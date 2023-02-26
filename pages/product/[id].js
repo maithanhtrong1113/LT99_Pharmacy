@@ -1,13 +1,16 @@
 import Footer from "@/Components/Index/Footer";
 import GoTopPage from "@/Components/Index/GoTopPage";
+import Navigation from "@/Components/Index/Navigation";
+import Content from "@/Components/ProductDetail/Content";
+import { useRouter } from "next/router";
 import React, { Fragment } from "react";
-import Content from "../Components/Index/Content";
-import Navigation from "../Components/Index/Navigation";
-import { ToastContainer } from "react-toastify";
-const index = () => {
+
+const page = () => {
+  const router = useRouter();
+  const productId = router.query.id;
+
   return (
     <Fragment>
-      <ToastContainer />
       <GoTopPage />
       <Navigation />
       <Content />
@@ -16,4 +19,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default page;

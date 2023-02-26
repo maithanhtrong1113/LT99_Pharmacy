@@ -1,19 +1,20 @@
+import Content from "@/Components/Cart/Content";
 import Footer from "@/Components/Index/Footer";
 import GoTopPage from "@/Components/Index/GoTopPage";
-import React, { Fragment } from "react";
-import Content from "../Components/Index/Content";
-import Navigation from "../Components/Index/Navigation";
+import Navigation from "@/Components/Index/Navigation";
+import RouteGuard from "@/Components/RouteGuard/RouteGuard";
+import React from "react";
 import { ToastContainer } from "react-toastify";
-const index = () => {
+const cart = () => {
   return (
-    <Fragment>
+    <RouteGuard>
       <ToastContainer />
       <GoTopPage />
       <Navigation />
       <Content />
       <Footer />
-    </Fragment>
+    </RouteGuard>
   );
 };
 
-export default index;
+export default cart;
