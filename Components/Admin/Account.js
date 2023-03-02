@@ -2,26 +2,42 @@ import Link from "next/link";
 import React, { Fragment, useState } from "react";
 import { AiOutlineMore } from "react-icons/ai";
 
-const Account = () => {
+const Account = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenTrangThai, setIsOpenTrangThai] = useState(true);
   const [isOpenVaiTro, setIsOpenVaiTro] = useState(true);
   const toggleTrangThai = () => setIsOpenTrangThai(!isOpenTrangThai);
   const toggleVaiTro = () => setIsOpenVaiTro(!isOpenVaiTro);
   const toggle = () => setIsOpen(!isOpen);
+
   return (
     <Fragment>
       <tr className="position-relative">
-        <th scope="row">1</th>
+        <th scope="row">{props.stt}</th>
         <td>maithanhtrong1113@gmail.com</td>
         <td>
-          <button class="btn btn-success btn-sm me-2">Đang hoạt động</button>
-          <button class="btn btn-danger btn-sm me-2 ">Vô hiệu hóa</button>
+          {props.active && (
+            <button className="btn btn-success btn-sm me-2">
+              Đang hoạt động
+            </button>
+          )}
+          {!props.active && (
+            <button className="btn btn-danger btn-sm me-2 ">Vô hiệu hóa</button>
+          )}
         </td>
         <td>
-          <button className="btn btn-warning btn-sm me-2">Nhân viên</button>
-          <button className="btn btn-info btn-sm me-2">Khách hàng</button>
-          <button className="btn btn-primary btn-sm me-2">Quản lí</button>
+          {props.vaiTro === "nhanVien" && (
+            <button className="btn btn-warning btn-sm me-2">Nhân viên</button>
+          )}
+
+          {props.vaiTro === "khachHang" && (
+            <button className="btn btn-info btn-sm me-2">Khách hàng</button>
+          )}
+          {props.vaiTro === "quanLy" && (
+            <button className="btn btn-primary btn-sm me-2">Quản lý</button>
+          )}
+        </td>
+        <td>
           <button className="btn" onClick={toggle}>
             <AiOutlineMore />
           </button>

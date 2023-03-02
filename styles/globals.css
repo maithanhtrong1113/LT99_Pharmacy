@@ -322,3 +322,10 @@ code {
 .w-85 {
   width: 85%;
 }
+.navbarSideLiHover li:hover {
+  background-color: #19d6ff;
+  border-radius: 5px;
+}
+.my-datepicker-input {
+  width: 100%;
+}

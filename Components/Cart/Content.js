@@ -133,16 +133,17 @@ const Content = () => {
                     <span className="fw-bold">Mua Thêm</span>
                   </button>
                 </Link>
-
-                <Link
-                  href="/checkout"
-                  className="text-decoration-none text-dark col-6 text-end"
-                >
-                  <button className="btn btn-warning text-light">
-                    <span className="fw-bold">Đặt hàng</span>
-                    <FaAngleRight />
-                  </button>
-                </Link>
+                {totalPriceCartt > 0 && (
+                  <Link
+                    href="/checkout"
+                    className="text-decoration-none text-dark col-6 text-end"
+                  >
+                    <button className="btn btn-warning text-light">
+                      <span className="fw-bold">Đặt hàng</span>
+                      <FaAngleRight />
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

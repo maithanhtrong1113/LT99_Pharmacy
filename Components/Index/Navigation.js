@@ -66,33 +66,11 @@ const Navigation = () => {
               >
                 <ul className="list-unstyled ps-0 ">
                   <li className="mb-1">
-                    <button
-                      className="btn btn-toggle align-items-center rounded collapsed"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#home-collapse"
-                    >
-                      Dược phẩm <FaAngleDown />
-                    </button>
-                    <div className="collapse" id="home-collapse">
-                      <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small ">
-                        <li className="p-1">
-                          <Link
-                            href="/"
-                            className="link-dark rounded text-decoration-none ms-2 "
-                          >
-                            Thuốc kê đơn
-                          </Link>
-                        </li>
-                        <li className="p-1">
-                          <Link
-                            href="/listProduct"
-                            className="link-dark rounded text-decoration-none ms-2   "
-                          >
-                            Thuốc không kê đơn
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
+                    <Link href="/listProduct">
+                      <button className="btn btn-toggle  rounded ">
+                        Dược phẩm
+                      </button>
+                    </Link>
                   </li>
                   <li className="mb-1">
                     <Link href="/">

@@ -7,28 +7,46 @@ const Products = () => {
     <Fragment>
       <div className="row mt-3">
         <div className="col-xl-3 col-lg-3">
-          <h4 className="fw-bold">Danh mục</h4>
+          <h4 className="fw-bold ms-1">Danh mục</h4>
           <nav className="navbar bg-white border rounded shadow">
             <div className="container-fluid ">
               <ul className="navbar-nav w-100 ">
                 <li className="nav-item my-2 liList">
-                  <a
+                  <Link
                     className="nav-link d-flex justify-content-between align-items-center px-2"
-                    href="#"
+                    href="/"
                   >
-                    Thuốc kê đơn
+                    Dược phẩm
                     <FaAngleDown />
-                  </a>
+                  </Link>
                 </li>
 
                 <li className="nav-item my-2 liList ">
-                  <a
+                  <Link
                     className="nav-link d-flex justify-content-between align-items-center px-2"
-                    href="#"
+                    href="/"
                   >
-                    Thuốc không kê đơn
+                    Chăm sóc sức khỏe
                     <FaAngleDown />
-                  </a>
+                  </Link>
+                </li>
+                <li className="nav-item my-2 liList ">
+                  <Link
+                    className="nav-link d-flex justify-content-between align-items-center px-2"
+                    href="/"
+                  >
+                    Chăm sóc cá nhân
+                    <FaAngleDown />
+                  </Link>
+                </li>
+                <li className="nav-item my-2 liList ">
+                  <Link
+                    className="nav-link d-flex justify-content-between align-items-center px-2"
+                    href="/"
+                  >
+                    Thực phẩm chức năng
+                    <FaAngleDown />
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -105,22 +123,22 @@ const Products = () => {
             <div className="row">
               <CardProduct
                 images="images/index/products/product1.jpg"
-                price="310.000"
+                price="310000"
                 title="Thực phẩm bảo vệ sức khỏe"
               />
               <CardProduct
                 images="images/index/products/product1.jpg"
-                price="310.000"
+                price="310000"
                 title="Thực phẩm bảo vệ sức khỏe"
               />
               <CardProduct
                 images="images/index/products/product1.jpg"
-                price="310.000"
+                price="310000"
                 title="Thực phẩm bảo vệ sức khỏe"
               />
               <CardProduct
                 images="images/index/products/product1.jpg"
-                price="310.000"
+                price="310000"
                 title="Thực phẩm bảo vệ sức khỏe"
               />
             </div>

@@ -177,7 +177,7 @@ function ModalAll(props) {
                 </div>
                 <div className="col-12 my-3">
                   <select
-                    className="form-select form-select-md py-2"
+                    className="form-select form-select-sm py-2"
                     id="district"
                     aria-label=".form-select-md"
                     {...register("quan", {
@@ -251,7 +251,7 @@ function ModalAll(props) {
                   </Button>
                 </div>
 
-                <div className="col-6 d-inline-block">
+                <div className="col-6 d-inline-block text-end">
                   <Button color="secondary" className="ms-5" onClick={toggle}>
                     Hủy
                   </Button>

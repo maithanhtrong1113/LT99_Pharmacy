@@ -8,7 +8,7 @@ import Footer from "@/Components/Index/Footer";
 const signup = () => {
   const router = useRouter();
   const submitHandler = (data) => {
-    fetch("http://localhost:8080/auth/signup", {
+    fetch("http://localhost:8081/auth/signup", {
       method: "PUT",
       body: JSON.stringify({
         email: data.email,

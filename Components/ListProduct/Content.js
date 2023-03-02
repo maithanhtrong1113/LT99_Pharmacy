@@ -9,7 +9,6 @@ const Content = () => {
       <Container fluid className="my-10">
         <div className="row  d-flex pt-2 ">
           <div className="col-lg-12">
-            {" "}
             <nav aria-label="breadcrumb ">
               <ol className="breadcrumb ">
                 <li className="breadcrumb-item">
@@ -27,11 +26,11 @@ const Content = () => {
           </div>
         </div>
         <div className="row bg-gray2 py-4 shadow">
-          {" "}
           <div className="col-lg-12 col-xl-12">
             <h2 className="fw-bold">Thuốc không kê đơn</h2>
           </div>
         </div>
+
         <Products />
       </Container>
     </Fragment>

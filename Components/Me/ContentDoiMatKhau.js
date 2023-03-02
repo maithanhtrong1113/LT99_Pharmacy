@@ -128,6 +128,36 @@ const ContentDoiMatKhau = () => {
             <div className="container">
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="row mb-4 d-flex align-items-center">
+                  <div className="col-lg-4 col-xl-4  ">
+                    <label className="fw-bold">Mật khẩu cũ</label>
+                  </div>
+                  <div className="col-lg-8  col-xl-8">
+                    <div className="form-outline">
+                      <input
+                        {...register("password_old", {
+                          required: true,
+                        })}
+                        type="password"
+                        className="form-control"
+                      />
+
+                      {errors?.password_old?.type === "required" && (
+                        <span className=" text-danger">
+                          Vui lòng nhập mật khẩu cũ
+                        </span>
+                      )}
+                      {errors.password_old && (
+                        <span className=" text-danger">
+                          {errors.password_old.message}
+                        </span>
+                      )}
+                      {errors?.phone?.type === "pattern" && (
+                        <span className="text-danger"></span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="row mb-4 d-flex align-items-center">
                   <div className="col-lg-4 col-xl-4">
                     <label className="fw-bold">Mật khẩu mới</label>
                   </div>

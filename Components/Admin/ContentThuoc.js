@@ -5,9 +5,9 @@ import React, { Fragment, useState } from "react";
 import { FaAngleRight, FaMoneyBillAlt } from "react-icons/fa";
 import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Account from "./Account";
-const index = () => {
+import Thuoc from "./Thuoc";
+const ContentThuoc = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
@@ -35,7 +35,7 @@ const index = () => {
 
             <hr className="text-white" />
             <ul className="list-unstyled vh-100 navbarSideLiHover">
-              <li className="bg-info rounded mb-2">
+              <li className=" rounded mb-2">
                 <button
                   className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
                   data-bs-toggle="collapse"
@@ -45,7 +45,6 @@ const index = () => {
                   khoản
                 </button>
               </li>
-
               <div className="collapse" id="home-collapse">
                 <ul className="btn-toggle-nav list-unstyled fw-normal pb-1  small ">
                   <li className="nav-item p-2  ms-3">
@@ -68,8 +67,8 @@ const index = () => {
               </div>
               <li className=" mb-2">
                 <Link
-                  className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
-                  href="/admin/thuoc"
+                  className="bg-info btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
+                  href="/"
                 >
                   <FaMoneyBillAlt className="text-white me-2" /> Quản lý thuốc
                 </Link>
@@ -102,9 +101,12 @@ const index = () => {
           <div className="col-10 ">
             <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
               <button className="btn  " onClick={toggle}>
-                <img
-                  src="images/user-profile.jpg"
+                <Image
+                  src="/images/user-profile.jpg"
                   className="img-profile me-2"
+                  width={100}
+                  height={100}
+                  alt=""
                 />
                 <span>Mai Thanh Trọng</span>
               </button>
@@ -117,9 +119,12 @@ const index = () => {
                     }}
                   >
                     <div className="col-2">
-                      <img
-                        src="images/profile.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/profile.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -139,9 +144,12 @@ const index = () => {
                     onClick={logOutHandler}
                   >
                     <div className="col-2 pointer">
-                      <img
-                        src="images/logout.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/logout.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -157,32 +165,20 @@ const index = () => {
               )}
             </div>
             <div className="container border shadow rounded">
-              <div className="row my-3 d-flex align-items-center">
-                <div className="col-4">
-                  <form>
-                    <input type="text" className="form-input w-100" />
-                  </form>
-                </div>
-                <div className="col-8">
-                  <ModalAddNhanVien />
-                </div>
-              </div>
               <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Vai trò</th>
+                    <th scope="col">Tên Thuốc</th>
+                    <th scope="col">Loại Thuốc</th>
+                    <th scope="col">Đơn Vị Tính</th>
+                    <th scope="col">Ngày Sản Xuất</th>
+                    <th scope="col">Ngày Hết Hạn</th>
+                    <th scope="col">Số Lượng</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <Account active={true} vaiTro={"khachHang"} stt={1} />
-                  <Account active={true} vaiTro={"nhanVien"} stt={2} />
-                  <Account active={false} vaiTro={"quanLy"} stt={3} />
-                  <Account active={true} vaiTro={"khachHang"} stt={4} />
-                  <Account active={true} vaiTro={"khachHang"} stt={5} />
-                  <Account active={true} vaiTro={"khachHang"} stt={6} />
+                  <Thuoc />
                 </tbody>
               </table>
             </div>
@@ -193,4 +189,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ContentThuoc;

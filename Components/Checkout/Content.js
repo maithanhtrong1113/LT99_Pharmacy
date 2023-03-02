@@ -24,6 +24,7 @@ const Content = () => {
   const getDiaChi = (data) => {
     console.log(data);
   };
+
   return (
     <Fragment>
       <div className="container-fluid my-10 " id="modal-checkout">
@@ -211,17 +212,19 @@ const Content = () => {
                 <p className="text-muted">Ghi chú đơn hàng</p>
                 <textarea className="customer-note border-none rounded shadow w-100"></textarea>
               </div>
-              <div className="row py-3">
-                <Link
-                  href="/checkout"
-                  className="text-decoration-none text-dark col-12"
-                >
-                  <button className="btn btn-warning text-center btn-lg text-light w-100">
-                    <span className="fw-bold ">Đặt hàng</span>
-                    <FaAngleRight />
-                  </button>
-                </Link>
-              </div>
+              {totalPriceCartt > 0 && (
+                <div className="row py-3">
+                  <Link
+                    href="/checkout"
+                    className="text-decoration-none text-dark col-12"
+                  >
+                    <button className="btn btn-warning text-center btn-lg text-light w-100">
+                      <span className="fw-bold ">Đặt hàng</span>
+                      <FaAngleRight />
+                    </button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

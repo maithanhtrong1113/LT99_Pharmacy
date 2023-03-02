@@ -114,9 +114,9 @@ function Example(props) {
           </div>
         </ModalBody>
         <ModalFooter className="  d-flex justify-content-between">
-          <Button color="secondary" onClick={toggle}>
+          {/* <Button color="secondary" onClick={toggle}>
             Quay Về
-          </Button>
+          </Button> */}
         </ModalFooter>
       </Modal>
     </Fragment>
