@@ -329,3 +329,9 @@ code {
 .my-datepicker-input {
   width: 100%;
 }
+.p-opx {
+  padding: 0px !important;
+}
+.p-sopx {
+  padding-left: 0px !important;
+}

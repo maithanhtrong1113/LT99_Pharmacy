@@ -1,15 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  BsFillCalendar2DateFill,
-  BsFillCalendarDateFill,
-} from "react-icons/bs";
+
 function ModalAddNhanVien(props) {
-  const [selectedDate, setSelectedDate] = useState(moment());
   const {
     register,
     handleSubmit,
@@ -24,7 +20,7 @@ function ModalAddNhanVien(props) {
     toggle();
   };
   const onSubmit = (data) => {
-    data.startDate = new Date(data.startDate).toLocaleDateString("en-GB");
+    console.log(data.date);
     console.log(data);
   };
 
@@ -34,8 +30,8 @@ function ModalAddNhanVien(props) {
         Tạo tài khoản nhân viên
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle} className="fw-bold">
-          Tạo Tài Khoản Nhân Viên
+        <ModalHeader toggle={toggle}>
+          <span className="fw-bold">Tạo Tài Khoản Nhân Viên</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -43,7 +39,9 @@ function ModalAddNhanVien(props) {
               <div className="col-xl-12 col-lg-12">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
-                    <label className="col-sm-3 col-form-label">Tên</label>
+                    <label className="col-sm-3 col-form-label fw-bold">
+                      Tên:
+                    </label>
                     <div className="col-sm-9">
                       <input
                         {...register("name", {
@@ -52,7 +50,7 @@ function ModalAddNhanVien(props) {
                         })}
                         type="text"
                         required
-                        className="form-control inputText"
+                        className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-3"></div>
@@ -67,8 +65,10 @@ function ModalAddNhanVien(props) {
                       )}
                     </div>
                   </div>
-                  <div className="form-group row my-2">
-                    <label className="col-sm-3 col-form-label">Email</label>
+                  <div className="form-group  row my-2">
+                    <label className="col-sm-3 col-form-label fw-bold">
+                      Email:
+                    </label>
                     <div className="col-sm-9">
                       <input
                         {...register("email", {
@@ -76,7 +76,7 @@ function ModalAddNhanVien(props) {
                           pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                         })}
                         type="text"
-                        className="form-control inputText"
+                        className="form-control form-control-sm inputText"
                         required
                       />
                     </div>
@@ -95,8 +95,8 @@ function ModalAddNhanVien(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-3 col-form-label">
-                      Điện Thoại
+                    <label className="col-sm-3 col-form-label fw-bold">
+                      Điện Thoại:
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -107,7 +107,7 @@ function ModalAddNhanVien(props) {
                         })}
                         type="tel"
                         required
-                        className="form-control inputText"
+                        className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-3"></div>
@@ -125,27 +125,56 @@ function ModalAddNhanVien(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-3">Giới Tính</label>
+                    <label className="col-sm-3 col-form-label fw-bold">
+                      Password:
+                    </label>
+                    <div className="col-sm-9">
+                      <input
+                        {...register("password", {
+                          required: true,
+                          minLength: 8,
+                        })}
+                        type="password"
+                        required
+                        className="form-control form-control-sm inputText"
+                      />
+                    </div>
+                    <div className="col-sm-3"></div>
+                    <div className="col-sm-9">
+                      {errors?.password?.type === "required" && (
+                        <span className=" text-danger">
+                          Vui lòng nhập mật khẩu
+                        </span>
+                      )}
+                      {errors?.password?.type === "minLength" && (
+                        <span className=" text-danger">
+                          Mật khẩu tối thiểu phải có 8 ký tự
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="form-group row my-2">
+                    <label className="col-sm-3 fw-bold">Giới Tính:</label>
                     <div className="col-sm-3">
                       <div className="form-outline">
                         <select
                           {...register("gender")}
-                          className="form-select form-select-sm text-center"
+                          className="form-select form-select-sm "
                         >
                           <option value="nam">Nam</option>
                           <option value="nữ">Nữ</option>
                         </select>
                       </div>
                     </div>
-                    <label className="col-3">Ngày sinh</label>
-                    <div className="col-3">
+
+                    <div className="col-sm-6 d-flex">
+                      <label className="fw-bold">Ngày sinh:</label>
                       <Controller
                         className="w-100"
-                        name="startDate"
+                        name="date"
                         control={control}
                         defaultValue={new Date()}
                         render={({ field }) => (
-                          
                           <DatePicker
                             {...field}
                             selected={field.value}
@@ -158,12 +187,13 @@ function ModalAddNhanVien(props) {
                       />
                     </div>
                   </div>
+
                   <div className="row d-flex justify-content-center ">
                     <button
-                      className="btn btn-info my-2  text-white fw-bold w-100"
+                      className="btn btn-info my-3  text-white fw-bold w-100"
                       type="submit"
                     >
-                      Submit
+                      Tạo tài khoản
                     </button>
                   </div>
                 </form>
@@ -171,7 +201,6 @@ function ModalAddNhanVien(props) {
             </div>
           </div>
         </ModalBody>
-        <ModalFooter className="d-flex justify-content-between"></ModalFooter>
       </Modal>
     </Fragment>
   );

@@ -36,35 +36,15 @@ const ContentThuoc = () => {
             <hr className="text-white" />
             <ul className="list-unstyled vh-100 navbarSideLiHover">
               <li className=" rounded mb-2">
-                <button
+                <Link
                   className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
-                  data-bs-toggle="collapse"
-                  data-bs-target="#home-collapse"
+                  href="/admin"
                 >
                   <MdManageAccounts className="text-white me-2" /> Quản lý tài
                   khoản
-                </button>
+                </Link>
               </li>
-              <div className="collapse" id="home-collapse">
-                <ul className="btn-toggle-nav list-unstyled fw-normal pb-1  small ">
-                  <li className="nav-item p-2  ms-3">
-                    <Link
-                      href="/admin"
-                      className="rounded text-decoration-none text-white"
-                    >
-                      Tài khoản nhân viên
-                    </Link>
-                  </li>
-                  <li className="nav-item  p-2  ms-3 ">
-                    <Link
-                      href="/admin"
-                      className=" rounded text-decoration-none text-white"
-                    >
-                      Tài khoản khách hàng
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+
               <li className=" mb-2">
                 <Link
                   className="bg-info btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
@@ -165,13 +145,21 @@ const ContentThuoc = () => {
               )}
             </div>
             <div className="container border shadow rounded">
+              <div className="row my-3 d-flex align-items-center">
+                <div className="col-4">
+                  <form>
+                    <input type="text" className="form-input w-100 px-2" />
+                  </form>
+                </div>
+                <div className="col-8"></div>
+              </div>
               <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên Thuốc</th>
                     <th scope="col">Loại Thuốc</th>
-                    <th scope="col">Đơn Vị Tính</th>
+
                     <th scope="col">Ngày Sản Xuất</th>
                     <th scope="col">Ngày Hết Hạn</th>
                     <th scope="col">Số Lượng</th>

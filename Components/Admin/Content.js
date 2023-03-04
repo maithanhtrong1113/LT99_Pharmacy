@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useState } from "react";
-import { FaAngleRight, FaMoneyBillAlt } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaMoneyBillAlt } from "react-icons/fa";
 import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
@@ -36,36 +36,15 @@ const index = () => {
             <hr className="text-white" />
             <ul className="list-unstyled vh-100 navbarSideLiHover">
               <li className="bg-info rounded mb-2">
-                <button
+                <Link
                   className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
-                  data-bs-toggle="collapse"
-                  data-bs-target="#home-collapse"
+                  href="/admin"
                 >
                   <MdManageAccounts className="text-white me-2" /> Quản lý tài
                   khoản
-                </button>
+                </Link>
               </li>
 
-              <div className="collapse" id="home-collapse">
-                <ul className="btn-toggle-nav list-unstyled fw-normal pb-1  small ">
-                  <li className="nav-item p-2  ms-3">
-                    <Link
-                      href="/admin"
-                      className="rounded text-decoration-none text-white"
-                    >
-                      Tài khoản nhân viên
-                    </Link>
-                  </li>
-                  <li className="nav-item  p-2  ms-3 ">
-                    <Link
-                      href="/admin"
-                      className=" rounded text-decoration-none text-white"
-                    >
-                      Tài khoản khách hàng
-                    </Link>
-                  </li>
-                </ul>
-              </div>
               <li className=" mb-2">
                 <Link
                   className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
@@ -156,11 +135,11 @@ const index = () => {
                 </div>
               )}
             </div>
-            <div className="container border shadow rounded">
+            <div className="container border shadow rounded ">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input type="text" className="form-input w-100" />
+                    <input type="text" className="form-input w-100 px-2" />
                   </form>
                 </div>
                 <div className="col-8">
@@ -183,6 +162,20 @@ const index = () => {
                   <Account active={true} vaiTro={"khachHang"} stt={4} />
                   <Account active={true} vaiTro={"khachHang"} stt={5} />
                   <Account active={true} vaiTro={"khachHang"} stt={6} />
+                  <Account active={true} vaiTro={"khachHang"} stt={7} />
+                  <Account active={true} vaiTro={"khachHang"} stt={8} />
+                  <Account active={true} vaiTro={"khachHang"} stt={9} />
+                  <Account active={true} vaiTro={"khachHang"} stt={10} />
+                  <tr>
+                    <td>
+                      <button className="btn btn-dark me-3 ">
+                        <FaAngleLeft className="text-white" />
+                      </button>
+                      <button className="btn btn-dark ">
+                        <FaAngleRight className="text-white" />
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
