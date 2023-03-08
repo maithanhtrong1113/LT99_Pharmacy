@@ -20,7 +20,7 @@ function ModalAddNhanVien(props) {
     toggle();
   };
   const onSubmit = (data) => {
-    console.log(data.date);
+    data.date = new Date(data.date).toLocaleDateString("vi-VN");
     console.log(data);
   };
 
@@ -168,7 +168,7 @@ function ModalAddNhanVien(props) {
                     </div>
 
                     <div className="col-sm-6 d-flex">
-                      <label className="fw-bold">Ngày sinh:</label>
+                      <label className="fw-bold w-100">Ngày sinh:</label>
                       <Controller
                         className="w-100"
                         name="date"

@@ -1,14 +1,15 @@
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaMoneyBillAlt } from "react-icons/fa";
-import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
+import React, { Fragment, useEffect, useState } from "react";
+import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
-import Account from "./Account";
+import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
+import LoaiThuoc from "./LoaiThuoc";
 import Sidebar from "./Sidebar";
-const index = () => {
+
+const ContentLoaiThuoc = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
@@ -19,6 +20,34 @@ const index = () => {
     localStorage.removeItem("id");
     toggle();
   };
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setLoaiThuoc(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+  const themLoaiThuoc = (data) => {
+    fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tenLoai: data.tenLoai,
+        moTaChung: data.moTaChung,
+      }),
+    });
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setLoaiThuoc(data);
+    //   })
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -27,9 +56,12 @@ const index = () => {
           <div className="col-10 ">
             <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
               <button className="btn  " onClick={toggle}>
-                <img
-                  src="images/user-profile.jpg"
+                <Image
+                  src="/images/user-profile.jpg"
                   className="img-profile me-2"
+                  width={100}
+                  height={100}
+                  alt=""
                 />
                 <span>Mai Thanh Trọng</span>
               </button>
@@ -42,9 +74,12 @@ const index = () => {
                     }}
                   >
                     <div className="col-2">
-                      <img
-                        src="images/profile.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/profile.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -64,9 +99,12 @@ const index = () => {
                     onClick={logOutHandler}
                   >
                     <div className="col-2 pointer">
-                      <img
-                        src="images/logout.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/logout.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -81,47 +119,31 @@ const index = () => {
                 </div>
               )}
             </div>
-            <div className="container border shadow rounded ">
+            <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input type="text" className="form-input w-100 px-2" />
+                    <input
+                      type="text"
+                      className="form-input w-100 px-2"
+                      placeholder="Nhập tên loại thuốc bạn muốn tìm"
+                    />
                   </form>
                 </div>
                 <div className="col-8">
-                  <ModalAddNhanVien />
+                  <ModalAddLoaiThuoc submitHandler={themLoaiThuoc} />
                 </div>
               </div>
               <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Vai trò</th>
+                    <th scope="col">Tên Loại Thuốc</th>
+                    <th scope="col">Mô tả chung</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <Account active={true} vaiTro={"khachHang"} stt={1} />
-                  <Account active={true} vaiTro={"nhanVien"} stt={2} />
-                  <Account active={false} vaiTro={"quanLy"} stt={3} />
-                  <Account active={true} vaiTro={"khachHang"} stt={4} />
-                  <Account active={true} vaiTro={"khachHang"} stt={5} />
-                  <Account active={true} vaiTro={"khachHang"} stt={6} />
-                  <Account active={true} vaiTro={"khachHang"} stt={7} />
-                  <Account active={true} vaiTro={"khachHang"} stt={8} />
-                  <Account active={true} vaiTro={"khachHang"} stt={9} />
-                  <Account active={true} vaiTro={"khachHang"} stt={10} />
-                  <tr>
-                    <td>
-                      <button className="btn btn-dark me-3 ">
-                        <FaAngleLeft className="text-white" />
-                      </button>
-                      <button className="btn btn-dark ">
-                        <FaAngleRight className="text-white" />
-                      </button>
-                    </td>
-                  </tr>
+                  <LoaiThuoc loaiThuoc={loaiThuoc} />
                 </tbody>
               </table>
             </div>
@@ -132,4 +154,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ContentLoaiThuoc;

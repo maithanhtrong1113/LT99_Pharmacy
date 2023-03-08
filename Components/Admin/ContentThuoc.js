@@ -1,13 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, useState } from "react";
-import { FaAngleRight, FaMoneyBillAlt } from "react-icons/fa";
-import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
+import React, { Fragment, useEffect, useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import Account from "./Account";
+
+import Sidebar from "./Sidebar";
+
+import ModalAddThuoc from "../Modal/ModalAddThuoc";
 import Thuoc from "./Thuoc";
 const ContentThuoc = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
@@ -18,66 +27,55 @@ const ContentThuoc = () => {
     localStorage.removeItem("id");
     toggle();
   };
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [dsThuoc, setDsThuoc] = useState([]);
+  const [loaiThuocSelected, setLoaiThuocSelected] = useState("Tất cả thuốc");
+
+  // danh sách thuốc theo loại thuốc
+  useEffect(() => {
+    if (loaiThuocSelected === "Tất cả thuốc") {
+      // danh sách tất cả thuốc truyền vào table
+      fetch(
+        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDsThuoc(data);
+        })
+        .catch((error) => console.error(error));
+    } else {
+      console.log(loaiThuocSelected);
+      fetch(
+        `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/${loaiThuocSelected}/thuoc`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDsThuoc(data);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [loaiThuocSelected]);
+
+  useEffect(() => {
+    // danh sách loại thuốc truyền vào select option
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setLoaiThuoc(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+  const onSubmit = (data) => {
+    console.log(data);
+    // props.submitHandler(data);
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
         <div className="row d-flex">
-          <div className="col-2 p-2 bg-dark shadow position-relative ">
-            <Link href="/">
-              <Image
-                src="/images/logo.png"
-                className="img-fluid rounded mx-5 my-2"
-                width={100}
-                height={100}
-                alt=""
-              />
-            </Link>
-
-            <hr className="text-white" />
-            <ul className="list-unstyled vh-100 navbarSideLiHover">
-              <li className=" rounded mb-2">
-                <Link
-                  className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
-                  href="/admin"
-                >
-                  <MdManageAccounts className="text-white me-2" /> Quản lý tài
-                  khoản
-                </Link>
-              </li>
-
-              <li className=" mb-2">
-                <Link
-                  className="bg-info btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
-                  href="/"
-                >
-                  <FaMoneyBillAlt className="text-white me-2" /> Quản lý thuốc
-                </Link>
-              </li>
-              <li className="mb-2">
-                <Link
-                  href="/"
-                  className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
-                >
-                  <FaMoneyBillAlt className="text-white me-2" /> Quản lý hóa đơn
-                </Link>
-              </li>
-
-              <li className="mb-2">
-                <Link
-                  className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
-                  href="/"
-                >
-                  <FaMoneyBillAlt className="text-white me-2" /> Quản lý danh
-                  mục
-                </Link>
-              </li>
-            </ul>
-            <div className="position-absolute localFooter bg-secondary">
-              <Link href="/" className="w-100 d-block text-center ">
-                <MdArrowBackIos />
-              </Link>
-            </div>
-          </div>
+          <Sidebar />
           <div className="col-10 ">
             <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
               <button className="btn  " onClick={toggle}>
@@ -148,25 +146,60 @@ const ContentThuoc = () => {
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input type="text" className="form-input w-100 px-2" />
+                    <input
+                      type="text"
+                      placeholder="Nhập tên thuốc muốn tìm"
+                      className="form-input w-100 px-2"
+                    />
                   </form>
                 </div>
-                <div className="col-8"></div>
+                <div className="col-2">
+                  <form>
+                    <select
+                      className="form-select form-select-sm py-2"
+                      aria-label=".form-select-sm"
+                      {...register("loaiThuocName", {})}
+                      onChange={(e) => {
+                        setLoaiThuocSelected(e.target.value);
+                      }}
+                    >
+                      <option value={"Tất cả thuốc"} key={0} defaultValue>
+                        Tất cả thuốc
+                      </option>
+                      {loaiThuoc.map((loaiThuoc) => (
+                        <option value={loaiThuoc.maLoai} key={loaiThuoc.maLoai}>
+                          {loaiThuoc.tenLoai}
+                        </option>
+                      ))}
+                    </select>
+                  </form>
+                </div>
+                <div className="col-6">
+                  <ModalAddThuoc />
+                </div>
               </div>
               <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>
                     <th scope="col">Tên Thuốc</th>
-                    <th scope="col">Loại Thuốc</th>
-
-                    <th scope="col">Ngày Sản Xuất</th>
-                    <th scope="col">Ngày Hết Hạn</th>
+                    <th scope="col">Liều Lượng</th>
+                    <th scope="col">Công Dụng</th>
+                    <th scope="col">Đơn vị Tính</th>
                     <th scope="col">Số Lượng</th>
+                    <th scope="col">Tên Loại Thuốc</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <Thuoc />
+                  <Thuoc dsThuoc={dsThuoc} />
+                  <tr>
+                    <button className="btn btn-sm bg-dark rounded me-2 my-2">
+                      <FaAngleLeft className="text-white" />
+                    </button>
+                    <button className="btn btn-sm bg-dark rounded my-2">
+                      <FaAngleRight className="text-white" />
+                    </button>
+                  </tr>
                 </tbody>
               </table>
             </div>
