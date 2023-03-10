@@ -25,6 +25,9 @@ const Thuoc = (props) => {
   const handlerInfo = (data) => {
     router.push(`thuoc/${data}`);
   };
+  const handlerDeltete = () => {
+    props.Deltete(thuoc.maThuoc);
+  };
   return (
     <Fragment>
       {props.dsThuoc.map((thuoc, index) => (
@@ -37,18 +40,18 @@ const Thuoc = (props) => {
           <td>{thuoc.soLuong}</td>
           <td>{thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
-            <Dropdown
-              isOpen={dropdownStates[index]}
-              toggle={() => handleDropdownToggle(index)}
+            <button
+              className="btn btn-sm btn-info ms-2"
+              onClick={() => handlerInfo(thuoc.maThuoc)}
             >
-              <DropdownToggle caret className="btn btn-sm"></DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem onClick={() => handlerInfo(thuoc.maThuoc)}>
-                  Xem chi tiết/ Chỉnh Sửa
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-            <button className="btn btn-sm btn-danger ms-2">Xóa</button>
+              Chỉnh sửa/ Xem chi tiết
+            </button>
+            <button
+              className="btn btn-sm btn-danger ms-2"
+              onClick={handlerDeltete}
+            >
+              Xóa
+            </button>
           </td>
         </tr>
       ))}

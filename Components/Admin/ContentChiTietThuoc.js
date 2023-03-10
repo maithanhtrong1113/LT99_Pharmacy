@@ -8,9 +8,7 @@ import { useDispatch } from "react-redux";
 
 import Sidebar from "./Sidebar";
 
-import ModalAddThuoc from "../Modal/ModalAddThuoc";
-
-const ContentChiTietThuoc = () => {
+const ContentChiTietThuoc = (props) => {
   const {
     register,
     handleSubmit,
@@ -28,33 +26,19 @@ const ContentChiTietThuoc = () => {
     toggle();
   };
   const [loaiThuoc, setLoaiThuoc] = useState([]);
-  const [dsThuoc, setDsThuoc] = useState([]);
-  const [loaiThuocSelected, setLoaiThuocSelected] = useState("Tất cả thuốc");
+  const [Thuoc, setThuoc] = useState({});
+  const [loaiThuocSelected, setLoaiThuocSelected] = useState("");
+  const [tenThuoc, setTenThuoc] = useState("");
+  const [congDung, setCongDung] = useState("");
+  const [quyCachDongGoi, setQuyCachDongGoi] = useState("");
+  const [donViTinh, setDonViTinh] = useState("");
+  const [lieuLuong, setLieuLuong] = useState("");
+  const [tacDungPhu, setTacDungPhu] = useState("");
+  const [huongDanSuDung, setHuongDanSuDung] = useState("");
+  const [moTa, setMoTa] = useState("");
+  const [soLuong, setSoLuong] = useState("");
 
-  // danh sách thuốc theo loại thuốc
-  useEffect(() => {
-    if (loaiThuocSelected === "Tất cả thuốc") {
-      // danh sách tất cả thuốc truyền vào table
-      fetch(
-        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setDsThuoc(data);
-        })
-        .catch((error) => console.error(error));
-    } else {
-      console.log(loaiThuocSelected);
-      fetch(
-        `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/${loaiThuocSelected}/thuoc`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setDsThuoc(data);
-        })
-        .catch((error) => console.error(error));
-    }
-  }, [loaiThuocSelected]);
+  const { id } = router.query;
 
   useEffect(() => {
     // danh sách loại thuốc truyền vào select option
@@ -66,10 +50,50 @@ const ContentChiTietThuoc = () => {
         setLoaiThuoc(data);
       })
       .catch((error) => console.error(error));
+    // Thông tin chi tiết của thuốc
   }, []);
+  useEffect(() => {
+    async function fetchData() {
+      if (typeof id === "string") {
+        try {
+          const response = await fetch(
+            `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${id}`
+          );
+          const data = await response.json();
+
+          setThuoc(data);
+          setTenThuoc(data.tenThuoc);
+          setCongDung(data.congDung);
+          setQuyCachDongGoi(data.quyCachDongGoi);
+          setDonViTinh(data.donViTinh);
+          setLieuLuong(data.lieuLuong);
+          setTacDungPhu(data.tacDungPhu);
+          setHuongDanSuDung(data.huongDanSuDung);
+          setMoTa(data.moTa);
+          setSoLuong(data.soLuong);
+          setLoaiThuocSelected(data.loaiThuoc.tenLoai);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+    fetchData();
+  }, [id]);
+
   const onSubmit = (data) => {
+    data = {
+      tenThuoc,
+      congDung,
+      quyCachDongGoi,
+      donViTinh,
+      lieuLuong,
+      tacDungPhu,
+      huongDanSuDung,
+      moTa,
+      soLuong,
+      loaiThuocSelected,
+    };
     console.log(data);
-    // props.submitHandler(data);
   };
   return (
     <Fragment>
@@ -146,7 +170,7 @@ const ContentChiTietThuoc = () => {
               <div className="row d-flex align-items-center my-2">
                 <div className="col-1">
                   <button
-                    className="btn btn-sm btn-secondary"
+                    className="btn btn-sm btn-dark"
                     onClick={() => router.push("/admin/thuoc")}
                   >
                     <FaAngleLeft />
@@ -157,192 +181,264 @@ const ContentChiTietThuoc = () => {
                     Thông tin chi tiết của thuốc
                   </h3>
                 </div>
-                <div className="col-12">
-                  <div>
-                    <form
-                      onSubmit={handleSubmit(onSubmit)}
-                      noValidate
-                      className="container"
-                    >
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Tên Thuốc:
-                        </label>
-                        <div className="col-sm-4">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
+                {Object.keys(Thuoc).length !== 0 && (
+                  <div className="col-12">
+                    <div>
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        noValidate
+                        className="container"
+                      >
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2">
+                            <label className="fw-bold">Tên Thuốc</label>
+                          </div>
+                          <div className="col-6 ">
+                            <div className="form-outline">
+                              <input
+                                {...register("tenThuoc", {})}
+                                type="text"
+                                className="form-control"
+                                value={tenThuoc}
+                                onChange={(e) => {
+                                  setTenThuoc(e.target.value);
+                                }}
+                              />
+                              {tenThuoc === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập tên thuốc
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Loại Thuốc</label>
+                          </div>
+                          <div className="col-2 p-sopx">
+                            <select
+                              className="form-select form-select-sm py-2"
+                              aria-label=".form-select-sm"
+                              defaultValue={loaiThuocSelected}
+                              {...register("loaiThuocName", {})}
+                              onChange={(e) => {
+                                setLoaiThuocSelected(e.target.value);
+                              }}
+                            >
+                              {loaiThuoc.map((loaiThuoc) => (
+                                <option
+                                  value={loaiThuoc.maLoai}
+                                  key={loaiThuoc.maLoai}
+                                  selected={
+                                    loaiThuoc.tenLoai === loaiThuocSelected
+                                      ? "selected"
+                                      : null
+                                  }
+                                >
+                                  {loaiThuoc.tenLoai}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
                         </div>
-                        <div className="col-sm-2"></div>
-                        <div className="col-sm-4">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2">
+                            <label className="fw-bold">Công Dụng</label>
+                          </div>
+                          <div className="col-10">
+                            <div className="form-outline">
+                              <input
+                                {...register("congDung", {})}
+                                type="text"
+                                className="form-control"
+                                onChange={(e) => {
+                                  setCongDung(e.target.value);
+                                }}
+                                value={congDung}
+                              />
+                              {congDung === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập công dụng của thuốc
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2">
+                            <label className="fw-bold">Đơn vị tính</label>
+                          </div>
+                          <div className="col-2">
+                            <div className="form-outline">
+                              <input
+                                {...register("donViTinhh", {})}
+                                type="text"
+                                className="form-control"
+                                value={donViTinh}
+                                onChange={(e) => {
+                                  setDonViTinh(e.target.value);
+                                }}
+                              />
+                              {donViTinh === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập đơn vị tính
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-2">
+                            <label className="fw-bold">Quy cách đóng gói</label>
+                          </div>
+                          <div className="col-2 p-sopx">
+                            <div className="form-outline">
+                              <input
+                                {...register("quyCachDongGoi", {})}
+                                type="text"
+                                className="form-control"
+                                value={quyCachDongGoi}
+                                onChange={(e) => {
+                                  setQuyCachDongGoi(e.target.value);
+                                }}
+                              />
+                              {quyCachDongGoi === "" && (
+                                <span className="text-danger">
+                                  Không được để trống
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-1 pr-opx">
+                            <label className="fw-bold">Số lượng</label>
+                          </div>
+                          <div className="col-3">
+                            <div className="form-outline">
+                              <input
+                                {...register("soLuong", {})}
+                                type="number"
+                                className="form-control"
+                                value={soLuong}
+                                onChange={(e) => {
+                                  setSoLuong(e.target.value);
+                                }}
+                              />
+                              {soLuong === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập số lượng
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Hướng dẫn sử dụng</label>
+                          </div>
+                          <div className="col-10">
+                            <div className="form-outline">
+                              <input
+                                {...register("huongDanSuDung", {})}
+                                type="text"
+                                className="form-control"
+                                value={huongDanSuDung}
+                                onChange={(e) => {
+                                  setHuongDanSuDung(e.target.value);
+                                }}
+                              />
+                              {huongDanSuDung === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập hướng dẫn sử dụng
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Tác dụng phụ</label>
+                          </div>
+                          <div className="col-4">
+                            <div className="form-outline">
+                              <input
+                                {...register("tacDungPhu", {})}
+                                type="text"
+                                className="form-control"
+                                value={tacDungPhu}
+                                onChange={(e) => {
+                                  setTacDungPhu(e.target.value);
+                                }}
+                              />
+                              {tacDungPhu === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập tác dụng phụ
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Liều Lượng</label>
+                          </div>
+                          <div className="col-4">
+                            <div className="form-outline">
+                              <input
+                                {...register("lieuLuongg", {})}
+                                type="text"
+                                className="form-control"
+                                value={lieuLuong}
+                                onChange={(e) => {
+                                  setLieuLuong(e.target.value);
+                                }}
+                              />
+                              {lieuLuong === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập liều lượng
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Mô tả</label>
+                          </div>
+                          <div className="col-10">
+                            <div className="form-outline">
+                              <input
+                                {...register("moTa", {})}
+                                type="text"
+                                className="form-control"
+                                value={moTa}
+                                onChange={(e) => {
+                                  setMoTa(e.target.value);
+                                }}
+                              />
+                              {moTa === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập mô tả
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
 
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Liều Lượng:
-                        </label>
-                        <div className="col-sm-4">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-2"></div>
-                        <div className="col-sm-4">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Công dụng
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Tên Thuốc:
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Tên Thuốc:
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Tên Thuốc:
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="form-group row my-2">
-                        <label className="col-sm-2 col-form-label fw-bold">
-                          Tên Thuốc:
-                        </label>
-                        <div className="col-sm-10">
-                          <input
-                            {...register("tenLoai", {
-                              required: true,
-                            })}
-                            type="text"
-                            required
-                            // value={tenLoai}
-                            // onChange={handleInputChange}
-                            className="form-control form-control-sm inputText"
-                          />
-                        </div>
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          {errors?.tenLoai?.type === "required" && (
-                            <span className="text-danger">
-                              Vui lòng nhập tên loại thuốc
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </form>
+                        <button className="btn btn-primary mx-2" type="submit">
+                          Lưu
+                        </button>
+
+                        <button
+                          className="btn btn-secondary mx-2"
+                          type="button"
+                          onClick={() => {
+                            router.push("/admin/thuoc");
+                          }}
+                        >
+                          Hủy
+                        </button>
+                      </form>
+                    </div>
                   </div>
-                </div>
+                )}
+                {Object.keys(Thuoc).length === 0 && (
+                  <div className="col-12"></div>
+                )}
               </div>
             </div>
           </div>
