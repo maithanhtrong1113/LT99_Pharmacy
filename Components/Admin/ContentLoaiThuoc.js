@@ -48,6 +48,46 @@ const ContentLoaiThuoc = () => {
     //     setLoaiThuoc(data);
     //   })
   };
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  const handleInputChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    console.log(searchTerm);
+    if (timeoutId) {
+      clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
+    }
+
+    if (searchTerm.length > 0) {
+      const newTimeoutId = setTimeout(() => {
+        fetch(
+          `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-loai-thuoc?keyword=${encodeURIComponent(
+            searchTerm
+          )}`
+        )
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.length > 0) setLoaiThuoc(results);
+            else {
+              setLoaiThuoc([]);
+            }
+          });
+      }, 500);
+      setTimeoutId(newTimeoutId);
+    } else {
+      fetch(
+        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setLoaiThuoc(data);
+        })
+        .catch((error) => console.error(error));
+    }
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -127,6 +167,8 @@ const ContentLoaiThuoc = () => {
                       type="text"
                       className="form-input w-100 px-2"
                       placeholder="Nhập tên loại thuốc bạn muốn tìm"
+                      value={searchTerm}
+                      onChange={handleInputChange}
                     />
                   </form>
                 </div>
