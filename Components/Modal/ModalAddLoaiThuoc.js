@@ -17,9 +17,8 @@ function ModalAddLoaiThuoc(props) {
     toggle();
   };
   const onSubmit = (data) => {
-    console.log(data);
     props.submitHandler(data);
-    
+    toggle();
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { toast } from "react-toastify";
 import ModalChinhSuaLoaiThuoc from "../Modal/ModalChinhSuaLoaiThuoc";
 import ModalXemLoaiThuoc from "../Modal/ModalXemLoaiThuoc";
 import ModalXoaLoaiThuoc from "../Modal/ModalXoaLoaiThuoc";
@@ -16,9 +17,47 @@ const LoaiThuoc = (props) => {
       }
     ).then((response) => {
       if (response.ok) {
-        console.log("Loại thuốc đã được xóa thành công!");
+        toast.success("Xóa loại thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
       } else {
-        console.error("Có lỗi xảy ra khi xóa loại thuốc!");
+        toast.error("Xóa loại thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      }
+    });
+  };
+  const chinhSuaLoaiThuocHandler = (data) => {
+    // chỉnh sửa thông tin loại thuốc
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data.maLoai}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tenLoai: data.tenLoai,
+          moTaChung: data.moTaChung,
+        }),
+      }
+    ).then((response) => {
+      if (response.ok) {
+        toast.success("Chỉnh sửa loại thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      } else {
+        toast.error("Chỉnh sửa loại thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
       }
     });
   };
@@ -32,7 +71,10 @@ const LoaiThuoc = (props) => {
           <td>{loaiThuoc.moTaChung}</td>
           <td className="d-flex">
             <ModalXemLoaiThuoc loaiThuocId={loaiThuoc.maLoai} />
-            <ModalChinhSuaLoaiThuoc loaiThuoc={loaiThuoc} />
+            <ModalChinhSuaLoaiThuoc
+              loaiThuoc={loaiThuoc}
+              chinhSuaLoaiThuoc={chinhSuaLoaiThuocHandler}
+            />
             <ModalXoaLoaiThuoc
               loaiThuoc={loaiThuoc}
               handlerSubmit={xoaLoaiThuoc}

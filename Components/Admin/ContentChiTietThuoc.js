@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
 import Sidebar from "./Sidebar";
+import { toast } from "react-toastify";
 
 const ContentChiTietThuoc = (props) => {
   const {
@@ -37,7 +38,7 @@ const ContentChiTietThuoc = (props) => {
   const [huongDanSuDung, setHuongDanSuDung] = useState("");
   const [moTa, setMoTa] = useState("");
   const [soLuong, setSoLuong] = useState("");
-
+  const [loaiThuocBanDau, setLoaiThuocBanDau] = useState("");
   const { id } = router.query;
 
   useEffect(() => {
@@ -71,7 +72,8 @@ const ContentChiTietThuoc = (props) => {
           setHuongDanSuDung(data.huongDanSuDung);
           setMoTa(data.moTa);
           setSoLuong(data.soLuong);
-          setLoaiThuocSelected(data.loaiThuoc.tenLoai);
+          setLoaiThuocSelected(data.loaiThuoc.maLoai);
+          setLoaiThuocBanDau(data.loaiThuoc.maLoai);
         } catch (error) {
           console.error(error);
         }
@@ -94,7 +96,60 @@ const ContentChiTietThuoc = (props) => {
       loaiThuocSelected,
     };
     console.log(data);
+
+    // chỉnh sửa thông tin  thuốc
+    if (
+      tenThuoc !== "" &&
+      congDung !== "" &&
+      quyCachDongGoi !== "" &&
+      donViTinh !== "" &&
+      lieuLuong !== "" &&
+      tacDungPhu !== "" &&
+      huongDanSuDung !== "" &&
+      moTa !== ""
+    ) {
+      fetch(
+        `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data.loaiThuocSelected}/thuoc/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tenThuoc: data.tenThuoc,
+            lieuLuong: data.lieuLuong,
+            congDung: data.congDung,
+            donViTinh: data.donViTinh,
+            quyCachDongGoi: data.quyCachDongGoi,
+            tacDungPhu: data.tacDungPhu,
+            huongDanSuDung: data.huongDanSuDung,
+            moTa: data.moTa,
+            images: [],
+            dsDoiTuong: [],
+            thuocKeDon: true,
+          }),
+        }
+      ).then((response) => {
+        if (response.ok) {
+          toast.success("Chỉnh sửa loại thuốc thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+          setTimeout(() => {
+            router.push("/admin/thuoc");
+          }, 2000);
+        } else {
+          toast.error("Chỉnh sửa loại thuốc không thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        }
+      });
+    }
   };
+
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -219,7 +274,7 @@ const ContentChiTietThuoc = (props) => {
                               className="form-select form-select-sm py-2"
                               aria-label=".form-select-sm"
                               defaultValue={loaiThuocSelected}
-                              {...register("loaiThuocName", {})}
+                              {...register("loaiThuoc", {})}
                               onChange={(e) => {
                                 setLoaiThuocSelected(e.target.value);
                               }}
@@ -229,7 +284,7 @@ const ContentChiTietThuoc = (props) => {
                                   value={loaiThuoc.maLoai}
                                   key={loaiThuoc.maLoai}
                                   selected={
-                                    loaiThuoc.tenLoai === loaiThuocSelected
+                                    loaiThuoc.maLoai === loaiThuocSelected
                                       ? "selected"
                                       : null
                                   }
@@ -313,12 +368,10 @@ const ContentChiTietThuoc = (props) => {
                             <div className="form-outline">
                               <input
                                 {...register("soLuong", {})}
-                                type="number"
-                                className="form-control"
+                                type="text"
+                                className="form-control visiblity"
                                 value={soLuong}
-                                onChange={(e) => {
-                                  setSoLuong(e.target.value);
-                                }}
+                                readonly
                               />
                               {soLuong === "" && (
                                 <span className="text-danger">
@@ -420,7 +473,7 @@ const ContentChiTietThuoc = (props) => {
                         </div>
 
                         <button className="btn btn-primary mx-2" type="submit">
-                          Lưu
+                          Sửa thông tin thuốc
                         </button>
 
                         <button

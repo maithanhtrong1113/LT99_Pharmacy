@@ -1,38 +1,39 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { toast } from "react-toastify";
 
-function ModalXoaLoaiThuoc(props) {
+function ModalXoaThuoc(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
   const deleteHandler = () => {
-    const loaiThuocId = props.loaiThuoc.maLoai;
-    props.handlerSubmit(loaiThuocId);
-    console.log(loaiThuocId);
+    props.OnClickYes(props.maThuoc);
     toggle();
   };
   return (
     <div>
-      <Button color="danger" className="btn btn-danger btn-sm" onClick={toggle}>
+      <Button
+        color="danger"
+        className="btn btn-danger btn-sm ms-2"
+        onClick={toggle}
+      >
         Xóa
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>Xóa loại thuốc</ModalHeader>
+        <ModalHeader toggle={toggle}>Xóa Thuốc</ModalHeader>
         <ModalBody>
-          <p> Bạn có muốn xóa loại thuốc không?</p>
+          <p> Bạn có muốn xóa thuốc không?</p>
         </ModalBody>
         <ModalFooter className="d-flex justify-content-between">
           <Button color="secondary" onClick={toggle}>
-            Hủy
+            Quay Về
           </Button>
           <Button color="danger" onClick={deleteHandler}>
             Xóa
-          </Button>{" "}
+          </Button>
         </ModalFooter>
       </Modal>
     </div>
   );
 }
 
-export default ModalXoaLoaiThuoc;
+export default ModalXoaThuoc;

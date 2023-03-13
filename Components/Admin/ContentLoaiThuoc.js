@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
 import LoaiThuoc from "./LoaiThuoc";
 import Sidebar from "./Sidebar";
@@ -42,7 +43,22 @@ const ContentLoaiThuoc = () => {
         tenLoai: data.tenLoai,
         moTaChung: data.moTaChung,
       }),
+    }).then((response) => {
+      if (response.ok) {
+        toast.success("Thêm loại thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      } else {
+        toast.error("Thêm loại thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      }
     });
+
     //   .then((response) => response.json())
     //   .then((data) => {
     //     setLoaiThuoc(data);

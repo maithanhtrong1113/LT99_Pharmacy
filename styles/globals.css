@@ -338,3 +338,13 @@ code {
 .pr-opx {
   padding-right: 0px !important;
 }
+@media (min-width: 576px) {
+  .modal-dialogg {
+    max-width: 900px !important;
+  }
+}
+.visiblity {
+  opacity: 0.5;
+  cursor: not-allowed;
+  caret-color: transparent;
+}

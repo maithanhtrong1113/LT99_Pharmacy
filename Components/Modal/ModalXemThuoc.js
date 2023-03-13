@@ -114,14 +114,14 @@ function ModalXemThuoc(props) {
                       <label>{moTa}</label>
                     </div>
                   </div>
-                  <div className="form-group row my-2 d-flex align-items-center">
+                  {/* <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Loại Thuốc
                     </label>
                     <div className="col-sm-8">
                       <label>{moTa}</label>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="row d-flex justify-content-center "></div>
                 </form>
               </div>

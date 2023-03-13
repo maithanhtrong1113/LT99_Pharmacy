@@ -30,9 +30,6 @@ const Account = (props) => {
             <button className="btn btn-warning btn-sm me-2">Nhân viên</button>
           )}
 
-          {props.vaiTro === "khachHang" && (
-            <button className="btn btn-info btn-sm me-2">Khách hàng</button>
-          )}
           {props.vaiTro === "quanLy" && (
             <button className="btn btn-primary btn-sm me-2">Quản lý</button>
           )}

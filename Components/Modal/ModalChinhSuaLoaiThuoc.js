@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
 
 function ModalChinhSuaLoaiThuoc(props) {
   const {
@@ -18,8 +19,10 @@ function ModalChinhSuaLoaiThuoc(props) {
     toggle();
   };
   const onSubmit = (data) => {
+    data.maLoai = props.loaiThuoc.maLoai;
     console.log(data);
-    // props.submitHandler(data);
+    props.chinhSuaLoaiThuoc(data);
+    toggle();
   };
   function handleInputChange(event) {
     setTenLoai(event.target.value);
@@ -27,29 +30,7 @@ function ModalChinhSuaLoaiThuoc(props) {
   function handleInputChange1(event) {
     setMoTaChung(event.target.value);
   }
-  const chinhSuaLoaiThuocHandler = () => {
-    // chỉnh sửa thông tin loại thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${props.loaiThuoc.maLoai}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tenLoai: tenLoai,
-          moTaChung: moTaChung,
-        }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // setTenLoai(data.tenLoai);
-        // setMoTaChung(data.moTaChung);
-      })
-      .catch((error) => console.error(error));
-    toggle();
-  };
+
   // lấy thông tin loại thuốc
   useEffect(() => {
     fetch(
@@ -126,10 +107,16 @@ function ModalChinhSuaLoaiThuoc(props) {
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
+                  <div className="row d-flex justify-content-between ">
                     <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      onClick={chinhSuaLoaiThuocHandler}
+                      className="btn btn-secondary my-3  text-white fw-bold w-25"
+                      type="button"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      className="btn btn-info my-3  text-white fw-bold w-50"
+                      type="submit"
                     >
                       Chỉnh Sửa Loại Thuốc
                     </button>

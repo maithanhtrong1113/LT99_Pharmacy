@@ -102,16 +102,8 @@ const index = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <Account active={true} vaiTro={"khachHang"} stt={1} />
-                  <Account active={true} vaiTro={"nhanVien"} stt={2} />
-                  <Account active={false} vaiTro={"quanLy"} stt={3} />
-                  <Account active={true} vaiTro={"khachHang"} stt={4} />
-                  <Account active={true} vaiTro={"khachHang"} stt={5} />
-                  <Account active={true} vaiTro={"khachHang"} stt={6} />
-                  <Account active={true} vaiTro={"khachHang"} stt={7} />
-                  <Account active={true} vaiTro={"khachHang"} stt={8} />
-                  <Account active={true} vaiTro={"khachHang"} stt={9} />
-                  <Account active={true} vaiTro={"khachHang"} stt={10} />
+                  <Account active={true} vaiTro={"nhanVien"} stt={1} />
+                  <Account active={false} vaiTro={"quanLy"} stt={2} />
                   <tr>
                     <td>
                       <button className="btn btn-dark me-3 ">

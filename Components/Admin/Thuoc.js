@@ -1,13 +1,7 @@
-import React, { Fragment, useState } from "react";
-import { AiOutlineMore } from "react-icons/ai";
-import More from "./More";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import React, { Fragment, useEffect, useState } from "react";
+
 import { useRouter } from "next/router";
+import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
 const Thuoc = (props) => {
   const [dropdownStates, setDropdownStates] = useState(
     props.dsThuoc.map((thuoc) => false)
@@ -25,9 +19,25 @@ const Thuoc = (props) => {
   const handlerInfo = (data) => {
     router.push(`thuoc/${data}`);
   };
-  const handlerDeltete = () => {
-    props.Deltete(thuoc.maThuoc);
+
+  const DeleteHandler = (data) => {
+    fetch(
+      `  http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${data}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((response) => {
+      if (response.ok) {
+        console.log("thuốc đã được xóa thành công!");
+      } else {
+        console.error("Có lỗi xảy ra khi  xóa thuốc!");
+      }
+    });
   };
+
   return (
     <Fragment>
       {props.dsThuoc.map((thuoc, index) => (
@@ -46,12 +56,7 @@ const Thuoc = (props) => {
             >
               Chỉnh sửa/ Xem chi tiết
             </button>
-            <button
-              className="btn btn-sm btn-danger ms-2"
-              onClick={handlerDeltete}
-            >
-              Xóa
-            </button>
+            <ModalXoaThuoc maThuoc={thuoc.maThuoc} OnClickYes={DeleteHandler} />
           </td>
         </tr>
       ))}

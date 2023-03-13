@@ -110,6 +110,32 @@ const ContentThuoc = () => {
         .catch((error) => console.error(error));
     }
   };
+  const addThuocHandler = (data) => {
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/${data.maLoai}/thuoc`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tenThuoc: data.tenThuoc,
+
+          lieuLuong: data.lieuLuong,
+          congDung: data.congDung,
+          donViTinh: data.donViTinh,
+          quyCachDongGoi: data.quyCachDongGoi,
+          tacDungPhu: data.tacDungPhu,
+          huongDanSuDung: data.huongDanSuDung,
+          soLuong: data.soLuong,
+          images: [],
+          dsDoiTuong: [],
+          thuocKeDon: false,
+          moTa: data.moTa,
+        }),
+      }
+    );
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -216,7 +242,7 @@ const ContentThuoc = () => {
                   </form>
                 </div>
                 <div className="col-6">
-                  <ModalAddThuoc />
+                  <ModalAddThuoc submitHandler={addThuocHandler} />
                 </div>
               </div>
               <table className="table">
