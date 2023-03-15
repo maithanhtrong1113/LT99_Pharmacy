@@ -40,6 +40,9 @@ const Thuoc = (props) => {
 
   return (
     <Fragment>
+      {props.dsThuoc.length === 0 && (
+        <tr className="text-danger">Không tìm thấy thuốc</tr>
+      )}
       {props.dsThuoc.map((thuoc, index) => (
         <tr key={thuoc.maThuoc}>
           <th scope="row">{count++}</th>
@@ -54,7 +57,7 @@ const Thuoc = (props) => {
               className="btn btn-sm btn-info ms-2"
               onClick={() => handlerInfo(thuoc.maThuoc)}
             >
-              Chỉnh sửa/ Xem chi tiết
+              Xem chi tiết
             </button>
             <ModalXoaThuoc maThuoc={thuoc.maThuoc} OnClickYes={DeleteHandler} />
           </td>

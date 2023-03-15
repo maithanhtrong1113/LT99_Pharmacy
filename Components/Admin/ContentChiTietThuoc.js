@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -40,7 +40,9 @@ const ContentChiTietThuoc = (props) => {
   const [soLuong, setSoLuong] = useState("");
   const [loaiThuocBanDau, setLoaiThuocBanDau] = useState("");
   const { id } = router.query;
-
+  const [isShow, setIsShow] = useState(false);
+  const toggleShow = () => setIsShow(!isShow);
+  const [lichSus, setLichSus] = useState([]);
   useEffect(() => {
     // danh sách loại thuốc truyền vào select option
     fetch(
@@ -51,7 +53,16 @@ const ContentChiTietThuoc = (props) => {
         setLoaiThuoc(data);
       })
       .catch((error) => console.error(error));
-    // Thông tin chi tiết của thuốc
+    // Thông tin lịch sử nhập thuốc
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${id}/lich-su-nhap-thuoc`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setLichSus(data);
+        ư;
+      })
+      .catch((error) => console.error(error));
   }, []);
   useEffect(() => {
     async function fetchData() {
@@ -165,7 +176,9 @@ const ContentChiTietThuoc = (props) => {
                   height={100}
                   alt=""
                 />
-                <span>Mai Thanh Trọng</span>
+                <span>
+                  Mai Thanh Trọng <FaAngleDown />
+                </span>
               </button>
               {!isOpen && (
                 <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
@@ -267,6 +280,42 @@ const ContentChiTietThuoc = (props) => {
                             </div>
                           </div>
                           <div className="col-2 pr-opx">
+                            <label className="fw-bold">Mã Thuốc</label>
+                          </div>
+                          <div className="col-2 p-sopx">
+                            <div className="form-outline">
+                              <input
+                                type="text"
+                                className="form-control visiblity"
+                                value={id}
+                                readOnly
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row my-4 d-flex align-items-center">
+                          <div className="col-2">
+                            <label className="fw-bold">Công Dụng</label>
+                          </div>
+                          <div className="col-6">
+                            <div className="form-outline">
+                              <input
+                                {...register("congDung", {})}
+                                type="text"
+                                className="form-control"
+                                onChange={(e) => {
+                                  setCongDung(e.target.value);
+                                }}
+                                value={congDung}
+                              />
+                              {congDung === "" && (
+                                <span className="text-danger">
+                                  Vui lòng nhập công dụng của thuốc
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="col-2 pr-opx">
                             <label className="fw-bold">Loại Thuốc</label>
                           </div>
                           <div className="col-2 p-sopx">
@@ -293,29 +342,6 @@ const ContentChiTietThuoc = (props) => {
                                 </option>
                               ))}
                             </select>
-                          </div>
-                        </div>
-                        <div className="row my-4 d-flex align-items-center">
-                          <div className="col-2">
-                            <label className="fw-bold">Công Dụng</label>
-                          </div>
-                          <div className="col-10">
-                            <div className="form-outline">
-                              <input
-                                {...register("congDung", {})}
-                                type="text"
-                                className="form-control"
-                                onChange={(e) => {
-                                  setCongDung(e.target.value);
-                                }}
-                                value={congDung}
-                              />
-                              {congDung === "" && (
-                                <span className="text-danger">
-                                  Vui lòng nhập công dụng của thuốc
-                                </span>
-                              )}
-                            </div>
                           </div>
                         </div>
                         <div className="row my-4 d-flex align-items-center">
@@ -371,7 +397,7 @@ const ContentChiTietThuoc = (props) => {
                                 type="text"
                                 className="form-control visiblity"
                                 value={soLuong}
-                                readonly
+                                readOnly
                               />
                               {soLuong === "" && (
                                 <span className="text-danger">
@@ -471,20 +497,34 @@ const ContentChiTietThuoc = (props) => {
                             </div>
                           </div>
                         </div>
-
-                        <button className="btn btn-primary mx-2" type="submit">
-                          Sửa thông tin thuốc
-                        </button>
-
-                        <button
-                          className="btn btn-secondary mx-2"
-                          type="button"
-                          onClick={() => {
-                            router.push("/admin/thuoc");
-                          }}
-                        >
-                          Hủy
-                        </button>
+                        <div className="row ">
+                          <div className="col-4">
+                            <button
+                              className="btn btn-warning me-2"
+                              type="submit"
+                            >
+                              Sửa thông tin thuốc
+                            </button>
+                            <button
+                              className="btn btn-secondary ms-2"
+                              type="button"
+                              onClick={() => {
+                                router.push("/admin/thuoc");
+                              }}
+                            >
+                              Hủy
+                            </button>
+                          </div>
+                          <div className="col-8 text-end">
+                            <button
+                              className="btn btn-primary me-auto"
+                              type="button"
+                              onClick={toggleShow}
+                            >
+                              Xem Lịch Sử Nhập Thuốc
+                            </button>
+                          </div>
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -494,6 +534,49 @@ const ContentChiTietThuoc = (props) => {
                 )}
               </div>
             </div>
+            {isShow && (
+              <div className="container-fluid border shadow rounded my-3">
+                <div className="table-responsive">
+                  <table className="tableNhap table-striped table">
+                    <thead>
+                      <tr>
+                        <th className="pe-5">Mã Lô Thuốc</th>
+                        <th className="pe-5"> Số Lô</th>
+                        <th className="pe-5">Ngày Nhập </th>
+                        <th className="pe-5">Ngày Sản Xuất</th>
+                        <th className="pe-5">Ngày Hết Hạn</th>
+                        <th className="pe-5">Số Lượng Nhập</th>
+                        <th className="pe-5">Số Lượng Tồn</th>
+                        <th className="pe-5">Giá Nhập</th>
+                        <th className="pe-5">Giá Bán Sỉ</th>
+                        <th className="pe-5">Giá Bán Lẻ</th>
+                        <th className="pe-5">Nhà Cung Cấp</th>
+                        <th className="pe-5">Nước Sản Xuất</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {lichSus.map((lichSu) => (
+                        <tr>
+                          <td>{lichSu.maLoThuoc}</td>
+                          <td>{lichSu.soLo}</td>
+                          <td>{lichSu.ngayNhapLoThuoc}</td>
+                          <td>{lichSu.ngaySanXuat}</td>
+                          <td>{lichSu.ngayHetHan}</td>
+                          <td>{lichSu.soLuongNhap}</td>
+                          <td>{lichSu.soLuongTon}</td>
+                          <td>{lichSu.giaNhap}</td>
+                          <td>{lichSu.giaBanSi}</td>
+                          <td>{lichSu.giaBanLe}</td>
+                          <td>{lichSu.nhaCungCap}</td>
+                          <td>{lichSu.nuocSanXuat}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

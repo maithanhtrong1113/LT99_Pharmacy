@@ -3,10 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleRight } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
+import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
+import ProgressBar from "../ProcessBar/ProcessBar";
 import LoaiThuoc from "./LoaiThuoc";
 import Sidebar from "./Sidebar";
 
@@ -106,6 +108,7 @@ const ContentLoaiThuoc = () => {
   };
   return (
     <Fragment>
+      <ProgressBar />
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -119,7 +122,9 @@ const ContentLoaiThuoc = () => {
                   height={100}
                   alt=""
                 />
-                <span>Mai Thanh Trọng</span>
+                <span>
+                  Mai Thanh Trọng <FaAngleDown />
+                </span>
               </button>
               {!isOpen && (
                 <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
@@ -179,13 +184,16 @@ const ContentLoaiThuoc = () => {
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input
-                      type="text"
-                      className="form-input w-100 px-2"
-                      placeholder="Nhập tên loại thuốc bạn muốn tìm"
-                      value={searchTerm}
-                      onChange={handleInputChange}
-                    />
+                    <div className="position-relative">
+                      <input
+                        type="text"
+                        className="form-input w-100 px-2"
+                        placeholder="Nhập tên loại thuốc bạn muốn tìm"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                      />
+                      <BsSearch className="position-absolute  localIconSearch" />
+                    </div>
                   </form>
                 </div>
                 <div className="col-8">

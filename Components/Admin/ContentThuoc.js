@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +10,8 @@ import Sidebar from "./Sidebar";
 
 import ModalAddThuoc from "../Modal/ModalAddThuoc";
 import Thuoc from "./Thuoc";
+import { BsSearch } from "react-icons/bs";
+import ProgressBar from "../ProcessBar/ProcessBar";
 const ContentThuoc = () => {
   const {
     register,
@@ -69,7 +71,6 @@ const ContentThuoc = () => {
   }, []);
   const onSubmit = (data) => {
     console.log(data);
-    // props.submitHandler(data);
   };
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -138,6 +139,7 @@ const ContentThuoc = () => {
   };
   return (
     <Fragment>
+      <ProgressBar />
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -151,7 +153,9 @@ const ContentThuoc = () => {
                   height={100}
                   alt=""
                 />
-                <span>Mai Thanh Trọng</span>
+                <span>
+                  Mai Thanh Trọng <FaAngleDown />
+                </span>
               </button>
               {!isOpen && (
                 <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
@@ -207,17 +211,21 @@ const ContentThuoc = () => {
                 </div>
               )}
             </div>
+
             <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input
-                      type="text"
-                      placeholder="Nhập tên  hoặc công dụng của thuốc muốn tìm"
-                      className="form-input w-100 px-2"
-                      value={searchTerm}
-                      onChange={handleInputChange}
-                    />
+                    <div className="position-relative">
+                      <input
+                        type="text"
+                        placeholder="Nhập tên hoặc công dụng của thuốc muốn tìm"
+                        className="form-input w-100 px-2"
+                        value={searchTerm}
+                        onChange={handleInputChange}
+                      />
+                      <BsSearch className="position-absolute localIconSearch" />
+                    </div>
                   </form>
                 </div>
                 <div className="col-2">

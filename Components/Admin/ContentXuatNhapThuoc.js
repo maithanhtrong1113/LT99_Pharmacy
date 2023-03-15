@@ -2,18 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import {
-  FaAngleDown,
-  FaAngleLeft,
-  FaAngleRight,
-  FaMoneyBillAlt,
-} from "react-icons/fa";
-import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
-import Account from "./Account";
+
 import Sidebar from "./Sidebar";
-const index = () => {
+
+import ModalAddThuoc from "../Modal/ModalAddThuoc";
+
+import { BsSearch } from "react-icons/bs";
+
+const ContentXuatNhapThuoc = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
@@ -24,15 +29,35 @@ const index = () => {
     localStorage.removeItem("id");
     toggle();
   };
-  const [dsNhanVien, setDsNhanVien] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:8080/QLNT-Server/quan-ly/danh-sach-nhan-vien`)
-      .then((response) => response.json())
-      .then((data) => {
-        setDsNhanVien(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [dsThuoc, setDsThuoc] = useState([]);
+  const [loaiThuocSelected, setLoaiThuocSelected] = useState("Tất cả thuốc");
+  const addThuocHandler = (data) => {
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/${data.maLoai}/thuoc`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tenThuoc: data.tenThuoc,
+
+          lieuLuong: data.lieuLuong,
+          congDung: data.congDung,
+          donViTinh: data.donViTinh,
+          quyCachDongGoi: data.quyCachDongGoi,
+          tacDungPhu: data.tacDungPhu,
+          huongDanSuDung: data.huongDanSuDung,
+          soLuong: data.soLuong,
+          images: [],
+          dsDoiTuong: [],
+          thuocKeDon: false,
+          moTa: data.moTa,
+        }),
+      }
+    );
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -41,13 +66,14 @@ const index = () => {
           <div className="col-10 ">
             <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
               <button className="btn  " onClick={toggle}>
-                <img
-                  src="images/user-profile.jpg"
+                <Image
+                  src="/images/user-profile.jpg"
                   className="img-profile me-2"
+                  width={100}
+                  height={100}
+                  alt=""
                 />
-                <span>
-                  Mai Thanh Trọng <FaAngleDown />
-                </span>
+                <span>Mai Thanh Trọng</span>
               </button>
               {!isOpen && (
                 <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
@@ -58,9 +84,12 @@ const index = () => {
                     }}
                   >
                     <div className="col-2">
-                      <img
-                        src="images/profile.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/profile.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -80,9 +109,12 @@ const index = () => {
                     onClick={logOutHandler}
                   >
                     <div className="col-2 pointer">
-                      <img
-                        src="images/logout.png "
+                      <Image
+                        width={100}
+                        height={100}
+                        src="/images/logout.png "
                         className="bg-gray rounded-circle img-profile"
+                        alt=""
                       />
                     </div>
                     <div className="col-8">
@@ -97,49 +129,29 @@ const index = () => {
                 </div>
               )}
             </div>
-            <div className="container border shadow rounded ">
+            <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input type="text" className="form-input w-100 px-2" />
+                    <div className="position-relative">
+                      <input
+                        type="text"
+                        placeholder="Nhập tên hoặc công dụng của thuốc muốn tìm"
+                        className="form-input w-100 px-2"
+                      />
+                      <BsSearch className="position-absolute localIconSearch" />
+                    </div>
                   </form>
                 </div>
-                <div className="col-8">
-                  <ModalAddNhanVien />
+                <div className="col-6">
+                  <ModalAddThuoc submitHandler={addThuocHandler} />
                 </div>
               </div>
               <table className="table">
                 <thead>
-                  <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Nơi sinh</th>
-                    <th scope="col">Giới tính</th>
-                    <th scope="col">Ngày sinh</th>
-                    <th scope="col">Ngày vào làm</th>
-                  </tr>
+                  <tr></tr>
                 </thead>
-                <tbody>
-                  {dsNhanVien.map((nhanVien) => (
-                    <tr>
-                      <td>{nhanVien.maNhanVien}</td>
-                      <td>{nhanVien.hoTen}</td>
-                      <td>{nhanVien.soDienThoai}</td>
-                      <td>{nhanVien.diaChi}</td>
-                      <td>{nhanVien.gioiTinh}</td>
-                      <td>{nhanVien.ngaySinh}</td>
-                      <td>{`${new Date(nhanVien.ngayVaoLam).getDate()}/${
-                        new Date(nhanVien.ngayVaoLam).getMonth() + 1
-                      }/${new Date(nhanVien.ngayVaoLam).getFullYear()}`}</td>
-                      <td>
-                        <button className="btn btn-info btn-sm">
-                          Xem chi tiết
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           </div>
@@ -149,4 +161,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ContentXuatNhapThuoc;

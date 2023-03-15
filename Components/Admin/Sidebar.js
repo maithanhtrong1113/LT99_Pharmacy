@@ -11,6 +11,7 @@ const Sidebar = () => {
   const [active, setActive] = useState("");
   const [activeThuoc, setActiveThuoc] = useState("");
   const [activeLoaiThuoc, setActiveLoaiThuoc] = useState("");
+  const [activeXuatNhapThuoc, setActiveXuatNhapThuoc] = useState("");
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -18,6 +19,8 @@ const Sidebar = () => {
       setActive("bg-info rounded");
     } else if (router.pathname === "/admin/loaiThuoc") {
       setActiveLoaiThuoc("bg-info rounded");
+    } else if (router.pathname === "/admin/xuatNhapThuoc") {
+      setActiveXuatNhapThuoc("bg-info rounded");
     }
   }, []);
 
@@ -61,12 +64,12 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          <li className="mb-2">
+          <li className={`${activeXuatNhapThuoc} mb-2`}>
             <Link
-              href="/"
+              href="/admin/xuatNhapThuoc"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaMoneyBillAlt className="text-white me-2" /> Quản lý hóa đơn
+              <FaMoneyBillAlt className="text-white me-2" /> Quản lý nhập thuốc
             </Link>
           </li>
         </ul>

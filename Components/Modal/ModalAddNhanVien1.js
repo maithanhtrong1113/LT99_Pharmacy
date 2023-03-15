@@ -225,35 +225,70 @@ function ModalAddNhanVien(props) {
                     <div className="col-3">
                       <label className="fw-bold text-info">Địa chỉ:</label>
                     </div>
-                    <div className="col-sm-9">
-                      <input
-                        {...register("diaChi", {
-                          required: true,
-                        })}
-                        type="text"
-                        required
-                        className="form-control form-control-sm inputText"
-                      />
-                    </div>
-                    <div className="col-sm-3"></div>
-                    <div className="col-sm-9">
-                      {errors?.diaChi?.type === "required" && (
-                        <span className=" text-danger">
-                          Vui lòng nhập địa chỉ
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  {/* Ca làm Việc */}
-                  <div className="form-group row my-2">
                     <div className="col-3">
-                      <label className="fw-bold text-info">Ca làm việc</label>
+                      <select
+                        className="w-100"
+                        onChange={(e) => {
+                          setTinhSelected(e.target.value);
+                          setQuanSelected({ name: "", code: "" });
+                          setXaSelected({ name: "", code: "" });
+                          setDsXa([]);
+                        }}
+                      >
+                        {dsTinh.map((tinh) => (
+                          <option
+                            key={tinh.code}
+                            value={JSON.stringify({
+                              name: tinh.name,
+                              code: tinh.code,
+                            })}
+                          >
+                            {tinh.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <div className="col-3"></div>
                     <div className="col-3">
-                      <label className="fw-bold text-info">Quyền</label>
+                      <select
+                        className="w-100"
+                        onChange={(e) => {
+                          setQuanSelected(e.target.value);
+                          setXaSelected({ name: "", code: "" });
+                        }}
+                      >
+                        {dsQuan.map((quan) => (
+                          <option
+                            key={quan.code}
+                            value={JSON.stringify({
+                              name: quan.name,
+                              code: quan.code,
+                            })}
+                          >
+                            {quan.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <div className="col-3"></div>
+                    <div className="col-3">
+                      <select
+                        className="w-100"
+                        onChange={(e) => {
+                          setXaSelected(e.target.value);
+                        }}
+                      >
+                        {dsXa.map((xa) => (
+                          <option
+                            value={JSON.stringify({
+                              name: xa.name,
+                              code: xa.code,
+                            })}
+                            key={xa.code}
+                          >
+                            {xa.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div className="row d-flex justify-content-center ">
                     <button
