@@ -65,7 +65,9 @@ const LoaiThuoc = (props) => {
   return (
     <Fragment>
       {props.loaiThuoc.length === 0 && (
-        <tr className="text-danger">Không tìm thấy loại thuốc </tr>
+        <tr className="text-dark">
+          <td>Không tìm thấy loại thuốc</td>
+        </tr>
       )}
       {props.loaiThuoc.map((loaiThuoc) => (
         <tr key={loaiThuoc.maLoai}>

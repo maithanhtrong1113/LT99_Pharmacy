@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { useForm, Controller } from "react-hook-form";
-
+import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 
 function ModalAddLoaiThuoc(props) {
@@ -13,9 +12,6 @@ function ModalAddLoaiThuoc(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const luuHandler = (e) => {
-    toggle();
-  };
   const onSubmit = (data) => {
     props.submitHandler(data);
     toggle();

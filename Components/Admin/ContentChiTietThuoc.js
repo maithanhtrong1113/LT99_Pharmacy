@@ -1,20 +1,21 @@
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleDown, FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import { useForm } from "react-hook-form";
+import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
-
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
-
+import NguoiDung from "./NguoiDung";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 const ContentChiTietThuoc = (props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    control,
+  } = useForm({});
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
@@ -38,11 +39,26 @@ const ContentChiTietThuoc = (props) => {
   const [huongDanSuDung, setHuongDanSuDung] = useState("");
   const [moTa, setMoTa] = useState("");
   const [soLuong, setSoLuong] = useState("");
-  const [loaiThuocBanDau, setLoaiThuocBanDau] = useState("");
+  const [loaThuocBanDau, setLoaiThuocBanDau] = useState("");
   const { id } = router.query;
   const [isShow, setIsShow] = useState(false);
   const toggleShow = () => setIsShow(!isShow);
+  const [isShowNhapThuoc, setIsShowNhapThuoc] = useState(false);
+  const toggleShowNhapThuoc = () => setIsShowNhapThuoc(!isShowNhapThuoc);
   const [lichSus, setLichSus] = useState([]);
+  const today = new Date();
+  const [ngaySanXuat, setNgaySanXuat] = useState(
+    today.getTime() - 24 * 60 * 60 * 1000
+  );
+  const [ngayHetHan, setNgayHetHan] = useState(
+    today.getTime() + 24 * 60 * 60 * 1000
+  );
+  const validateSoLuongNhap = (value) => {
+    if (value <= 0) {
+      return "Giá trị phải lớn hơn 0";
+    }
+    return true;
+  };
   useEffect(() => {
     // danh sách loại thuốc truyền vào select option
     fetch(
@@ -60,11 +76,10 @@ const ContentChiTietThuoc = (props) => {
       .then((response) => response.json())
       .then((data) => {
         setLichSus(data);
-        ư;
       })
       .catch((error) => console.error(error));
-  }, []);
-  useEffect(() => {
+
+    // thông tin thuốc
     async function fetchData() {
       if (typeof id === "string") {
         try {
@@ -107,7 +122,6 @@ const ContentChiTietThuoc = (props) => {
       loaiThuocSelected,
     };
     console.log(data);
-
     // chỉnh sửa thông tin  thuốc
     if (
       tenThuoc !== "" &&
@@ -161,79 +175,54 @@ const ContentChiTietThuoc = (props) => {
     }
   };
 
+  const onSubmitNhapThuoc = (dataa) => {
+    if (ngayHetHan <= today || ngaySanXuat >= today) return;
+    console.log(
+      dataa.soLo,
+      dataa.soLuongNhap,
+      today.toLocaleDateString("en-CA"),
+      format(new Date(ngaySanXuat), "yyyy-MM-dd"),
+      format(new Date(ngayHetHan), "yyyy-MM-dd")
+    );
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${id}/nhap-thuoc`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          soLo: dataa.soLo,
+          ngayNhapLoThuoc: today.toLocaleDateString("en-CA"),
+          ngaySanXuat: format(new Date(ngaySanXuat), "yyyy-MM-dd"),
+          ngayHetHan: format(new Date(ngayHetHan), "yyyy-MM-dd"),
+          soLuongNhap: dataa.soLuongNhap,
+        }),
+      }
+    ).then((response) => {
+      if (response.ok) {
+        toast.success("Nhập thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      } else {
+        toast.error("Nhập thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      }
+    });
+    router.push("/admin/thuoc");
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
           <div className="col-10 ">
-            <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
-              <button className="btn  " onClick={toggle}>
-                <Image
-                  src="/images/user-profile.jpg"
-                  className="img-profile me-2"
-                  width={100}
-                  height={100}
-                  alt=""
-                />
-                <span>
-                  Mai Thanh Trọng <FaAngleDown />
-                </span>
-              </button>
-              {!isOpen && (
-                <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
-                  <div
-                    className="row p-2 d-flex align-items-center pointer"
-                    onClick={() => {
-                      router.push("/me");
-                    }}
-                  >
-                    <div className="col-2">
-                      <Image
-                        width={100}
-                        height={100}
-                        src="/images/profile.png "
-                        className="bg-gray rounded-circle img-profile"
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-8">
-                      <Link
-                        href="/me"
-                        className="text-decoration-none text-dark text-center"
-                      >
-                        Hồ sơ cá nhân
-                      </Link>
-                    </div>
-                    <div className="col-2">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                  <div
-                    className="row p-2 d-flex align-items-center"
-                    onClick={logOutHandler}
-                  >
-                    <div className="col-2 pointer">
-                      <Image
-                        width={100}
-                        height={100}
-                        src="/images/logout.png "
-                        className="bg-gray rounded-circle img-profile"
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-8">
-                      <button className="btn btn-white w-100 d-flex justify-content-between align-items-center">
-                        Đăng xuất
-                      </button>
-                    </div>
-                    <div className="col-2 pointer">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            <NguoiDung />
             <div className="container-fluid border shadow rounded">
               <div className="row d-flex align-items-center my-2">
                 <div className="col-1">
@@ -517,7 +506,14 @@ const ContentChiTietThuoc = (props) => {
                           </div>
                           <div className="col-8 text-end">
                             <button
-                              className="btn btn-primary me-auto"
+                              className="btn btn-primary me-2 "
+                              type="button"
+                              onClick={toggleShowNhapThuoc}
+                            >
+                              Nhập thuốc
+                            </button>
+                            <button
+                              className="btn btn-info "
                               type="button"
                               onClick={toggleShow}
                             >
@@ -534,8 +530,12 @@ const ContentChiTietThuoc = (props) => {
                 )}
               </div>
             </div>
+            {/* lich sử nhập thuốc */}
             {isShow && (
               <div className="container-fluid border shadow rounded my-3">
+                <div className="row text-center ">
+                  <h4 className="text-info my-2">Lịch sử nhập thuốc</h4>
+                </div>
                 <div className="table-responsive">
                   <table className="tableNhap table-striped table">
                     <thead>
@@ -560,9 +560,18 @@ const ContentChiTietThuoc = (props) => {
                         <tr>
                           <td>{lichSu.maLoThuoc}</td>
                           <td>{lichSu.soLo}</td>
-                          <td>{lichSu.ngayNhapLoThuoc}</td>
-                          <td>{lichSu.ngaySanXuat}</td>
-                          <td>{lichSu.ngayHetHan}</td>
+                          <td>
+                            {format(
+                              new Date(lichSu.ngayNhapLoThuoc),
+                              "yyyy-MM-dd"
+                            )}
+                          </td>
+                          <td>
+                            {format(new Date(lichSu.ngaySanXuat), "yyyy-MM-dd")}
+                          </td>
+                          <td>
+                            {format(new Date(lichSu.ngayHetHan), "yyyy-MM-dd")}
+                          </td>
                           <td>{lichSu.soLuongNhap}</td>
                           <td>{lichSu.soLuongTon}</td>
                           <td>{lichSu.giaNhap}</td>
@@ -575,6 +584,106 @@ const ContentChiTietThuoc = (props) => {
                     </tbody>
                   </table>
                 </div>
+              </div>
+            )}
+            {/* Nhập Thuốc */}
+            {isShowNhapThuoc && (
+              <div className="container-fluid border shadow rounded my-3">
+                <div className="row my-3">
+                  <h4 className="text-info text-center fw-bold">Nhập Thuốc</h4>
+                </div>
+                <form
+                  onSubmit={handleSubmit(onSubmitNhapThuoc)}
+                  noValidate
+                  className="form-control form-control-sm mb-2"
+                >
+                  <div className="form-group row my-3">
+                    <label className="col-sm-3 col-form-label fw-bold text-info">
+                      Số lượng
+                    </label>
+                    <div className="col-sm-3">
+                      <input
+                        {...register("soLuongNhap", {
+                          required: true,
+                          validate: validateSoLuongNhap,
+                        })}
+                        type="number"
+                        min={1}
+                        required
+                        defaultValue={1}
+                        className="form-control form-control-sm inputText"
+                      />
+                      {errors?.soLuongNhap?.type === "required" && (
+                        <span className="text-danger">
+                          Vui lòng nhập số lượng
+                        </span>
+                      )}
+                      {errors.soLuongNhap && (
+                        <span className="text-danger">
+                          {errors.soLuongNhap.message}
+                        </span>
+                      )}
+                    </div>
+                    <label className="col-sm-2 col-form-label fw-bold text-info">
+                      Số Lô
+                    </label>
+                    <div className="col-sm-4">
+                      <input
+                        {...register("soLo", {
+                          required: true,
+                        })}
+                        type="text"
+                        required
+                        className="form-control form-control-sm inputText"
+                      />
+                      {errors?.soLo?.type === "required" && (
+                        <span className="text-danger">Vui lòng nhập số lô</span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Số Lô  Số Lượng*/}
+                  <div className="form-group row my-3"></div>
+                  {/* Ngày sản xuất ngày hết hạn */}
+                  <div className="form-group row my-3 d-flex align-items-center">
+                    <label className="col-sm-3 fw-bold text-info">
+                      Ngày sản xuất:
+                    </label>
+                    <div className="col-sm-3">
+                      <DatePicker
+                        className="form-select  "
+                        selected={ngaySanXuat}
+                        onChange={(date) => setNgaySanXuat(date)}
+                        dateFormat="yyyy/MM/dd"
+                      />
+                      {ngaySanXuat >= today && (
+                        <span className="text-danger">
+                          Ngày sản xuất phải nhỏ hơn ngày hiện tại
+                        </span>
+                      )}
+                    </div>
+
+                    <label className="col-sm-2 fw-bold  text-info">
+                      Ngày hết hạn
+                    </label>
+                    <div className="col-sm-4">
+                      <DatePicker
+                        className="form-select  form-control-sm"
+                        selected={ngayHetHan}
+                        onChange={(date) => setNgayHetHan(date)}
+                        dateFormat="yyyy/MM/dd"
+                      />
+                      {ngayHetHan <= today && (
+                        <p className="text-danger">
+                          Ngày hết hạn phải lớn hơn ngày hiện tại
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <button type="submit" className="btn btn-primary my-3">
+                    Nhập Thuốc
+                  </button>
+                </form>
               </div>
             )}
           </div>

@@ -7,7 +7,7 @@ import { persistor } from "../store/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
-
+import "react-datepicker/dist/react-datepicker.css";
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");

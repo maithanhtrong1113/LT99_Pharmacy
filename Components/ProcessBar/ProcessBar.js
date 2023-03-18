@@ -5,12 +5,12 @@ import { Fragment, useEffect, useState } from "react";
 const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
-  console.log(router);
+
   useEffect(() => {
     setProgress(100);
     setTimeout(() => {
       setProgress(0);
-    }, 1000);
+    }, 500);
   }, [router.asPath]);
 
   return (

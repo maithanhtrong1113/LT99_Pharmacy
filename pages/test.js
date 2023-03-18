@@ -1,50 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top",
+    },
+    title: {
+      display: true,
+      text: "Chart.js Bar Chart",
+    },
+  },
+};
+
+const labels = ["January", "February", "March", "April", "May", "June", "July"];
+
+const data = {
+  labels,
+  datasets: [
+    {
+      label: "Số lượng nhập",
+      data: ["3", "6", "9"],
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+    },
+    {
+      label: "Số lượng tồn",
+      data: ["3", "6", "9"],
+      backgroundColor: "rgba(53, 162, 235, 0.5)",
+    },
+    {
+      label: "Số lượng xuất",
+      data: ["3", "6", "9"],
+      backgroundColor: "rgb(233, 233, 110,0.5)",
+    },
+  ],
+};
 
 const test = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [timeoutId, setTimeoutId] = useState(null);
-
-  const handleInputChange = (event) => {
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
-    console.log(searchTerm);
-    if (timeoutId) {
-      clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
-    }
-
-    if (searchTerm.length > 0) {
-      const newTimeoutId = setTimeout(() => {
-        fetch(
-          `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-thuoc?keyword=${encodeURIComponent(
-            searchTerm
-          )}`
-        )
-          .then((response) => response.json())
-          .then((results) => {
-            if (Array.isArray(results)) {
-              setSuggestions(results.slice(0, 5));
-              console.log(results);
-            } else {
-              setSuggestions([]);
-            }
-          });
-      }, 500);
-      setTimeoutId(newTimeoutId);
-    } else {
-      setSuggestions([]);
-    }
-  };
   return (
-    <div>
-      <input type="text" value={searchTerm} onChange={handleInputChange} />
-      <ul className="list-group">
-        {suggestions.map((suggestion) => (
-          <li class="list-group-item w-25" key={suggestion.maThuoc}>
-            {suggestion.tenThuoc}
-          </li>
-        ))}
-      </ul>
+    <div className="container">
+      <Bar options={options} data={data} height={400} />
     </div>
   );
 };

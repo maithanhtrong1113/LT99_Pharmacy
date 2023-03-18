@@ -1,4 +1,4 @@
-import ContentThuoc from "@/Components/Admin/ContentThuoc";
+import ContentThongKe from "@/Components/Admin/ContentThongKe";
 import GoTopPage from "@/Components/Index/GoTopPage";
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
@@ -8,7 +8,7 @@ const index = () => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <ContentThuoc />
+      <ContentThongKe />
     </Fragment>
   );
 };

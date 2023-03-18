@@ -26,12 +26,9 @@ function ModalAddThuoc(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const luuHandler = (e) => {
-    toggle();
-  };
   const onSubmit = (data) => {
-    console.log(data);
     props.submitHandler(data);
+    toggle();
   };
 
   return (
@@ -53,6 +50,7 @@ function ModalAddThuoc(props) {
             <div className="row">
               <div className="col-xl-12 col-lg-12">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                  {/* tên Thuốc */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Tên Thuốc:
@@ -76,6 +74,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Loại thuốc */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Loại Thuốc
@@ -106,6 +105,7 @@ function ModalAddThuoc(props) {
                       </select>
                     </div>
                   </div>
+                  {/* Liều lượng */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Liều Lượng:
@@ -129,6 +129,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Công dụng */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Công Dụng:
@@ -152,6 +153,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Đơn vị tính */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Đơn vị tính:
@@ -175,6 +177,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Mô tả */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Mô tả
@@ -198,6 +201,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Quy Cách Đóng Gói */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Quy cách đóng gói
@@ -221,6 +225,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Tác Dụng Phụ */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Tác Dụng Phụ
@@ -244,6 +249,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
+                  {/* Hướng dẫn sử dụng */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Hướng dẫn sử dụng
@@ -267,29 +273,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
-                  <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
-                      Số lượng
-                    </label>
-                    <div className="col-sm-8">
-                      <input
-                        {...register("soLuong", {
-                          required: true,
-                        })}
-                        type="number"
-                        required
-                        className="form-control form-control-sm inputText"
-                      />
-                    </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
-                      {errors?.soLuong?.type === "required" && (
-                        <span className="text-danger">
-                          Vui lòng nhập số lượng
-                        </span>
-                      )}
-                    </div>
-                  </div>
+
                   <div className="row d-flex justify-content-between ">
                     <button
                       className="btn btn-info my-3  text-white fw-bold w-25"

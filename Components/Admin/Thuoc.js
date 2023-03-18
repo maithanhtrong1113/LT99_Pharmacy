@@ -1,19 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
-
+import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
+import { toast } from "react-toastify";
 const Thuoc = (props) => {
-  const [dropdownStates, setDropdownStates] = useState(
-    props.dsThuoc.map((thuoc) => false)
-  );
-
-  const handleDropdownToggle = (index) => {
-    setDropdownStates((prevStates) => {
-      const newStates = [...prevStates];
-      newStates[index] = !newStates[index];
-      return newStates;
-    });
-  };
   let count = 1;
   const router = useRouter();
   const handlerInfo = (data) => {
@@ -31,9 +20,17 @@ const Thuoc = (props) => {
       }
     ).then((response) => {
       if (response.ok) {
-        console.log("thuốc đã được xóa thành công!");
+        toast.success("Xóa thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
       } else {
-        console.error("Có lỗi xảy ra khi  xóa thuốc!");
+        toast.error("Xóa thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
       }
     });
   };
@@ -41,16 +38,18 @@ const Thuoc = (props) => {
   return (
     <Fragment>
       {props.dsThuoc.length === 0 && (
-        <tr className="text-danger">Không tìm thấy thuốc</tr>
+        <tr className="text-dark">
+          <td>Không tìm thấy thuốc</td>
+        </tr>
       )}
-      {props.dsThuoc.map((thuoc, index) => (
+      {props.dsThuoc.map((thuoc) => (
         <tr key={thuoc.maThuoc}>
           <th scope="row">{count++}</th>
           <td>{thuoc.tenThuoc}</td>
           <td>{thuoc.lieuLuong}</td>
           <td>{thuoc.congDung}</td>
           <td>{thuoc.donViTinh}</td>
-          <td>{thuoc.soLuong}</td>
+          {/* <td>{thuoc.soLuong}</td> */}
           <td>{thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
             <button

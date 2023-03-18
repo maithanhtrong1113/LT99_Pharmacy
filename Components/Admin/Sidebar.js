@@ -2,16 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaMoneyBillAlt } from "react-icons/fa";
-import { MdArrowBackIos, MdManageAccounts } from "react-icons/md";
+import { AiFillMedicineBox } from "react-icons/ai";
+import { BsFillBarChartFill } from "react-icons/bs";
+import {
+  MdArrowBackIos,
+  MdCategory,
+  MdLabelImportant,
+  MdManageAccounts,
+} from "react-icons/md";
 
 const Sidebar = () => {
   const router = useRouter();
-
   const [active, setActive] = useState("");
   const [activeThuoc, setActiveThuoc] = useState("");
   const [activeLoaiThuoc, setActiveLoaiThuoc] = useState("");
   const [activeXuatNhapThuoc, setActiveXuatNhapThuoc] = useState("");
+  const [activeThongKe, setActiveThongKe] = useState("");
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -21,6 +27,8 @@ const Sidebar = () => {
       setActiveLoaiThuoc("bg-info rounded");
     } else if (router.pathname === "/admin/xuatNhapThuoc") {
       setActiveXuatNhapThuoc("bg-info rounded");
+    } else if (router.pathname === "/admin/thongKe") {
+      setActiveThongKe("bg-info rounded");
     }
   }, []);
 
@@ -30,9 +38,10 @@ const Sidebar = () => {
         <Link href="/">
           <Image
             src="/images/logo.png"
-            className="img-fluid rounded mx-5 my-2"
+            className="img-fluid rounded mx-5 my-2 "
             width={100}
             height={100}
+            priority
             alt=""
           />
         </Link>
@@ -44,7 +53,8 @@ const Sidebar = () => {
               className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
               href="/admin"
             >
-              <MdManageAccounts className="text-white me-2" /> Quản lý tài khoản
+              <MdManageAccounts className="text-secondary me-2" /> Quản lý tài
+              khoản
             </Link>
           </li>
           <li className={`${activeLoaiThuoc} mb-2`}>
@@ -52,7 +62,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
               href="/admin/loaiThuoc"
             >
-              <FaMoneyBillAlt className="text-white me-2" /> Quản lý loại thuốc
+              <MdCategory className="text-danger me-2" /> Quản lý loại thuốc
             </Link>
           </li>
           <li className={`${activeThuoc} mb-2`}>
@@ -60,7 +70,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
               href="/admin/thuoc"
             >
-              <FaMoneyBillAlt className="text-white me-2" /> Quản lý thuốc
+              <AiFillMedicineBox className="text-warning me-2" /> Quản lý thuốc
             </Link>
           </li>
 
@@ -69,7 +79,16 @@ const Sidebar = () => {
               href="/admin/xuatNhapThuoc"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaMoneyBillAlt className="text-white me-2" /> Quản lý nhập thuốc
+              <MdLabelImportant className="text-success me-2 " />
+              Nhập thuốc
+            </Link>
+          </li>
+          <li className={`${activeThongKe} mb-2`}>
+            <Link
+              href="/admin/thongKe"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <BsFillBarChartFill className="text-primary me-2 " /> Thống Kê
             </Link>
           </li>
         </ul>

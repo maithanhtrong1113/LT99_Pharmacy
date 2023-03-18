@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
 import ProgressBar from "../ProcessBar/ProcessBar";
 import LoaiThuoc from "./LoaiThuoc";
+import NguoiDung from "./NguoiDung";
 import Sidebar from "./Sidebar";
 
 const ContentLoaiThuoc = () => {
@@ -30,11 +31,11 @@ const ContentLoaiThuoc = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setLoaiThuoc(data);
       })
       .catch((error) => console.error(error));
   }, []);
+  // thêm loại thuốc
   const themLoaiThuoc = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {
       method: "POST",
@@ -70,6 +71,7 @@ const ContentLoaiThuoc = () => {
 
   const [timeoutId, setTimeoutId] = useState(null);
 
+  //gợi ý tìm kiếm loại Thuốc
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
@@ -113,81 +115,15 @@ const ContentLoaiThuoc = () => {
         <div className="row d-flex">
           <Sidebar />
           <div className="col-10 ">
-            <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
-              <button className="btn  " onClick={toggle}>
-                <Image
-                  src="/images/user-profile.jpg"
-                  className="img-profile me-2"
-                  width={100}
-                  height={100}
-                  alt=""
-                />
-                <span>
-                  Mai Thanh Trọng <FaAngleDown />
-                </span>
-              </button>
-              {!isOpen && (
-                <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
-                  <div
-                    className="row p-2 d-flex align-items-center pointer"
-                    onClick={() => {
-                      router.push("/me");
-                    }}
-                  >
-                    <div className="col-2">
-                      <Image
-                        width={100}
-                        height={100}
-                        src="/images/profile.png "
-                        className="bg-gray rounded-circle img-profile"
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-8">
-                      <Link
-                        href="/me"
-                        className="text-decoration-none text-dark text-center"
-                      >
-                        Hồ sơ cá nhân
-                      </Link>
-                    </div>
-                    <div className="col-2">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                  <div
-                    className="row p-2 d-flex align-items-center"
-                    onClick={logOutHandler}
-                  >
-                    <div className="col-2 pointer">
-                      <Image
-                        width={100}
-                        height={100}
-                        src="/images/logout.png "
-                        className="bg-gray rounded-circle img-profile"
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-8">
-                      <button className="btn btn-white w-100 d-flex justify-content-between align-items-center">
-                        Đăng xuất
-                      </button>
-                    </div>
-                    <div className="col-2 pointer">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            <NguoiDung />
             <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
-                <div className="col-4">
+                <div className="col-5">
                   <form>
                     <div className="position-relative">
                       <input
                         type="text"
-                        className="form-input w-100 px-2"
+                        className="form-control w-100 px-2"
                         placeholder="Nhập tên loại thuốc bạn muốn tìm"
                         value={searchTerm}
                         onChange={handleInputChange}
@@ -196,7 +132,7 @@ const ContentLoaiThuoc = () => {
                     </div>
                   </form>
                 </div>
-                <div className="col-8">
+                <div className="col-7">
                   <ModalAddLoaiThuoc submitHandler={themLoaiThuoc} />
                 </div>
               </div>
