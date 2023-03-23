@@ -2,7 +2,7 @@ import { authActions } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
@@ -19,6 +19,7 @@ const NguoiDung = () => {
     localStorage.removeItem("id");
     toggle();
   };
+
   return (
     <Fragment>
       <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">

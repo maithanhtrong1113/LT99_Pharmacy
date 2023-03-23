@@ -375,6 +375,9 @@ body {
 .w-modalAddNhanVien {
   max-width: 800px;
 }
+.w-modalAddKhachHang {
+  max-width: 650px;
+}
 .rotate {
   transform: rotate(90deg);
 }
