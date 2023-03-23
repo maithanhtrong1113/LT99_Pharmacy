@@ -72,7 +72,11 @@ const index = () => {
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input type="text" className="form-control w-100 px-2" />
+                    <input
+                      type="text"
+                      placeholder="Nhập tên tài khoản"
+                      className="form-control w-100 px-2"
+                    />
                   </form>
                 </div>
                 <div className="col-8">

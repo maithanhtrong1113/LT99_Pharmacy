@@ -384,3 +384,13 @@ body {
 .ngayHetHann .react-datepicker-wrapper {
   width: 50% !important;
 }
+.fs-15 {
+  font-size: 20px;
+  transform: rotate(90deg);
+}
+.fs-25 {
+  font-size: 24px;
+}
+.text-align {
+  text-align: justify !important;
+}

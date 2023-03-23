@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight, FaFileImport } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Sidebar from "./Sidebar";
 import ModalAddThuoc from "../Modal/ModalAddThuoc";
@@ -11,6 +11,7 @@ import { BsSearch } from "react-icons/bs";
 import ProgressBar from "../ProcessBar/ProcessBar";
 import NguoiDung from "./NguoiDung";
 import { toast } from "react-toastify";
+import { CSVLink } from "react-csv";
 const ContentThuoc = () => {
   const {
     register,
@@ -161,6 +162,7 @@ const ContentThuoc = () => {
                         value={searchTerm}
                         onChange={handleInputChange}
                       />
+
                       <BsSearch className="position-absolute localIconSearch" />
                     </div>
                   </form>
@@ -186,8 +188,23 @@ const ContentThuoc = () => {
                     </select>
                   </form>
                 </div>
-                <div className="col-6">
+                <div className="col-2">
                   <ModalAddThuoc submitHandler={addThuocHandler} />
+                </div>
+                <div className="col-2 d-flex align-items-center">
+                  <buton
+                    className="btn btn-primary d-flex align-items-center"
+                    type="button"
+                  >
+                    <CSVLink
+                      data={dsThuoc}
+                      filename={"dataThuoc"}
+                      className="text-white text-decoration-none"
+                    >
+                      Export
+                    </CSVLink>
+                    <FaFileImport className="ms-2 text-light fs-15" />
+                  </buton>
                 </div>
               </div>
               <table className="table">

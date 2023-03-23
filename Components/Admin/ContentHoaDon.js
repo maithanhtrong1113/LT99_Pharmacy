@@ -5,8 +5,11 @@ import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
+import { CSVLink } from "react-csv";
+import { FaFileImport } from "react-icons/fa";
 const ContentKhachHang = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
+  const [dsIn, setDsIn] = useState([]);
   // danh sách khách hàng
   useEffect(() => {
     fetch(`http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/`)
@@ -14,7 +17,27 @@ const ContentKhachHang = () => {
       .then((data) => {
         console.log(data);
         setDanhSachHoaDon(data.content);
+
+        let arr = data.content.map((hoaDon) => {
+          return {
+            "Mã Hóa Đơn": hoaDon.maHoaDon,
+            "Tên Khách Hàng": hoaDon.khachHang.hoTen,
+            "Nhân viên bán hàng": hoaDon.nhanVienBanHang.hoTen,
+
+            "Ngày lập hóa đơn": `${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
+              new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
+            }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`,
+            "Bác sĩ chỉ định": hoaDon.bacSiChiDinh,
+            "Nơi khám": hoaDon.noiKham,
+            "Hóa đơn kê đơn": hoaDon.hoaDonKeDon
+              ? "Hóa đơn Kê đơn"
+              : "Hóa đơn không kê đơn",
+            "Ghi chú": hoaDon.ghiChu,
+          };
+        });
+        setDsIn(arr);
       })
+
       .catch((error) => console.error(error));
   }, []);
   // thêm nhân viên và tạo tài khoản
@@ -78,9 +101,21 @@ const ContentKhachHang = () => {
                     />
                   </form>
                 </div>
-                {/* <div className="col-8">
-                  <ModalAddNhanVien addNhanVienHandler={addNhanVienSubmit} />
-                </div> */}
+                <div className="col-2 d-flex align-items-center">
+                  <buton
+                    className="btn btn-primary d-flex align-items-center"
+                    type="button"
+                  >
+                    <CSVLink
+                      data={dsIn}
+                      filename={"dataHoaDon"}
+                      className="text-white text-decoration-none"
+                    >
+                      Export
+                    </CSVLink>
+                    <FaFileImport className="ms-2 text-light fs-15" />
+                  </buton>
+                </div>
               </div>
               <table className="table table-striped">
                 <thead>
@@ -100,7 +135,10 @@ const ContentKhachHang = () => {
                       <td>{hoaDon.maHoaDon}</td>
                       <td>{hoaDon.khachHang.hoTen}</td>
                       <td>{hoaDon.nhanVienBanHang.hoTen}</td>
-                      <td>{hoaDon.ngayLapHoaDon}</td>
+
+                      <td>{`${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
+                        new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
+                      }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>
                       <td>{hoaDon.bacSiChiDinh}</td>
                       <td>{hoaDon.noiKham}</td>
                       <td></td>

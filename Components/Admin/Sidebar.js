@@ -38,7 +38,7 @@ const Sidebar = () => {
 
   return (
     <Fragment>
-      <div className="col-2 p-2 bg-dark shadow position-relative ">
+      <div className="col-2 p-2 bg-dark shadow position-relative vh-100">
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -51,14 +51,14 @@ const Sidebar = () => {
         </Link>
 
         <hr className="text-white" />
-        <ul className="list-unstyled vh-100 navbarSideLiHover">
+        <ul className="list-unstyled  navbarSideLiHover">
           <li className={`${active} mb-3`}>
             <Link
               className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
               href="/admin"
             >
-              <MdManageAccounts className="text-secondary me-2" /> Quản lý tài
-              khoản
+              <MdManageAccounts className="text-secondary me-2 fs-25" /> Quản lý
+              tài khoản
             </Link>
           </li>
           <li className={`${activeKhachHang} mb-3`}>
@@ -66,7 +66,7 @@ const Sidebar = () => {
               href="/admin/khachHang"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillPersonLinesFill className="text-light me-2 " />
+              <BsFillPersonLinesFill className="text-light me-2 fs-25" />
               Khách Hàng
             </Link>
           </li>
@@ -75,7 +75,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
               href="/admin/loaiThuoc"
             >
-              <MdCategory className="text-danger me-2" />
+              <MdCategory className="text-danger me-2 fs-25" />
               Loại thuốc
             </Link>
           </li>
@@ -84,7 +84,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
               href="/admin/thuoc"
             >
-              <AiFillMedicineBox className="text-warning me-2" /> Thuốc
+              <AiFillMedicineBox className="text-warning me-2 fs-25" /> Thuốc
             </Link>
           </li>
           <li className={`${activeHoaDon} mb-3`}>
@@ -92,7 +92,7 @@ const Sidebar = () => {
               href="/admin/hoaDon"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaRegMoneyBillAlt className="text-success me-2 " /> Hóa Đơn
+              <FaRegMoneyBillAlt className="text-success me-2 fs-25 " /> Hóa Đơn
             </Link>
           </li>
           <li className={`${activeThongKe} mb-3`}>
@@ -100,7 +100,8 @@ const Sidebar = () => {
               href="/admin/thongKe"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillBarChartFill className="text-primary me-2 " /> Thống Kê
+              <BsFillBarChartFill className="text-primary me-2 fs-25" /> Thống
+              Kê
             </Link>
           </li>
         </ul>

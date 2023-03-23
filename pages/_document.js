@@ -5,7 +5,6 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <link rel="icon" type="image/x-icon" href="/images/logo.png"></link>
-        <title>LT99 Pharmacy</title>
       </Head>
       <body>
         <Main />
