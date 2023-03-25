@@ -76,6 +76,9 @@ body {
 .fs-20 {
   font-size: 30px;
 }
+.fs-27 {
+  font-size: 27px !important;
+}
 .bg-cart {
   font-size: 9px;
   background-color: #da2319;
@@ -315,6 +318,9 @@ body {
 .w-15 {
   width: 15%;
 }
+.w-10 {
+  width: 13%;
+}
 .w-85 {
   width: 85%;
 }
@@ -388,9 +394,7 @@ body {
   font-size: 20px;
   transform: rotate(90deg);
 }
-.fs-25 {
-  font-size: 24px;
-}
+
 .text-align {
   text-align: justify !important;
 }

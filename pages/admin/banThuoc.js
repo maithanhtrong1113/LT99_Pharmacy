@@ -1,4 +1,4 @@
-import ContentXuatNhapThuoc from "@/Components/Admin/ContentXuatNhapThuoc";
+import ContentBanThuoc from "@/Components/Admin/ContentBanThuoc";
 import GoTopPage from "@/Components/Index/GoTopPage";
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
@@ -8,7 +8,7 @@ const index = () => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <ContentXuatNhapThuoc />
+      <ContentBanThuoc />
     </Fragment>
   );
 };

@@ -40,47 +40,41 @@ const ContentKhachHang = () => {
 
       .catch((error) => console.error(error));
   }, []);
-  // thêm nhân viên và tạo tài khoản
-  const addNhanVienSubmit = (data) => {
-    fetch("http://localhost:8080/QLNT-Server/quan-ly/nhan-vien", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        hoTen: data.name,
-        soDienThoai: data.phone,
-        diaChi: data.diaChi,
-        gioiTinh: data.gender,
-        ngaySinh: data.date,
-        caLamViec: { maCaLam: 1, tenCa: "sang", soGioLam: 8 },
-        ngayVaoLam: Date.now(),
-        taiKhoan: {
-          userName: data.tenDangNhap,
-          password: data.password,
-          quyen: [{ maQuyen: "2", tenQuyen: "EMPLOYEE" }],
-        },
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        toast.success("Thêm nhân viên thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Thêm nhân viên không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
+  const [searchTerm, setSearchTerm] = useState("");
 
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setLoaiThuoc(data);
-    //   })
+  const [timeoutId, setTimeoutId] = useState(null);
+  const handleInputChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    console.log(searchTerm);
+    if (timeoutId) {
+      clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
+    }
+
+    if (searchTerm.length > 0) {
+      const newTimeoutId = setTimeout(() => {
+        fetch(
+          `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/tim-hoa-don-theo-khach-hang?keyword=${encodeURIComponent(
+            searchTerm
+          )}`
+        )
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.length > 0) setDanhSachHoaDon(results);
+            else {
+              setDanhSachHoaDon([]);
+            }
+          });
+      }, 500);
+      setTimeoutId(newTimeoutId);
+    } else {
+      // fetch("http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/")
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     setDanhSachHoaDon(data);
+      //   })
+      //   .catch((error) => console.error(error));
+    }
   };
   return (
     <Fragment>
@@ -96,8 +90,10 @@ const ContentKhachHang = () => {
                   <form>
                     <input
                       type="text"
-                      placeholder="Nhập hóa đơn muốn tìm"
+                      placeholder="Nhập tên hoặc số điện thoại  khách hàng"
                       className="form-control w-100 px-2"
+                      value={searchTerm}
+                      onChange={handleInputChange}
                     />
                   </form>
                 </div>

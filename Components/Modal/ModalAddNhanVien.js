@@ -221,7 +221,7 @@ function ModalAddNhanVien(props) {
                     </div>
                   </div>
                   {/* Ca làm Việc và Quyền */}
-                  <div className="form-group row my-2">
+                  {/* <div className="form-group row my-2">
                     <div className="col-3">
                       <label className="fw-bold text-info">Ca làm việc</label>
                     </div>
@@ -230,7 +230,7 @@ function ModalAddNhanVien(props) {
                       <label className="fw-bold text-info">Quyền</label>
                     </div>
                     <div className="col-3"></div>
-                  </div>
+                  </div> */}
                   <div className="row d-flex justify-content-center ">
                     <button
                       className="btn btn-info my-3  text-white fw-bold w-100"

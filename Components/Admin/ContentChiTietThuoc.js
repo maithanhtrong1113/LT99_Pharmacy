@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
-import { useForm, Controller } from "react-hook-form";
+import { FaAngleLeft } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";

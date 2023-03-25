@@ -14,14 +14,20 @@ import Sidebar from "./Sidebar";
 
 import ProgressBar from "../ProcessBar/ProcessBar";
 import NguoiDung from "./NguoiDung";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import DatePicker from "react-datepicker";
+import ThuocSapHetHan from "./ThuocSapHetHan";
+import ThuocHetHan from "./ThuocHetHan";
+import ThuocSapHetHang from "./ThuocSapHetHang";
+import DoanhThuTheoNgay from "./DoanhThuTheoNgay";
+import DoanhThuTheoThang from "./DoanhThuTheoThang";
 const ContentThongKe = () => {
   const {
     formState: { errors },
     control,
   } = useForm();
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -50,9 +56,9 @@ const ContentThongKe = () => {
   const [soLuongXuat, setSoLuongXuat] = useState([]);
   const [ngayBatDau, setNgayBatDau] = useState(new Date());
   const [ngayKetThuc, setNgayKetThuc] = useState(new Date());
+
   useEffect(() => {
     //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc
-
     fetch(
       `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-xuat-nhap-ton/theo-ngay?ngayBatDau=
       ${ngayBatDau.toLocaleDateString(
@@ -62,14 +68,14 @@ const ContentThongKe = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.length !== 0) {
-          console.log(data);
+          //lọc những phần tử thỏa mãn điều kiện
           data = data.filter(
             (item) =>
               item.xuatNhapTon.soLuongTon !== 0 ||
               item.xuatNhapTon.soLuongXuat !== 0 ||
               item.xuatNhapTon.soLuongNhap !== 0
           );
-
+          //lấy thuốc 1 trong 3 khác 0
           const temporaryLabels = [];
           const soLuongTons = [];
           const soLuongNhaps = [];
@@ -93,6 +99,7 @@ const ContentThongKe = () => {
       })
       .catch((error) => console.error(error));
   }, [ngayBatDau, ngayKetThuc]);
+
   const data = {
     labels,
     datasets: [
@@ -113,7 +120,27 @@ const ContentThongKe = () => {
       },
     ],
   };
-  console.log(ngayBatDau.toLocaleDateString("en-CA"));
+  const [isXuatNhapTon, setIsXuatNhapTon] = useState(false);
+  const [isThuocSapHetHan, setIsThuocSapHetHan] = useState(false);
+  const [isHetHan, setIsHetHan] = useState(false);
+  const [isSapHetHang, setIsSapHetHang] = useState(false);
+  const [isDoanhThuNgay, setIsDoanhThuNgay] = useState(false);
+  const [isDoanhThuThang, setIsDoanhThuThang] = useState(false);
+  const [selected, setSelected] = useState("");
+  useEffect(() => {
+    setIsXuatNhapTon(false);
+    setIsThuocSapHetHan(false);
+    setIsHetHan(false);
+    setIsSapHetHang(false);
+    setIsDoanhThuNgay(false);
+    setIsDoanhThuThang(false);
+    if (selected === "XuatNhapTon") setIsXuatNhapTon(true);
+    else if (selected === "SapHetHan") setIsThuocSapHetHan(true);
+    else if (selected === "HetHan") setIsHetHan(true);
+    else if (selected === "SapHetHang") setIsSapHetHang(true);
+    else if (selected === "DoanhThuTheoNgay") setIsDoanhThuNgay(true);
+    else if (selected === "DoanhThuTheoThang") setIsDoanhThuThang(true);
+  }, [selected]);
   return (
     <Fragment>
       <ProgressBar />
@@ -122,35 +149,74 @@ const ContentThongKe = () => {
           <Sidebar />
           <div className="col-10 ">
             <NguoiDung />
-
             <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-2">
-                  <label className="fw-bold">Chọn ngày bắt đầu</label>
+                  <h5 className="text-info fw-bold">Thống Kê:</h5>
                 </div>
-                <div className="col-2">
-                  <DatePicker
-                    className="form-select"
-                    selected={ngayBatDau}
-                    onChange={(date) => setNgayBatDau(date)}
-                    dateFormat="yyyy-MM-dd"
-                  />
-                </div>
-                <div className="col-2">
-                  <label className="fw-bold">Chọn ngày kết thúc</label>
-                </div>
-                <div className="col-2">
-                  <DatePicker
-                    className="form-select"
-                    selected={ngayKetThuc}
-                    onChange={(date) => setNgayKetThuc(date)}
-                    dateFormat="yyyy-MM-dd"
-                  />
-                </div>
-                <div className="col-12">
-                  <Bar options={options} data={data} height={400} />
+                <div className="col-3">
+                  <select
+                    className="form-select "
+                    onChange={(e) => {
+                      setSelected(e.target.value);
+                    }}
+                  >
+                    <option value="">Chọn Loại Thống Kê</option>
+                    <option value="XuatNhapTon">Xuất Nhập Tồn Theo Ngày</option>
+                    <option value="SapHetHan"> Thuốc Sắp Hết Hạn</option>
+                    <option value="HetHan">Thuốc Hết Hạn</option>
+                    <option value="SapHetHang">Thuốc Sắp Hết Hàng</option>
+                    <option value="DoanhThuTheoNgay">
+                      Doanh Thu Theo Ngày
+                    </option>
+                    <option value="DoanhThuTheoThang">
+                      Doanh Thu Theo Tháng
+                    </option>
+                  </select>
                 </div>
               </div>
+              {isXuatNhapTon && (
+                <div className="row my-3 d-flex align-items-center">
+                  <div className="col-12">
+                    <hr />
+                  </div>
+                  <div className="col-12">
+                    <h5 className="fw-bold text-info fst-italic ">
+                      Thống kê xuất nhập tồn theo ngày
+                    </h5>
+                  </div>
+                  <div className="col-2">
+                    <label className="fw-bold">Chọn ngày bắt đầu</label>
+                  </div>
+                  <div className="col-2">
+                    <DatePicker
+                      className="form-select"
+                      selected={ngayBatDau}
+                      onChange={(date) => setNgayBatDau(date)}
+                      dateFormat="yyyy-MM-dd"
+                    />
+                  </div>
+                  <div className="col-2">
+                    <label className="fw-bold">Chọn ngày kết thúc</label>
+                  </div>
+                  <div className="col-2">
+                    <DatePicker
+                      className="form-select"
+                      selected={ngayKetThuc}
+                      onChange={(date) => setNgayKetThuc(date)}
+                      dateFormat="yyyy-MM-dd"
+                    />
+                  </div>
+                  <div className="col-12">
+                    <Bar options={options} data={data} height={400} />
+                  </div>
+                </div>
+              )}
+              {isThuocSapHetHan && <ThuocSapHetHan />}
+              {isHetHan && <ThuocHetHan />}
+              {isSapHetHang && <ThuocSapHetHang />}
+              {isDoanhThuNgay && <DoanhThuTheoNgay />}
+              {isDoanhThuThang && <DoanhThuTheoThang />}
             </div>
           </div>
         </div>
