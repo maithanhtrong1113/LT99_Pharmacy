@@ -296,6 +296,13 @@ const ContentBanThuoc = () => {
     }
   };
   const setThongTin = (khachHangCoSan) => {
+    if (Object.keys(khachHangCoSan).length === 0) {
+      setName("");
+      setSoDienThoai("");
+      setDiaChi("");
+      setKhachHangCoSan({});
+      return;
+    }
     const input = khachHangCoSan.ngaySinh.split("/");
     const ngaySinhKHCoSan = input[2] + "/" + input[1] + "/" + input[0];
     setName(khachHangCoSan.hoTen);
@@ -303,6 +310,48 @@ const ContentBanThuoc = () => {
     setDiaChi(khachHangCoSan.diaChi);
     setGioiTinh(khachHangCoSan.gioiTinh);
     setNgaySinh(new Date(ngaySinhKHCoSan));
+  };
+  const themKhachHangMoi = () => {
+    if (
+      name === "" ||
+      soDienThoai === "" ||
+      diaChi === "" ||
+      gioiTinh === "" ||
+      ngaySinh === ""
+    ) {
+      toast.error("Vui Lòng Nhập Đầy Đủ Thông Tin", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+        theme: "light",
+      });
+      return;
+    }
+
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/khach-hang",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          hoTen: name,
+          soDienThoai: soDienThoai,
+          diaChi: diaChi,
+          gioiTinh: gioiTinh,
+          ngaySinh: ngaySinh,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((results) => {
+        setThongTin(results);
+        toast.success("Thêm khách hàng thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      });
   };
   const [tab, setTab] = useState("KeDon");
   return (
@@ -371,9 +420,7 @@ const ContentBanThuoc = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-4">
-                  <ModalAddKhachHangHD setThongTin={setThongTin} />
-                </div>
+                <div className="col-4"></div>
 
                 <div className={`${tab === "KeDon" ? "col-7" : "col-9"} my-3`}>
                   <div className="container border shadow rounded p-4">
@@ -390,17 +437,9 @@ const ContentBanThuoc = () => {
                           onFocus={hanleFocusName}
                           onChange={(e) => setName(e.target.value)}
                           type="text"
-                          className="form-control inputText"
+                          className="form-control inputText "
                         />
                       </div>
-                      {name === "" && nameFocus && (
-                        <>
-                          <div className="col-3"></div>
-                          <span className="text-danger col-9">
-                            Vui lòng nhập tên
-                          </span>
-                        </>
-                      )}
                     </div>
                     <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
@@ -412,26 +451,9 @@ const ContentBanThuoc = () => {
                           onChange={(e) => setSoDienThoai(e.target.value)}
                           onFocus={hanleFocusSoDienThoai}
                           type="text"
-                          className="form-control inputText"
+                          className="form-control inputText "
                         />
                       </div>
-                      {soDienThoaiFocus && soDienThoai === "" && (
-                        <>
-                          <div className="col-3"></div>
-                          <span className="col-9 text-danger">
-                            Vui lòng nhập số điện thoại
-                          </span>
-                        </>
-                      )}
-                      {!kiemTraSoDienThoai(soDienThoai) &&
-                        soDienThoai !== "" && (
-                          <>
-                            <div className="col-3"></div>
-                            <span className="col-9 text-danger">
-                              Số điện thoại không tồn tại
-                            </span>
-                          </>
-                        )}
                     </div>
                     <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
@@ -442,7 +464,7 @@ const ContentBanThuoc = () => {
                           type="text"
                           value={diaChi}
                           onChange={(e) => setDiaChi(e.target.value)}
-                          className="form-control inputText"
+                          className="form-control inputText "
                         />
                       </div>
                     </div>
@@ -471,6 +493,24 @@ const ContentBanThuoc = () => {
                           onChange={(date) => setNgaySinh(date)}
                           dateFormat="dd-MM-yyyy"
                         />
+                      </div>
+                      <div className="d-flex justify-content-between">
+                        {Object.keys(khachHangCoSan).length === 0 && (
+                          <button
+                            className="btn btn-primary my-3 w-25 btn-sm"
+                            type="button"
+                            onClick={themKhachHangMoi}
+                          >
+                            Thêm khách hàng
+                          </button>
+                        )}
+                        <button
+                          className="btn btn-warning my-3 w-25 float-right btn-sm"
+                          type="button"
+                          onClick={() => setThongTin({})}
+                        >
+                          Xóa thông tin nhập
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -704,17 +744,18 @@ const ContentBanThuoc = () => {
                       </tbody>
                     </table>
                   </div>
-                  {dsNhap.length !== 0 && (
-                    <div className="col-3 mb-3">
-                      <button
-                        className="btn btn-primary d-flex align-items-center"
-                        type="Submit"
-                      >
-                        <BsFillCartCheckFill className="fs-5 me-2" />
-                        Tạo Hóa Đơn
-                      </button>
-                    </div>
-                  )}
+                  {dsNhap.length !== 0 &&
+                    Object.keys(khachHangCoSan).length !== 0 && (
+                      <div className="col-3 mb-3">
+                        <button
+                          className="btn btn-primary d-flex align-items-center"
+                          type="Submit"
+                        >
+                          <BsFillCartCheckFill className="fs-5 me-2" />
+                          Tạo Hóa Đơn
+                        </button>
+                      </div>
+                    )}
                 </div>
               )}
               {tab === "KhongKeDon" && (
