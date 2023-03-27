@@ -44,7 +44,7 @@ const Thuoc = (props) => {
       )}
       {props.dsThuoc.map((thuoc) => (
         <tr key={thuoc.maThuoc}>
-          <th scope="row">{count++}</th>
+          <th scope="row">{thuoc.maThuoc}</th>
           <td>{thuoc.tenThuoc}</td>
           <td>{thuoc.lieuLuong}</td>
           <td>{thuoc.congDung}</td>

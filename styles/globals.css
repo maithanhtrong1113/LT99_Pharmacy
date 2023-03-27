@@ -398,3 +398,9 @@ body {
 .text-align {
   text-align: justify !important;
 }
+.navBarStyle {
+  font-size: 24px;
+}
+.pb-10 {
+  padding-bottom: 8rem !important;
+}

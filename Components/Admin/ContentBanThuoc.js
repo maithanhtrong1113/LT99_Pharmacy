@@ -1,32 +1,38 @@
-import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+
 import Sidebar from "./Sidebar";
-import ModalAddThuoc from "../Modal/ModalAddThuoc";
+
 import {
   BsCheck2,
   BsFillCartCheckFill,
   BsFillPlusCircleFill,
   BsSearch,
+  BsTrash,
 } from "react-icons/bs";
 import NguoiDung from "./NguoiDung";
 import DatePicker from "react-datepicker";
 
 import {
-  AiOutlineClose,
+  AiFillCloseCircle,
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
 } from "react-icons/ai";
 import { useForm } from "react-hook-form";
+import { MdOutlineClose } from "react-icons/md";
+import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
+
+import { toast } from "react-toastify";
+import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
+import ModalAddKhachHangHD from "../Modal/ModalAddKhachHangHD";
+
 const onSubmit = (data) => {
   console.log(data);
 };
 const ContentBanThuoc = () => {
   const {
     register,
-    handleSubmit,
+
     formState: { errors },
-    control,
   } = useForm({});
   const addThuocHandler = (data) => {
     fetch(
@@ -65,14 +71,8 @@ const ContentBanThuoc = () => {
   const [diaChi, setDiaChi] = useState("");
   const [gioiTinh, setGioiTinh] = useState("");
   const [ngaySinh, setNgaySinh] = useState(new Date());
-  const [khachHangCoSan, setKhachHangCoSan] = useState({
-    hoTen: "trong",
-    soDienThoai: "0925562559",
-    diaChi: "NguyenKiem",
-    gioiTinh: "Nữ",
-    ngaySinh: "2000/11/13",
-  });
-
+  const [khachHangCoSan, setKhachHangCoSan] = useState({});
+  const [dsNhap1, setDsNhap1] = useState([]);
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
@@ -83,6 +83,9 @@ const ContentBanThuoc = () => {
 
     if (searchTerm.length > 0) {
       const newTimeoutId = setTimeout(() => {
+        if (tab === "KhongKeDon") {
+        }
+
         fetch(
           `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-thuoc?keyword=${encodeURIComponent(
             searchTerm
@@ -112,7 +115,7 @@ const ContentBanThuoc = () => {
     if (searchTerm1.length > 0) {
       const newTimeoutId1 = setTimeout(() => {
         fetch(
-          `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-thuoc?keyword=${encodeURIComponent(
+          `http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/tim-khach-hang?keyword=${encodeURIComponent(
             searchTerm1
           )}`
         )
@@ -124,7 +127,7 @@ const ContentBanThuoc = () => {
             }
           });
       }, 500);
-      setTimeoutId(newTimeoutId1);
+      setTimeoutId1(newTimeoutId1);
     } else {
       setDsKhachHang([]);
     }
@@ -137,6 +140,12 @@ const ContentBanThuoc = () => {
       isThuocExist.soLuongBan--;
       setDsNhap([...dsNhap]);
     }
+  };
+  const removeThuoc = (maThuoc) => {
+    setDsNhap(dsNhap.filter((item) => item.maThuoc !== maThuoc));
+  };
+  const removeALL = () => {
+    setDsNhap([]);
   };
   const addThuocNhap = (maThuoc) => {
     const isThuocExist = dsNhap.find((item) => item.maThuoc === maThuoc);
@@ -158,38 +167,176 @@ const ContentBanThuoc = () => {
   }
   const [nameFocus, setNameFocus] = useState(false);
   const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
-  const [diaChiFocus, setDiaChiFocus] = useState(false);
+
   const hanleFocusName = () => {
     setNameFocus(true);
   };
   const hanleFocusSoDienThoai = () => {
     setSoDienThoaiFocus(true);
   };
-  const hanleFocusDiaChi = () => {
-    setDiaChiFocus(true);
+
+  const [noiKham, setNoiKham] = useState("");
+  const [noiKhamFocus, setNoiKhamFocus] = useState(false);
+  const [bacSi, setBacSi] = useState("");
+  const [bacSiFocus, setBacSiFocus] = useState(false);
+  const hanleFocusBacSi = () => {
+    setBacSiFocus(true);
+  };
+  const hanleFocusNoiKham = () => {
+    setNoiKhamFocus(true);
   };
   const submitHanler = (e) => {
     e.preventDefault();
-    console.log(
-      name,
-      diaChi,
-      soDienThoai,
-      gioiTinh,
-      ngaySinh.toLocaleDateString("vi-VN")
-    );
+    if (name === "") {
+      setNameFocus(true);
+    }
+    if (soDienThoai === "") {
+      setSoDienThoaiFocus(true);
+    }
+    if (tab === "KeDon" && bacSi === "") {
+      setBacSiFocus(true);
+    }
+    if (tab === "KeDon" && noiKham === "") {
+      setNoiKhamFocus(true);
+    }
+    if (name === "" || soDienThoai === "") {
+      return;
+    }
+    if (
+      tab === "KeDon" &&
+      (name === "" || soDienThoai === "" || bacSi === "" || noiKham === "")
+    ) {
+      return;
+    }
+    if (tab === "KeDon") {
+      // Hóa đơn kê đơn
+      let dsXuat = dsNhap.map((thuoc) => {
+        return {
+          thuoc: {
+            maThuoc: thuoc.maThuoc,
+          },
+          soLuongThuocBan: thuoc.soLuongBan,
+        };
+      });
+
+      fetch(
+        `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/lap-hoa-don-theo-toa`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nhanVienBanHang: { maNhanVien: "2" },
+            khachHang: {
+              maKhachHang: khachHangCoSan.maKhachHang,
+            },
+            bacSiChiDinh: bacSi,
+            noiKham: noiKham,
+            dsHoaDon: dsXuat,
+          }),
+        }
+      ).then((response) => {
+        if (response.ok) {
+          toast.success("Thêm hóa đơn thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        } else {
+          toast.error("Thêm hóa đơn không thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        }
+      });
+    } else {
+      //Hóa đơn không kê đơn
+      let dsXuat = dsNhap1.map((thuoc) => {
+        return {
+          thuoc: {
+            maThuoc: thuoc.maThuoc,
+          },
+          soLuongThuocBan: thuoc.soLuongBan,
+        };
+      });
+
+      fetch(
+        `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/lap-hoa-don-khong-theo-toa`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nhanVienBanHang: { maNhanVien: "2" },
+            khachHang: {
+              maKhachHang: khachHangCoSan.maKhachHang,
+            },
+
+            dsHoaDon: dsXuat,
+          }),
+        }
+      ).then((response) => {
+        if (response.ok) {
+          toast.success("Thêm hóa đơn thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        } else {
+          toast.error("Thêm hóa đơn không thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        }
+      });
+    }
   };
+  const setThongTin = (khachHangCoSan) => {
+    const input = khachHangCoSan.ngaySinh.split("/");
+    const ngaySinhKHCoSan = input[2] + "/" + input[1] + "/" + input[0];
+    setName(khachHangCoSan.hoTen);
+    setSoDienThoai(khachHangCoSan.soDienThoai);
+    setDiaChi(khachHangCoSan.diaChi);
+    setGioiTinh(khachHangCoSan.gioiTinh);
+    setNgaySinh(new Date(ngaySinhKHCoSan));
+  };
+  const [tab, setTab] = useState("KeDon");
   return (
     <Fragment>
-      <div className="container-fluid">
+      <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
-          <div className="col-10 ">
+          <div className="col-10 border shadow">
             <NguoiDung />
-            <form
-              className="container border shadow rounded "
-              onSubmit={submitHanler}
-              noValidate
-            >
+            <div className="d-flex my-3 justify-content-between border shadow">
+              <div className="col-6">
+                <button
+                  type="button"
+                  className={`btn btn-light w-100 ${
+                    tab === "KeDon" ? "active" : ""
+                  }`}
+                  onClick={() => setTab("KeDon")}
+                >
+                  Lập hóa đơn kê đơn
+                </button>
+              </div>
+              <div className="col-6">
+                <button
+                  className={`btn btn-light w-100 ${
+                    tab === "KhongKeDon" ? "active" : ""
+                  }`}
+                  type="button"
+                  onClick={() => setTab("KhongKeDon")}
+                >
+                  Lập hóa đơn không kê đơn
+                </button>
+              </div>
+            </div>
+            <div className="col-12">
               {/* thông tin khách hàng */}
               <div className="row my-3">
                 <div className="col-5">
@@ -210,20 +357,25 @@ const ContentBanThuoc = () => {
                         {dsKhachHang.map((khachHang) => (
                           <button
                             type="button"
-                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-1 border "
+                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
                             onClick={() => {
                               setKhachHangCoSan(khachHang);
+                              setThongTin(khachHang);
                             }}
                           >
                             <span>{khachHang.hoTen}</span>
+                            <span>{khachHang.soDienThoai}</span>
                           </button>
                         ))}
                       </div>
                     )}
                   </div>
                 </div>
-                <div className="col-7"></div>
-                <div className="col-9 my-3">
+                <div className="col-4">
+                  <ModalAddKhachHangHD setThongTin={setThongTin} />
+                </div>
+
+                <div className={`${tab === "KeDon" ? "col-7" : "col-9"} my-3`}>
                   <div className="container border shadow rounded p-4">
                     <h4 className="text-center fw-bold text-info">
                       Thông tin khách hàng
@@ -287,21 +439,12 @@ const ContentBanThuoc = () => {
                       </div>
                       <div className="col-9">
                         <input
-                          onFocus={hanleFocusDiaChi}
                           type="text"
                           value={diaChi}
                           onChange={(e) => setDiaChi(e.target.value)}
                           className="form-control inputText"
                         />
                       </div>
-                      {diaChiFocus && diaChi === "" && (
-                        <>
-                          <div className="col-3"></div>
-                          <span className="col-9 text-danger">
-                            Vui lòng nhập địa chỉ
-                          </span>
-                        </>
-                      )}
                     </div>
                     <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
@@ -318,10 +461,10 @@ const ContentBanThuoc = () => {
                           <option value="Nữ">Nữ</option>
                         </select>
                       </div>
-                      <div className="col-3">
+                      <div className="col-2 px-0">
                         <label className="fw-bold">Ngày sinh</label>
                       </div>
-                      <div className="col-3">
+                      <div className="col-4">
                         <DatePicker
                           className="form-select"
                           selected={ngaySinh}
@@ -330,23 +473,78 @@ const ContentBanThuoc = () => {
                         />
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => {
-                        setName(khachHangCoSan.hoTen);
-                        setSoDienThoai(khachHangCoSan.soDienThoai);
-                        setDiaChi(khachHangCoSan.diaChi);
-                        setGioiTinh(khachHangCoSan.gioiTinh);
-                        setNgaySinh(new Date(khachHangCoSan.ngaySinh));
-                      }}
-                    >
-                      Set Thông tin
-                    </button>
                   </div>
                 </div>
-              </div>
 
+                {tab === "KeDon" && (
+                  <div className="col-5 my-3">
+                    <div className="container border shadow rounded p-4 ">
+                      <h4 className="text-info fw-bold text-center">
+                        Thông tin nơi cấp đơn thuốc
+                      </h4>
+                      <div className="row d-flex align-items-center my-3 ">
+                        <div className="col-3">
+                          <label className="fw-bold">Nơi khám</label>
+                        </div>
+                        <div className="col-9">
+                          <input
+                            value={noiKham}
+                            onFocus={hanleFocusNoiKham}
+                            onChange={(e) => setNoiKham(e.target.value)}
+                            type="text"
+                            className="form-control inputText"
+                          />
+                        </div>
+                        {noiKham === "" && noiKhamFocus && (
+                          <>
+                            <div className="col-3"></div>
+                            <span className="text-danger col-9">
+                              Vui lòng nhập nơi khám bệnh
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      <div className="row d-flex align-items-center my-3">
+                        <div className="col-3">
+                          <label className="fw-bold">Bác sĩ</label>
+                        </div>
+                        <div className="col-9">
+                          <input
+                            value={bacSi}
+                            onChange={(e) => setBacSi(e.target.value)}
+                            onFocus={hanleFocusBacSi}
+                            type="text"
+                            className="form-control inputText"
+                          />
+                        </div>
+                        {bacSiFocus && bacSi === "" && (
+                          <>
+                            <div className="col-3"></div>
+                            <span className="col-9 text-danger">
+                              Vui Lòng Nhập Bác Sĩ kê đơn
+                            </span>
+                          </>
+                        )}
+                        {!kiemTraSoDienThoai(soDienThoai) &&
+                          soDienThoai !== "" && (
+                            <>
+                              <div className="col-3"></div>
+                              <span className="col-9 text-danger">
+                                Số điện thoại không tồn tại
+                              </span>
+                            </>
+                          )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <form
+              className="container border shadow rounded "
+              onSubmit={submitHanler}
+              noValidate
+            >
               {/* thêm thuốc cho hóa đơn */}
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-5">
@@ -367,16 +565,30 @@ const ContentBanThuoc = () => {
                             type="button"
                             className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-1 border "
                             onClick={() => {
-                              if (thuoc.soLuong === 0) return;
-                              const isThuocExist = dsNhap.find(
-                                (item) => item.maThuoc === thuoc.maThuoc
-                              );
-                              if (isThuocExist) {
-                                isThuocExist.soLuongBan++;
-                                setDsNhap([...dsNhap]);
+                              if (tab === "KeDon") {
+                                if (thuoc.soLuong === 0) return;
+                                const isThuocExist = dsNhap.find(
+                                  (item) => item.maThuoc === thuoc.maThuoc
+                                );
+                                if (isThuocExist) {
+                                  isThuocExist.soLuongBan++;
+                                  setDsNhap([...dsNhap]);
+                                } else {
+                                  thuoc.soLuongBan = 1;
+                                  setDsNhap([...dsNhap, thuoc]);
+                                }
                               } else {
-                                thuoc.soLuongBan = 1;
-                                setDsNhap([...dsNhap, thuoc]);
+                                if (thuoc.soLuong === 0) return;
+                                const isThuocExist = dsNhap1.find(
+                                  (item) => item.maThuoc === thuoc.maThuoc
+                                );
+                                if (isThuocExist) {
+                                  isThuocExist.soLuongBan++;
+                                  setDsNhap1([...dsNhap1]);
+                                } else {
+                                  thuoc.soLuongBan = 1;
+                                  setDsNhap1([...dsNhap1, thuoc]);
+                                }
                               }
                             }}
                           >
@@ -399,89 +611,114 @@ const ContentBanThuoc = () => {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12">
-                  <span className="fst-italic text-info">
-                    Danh sách thuốc khách hàng mua
-                  </span>
-                  <table className="table table-striped table-bordered table-sm shadow border-rounded">
-                    <thead>
-                      <tr className="text-center">
-                        <th>Mã thuốc</th>
-                        <th>Tên thuốc</th>
-                        <th>Số lượng</th>
-                        <th>Đơn vị tính</th>
-                        <th>Liều lượng</th>
-                        <th>Thuốc kê đơn</th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dsNhap.map((thuoc) => (
-                        <tr key={thuoc.maThuoc} className="text-center">
-                          <td>{thuoc.maThuoc}</td>
-                          <td>{thuoc.tenThuoc}</td>
-                          <td className="w-10 ">
-                            <input
-                              type="number"
-                              value={thuoc.soLuongBan}
-                              min={1}
-                              onChange={(e) => {
-                                if (
-                                  e.target.value <= 0 ||
-                                  e.target.value === ""
-                                ) {
-                                  e.target.value = 1;
-                                }
-                                NhapSoLuong(thuoc.maThuoc, e.target.value);
-                              }}
-                              className="fw-bold form-control text-center"
-                            />
-                            <span className=" text-muted">{`Tồn: ${thuoc.soLuong}`}</span>
-                          </td>
-
-                          <td>{thuoc.donViTinh}</td>
-                          <td>{thuoc.lieuLuong}</td>
-                          {thuoc.thuocKeDon && (
-                            <td>
-                              <BsCheck2 className="text-success fs-20 mt-3 " />
-                            </td>
-                          )}
-                          {!thuoc.thuocKeDon && (
-                            <td className="fw-bold ">
-                              <AiOutlineClose className="text-danger fs-27 mt-3 " />
-                            </td>
-                          )}
-                          <td>
-                            <button
-                              className="btn btn-sm bg-danger mx-2 px-2 mt-3 shadow"
-                              onClick={() => removeThuocNhap(thuoc.maThuoc)}
-                            >
-                              <AiOutlineMinusCircle className="text-dark" />
-                            </button>
-                            <button
-                              className="btn btn-sm bg-info mx-2 mt-3 shadow"
-                              onClick={() => addThuocNhap(thuoc.maThuoc)}
-                            >
-                              <BsFillPlusCircleFill className="text-white " />
-                            </button>
-                          </td>
+              {tab === "KeDon" && (
+                <div className="row">
+                  <div className="col-12">
+                    <div className="d-flex justify-content-between my-1 align-items-center">
+                      <span className="fst-italic text-info ">
+                        Danh sách thuốc khách hàng mua
+                      </span>
+                      {dsNhap.length !== 0 && (
+                        <button
+                          className="btn btn-danger"
+                          type="button"
+                          onClick={removeALL}
+                        >
+                          <BsTrash className="fs-16" />
+                        </button>
+                      )}
+                    </div>
+                    <table className="table table-striped table-bordered table-sm shadow border-rounded">
+                      <thead>
+                        <tr className="text-center">
+                          <th>Mã thuốc</th>
+                          <th>Tên thuốc</th>
+                          <th>Số lượng</th>
+                          <th>Đơn vị tính</th>
+                          <th>Liều lượng</th>
+                          <th>Thuốc kê đơn</th>
+                          <th></th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {dsNhap.map((thuoc) => (
+                          <tr key={thuoc.maThuoc} className="text-center">
+                            <td>{thuoc.maThuoc}</td>
+                            <td>{thuoc.tenThuoc}</td>
+                            <td className="w-10 ">
+                              <input
+                                type="number"
+                                value={thuoc.soLuongBan}
+                                min={1}
+                                onChange={(e) => {
+                                  if (
+                                    e.target.value <= 0 ||
+                                    e.target.value === ""
+                                  ) {
+                                    e.target.value = 1;
+                                  }
+                                  NhapSoLuong(thuoc.maThuoc, e.target.value);
+                                }}
+                                className="fw-bold form-control text-center"
+                              />
+                              <span className=" text-muted">{`Tồn: ${thuoc.soLuong}`}</span>
+                            </td>
+
+                            <td>{thuoc.donViTinh}</td>
+                            <td>{thuoc.lieuLuong}</td>
+                            {thuoc.thuocKeDon && (
+                              <td>
+                                <BsCheck2 className="text-success fs-20 mt-3 " />
+                              </td>
+                            )}
+                            {!thuoc.thuocKeDon && (
+                              <td className="fw-bold ">
+                                <MdOutlineClose className="text-danger fs-27 mt-3 " />
+                              </td>
+                            )}
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-warning mx-2 px-2 mt-3 shadow"
+                                onClick={() => removeThuocNhap(thuoc.maThuoc)}
+                              >
+                                <AiOutlineMinusCircle className="text-white" />
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-info mx-2 mt-3 shadow"
+                                onClick={() => addThuocNhap(thuoc.maThuoc)}
+                              >
+                                <BsFillPlusCircleFill className="text-white " />
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-danger mx-2 mt-3 shadow"
+                                onClick={() => removeThuoc(thuoc.maThuoc)}
+                              >
+                                <AiFillCloseCircle className="text-white " />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {dsNhap.length !== 0 && (
+                    <div className="col-3 mb-3">
+                      <button
+                        className="btn btn-primary d-flex align-items-center"
+                        type="Submit"
+                      >
+                        <BsFillCartCheckFill className="fs-5 me-2" />
+                        Tạo Hóa Đơn
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </div>
-              {dsNhap.length !== 0 && (
-                <div className="col-3 mb-3">
-                  <button
-                    className="btn btn-primary d-flex align-items-center"
-                    type="Submit"
-                  >
-                    <BsFillCartCheckFill className="fs-5 me-2" />
-                    Tạo Hóa Đơn
-                  </button>
-                </div>
+              )}
+              {tab === "KhongKeDon" && (
+                <HoaDonKhongKeDon dsNhap1={dsNhap1} setDsNhap1={setDsNhap1} />
               )}
             </form>
           </div>

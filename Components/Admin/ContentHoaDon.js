@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import { CSVLink } from "react-csv";
 import { FaFileImport } from "react-icons/fa";
+import { BsCheck2 } from "react-icons/bs";
+import { MdOutlineClose } from "react-icons/md";
 const ContentKhachHang = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
   const [dsIn, setDsIn] = useState([]);
@@ -122,6 +124,7 @@ const ContentKhachHang = () => {
                     <th scope="col">Ngày tạo hóa đơn</th>
                     <th scope="col">Bác sĩ chỉ định</th>
                     <th scope="col">Nơi khám</th>
+                    <th scope="col">Hóa đơn kê đơn</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -135,8 +138,27 @@ const ContentKhachHang = () => {
                       <td>{`${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
                         new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
                       }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>
-                      <td>{hoaDon.bacSiChiDinh}</td>
-                      <td>{hoaDon.noiKham}</td>
+                      <td>
+                        {hoaDon.bacSiChiDinh === null ? (
+                          <MdOutlineClose className="text-danger fs-20" />
+                        ) : (
+                          hoaDon.bacSiChiDinh
+                        )}
+                      </td>
+                      <td>
+                        {hoaDon.noiKham === null ? (
+                          <MdOutlineClose className="text-danger fs-20" />
+                        ) : (
+                          hoaDon.noiKham
+                        )}
+                      </td>
+                      <td>
+                        {hoaDon.hoaDonKeDon ? (
+                          <BsCheck2 className="text-success fs-20" />
+                        ) : (
+                          <MdOutlineClose className="text-danger fs-20" />
+                        )}
+                      </td>
                       <td></td>
                     </tr>
                   ))}

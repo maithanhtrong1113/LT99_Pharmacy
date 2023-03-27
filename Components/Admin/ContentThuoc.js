@@ -207,10 +207,10 @@ const ContentThuoc = () => {
                   </buton>
                 </div>
               </div>
-              <table className="table">
+              <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">STT</th>
+                    <th scope="col">Mã Thuốc</th>
                     <th scope="col">Tên Thuốc</th>
                     <th scope="col">Liều Lượng</th>
                     <th scope="col">Công Dụng</th>

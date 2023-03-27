@@ -136,7 +136,7 @@ const ContentLoaiThuoc = () => {
                   <ModalAddLoaiThuoc submitHandler={themLoaiThuoc} />
                 </div>
               </div>
-              <table className="table">
+              <table className="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">STT</th>

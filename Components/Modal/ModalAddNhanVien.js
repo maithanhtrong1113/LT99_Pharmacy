@@ -112,8 +112,8 @@ function ModalAddNhanVien(props) {
                           {...register("gender")}
                           className="form-select form-select-sm "
                         >
-                          <option value="nam">Nam</option>
-                          <option value="nữ">Nữ</option>
+                          <option value="Nam">Nam</option>
+                          <option value="Nữ">Nữ</option>
                         </select>
                       </div>
                     </div>

@@ -24,6 +24,10 @@ const DoanhThuTheoNgay = () => {
     Tooltip,
     Legend
   );
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -41,8 +45,13 @@ const DoanhThuTheoNgay = () => {
   const [soLuongConLai, setSoLuongConLai] = useState([]);
   const [labels, setLabels] = useState([]);
   const today = new Date();
-  const [ngayBatDau, setNgayBatDau] = useState(new Date());
-  const [ngayKetThuc, setNgayKetThuc] = useState(new Date());
+  const [ngayBatDau, setNgayBatDau] = useState(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2)
+  );
+  const [ngayKetThuc, setNgayKetThuc] = useState(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
+  );
+  const [tongDoanhThu, setTongDoanhThu] = useState(0);
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
     fetch(
@@ -53,11 +62,15 @@ const DoanhThuTheoNgay = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        let tempLabels = data.map((thuoc) => thuoc.ngay);
-        let tempSoLuongConLai = data.map((thuoc) => thuoc.doanhThu);
-
-        setLabels(tempLabels);
-        setSoLuongConLai(tempSoLuongConLai);
+        if (data.doanhThuTungNgay.length !== 0) {
+          let tempLabels = data.doanhThuTungNgay.map((thuoc) => thuoc.ngay);
+          let tempSoLuongConLai = data.doanhThuTungNgay.map(
+            (thuoc) => thuoc.doanhThu
+          );
+          setTongDoanhThu(data.tongDoanhThu);
+          setLabels(tempLabels);
+          setSoLuongConLai(tempSoLuongConLai);
+        }
       });
   }, [ngayBatDau, ngayKetThuc]);
   console.log(new Date().toLocaleDateString("en-CA"));
@@ -100,6 +113,11 @@ const DoanhThuTheoNgay = () => {
             onChange={(date) => setNgayKetThuc(date)}
             dateFormat="yyyy-MM-dd"
           />
+        </div>
+        <div className="col-12  my-3">
+          <span className="text-info">
+            Tổng doanh thu: {VND.format(tongDoanhThu)}
+          </span>
         </div>
         <div className="col-12">
           <Line options={options} data={data} height={400} />

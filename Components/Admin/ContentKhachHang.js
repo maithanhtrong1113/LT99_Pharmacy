@@ -1,13 +1,16 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import ProgressBar from "../ProcessBar/ProcessBar";
-import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
+
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
+
 const ContentKhachHang = () => {
   const [dsKhachHang, setDsKhachHang] = useState([]);
+  const [timeoutId1, setTimeoutId1] = useState(null);
+  const [searchTerm1, setSearchTerm1] = useState("");
   // danh sách khách hàng
   useEffect(() => {
     fetch(
@@ -58,6 +61,42 @@ const ContentKhachHang = () => {
     //     setLoaiThuoc(data);
     //   })
   };
+  const handleInputChange1 = (event) => {
+    const searchTerm1 = event.target.value;
+    setSearchTerm1(searchTerm1);
+
+    if (timeoutId1) {
+      clearTimeout(timeoutId1); // Xóa timeout trước đó nếu còn tồn tại
+    }
+
+    if (searchTerm1.length > 0) {
+      const newTimeoutId1 = setTimeout(() => {
+        fetch(
+          `http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/tim-khach-hang?keyword=${encodeURIComponent(
+            searchTerm1
+          )}`
+        )
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.length > 0) setDsKhachHang(results);
+            else {
+              setDsKhachHang([]);
+            }
+          });
+      }, 500);
+      setTimeoutId1(newTimeoutId1);
+    } else {
+      fetch(
+        `http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/danh-sach-khach-hang`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("err");
+          setDsKhachHang(data);
+        })
+        .catch((error) => console.error(error));
+    }
+  };
   return (
     <Fragment>
       <ProgressBar />
@@ -71,6 +110,8 @@ const ContentKhachHang = () => {
                 <div className="col-4">
                   <form>
                     <input
+                      value={searchTerm1}
+                      onChange={handleInputChange1}
                       type="text"
                       placeholder="Nhập tên khách hàng cần tìm"
                       className="form-control w-100 px-2"

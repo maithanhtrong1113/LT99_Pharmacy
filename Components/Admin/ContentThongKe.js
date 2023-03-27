@@ -49,13 +49,17 @@ const ContentThongKe = () => {
       },
     },
   };
-
+  const today = new Date();
   const [labels, setLabels] = useState([]);
   const [soLuongTon, setSoLuongTon] = useState([]);
   const [soLuongNhap, setSoLuongNhap] = useState([]);
   const [soLuongXuat, setSoLuongXuat] = useState([]);
-  const [ngayBatDau, setNgayBatDau] = useState(new Date());
-  const [ngayKetThuc, setNgayKetThuc] = useState(new Date());
+  const [ngayBatDau, setNgayBatDau] = useState(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() - 2)
+  );
+  const [ngayKetThuc, setNgayKetThuc] = useState(
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
+  );
 
   useEffect(() => {
     //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc

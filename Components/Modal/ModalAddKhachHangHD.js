@@ -3,8 +3,9 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
 
-function ModalAddKhachHang(props) {
+function ModalAddKhachHangHD(props) {
   const {
     register,
     handleSubmit,
@@ -17,8 +18,32 @@ function ModalAddKhachHang(props) {
 
   const onSubmit = (data) => {
     data.date = new Date(data.date).toLocaleDateString("vi-VN");
-    console.log(data);
-    props.addKhachHangSubmit(data);
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/khach-hang",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          hoTen: data.name,
+          soDienThoai: data.phone,
+          diaChi: data.diaChi,
+          gioiTinh: data.gender,
+          ngaySinh: data.date,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((results) => {
+        props.setThongTin(results);
+        toast.success("Thêm khách hàng thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      });
+
     toggle();
   };
 
@@ -145,22 +170,14 @@ function ModalAddKhachHang(props) {
                     </div>
                     <div className="col-sm-9">
                       <input
-                        {...register("diaChi", {
-                          required: true,
-                        })}
+                        {...register("diaChi", {})}
                         type="text"
                         required
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-3"></div>
-                    <div className="col-sm-9">
-                      {errors?.diaChi?.type === "required" && (
-                        <span className=" text-danger">
-                          Vui lòng nhập địa chỉ
-                        </span>
-                      )}
-                    </div>
+                    <div className="col-sm-9"></div>
                   </div>
 
                   <div className="row d-flex justify-content-center ">
@@ -181,4 +198,4 @@ function ModalAddKhachHang(props) {
   );
 }
 
-export default ModalAddKhachHang;
+export default ModalAddKhachHangHD;

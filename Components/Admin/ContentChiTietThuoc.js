@@ -9,7 +9,12 @@ import NguoiDung from "./NguoiDung";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+
 const ContentChiTietThuoc = (props) => {
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
   const {
     register,
     handleSubmit,
@@ -42,16 +47,22 @@ const ContentChiTietThuoc = (props) => {
   const [loaThuocBanDau, setLoaiThuocBanDau] = useState("");
   const { id } = router.query;
   const [isShow, setIsShow] = useState(false);
-  const toggleShow = () => setIsShow(!isShow);
+  const toggleShow = () => {
+    if (isShowNhapThuoc === true) setIsShowNhapThuoc(false);
+    setIsShow(!isShow);
+  };
   const [isShowNhapThuoc, setIsShowNhapThuoc] = useState(false);
-  const toggleShowNhapThuoc = () => setIsShowNhapThuoc(!isShowNhapThuoc);
+  const toggleShowNhapThuoc = () => {
+    if (isShow === true) setIsShow(false);
+    setIsShowNhapThuoc(!isShowNhapThuoc);
+  };
   const [lichSus, setLichSus] = useState([]);
   const today = new Date();
   const [ngaySanXuat, setNgaySanXuat] = useState(
-    today.getTime() - 24 * 60 * 60 * 1000
+    new Date(today.getFullYear(), today.getMonth() - 1, today.getDate())
   );
   const [ngayHetHan, setNgayHetHan] = useState(
-    today.getTime() + 24 * 60 * 60 * 1000
+    new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())
   );
   const validateSoLuongNhap = (value) => {
     if (value <= 0) {
@@ -80,36 +91,36 @@ const ContentChiTietThuoc = (props) => {
       .catch((error) => console.error(error));
 
     // thông tin thuốc
-    async function fetchData() {
-      if (typeof id === "string") {
-        try {
-          const response = await fetch(
-            `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${id}`
-          );
-          const data = await response.json();
-
-          setThuoc(data);
-          setTenThuoc(data.tenThuoc);
-          setCongDung(data.congDung);
-          setQuyCachDongGoi(data.quyCachDongGoi);
-          setDonViTinh(data.donViTinh);
-          setLieuLuong(data.lieuLuong);
-          setTacDungPhu(data.tacDungPhu);
-          setHuongDanSuDung(data.huongDanSuDung);
-          setMoTa(data.moTa);
-          setSoLuong(data.soLuong);
-          setLoaiThuocSelected(data.loaiThuoc.maLoai);
-          setLoaiThuocBanDau(data.loaiThuoc.maLoai);
-        } catch (error) {
-          console.error(error);
-        }
+    fetchData();
+  }, []);
+  async function fetchData() {
+    if (typeof id === "string") {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${id}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setThuoc(data);
+        setTenThuoc(data.thuoc.tenThuoc);
+        setCongDung(data.thuoc.congDung);
+        setQuyCachDongGoi(data.thuoc.quyCachDongGoi);
+        setDonViTinh(data.thuoc.donViTinh);
+        setLieuLuong(data.thuoc.lieuLuong);
+        setTacDungPhu(data.thuoc.tacDungPhu);
+        setHuongDanSuDung(data.thuoc.huongDanSuDung);
+        setMoTa(data.thuoc.moTa);
+        setSoLuong(data.thuoc.soLuong);
+        setLoaiThuocSelected(data.thuoc.loaiThuoc.maLoai);
+        setLoaiThuocBanDau(data.thuoc.loaiThuoc.maLoai);
+      } catch (error) {
+        console.error(error);
       }
     }
-    fetchData();
-  }, [id]);
-
-  const onSubmit = (data) => {
-    data = {
+  }
+  const handlerSuaTHuocSubmit = (e) => {
+    e.preventDefault();
+    console.log(
       tenThuoc,
       congDung,
       quyCachDongGoi,
@@ -118,61 +129,47 @@ const ContentChiTietThuoc = (props) => {
       tacDungPhu,
       huongDanSuDung,
       moTa,
-      soLuong,
-      loaiThuocSelected,
-    };
-    console.log(data);
+      loaiThuocSelected
+    );
     // chỉnh sửa thông tin  thuốc
-    if (
-      tenThuoc !== "" &&
-      congDung !== "" &&
-      quyCachDongGoi !== "" &&
-      donViTinh !== "" &&
-      lieuLuong !== "" &&
-      tacDungPhu !== "" &&
-      huongDanSuDung !== "" &&
-      moTa !== ""
-    ) {
-      fetch(
-        `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data.loaiThuocSelected}/thuoc/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            tenThuoc: data.tenThuoc,
-            lieuLuong: data.lieuLuong,
-            congDung: data.congDung,
-            donViTinh: data.donViTinh,
-            quyCachDongGoi: data.quyCachDongGoi,
-            tacDungPhu: data.tacDungPhu,
-            huongDanSuDung: data.huongDanSuDung,
-            moTa: data.moTa,
-            images: [],
-            dsDoiTuong: [],
-            thuocKeDon: true,
-          }),
-        }
-      ).then((response) => {
-        if (response.ok) {
-          toast.success("Chỉnh sửa loại thuốc thành công", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-            theme: "light",
-          });
-          setTimeout(() => {
-            router.push("/admin/thuoc");
-          }, 2000);
-        } else {
-          toast.error("Chỉnh sửa loại thuốc không thành công", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-            theme: "light",
-          });
-        }
-      });
-    }
+
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${loaiThuocSelected}/thuoc/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tenThuoc: tenThuoc,
+          lieuLuong: lieuLuong,
+          congDung: congDung,
+          donViTinh: donViTinh,
+          quyCachDongGoi: quyCachDongGoi,
+          huongDanSuDung: huongDanSuDung,
+          tacDungPhu: tacDungPhu,
+          moTa: moTa,
+          images: [],
+          dsDoiTuong: [],
+          thuocKeDon: true,
+        }),
+      }
+    ).then((response) => {
+      if (response.ok) {
+        toast.success("Chỉnh sửa  thuốc thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+        fetchData();
+      } else {
+        toast.error("Chỉnh sửa  thuốc không thành công", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+          theme: "light",
+        });
+      }
+    });
   };
 
   const onSubmitNhapThuoc = (dataa) => {
@@ -197,6 +194,9 @@ const ContentChiTietThuoc = (props) => {
           ngaySanXuat: format(new Date(ngaySanXuat), "yyyy-MM-dd"),
           ngayHetHan: format(new Date(ngayHetHan), "yyyy-MM-dd"),
           soLuongNhap: dataa.soLuongNhap,
+          giaNhap: dataa.giaNhap,
+          giaBanSi: dataa.giaBanSi,
+          giaBanLe: dataa.giaBanLe,
         }),
       }
     ).then((response) => {
@@ -206,6 +206,7 @@ const ContentChiTietThuoc = (props) => {
           autoClose: 1000,
           theme: "light",
         });
+        fetchData();
       } else {
         toast.error("Nhập thuốc không thành công", {
           position: toast.POSITION.TOP_RIGHT,
@@ -214,7 +215,6 @@ const ContentChiTietThuoc = (props) => {
         });
       }
     });
-    router.push("/admin/thuoc");
   };
   return (
     <Fragment>
@@ -242,7 +242,7 @@ const ContentChiTietThuoc = (props) => {
                   <div className="col-12">
                     <div>
                       <form
-                        onSubmit={handleSubmit(onSubmit)}
+                        onSubmit={handlerSuaTHuocSubmit}
                         noValidate
                         className="container"
                       >
@@ -253,7 +253,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-6 ">
                             <div className="form-outline">
                               <input
-                                {...register("tenThuoc", {})}
                                 type="text"
                                 className="form-control"
                                 value={tenThuoc}
@@ -289,7 +288,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-6">
                             <div className="form-outline">
                               <input
-                                {...register("congDung", {})}
                                 type="text"
                                 className="form-control"
                                 onChange={(e) => {
@@ -312,7 +310,6 @@ const ContentChiTietThuoc = (props) => {
                               className="form-select form-select-sm py-2"
                               aria-label=".form-select-sm"
                               defaultValue={loaiThuocSelected}
-                              {...register("loaiThuoc", {})}
                               onChange={(e) => {
                                 setLoaiThuocSelected(e.target.value);
                               }}
@@ -340,7 +337,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-2">
                             <div className="form-outline">
                               <input
-                                {...register("donViTinhh", {})}
                                 type="text"
                                 className="form-control"
                                 value={donViTinh}
@@ -361,7 +357,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-2 p-sopx">
                             <div className="form-outline">
                               <input
-                                {...register("quyCachDongGoi", {})}
                                 type="text"
                                 className="form-control"
                                 value={quyCachDongGoi}
@@ -371,7 +366,7 @@ const ContentChiTietThuoc = (props) => {
                               />
                               {quyCachDongGoi === "" && (
                                 <span className="text-danger">
-                                  Không được để trống
+                                  Vui lòng nhập quy cách đóng gói
                                 </span>
                               )}
                             </div>
@@ -382,7 +377,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-3">
                             <div className="form-outline">
                               <input
-                                {...register("soLuong", {})}
                                 type="text"
                                 className="form-control visiblity"
                                 value={soLuong}
@@ -403,7 +397,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-10">
                             <div className="form-outline">
                               <input
-                                {...register("huongDanSuDung", {})}
                                 type="text"
                                 className="form-control"
                                 value={huongDanSuDung}
@@ -426,7 +419,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-4">
                             <div className="form-outline">
                               <input
-                                {...register("tacDungPhu", {})}
                                 type="text"
                                 className="form-control"
                                 value={tacDungPhu}
@@ -447,7 +439,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-4">
                             <div className="form-outline">
                               <input
-                                {...register("lieuLuongg", {})}
                                 type="text"
                                 className="form-control"
                                 value={lieuLuong}
@@ -470,7 +461,6 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-10">
                             <div className="form-outline">
                               <input
-                                {...register("moTa", {})}
                                 type="text"
                                 className="form-control"
                                 value={moTa}
@@ -563,20 +553,26 @@ const ContentChiTietThuoc = (props) => {
                           <td>
                             {format(
                               new Date(lichSu.ngayNhapLoThuoc),
-                              "yyyy-MM-dd"
+                              "dd-MM-yyyy"
                             )}
                           </td>
                           <td>
-                            {format(new Date(lichSu.ngaySanXuat), "yyyy-MM-dd")}
+                            {format(new Date(lichSu.ngaySanXuat), "dd-MM-yyyy")}
                           </td>
                           <td>
-                            {format(new Date(lichSu.ngayHetHan), "yyyy-MM-dd")}
+                            {format(new Date(lichSu.ngayHetHan), "dd-MM-yyyy")}
                           </td>
                           <td>{lichSu.soLuongNhap}</td>
                           <td>{lichSu.soLuongTon}</td>
-                          <td>{lichSu.giaNhap}</td>
-                          <td>{lichSu.giaBanSi}</td>
-                          <td>{lichSu.giaBanLe}</td>
+                          <td className="fw-bold">
+                            {VND.format(lichSu.giaNhap)}
+                          </td>
+                          <td className="fw-bold">
+                            {VND.format(lichSu.giaBanSi)}
+                          </td>
+                          <td className="fw-bold">
+                            {VND.format(lichSu.giaBanLe)}
+                          </td>
                           <td>{lichSu.nhaCungCap}</td>
                           <td>{lichSu.nuocSanXuat}</td>
                         </tr>
@@ -625,9 +621,87 @@ const ContentChiTietThuoc = (props) => {
                       )}
                     </div>
                     <label className="col-sm-2 col-form-label fw-bold text-info">
-                      Số Lô
+                      Giá Nhập
                     </label>
                     <div className="col-sm-4">
+                      <input
+                        {...register("giaNhap", {
+                          required: true,
+                          validate: validateSoLuongNhap,
+                        })}
+                        type="text"
+                        required
+                        defaultValue={1000}
+                        className="form-control form-control-sm inputText"
+                      />
+                      {errors?.giaNhap?.type === "required" && (
+                        <span className="text-danger">
+                          Vui lòng nhập giá nhập thuốc
+                        </span>
+                      )}
+                      {errors.giaNhap && (
+                        <span className="text-danger">
+                          {errors.giaNhap.message}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="form-group row my-3">
+                    <label className="col-sm-3 col-form-label fw-bold text-info">
+                      Giá bán sĩ (VNĐ)
+                    </label>
+                    <div className="col-sm-3">
+                      <input
+                        {...register("giaBanSi", {
+                          required: true,
+                          validate: validateSoLuongNhap,
+                        })}
+                        type="number"
+                        required
+                        defaultValue={1000}
+                        className="form-control form-control-sm inputText"
+                      />
+                      {errors?.giaBanSi?.type === "required" && (
+                        <span className="text-danger">
+                          Vui lòng nhập giá bán sĩ
+                        </span>
+                      )}
+                      {errors.giaBanSi && (
+                        <span className="text-danger">
+                          {errors.giaBanSi.message}
+                        </span>
+                      )}
+                    </div>
+                    <label className="col-sm-2 col-form-label fw-bold text-info">
+                      Giá bán lẻ (VNĐ)
+                    </label>
+                    <div className="col-sm-4">
+                      <input
+                        {...register("giaBanLe", {
+                          required: true,
+                          validate: validateSoLuongNhap,
+                        })}
+                        type="number"
+                        required
+                        defaultValue={1000}
+                        className="form-control form-control-sm inputText"
+                      />
+                      {errors?.giaBanLe?.type === "required" && (
+                        <span className="text-danger">Vui lòng giá bán lẻ</span>
+                      )}
+                      {errors.giaBanSi && (
+                        <span className="text-danger">
+                          {errors.giaBanSi.message}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="form-group row my-3">
+                    <label className="col-sm-3 col-form-label fw-bold text-info">
+                      Số Lô
+                    </label>
+                    <div className="col-sm-9">
                       <input
                         {...register("soLo", {
                           required: true,

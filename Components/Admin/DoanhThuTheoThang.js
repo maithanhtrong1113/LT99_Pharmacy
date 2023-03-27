@@ -42,19 +42,19 @@ const DoanhThuTheoThang = () => {
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
     fetch(
-      "http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-thuoc-sap-het-hang"
+      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-doanh-thu-theo-thang-trong-nam?nam=${2023}`
     )
       .then((response) => response.json())
       .then((data) => {
-        let tempLabels = data.map((thuoc) => thuoc.tenThuoc);
-        let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuong);
+        let tempLabels = data.map((thuoc) => thuoc.thang);
+        let tempSoLuongConLai = data.map((thuoc) => thuoc.doanhThu);
 
         setLabels(tempLabels);
 
         setSoLuongConLai(tempSoLuongConLai);
       });
   }, []);
-
+  const [nam, setNam] = useState("2023");
   const data = {
     labels,
     datasets: [
@@ -71,31 +71,10 @@ const DoanhThuTheoThang = () => {
       <div className="row my-3 d-flex align-items-center">
         <div className="col-12">
           <h5 className="fw-bold text-info fst-italic ">
-            Doanh thu theo tháng
+            Doanh thu theo tháng ({new Date().getFullYear()})
           </h5>
         </div>
-        <div className="col-2">
-          <label className="fw-bold">Chọn ngày bắt đầu</label>
-        </div>
-        <div className="col-2">
-          <DatePicker
-            className="form-select"
-            selected={ngayBatDau}
-            onChange={(date) => setNgayBatDau(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-        </div>
-        <div className="col-2">
-          <label className="fw-bold">Chọn ngày kết thúc</label>
-        </div>
-        <div className="col-2">
-          <DatePicker
-            className="form-select"
-            selected={ngayKetThuc}
-            onChange={(date) => setNgayKetThuc(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-        </div>
+
         <div className="col-12">
           <Bar options={options} data={data} height={400} />
         </div>
