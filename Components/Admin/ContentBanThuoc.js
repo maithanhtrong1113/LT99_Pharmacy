@@ -93,7 +93,7 @@ const ContentBanThuoc = () => {
           )
             .then((response) => response.json())
             .then((results) => {
-              if (results.length > 0) setDsThuoc(results).slice(0, 5);
+              if (results.length > 0) setDsThuoc(results.slice(0, 5));
               else {
                 setDsThuoc([]);
               }
@@ -111,7 +111,7 @@ const ContentBanThuoc = () => {
               return response.json();
             })
             .then((results) => {
-              if (results.length > 0) setDsThuoc(results).slice(0, 5);
+              if (results.length > 0) setDsThuoc(results.slice(0, 5));
               else {
                 setDsThuoc([]);
               }
@@ -349,12 +349,16 @@ const ContentBanThuoc = () => {
       return;
     }
     const input = khachHangCoSan.ngaySinh.split("/");
-    const ngaySinhKHCoSan = input[2] + "/" + input[1] + "/" + input[0];
+    console.log(khachHangCoSan.ngaySinh);
+    // "yyyy-mm-dd"
+    //const ngaySinhKHCoSan = input[2] + "/" + input[1] + "/" + input[0];
+    //  để tạo đối tượng Date, chuỗi ngày tháng phải có định dạng "yyyy-mm-dd" hoặc "MM/dd/yyyy".
+    // data lay ra 3/28/2023 MM/dd/yyyy data can
     setName(khachHangCoSan.hoTen);
     setSoDienThoai(khachHangCoSan.soDienThoai);
     setDiaChi(khachHangCoSan.diaChi);
     setGioiTinh(khachHangCoSan.gioiTinh);
-    setNgaySinh(new Date(ngaySinhKHCoSan));
+    setNgaySinh(new Date(khachHangCoSan.ngaySinh));
   };
   const themKhachHangMoi = () => {
     if (name === "" || soDienThoai === "") {
@@ -378,7 +382,7 @@ const ContentBanThuoc = () => {
           soDienThoai: soDienThoai,
           diaChi: diaChi,
           gioiTinh: gioiTinh,
-          ngaySinh: ngaySinh.toLocaleDateString("en-CA"),
+          ngaySinh: ngaySinh.toISOString().slice(0, 10),
         }),
       }
     )
@@ -740,6 +744,7 @@ const ContentBanThuoc = () => {
                           <th>Đơn vị tính</th>
                           <th>Số lượng</th>
                           <th>Thuốc kê đơn</th>
+                          <th>Thành tiền(đang hoàn thiện)</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -804,20 +809,34 @@ const ContentBanThuoc = () => {
                             </td>
                           </tr>
                         ))}
+                        <tr>
+                          <td>Tổng tiền:(Đang hoàn thiện)</td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
                   {dsNhap.length !== 0 &&
                     Object.keys(khachHangCoSan).length !== 0 && (
-                      <div className="col-3 mb-3">
-                        <button
-                          className="btn btn-primary d-flex align-items-center"
-                          type="Submit"
-                        >
-                          <BsFillCartCheckFill className="fs-5 me-2" />
-                          Tạo Hóa Đơn
-                        </button>
-                      </div>
+                      <>
+                        <div className="col-2 mb-3 ">
+                          <button
+                            className="btn btn-primary d-flex align-items-center"
+                            type="Submit"
+                          >
+                            <BsFillCartCheckFill className="fs-5 me-2" />
+                            Tạo Hóa Đơn
+                          </button>
+                        </div>
+                        <div className="col-3 mb-3 ">
+                          <button
+                            className="btn btn-secondary d-flex align-items-center"
+                            type="Submit"
+                          >
+                            <BsFillCartCheckFill className="fs-5 me-2" />
+                            In Hóa Đơn
+                          </button>
+                        </div>
+                      </>
                     )}
                 </div>
               )}

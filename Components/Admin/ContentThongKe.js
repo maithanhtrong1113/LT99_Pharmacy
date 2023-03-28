@@ -62,15 +62,11 @@ const ContentThongKe = () => {
   );
 
   useEffect(() => {
-    console.log(
-      ngayBatDau.toLocaleDateString("en-CA"),
-      ngayKetThuc.toLocaleDateString("en-CA")
-    );
+    const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
+    const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
     //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc
     fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-xuat-nhap-ton/theo-ngay?ngayBatDau=${ngayBatDau.toLocaleDateString(
-        "en-CA"
-      )}&ngayKetThuc=${ngayKetThuc.toLocaleDateString("en-CA")}`
+      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-xuat-nhap-ton/theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
     )
       .then((response) => response.json())
       .then((data) => {

@@ -53,11 +53,10 @@ const DoanhThuTheoNgay = () => {
   const [tongDoanhThu, setTongDoanhThu] = useState(0);
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
+    const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
+    const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
     fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-doanh-thu-theo-ngay?ngayBatDau=
-      ${ngayBatDau.toLocaleDateString(
-        "en-CA"
-      )}&ngayKetThuc=${ngayKetThuc.toLocaleDateString("en-CA")}`
+      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-doanh-thu-theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
     )
       .then((response) => response.json())
       .then((data) => {

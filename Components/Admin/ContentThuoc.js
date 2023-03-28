@@ -192,7 +192,7 @@ const ContentThuoc = () => {
                 <div className="col-2">
                   <ModalAddThuoc submitHandler={addThuocHandler} />
                 </div>
-                <div className="col-2 d-flex align-items-center">
+                {/* <div className="col-2 d-flex align-items-center">
                   <buton
                     className="btn btn-primary d-flex align-items-center"
                     type="button"
@@ -206,7 +206,7 @@ const ContentThuoc = () => {
                     </CSVLink>
                     <FaFileImport className="ms-2 text-light fs-15" />
                   </buton>
-                </div>
+                </div> */}
               </div>
               <table className="table table-striped">
                 <thead>

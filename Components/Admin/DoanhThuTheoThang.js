@@ -36,9 +36,7 @@ const DoanhThuTheoThang = () => {
 
   const [soLuongConLai, setSoLuongConLai] = useState([]);
   const [labels, setLabels] = useState([]);
-  const today = new Date();
-  const [ngayBatDau, setNgayBatDau] = useState(new Date());
-  const [ngayKetThuc, setNgayKetThuc] = useState(new Date());
+
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
     fetch(

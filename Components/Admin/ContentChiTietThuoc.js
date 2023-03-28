@@ -65,6 +65,7 @@ const ContentChiTietThuoc = (props) => {
   const [ngayHetHan, setNgayHetHan] = useState(
     new Date(today.getFullYear(), today.getMonth() + 1, today.getDate())
   );
+  const [ngayNhapThuoc, setNgayNhapThuoc] = useState(new Date());
   const validateSoLuongNhap = (value) => {
     if (value <= 0) {
       return "Giá trị phải lớn hơn 0";
@@ -176,13 +177,7 @@ const ContentChiTietThuoc = (props) => {
 
   const onSubmitNhapThuoc = (dataa) => {
     if (ngayHetHan <= today || ngaySanXuat >= today) return;
-    console.log(
-      dataa.soLo,
-      dataa.soLuongNhap,
-      today.toLocaleDateString("en-CA"),
-      format(new Date(ngaySanXuat), "yyyy-MM-dd"),
-      format(new Date(ngayHetHan), "yyyy-MM-dd")
-    );
+    console.log(today.toISOString().slice(0, 10));
     fetch(
       `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${id}/nhap-thuoc`,
       {
@@ -192,7 +187,7 @@ const ContentChiTietThuoc = (props) => {
         },
         body: JSON.stringify({
           soLo: dataa.soLo,
-          ngayNhapLoThuoc: today.toLocaleDateString("en-CA"),
+          ngayNhapLoThuoc: today.toISOString().slice(0, 10),
           ngaySanXuat: format(new Date(ngaySanXuat), "yyyy-MM-dd"),
           ngayHetHan: format(new Date(ngayHetHan), "yyyy-MM-dd"),
           soLuongNhap: dataa.soLuongNhap,
@@ -735,8 +730,7 @@ const ContentChiTietThuoc = (props) => {
                       )}
                     </div>
                   </div>
-                  {/* Số Lô  Số Lượng*/}
-                  <div className="form-group row my-3"></div>
+
                   {/* Ngày sản xuất ngày hết hạn */}
                   <div className="form-group row my-3 d-flex align-items-center">
                     <label className="col-sm-3 fw-bold text-info">
@@ -773,7 +767,19 @@ const ContentChiTietThuoc = (props) => {
                       )}
                     </div>
                   </div>
-
+                  <div className="form-group row my-3 d-flex align-items-center">
+                    <label className="col-sm-3 fw-bold text-info">
+                      Ngày nhập thuốc:
+                    </label>
+                    <div className="col-sm-3">
+                      <DatePicker
+                        className="form-select  "
+                        selected={ngayNhapThuoc}
+                        onChange={(date) => setNgayNhapThuoc(date)}
+                        dateFormat="yyyy/MM/dd"
+                      />
+                    </div>
+                  </div>
                   <button type="submit" className="btn btn-primary my-3">
                     Nhập Thuốc
                   </button>
