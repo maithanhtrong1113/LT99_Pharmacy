@@ -3,6 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { BsCheck2 } from "react-icons/bs";
+import { MdOutlineClose } from "react-icons/md";
 
 function ModalAddThuoc(props) {
   const [loaiThuoc, setLoaiThuoc] = useState([]);
@@ -154,53 +156,34 @@ function ModalAddThuoc(props) {
                     </div>
                   </div>
                   {/* Đơn vị tính */}
-                  <div className="form-group row my-2">
+                  <div className="form-group row my-2 ">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Đơn vị tính:
                     </label>
-                    <div className="col-sm-8">
-                      <input
-                        {...register("donViTinh", {
-                          required: true,
-                        })}
-                        type="text"
-                        required
-                        className="form-control form-control-sm inputText"
-                      />
+                    <div className="col-sm-3">
+                      <select
+                        {...register("donViTinh")}
+                        className="form-select form-select-sm "
+                      >
+                        <option value="Vỉ">Vỉ</option>
+                        <option value="Viên">Viên</option>
+                        <option value="Hộp">Hộp</option>
+                        <option value="Cái">Cái</option>
+                        <option value="Tuýp">Tuýp</option>
+                      </select>
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
-                      {errors?.donViTinh?.type === "required" && (
-                        <span className="text-danger">
-                          Vui lòng nhập đơn vị tính
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  {/* Mô tả */}
-                  <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
-                      Mô tả
-                    </label>
-                    <div className="col-sm-8">
-                      <input
-                        {...register("moTa", {
-                          required: true,
-                        })}
-                        type="text"
-                        required
-                        className="form-control form-control-sm inputText"
-                      />
-                    </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
-                      {errors?.moTa?.type === "required" && (
-                        <span className="text-danger">
-                          Vui lòng nhập mô tả chung
-                        </span>
-                      )}
+                    <div className="col-sm-2 fw-bold">Thuốc kê đơn:</div>
+                    <div className="col-sm-3">
+                      <select
+                        {...register("thuocKeDon")}
+                        className="form-select form-select-sm "
+                      >
+                        <option value="true">Có</option>
+                        <option value="false">Không</option>
+                      </select>
                     </div>
                   </div>
+
                   {/* Quy Cách Đóng Gói */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
@@ -273,7 +256,30 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
-
+                  {/* Mô tả */}
+                  <div className="form-group row my-2">
+                    <label className="col-sm-4 col-form-label fw-bold">
+                      Mô tả
+                    </label>
+                    <div className="col-sm-8">
+                      <textarea
+                        {...register("moTa", {
+                          required: true,
+                        })}
+                        type="text"
+                        required
+                        className="form-control form-control-sm inputText"
+                      />
+                    </div>
+                    <div className="col-sm-4"></div>
+                    <div className="col-sm-8">
+                      {errors?.moTa?.type === "required" && (
+                        <span className="text-danger">
+                          Vui lòng nhập mô tả chung
+                        </span>
+                      )}
+                    </div>
+                  </div>
                   <div className="row d-flex justify-content-between ">
                     <button
                       className="btn btn-info my-3  text-white fw-bold w-25"

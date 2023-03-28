@@ -119,6 +119,7 @@ const ContentThuoc = () => {
           tacDungPhu: data.tacDungPhu,
           huongDanSuDung: data.huongDanSuDung,
           soLuong: 0,
+          isThuocKeDon: data.thuocKeDon,
           images: [],
           dsDoiTuong: [],
           thuocKeDon: false,

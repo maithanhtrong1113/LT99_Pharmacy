@@ -45,6 +45,7 @@ const ContentChiTietThuoc = (props) => {
   const [moTa, setMoTa] = useState("");
   const [soLuong, setSoLuong] = useState("");
   const [loaThuocBanDau, setLoaiThuocBanDau] = useState("");
+  const [thuocKeDon, setThuocKeDon] = useState("");
   const { id } = router.query;
   const [isShow, setIsShow] = useState(false);
   const toggleShow = () => {
@@ -113,6 +114,7 @@ const ContentChiTietThuoc = (props) => {
         setSoLuong(data.thuoc.soLuong);
         setLoaiThuocSelected(data.thuoc.loaiThuoc.maLoai);
         setLoaiThuocBanDau(data.thuoc.loaiThuoc.maLoai);
+        setThuocKeDon(data.thuoc.isThuocKeDon);
       } catch (error) {
         console.error(error);
       }
@@ -151,7 +153,7 @@ const ContentChiTietThuoc = (props) => {
           moTa: moTa,
           images: [],
           dsDoiTuong: [],
-          thuocKeDon: true,
+          isThuocKeDon: thuocKeDon,
         }),
       }
     ).then((response) => {
@@ -458,9 +460,9 @@ const ContentChiTietThuoc = (props) => {
                           <div className="col-2 pr-opx">
                             <label className="fw-bold">Mô tả</label>
                           </div>
-                          <div className="col-10">
+                          <div className="col-4">
                             <div className="form-outline">
-                              <input
+                              <textarea
                                 type="text"
                                 className="form-control"
                                 value={moTa}
@@ -473,6 +475,24 @@ const ContentChiTietThuoc = (props) => {
                                   Vui lòng nhập mô tả
                                 </span>
                               )}
+                            </div>
+                          </div>
+                          <div className="col-2 pr-opx">
+                            <label className="fw-bold">Thuốc Kê Đơn</label>
+                          </div>
+                          <div className="col-4">
+                            <div className="form-outline">
+                              <select
+                                type="text"
+                                className="form-select"
+                                value={thuocKeDon}
+                                onChange={(e) => {
+                                  setThuocKeDon(e.target.value);
+                                }}
+                              >
+                                <option value="true">Có</option>
+                                <option value="false">Không</option>
+                              </select>
                             </div>
                           </div>
                         </div>

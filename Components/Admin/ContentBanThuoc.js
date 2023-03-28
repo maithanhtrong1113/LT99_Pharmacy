@@ -22,8 +22,6 @@ import { MdOutlineClose } from "react-icons/md";
 import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
 
 import { toast } from "react-toastify";
-import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
-import ModalAddKhachHangHD from "../Modal/ModalAddKhachHangHD";
 
 const onSubmit = (data) => {
   console.log(data);
@@ -69,10 +67,13 @@ const ContentBanThuoc = () => {
   const [name, setName] = useState("");
   const [soDienThoai, setSoDienThoai] = useState("");
   const [diaChi, setDiaChi] = useState("");
-  const [gioiTinh, setGioiTinh] = useState("");
+  const [gioiTinh, setGioiTinh] = useState("Nam");
   const [ngaySinh, setNgaySinh] = useState(new Date());
   const [khachHangCoSan, setKhachHangCoSan] = useState({});
   const [dsNhap1, setDsNhap1] = useState([]);
+  const [optionThuoc, setOptionThuoc] = useState("Tất cả");
+  console.log(optionThuoc);
+
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
@@ -83,21 +84,63 @@ const ContentBanThuoc = () => {
 
     if (searchTerm.length > 0) {
       const newTimeoutId = setTimeout(() => {
-        if (tab === "KhongKeDon") {
+        //all
+        if (optionThuoc === "Tất cả") {
+          fetch(
+            `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-thuoc?keyword=${encodeURIComponent(
+              searchTerm
+            )}`
+          )
+            .then((response) => response.json())
+            .then((results) => {
+              if (results.length > 0) setDsThuoc(results).slice(0, 5);
+              else {
+                setDsThuoc([]);
+              }
+            });
+        } else if (optionThuoc === "Chỉ thuốc kê đơn") {
+          fetch(
+            `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/danh-sach-thuoc-ke-don?keyword=${encodeURIComponent(
+              searchTerm
+            )}`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((results) => {
+              if (results.length > 0) setDsThuoc(results).slice(0, 5);
+              else {
+                setDsThuoc([]);
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
+        } else if (optionThuoc === "Chỉ thuốc không kê đơn") {
+          fetch(
+            `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/danh-sach-thuoc-khong-ke-don?keyword=${encodeURIComponent(
+              searchTerm
+            )}`
+          )
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((results) => {
+              if (results.length > 0) setDsThuoc(results.slice(0, 5));
+              else {
+                setDsThuoc([]);
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching data:", error);
+            });
         }
-
-        fetch(
-          `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/tim-thuoc?keyword=${encodeURIComponent(
-            searchTerm
-          )}`
-        )
-          .then((response) => response.json())
-          .then((results) => {
-            if (results.length > 0) setDsThuoc(results);
-            else {
-              setDsThuoc([]);
-            }
-          });
       }, 500);
       setTimeoutId(newTimeoutId);
     } else {
@@ -300,6 +343,8 @@ const ContentBanThuoc = () => {
       setName("");
       setSoDienThoai("");
       setDiaChi("");
+      setBacSi("");
+      setNoiKham("");
       setKhachHangCoSan({});
       return;
     }
@@ -312,13 +357,7 @@ const ContentBanThuoc = () => {
     setNgaySinh(new Date(ngaySinhKHCoSan));
   };
   const themKhachHangMoi = () => {
-    if (
-      name === "" ||
-      soDienThoai === "" ||
-      diaChi === "" ||
-      gioiTinh === "" ||
-      ngaySinh === ""
-    ) {
+    if (name === "" || soDienThoai === "") {
       toast.error("Vui Lòng Nhập Đầy Đủ Thông Tin", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
@@ -339,7 +378,7 @@ const ContentBanThuoc = () => {
           soDienThoai: soDienThoai,
           diaChi: diaChi,
           gioiTinh: gioiTinh,
-          ngaySinh: ngaySinh,
+          ngaySinh: ngaySinh.toLocaleDateString("en-CA"),
         }),
       }
     )
@@ -354,6 +393,11 @@ const ContentBanThuoc = () => {
       });
   };
   const [tab, setTab] = useState("KeDon");
+  useEffect(() => {
+    if (tab === "KhongKeDon") {
+      setOptionThuoc("Chỉ thuốc không kê đơn");
+    }
+  }, [tab]);
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -453,6 +497,15 @@ const ContentBanThuoc = () => {
                           type="text"
                           className="form-control inputText "
                         />
+                        {!kiemTraSoDienThoai(soDienThoai) &&
+                          soDienThoai !== "" && (
+                            <>
+                              <div className="col-3"></div>
+                              <span className="col-9 text-danger">
+                                Số điện thoại không tồn tại
+                              </span>
+                            </>
+                          )}
                       </div>
                     </div>
                     <div className="row d-flex align-items-center my-3">
@@ -565,15 +618,6 @@ const ContentBanThuoc = () => {
                             </span>
                           </>
                         )}
-                        {!kiemTraSoDienThoai(soDienThoai) &&
-                          soDienThoai !== "" && (
-                            <>
-                              <div className="col-3"></div>
-                              <span className="col-9 text-danger">
-                                Số điện thoại không tồn tại
-                              </span>
-                            </>
-                          )}
                       </div>
                     </div>
                   </div>
@@ -596,6 +640,7 @@ const ContentBanThuoc = () => {
                       value={searchTerm}
                       onChange={handleInputChange}
                     />
+
                     <BsSearch className="position-absolute localIconSearch text-dark shadow pointer" />
 
                     {dsThuoc.length !== 0 && (
@@ -650,6 +695,24 @@ const ContentBanThuoc = () => {
                     )}
                   </div>
                 </div>
+                <div className="col-3">
+                  {tab === "KeDon" && (
+                    <select
+                      className="form-select form-select-sm "
+                      value={optionThuoc}
+                      onChange={(e) => {
+                        setOptionThuoc(e.target.value);
+                      }}
+                    >
+                      <option value="Tất cả">Tất cả thuốc</option>
+                      <option value="Chỉ thuốc kê đơn">Chỉ thuốc kê đơn</option>
+
+                      <option value="Chỉ thuốc không kê đơn">
+                        Chỉ thuốc không kê đơn
+                      </option>
+                    </select>
+                  )}
+                </div>
               </div>
               {tab === "KeDon" && (
                 <div className="row">
@@ -673,9 +736,9 @@ const ContentBanThuoc = () => {
                         <tr className="text-center">
                           <th>Mã thuốc</th>
                           <th>Tên thuốc</th>
-                          <th>Số lượng</th>
-                          <th>Đơn vị tính</th>
                           <th>Liều lượng</th>
+                          <th>Đơn vị tính</th>
+                          <th>Số lượng</th>
                           <th>Thuốc kê đơn</th>
                           <th></th>
                         </tr>
@@ -684,8 +747,11 @@ const ContentBanThuoc = () => {
                         {dsNhap.map((thuoc) => (
                           <tr key={thuoc.maThuoc} className="text-center">
                             <td>{thuoc.maThuoc}</td>
-                            <td>{thuoc.tenThuoc}</td>
-                            <td className="w-10 ">
+                            <td className="fw-bold">{thuoc.tenThuoc}</td>
+                            <td>{thuoc.lieuLuong}</td>
+
+                            <td>{thuoc.donViTinh}</td>
+                            <td className="w-10">
                               <input
                                 type="number"
                                 value={thuoc.soLuongBan}
@@ -703,15 +769,12 @@ const ContentBanThuoc = () => {
                               />
                               <span className=" text-muted">{`Tồn: ${thuoc.soLuong}`}</span>
                             </td>
-
-                            <td>{thuoc.donViTinh}</td>
-                            <td>{thuoc.lieuLuong}</td>
-                            {thuoc.thuocKeDon && (
+                            {thuoc.isThuocKeDon && (
                               <td>
                                 <BsCheck2 className="text-success fs-20 mt-3 " />
                               </td>
                             )}
-                            {!thuoc.thuocKeDon && (
+                            {!thuoc.isThuocKeDon && (
                               <td className="fw-bold ">
                                 <MdOutlineClose className="text-danger fs-27 mt-3 " />
                               </td>

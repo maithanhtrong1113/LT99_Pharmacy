@@ -91,12 +91,12 @@ const HoaDonKhongKeDon = ({ dsNhap1, setDsNhap1 }) => {
 
                   <td>{thuoc.donViTinh}</td>
                   <td>{thuoc.lieuLuong}</td>
-                  {thuoc.thuocKeDon && (
+                  {thuoc.isThuocKeDon && (
                     <td>
                       <BsCheck2 className="text-success fs-20 mt-3 " />
                     </td>
                   )}
-                  {!thuoc.thuocKeDon && (
+                  {!thuoc.isThuocKeDon && (
                     <td className="fw-bold ">
                       <MdOutlineClose className="text-danger fs-27 mt-3 " />
                     </td>
