@@ -1,24 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
-
-import ProgressBar from "../ProcessBar/ProcessBar";
-
+import React, { Fragment, useState } from "react";
 import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
+import { Input } from "reactstrap";
 
-const index = () => {
-  const [dsNhanVien, setDsNhanVien] = useState([]);
-  // danh sách nhân viên
-  useEffect(() => {
-    fetch(`http://localhost:8080/QLNT-Server/quan-ly/danh-sach-nhan-vien`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("err");
-        setDsNhanVien(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+const index = (props) => {
+  const [dsNhanVien, setDsNhanVien] = useState(props.nhanVien);
+
   // thêm nhân viên và tạo tài khoản
   const addNhanVienSubmit = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/nhan-vien", {
@@ -73,7 +62,7 @@ const index = () => {
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-4">
                   <form>
-                    <input
+                    <Input
                       type="text"
                       placeholder="Nhập tên tài khoản"
                       className="form-control w-100 px-2"

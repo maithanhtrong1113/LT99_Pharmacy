@@ -92,6 +92,7 @@ body {
   margin-top: 8rem;
   margin-bottom: 3rem;
 }
+
 .my-9 {
   margin-top: 6rem;
   margin-bottom: 3rem;
@@ -379,7 +380,7 @@ body {
   transition: width 0.2s ease-in-out;
 }
 .w-modalAddNhanVien {
-  max-width: 800px;
+  max-width: 650px;
 }
 .w-modalAddKhachHang {
   max-width: 650px;
@@ -403,4 +404,43 @@ body {
 }
 .pb-10 {
   padding-bottom: 8rem !important;
+}
+
+.adminIcon {
+  font-size: 24px;
+}
+.h-90 {
+  height: 90% !important;
+}
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 12px !important;
+  }
+
+  .my-10 {
+    margin-top: 6rem;
+    margin-bottom: 0.25rem;
+  }
+  .my-1i {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .carousel-control-next-icon {
+    visibility: hidden !important;
+  }
+  .carousel-control-prev-icon {
+    visibility: hidden !important;
+  }
+  .carousel-indicators {
+    visibility: hidden !important;
+  }
+  .h-600 {
+    height: 10px;
+  }
+  .fs-12 {
+    font-size: 10px !important;
+  }
+}
+.h-600 {
+  height: 60px;
 }

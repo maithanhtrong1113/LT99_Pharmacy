@@ -19,22 +19,30 @@ const CardProduct = (props) => {
     style: "currency",
     currency: "VND",
   });
+  const xuLyTenKhiQuaDai = (chuoi) => {
+    if (chuoi.length > 40) {
+      chuoi = chuoi.slice(0, 40) + "...";
+    }
+    return chuoi;
+  };
   return (
     <Fragment>
-      <div className="col-3  mb-3">
-        <div className="card cardProductHover">
+      <div className="col-6 col-lg-3  mb-3 shadow">
+        <div className="card cardProductHover h-100">
           <Link
             href={`product/${props.id}`}
-            className="text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
+            className="h-90 text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
           >
             <img src={props.images} className="card-img-top" />
             <div className="card-body">
-              <h6 className="card-title text-dark fw-bold">{props.title}</h6>
+              <h6 className="card-title text-dark fw-bold">
+                {xuLyTenKhiQuaDai(props.title)}
+              </h6>
               <p className="text-info">{VND.format(props.price)}</p>
             </div>
           </Link>
           <button
-            className="btn btn-primary  btn-info my-2 mx-3 shadow"
+            className="btn btn-primary  btn-info my-2 mx-2 shadow fw-bold fs-12"
             onClick={addToCart}
           >
             Thêm vào giỏ hàng

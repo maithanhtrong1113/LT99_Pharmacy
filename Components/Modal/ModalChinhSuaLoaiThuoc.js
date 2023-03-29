@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
 
 function ModalChinhSuaLoaiThuoc(props) {
   const {
@@ -15,9 +14,7 @@ function ModalChinhSuaLoaiThuoc(props) {
   const toggle = () => setModal(!modal);
   const [tenLoai, setTenLoai] = useState("");
   const [moTaChung, setMoTaChung] = useState("");
-  const luuHandler = (e) => {
-    toggle();
-  };
+
   const onSubmit = (data) => {
     data.maLoai = props.loaiThuoc.maLoai;
     console.log(data);

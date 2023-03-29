@@ -3,7 +3,7 @@ import GoTopPage from "@/Components/Index/GoTopPage";
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
 
-const index = () => {
+const thongKe = () => {
   return (
     <Fragment>
       <ToastContainer />
@@ -13,4 +13,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default thongKe;

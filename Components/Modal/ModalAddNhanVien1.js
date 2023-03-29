@@ -10,15 +10,12 @@ function ModalAddNhanVien(props) {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+
     control,
   } = useForm();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const luuHandler = (e) => {
-    toggle();
-  };
   const onSubmit = (data) => {
     data.date = new Date(data.date).toLocaleDateString("vi-VN");
     console.log(data);

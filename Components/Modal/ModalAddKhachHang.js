@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
@@ -9,7 +9,6 @@ function ModalAddKhachHang(props) {
     register,
     handleSubmit,
     formState: { errors },
-
     control,
   } = useForm();
   const [modal, setModal] = useState(false);

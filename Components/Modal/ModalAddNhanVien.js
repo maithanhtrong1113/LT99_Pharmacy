@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
@@ -119,11 +119,11 @@ function ModalAddNhanVien(props) {
                     </div>
 
                     <div className="col-sm-6 d-flex">
-                      <label className="fw-bold w-100 text-info">
+                      <label className="fw-bold w-75 text-info p">
                         Ngày sinh:
                       </label>
                       <Controller
-                        className="w-100"
+                        className="w-100 pr-opx"
                         name="date"
                         control={control}
                         defaultValue={new Date()}
@@ -131,7 +131,7 @@ function ModalAddNhanVien(props) {
                           <DatePicker
                             {...field}
                             selected={field.value}
-                            className="my-datepicker-input form-select"
+                            className="my-datepicker-input form-select form-control form-control-sm"
                             onChange={(date) => field.onChange(date)}
                             dateFormat="dd/MM/yyyy"
                             placeholderText="Select a date"

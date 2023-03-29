@@ -7,17 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 function ModalAddThuoc(props) {
   const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("");
-  // useEffect(() => {
-  //   // danh sách loại thuốc truyền vào select option
-  //   fetch(
-  //     "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setLoaiThuoc(data);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, []);
+
   const {
     register,
     handleSubmit,
@@ -163,8 +153,8 @@ function ModalAddThuoc(props) {
                         {...register("donViTinh")}
                         className="form-select form-select-sm "
                       >
-                        <option value="Vỉ">Vỉ</option>
                         <option value="Viên">Viên</option>
+                        <option value="Vỉ">Vỉ</option>
                         <option value="Hộp">Hộp</option>
                         <option value="Cái">Cái</option>
                         <option value="Tuýp">Tuýp</option>

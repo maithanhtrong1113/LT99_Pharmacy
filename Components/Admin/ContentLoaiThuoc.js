@@ -1,20 +1,13 @@
-import axios from "axios";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
-import ProgressBar from "../ProcessBar/ProcessBar";
 import LoaiThuoc from "./LoaiThuoc";
 import NguoiDung from "./NguoiDung";
 import Sidebar from "./Sidebar";
 
-const ContentLoaiThuoc = () => {
-  const router = useRouter();
+const ContentLoaiThuoc = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
@@ -24,19 +17,10 @@ const ContentLoaiThuoc = () => {
     localStorage.removeItem("id");
     toggle();
   };
-  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
-  useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setLoaiThuoc(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+
   // thêm loại thuốc
   const themLoaiThuoc = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {

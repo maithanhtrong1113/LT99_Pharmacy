@@ -7,22 +7,11 @@ import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
 
-const ContentKhachHang = () => {
-  const [dsKhachHang, setDsKhachHang] = useState([]);
+const ContentKhachHang = (props) => {
+  const [dsKhachHang, setDsKhachHang] = useState(props.khachHang);
   const [timeoutId1, setTimeoutId1] = useState(null);
   const [searchTerm1, setSearchTerm1] = useState("");
-  // danh sách khách hàng
-  useEffect(() => {
-    fetch(
-      `http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/danh-sach-khach-hang`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("err");
-        setDsKhachHang(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+
   // thêm khách hàng
   const addKhachHangHandler = (data) => {
     fetch(

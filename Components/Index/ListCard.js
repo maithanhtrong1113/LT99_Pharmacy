@@ -4,7 +4,7 @@ import CardProduct from "./CardProduct";
 const ListCard = () => {
   return (
     <Fragment>
-      <div className="row my-4">
+      <div className="row my-3 my-1i">
         <div className="col-12">
           <h3 className="fw-bold">Sản phẩm bán chạy</h3>
         </div>

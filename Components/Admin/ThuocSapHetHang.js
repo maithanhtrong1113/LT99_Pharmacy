@@ -28,7 +28,7 @@ const ThuocSapHetHang = () => {
       },
       title: {
         display: true,
-        text: "Thống kê sắp hết hạn",
+        text: "Thống kê sắp hết hàng",
       },
     },
   };

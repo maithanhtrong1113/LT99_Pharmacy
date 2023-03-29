@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <Container fluid className="bg-gray">
       <div className="row">
-        <div className="col-4 my-3">
+        <div className=" col-lg-4 col-6 my-3">
           <div className="fw-bold h-60 d-flex align-item-center">
             <Image
               src="/images/logo.png"
@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
 
           <hr />
-          <p className="">
+          <p>
             Tại LT99, mỗi dược sỹ luôn tận tâm phục vụ và được đào tạo để hoàn
             thành xuất sắc những sứ mệnh được giao.
           </p>
@@ -38,14 +38,15 @@ const Footer = () => {
             </Link>
           </p>
           <p>
-            Hỗ trợ đơn hàng doanh nghiệp:{" "}
-            <Link href="/" className="text-primary  text-decoration-none">
-              LT99pharmacy@gmail.com
-            </Link>
+            Hỗ trợ đơn hàng doanh nghiệp:
+            <br />
+            <p className="text-primary overflow-auto">LT99pharmacy@gmail.com</p>
           </p>
         </div>
-        <div className="col-4 my-3">
-          <p className="fw-bold h-60 ">Liên kết hữu ích</p>
+        <div className="col-lg-4  col-6 my-3 my-1i">
+          <p className="fw-bold h-60 d-flex align-items-center ">
+            Liên kết hữu ích
+          </p>
           <hr />
           <p>
             <Link href="/" className="fw-bold text-muted text-decoration-none">
@@ -83,8 +84,10 @@ const Footer = () => {
             </Link>
           </p>
         </div>
-        <div className="col-4 my-3">
-          <p className="fw-bold h-60 ">Theo dõi chúng tôi trên</p>
+        <div className="col-lg-4 col-12  my-3 my-1i">
+          <p className="fw-bold h-600 d-flex align-items-center">
+            Theo dõi chúng tôi trên
+          </p>
           <hr />
           <p>
             <BsFacebook className="colorFb me-4" />

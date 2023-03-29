@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { toast } from "react-toastify";
 
 function ModalXoaLoaiThuoc(props) {
   const [modal, setModal] = useState(false);

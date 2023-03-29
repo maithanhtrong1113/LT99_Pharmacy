@@ -1,9 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-
-import ProgressBar from "../ProcessBar/ProcessBar";
-import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Sidebar from "./Sidebar";
-import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import { CSVLink } from "react-csv";
 import { FaFileImport } from "react-icons/fa";
@@ -70,17 +66,10 @@ const ContentKhachHang = () => {
       }, 500);
       setTimeoutId(newTimeoutId);
     } else {
-      // fetch("http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/")
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     setDanhSachHoaDon(data);
-      //   })
-      //   .catch((error) => console.error(error));
     }
   };
   return (
     <Fragment>
-      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />

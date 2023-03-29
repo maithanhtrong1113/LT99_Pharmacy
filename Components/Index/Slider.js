@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 const Slider = () => {
   return (
     <Fragment>
-      <div className="row my-10">
+      <div className="row my-10 d-flex align-items-center">
         <div
           id="carouselExampleIndicators"
           className="col-8 carousel slide "

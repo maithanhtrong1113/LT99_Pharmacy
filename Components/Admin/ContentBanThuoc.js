@@ -39,7 +39,7 @@ const ContentBanThuoc = () => {
   const [ngaySinh, setNgaySinh] = useState(new Date());
   const [khachHangCoSan, setKhachHangCoSan] = useState({});
   const [dsNhap1, setDsNhap1] = useState([]);
-  const [optionThuoc, setOptionThuoc] = useState("Tất cả");
+  const [optionThuoc, setOptionThuoc] = useState("Chỉ thuốc kê đơn");
   const [tab, setTab] = useState("KeDon");
   const [noiKham, setNoiKham] = useState("");
   const [noiKhamFocus, setNoiKhamFocus] = useState(false);
@@ -47,6 +47,12 @@ const ContentBanThuoc = () => {
   const [bacSiFocus, setBacSiFocus] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
   const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
+
+  useEffect(() => {
+    if (tab === "KhongKeDon") {
+      setOptionThuoc("Chỉ thuốc không kê đơn");
+    }
+  }, [tab]);
 
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -121,6 +127,7 @@ const ContentBanThuoc = () => {
       setDsThuoc([]);
     }
   };
+  console.log(dsThuoc);
   const handleInputChange1 = (event) => {
     const searchTerm1 = event.target.value;
     setSearchTerm1(searchTerm1);
@@ -165,17 +172,17 @@ const ContentBanThuoc = () => {
     setDsNhap([]);
   };
   const addThuocNhap = (maThuoc) => {
-    const isThuocExist = dsNhap.find((item) => item.maThuoc === maThuoc);
-    isThuocExist.soLuongBan++;
-    if (isThuocExist.soLuongBan > isThuocExist.soLuong)
-      isThuocExist.soLuongBan = isThuocExist.soLuong;
+    const isThuocExist = dsNhap.find((item) => item.thuoc.maThuoc === maThuoc);
+    isThuocExist.thuoc.soLuongBan++;
+    if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
+      isThuocExist.thuoc.soLuongBan = isThuocExist.thuoc.soLuong;
     setDsNhap([...dsNhap]);
   };
   const NhapSoLuong = (maThuoc, soLuongBan) => {
-    const isThuocExist = dsNhap.find((item) => item.maThuoc === maThuoc);
+    const isThuocExist = dsNhap.find((item) => item.thuoc.maThuoc === maThuoc);
     isThuocExist.soLuongBan = parseInt(soLuongBan);
-    if (isThuocExist.soLuongBan > isThuocExist.soLuong)
-      isThuocExist.soLuongBan = isThuocExist.soLuong;
+    if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
+      isThuocExist.thuoc, (soLuongBan = isThuocExist.thuoc.soLuong);
     setDsNhap([...dsNhap]);
   };
   function kiemTraSoDienThoai(soDienThoai) {
@@ -213,10 +220,7 @@ const ContentBanThuoc = () => {
     if (name === "" || soDienThoai === "") {
       return;
     }
-    if (
-      tab === "KeDon" &&
-      (name === "" || soDienThoai === "" || bacSi === "" || noiKham === "")
-    ) {
+    if (tab === "KeDon" && (name === "" || bacSi === "" || noiKham === "")) {
       return;
     }
 
@@ -368,11 +372,6 @@ const ContentBanThuoc = () => {
       });
   };
 
-  useEffect(() => {
-    if (tab === "KhongKeDon") {
-      setOptionThuoc("Chỉ thuốc không kê đơn");
-    }
-  }, [tab]);
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -462,7 +461,7 @@ const ContentBanThuoc = () => {
                           <>
                             <div className="col-3"></div>
                             <span className="text-danger col-9">
-                              Vui lòng nhập số điện thoại
+                              Vui lòng nhập tên khách hàng
                             </span>
                           </>
                         )}
@@ -642,42 +641,46 @@ const ContentBanThuoc = () => {
                             className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-1 border "
                             onClick={() => {
                               if (tab === "KeDon") {
-                                if (thuoc.soLuong === 0) return;
+                                if (thuoc.thuoc.soLuong === 0) return;
                                 const isThuocExist = dsNhap.find(
-                                  (item) => item.maThuoc === thuoc.maThuoc
+                                  (item) =>
+                                    item.thuoc.maThuoc === thuoc.thuoc.maThuoc
                                 );
                                 if (isThuocExist) {
-                                  isThuocExist.soLuongBan++;
+                                  isThuocExist.thuoc.soLuongBan++;
                                   setDsNhap([...dsNhap]);
                                 } else {
-                                  thuoc.soLuongBan = 1;
+                                  thuoc.thuoc.soLuongBan = 1;
                                   setDsNhap([...dsNhap, thuoc]);
                                 }
                               } else {
-                                if (thuoc.soLuong === 0) return;
+                                if (thuoc.thuoc.soLuong === 0) return;
                                 const isThuocExist = dsNhap1.find(
-                                  (item) => item.maThuoc === thuoc.maThuoc
+                                  (item) =>
+                                    item.thuoc.maThuoc === thuoc.thuoc.maThuoc
                                 );
                                 if (isThuocExist) {
-                                  isThuocExist.soLuongBan++;
+                                  isThuocExist.thuoc.soLuongBan++;
                                   setDsNhap1([...dsNhap1]);
                                 } else {
-                                  thuoc.soLuongBan = 1;
+                                  thuoc.thuoc.soLuongBan = 1;
                                   setDsNhap1([...dsNhap1, thuoc]);
                                 }
                               }
                             }}
                           >
-                            <span className="fw-bold">{thuoc.tenThuoc}</span>
+                            <span className="fw-bold">
+                              {thuoc.thuoc.tenThuoc}
+                            </span>
                             <div>
                               {thuoc.soLuong > 1 && (
                                 <>
-                                  <span className="text-muted  ">{`Số lượng tồn: ${thuoc.soLuong} `}</span>
+                                  <span className="text-muted  ">{`Số lượng tồn: ${thuoc.thuoc.soLuong} `}</span>
                                   <AiOutlinePlusCircle className="text-info" />
                                 </>
                               )}
                               {thuoc.soLuong < 1 && (
-                                <span className="text-danger">{`Số lượng tồn: ${thuoc.soLuong} `}</span>
+                                <span className="text-danger">{`Số lượng tồn: ${thuoc.thuoc.soLuong} `}</span>
                               )}
                             </div>
                           </button>
@@ -727,25 +730,34 @@ const ContentBanThuoc = () => {
                         <tr className="text-center">
                           <th>Mã thuốc</th>
                           <th>Tên thuốc</th>
-                          <th>Liều lượng</th>
+                          <th>Thuốc kê đơn</th>
                           <th>Đơn vị tính</th>
                           <th>Số lượng</th>
-                          <th>Thuốc kê đơn</th>
+                          <th>Thành tiền</th>
                           <th></th>
                         </tr>
                       </thead>
                       <tbody>
                         {dsNhap.map((thuoc) => (
-                          <tr key={thuoc.maThuoc} className="text-center">
-                            <td>{thuoc.maThuoc}</td>
-                            <td className="fw-bold">{thuoc.tenThuoc}</td>
-                            <td>{thuoc.lieuLuong}</td>
+                          <tr key={thuoc.thuoc.maThuoc} className="text-center">
+                            <td>{thuoc.thuoc.maThuoc}</td>
+                            <td className="fw-bold">{thuoc.thuoc.tenThuoc}</td>
+                            {thuoc.thuoc.isThuocKeDon && (
+                              <td>
+                                <BsCheck2 className="text-success fs-20 mt-3 " />
+                              </td>
+                            )}
+                            {!thuoc.thuoc.isThuocKeDon && (
+                              <td className="fw-bold ">
+                                <MdOutlineClose className="text-danger fs-27 mt-3 " />
+                              </td>
+                            )}
 
-                            <td>{thuoc.donViTinh}</td>
+                            <td>{thuoc.thuoc.donViTinh}</td>
                             <td className="w-10">
                               <input
                                 type="number"
-                                value={thuoc.soLuongBan}
+                                value={thuoc.thuoc.soLuongBan}
                                 min={1}
                                 onChange={(e) => {
                                   if (
@@ -754,41 +766,39 @@ const ContentBanThuoc = () => {
                                   ) {
                                     e.target.value = 1;
                                   }
-                                  NhapSoLuong(thuoc.maThuoc, e.target.value);
+                                  NhapSoLuong(
+                                    thuoc.thuoc.maThuoc,
+                                    e.target.value
+                                  );
                                 }}
                                 className="fw-bold form-control text-center"
                               />
-                              <span className=" text-muted">{`Tồn: ${thuoc.soLuong}`}</span>
+                              <span className=" text-muted">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                             </td>
-                            {thuoc.isThuocKeDon && (
-                              <td>
-                                <BsCheck2 className="text-success fs-20 mt-3 " />
-                              </td>
-                            )}
-                            {!thuoc.isThuocKeDon && (
-                              <td className="fw-bold ">
-                                <MdOutlineClose className="text-danger fs-27 mt-3 " />
-                              </td>
-                            )}
+                            <td>{thuoc.thuoc.lieuLuong}</td>
                             <td>
                               <button
                                 type="button"
                                 className="btn btn-sm btn-warning mx-2 px-2 mt-3 shadow"
-                                onClick={() => removeThuocNhap(thuoc.maThuoc)}
+                                onClick={() =>
+                                  removeThuocNhap(thuoc.thuoc.maThuoc)
+                                }
                               >
                                 <AiOutlineMinusCircle className="text-white" />
                               </button>
                               <button
                                 type="button"
                                 className="btn btn-sm btn-info mx-2 mt-3 shadow"
-                                onClick={() => addThuocNhap(thuoc.maThuoc)}
+                                onClick={() =>
+                                  addThuocNhap(thuoc.thuoc.maThuoc)
+                                }
                               >
                                 <BsFillPlusCircleFill className="text-white " />
                               </button>
                               <button
                                 type="button"
                                 className="btn btn-sm btn-danger mx-2 mt-3 shadow"
-                                onClick={() => removeThuoc(thuoc.maThuoc)}
+                                onClick={() => removeThuoc(thuoc.thuoc.maThuoc)}
                               >
                                 <AiFillCloseCircle className="text-white " />
                               </button>
@@ -796,7 +806,7 @@ const ContentBanThuoc = () => {
                           </tr>
                         ))}
                         <tr>
-                          <td>Tổng tiền:(Đang hoàn thiện)</td>
+                          <td>Tổng tiền:</td>
                         </tr>
                       </tbody>
                     </table>
