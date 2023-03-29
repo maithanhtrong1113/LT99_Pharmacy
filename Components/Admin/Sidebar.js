@@ -9,12 +9,7 @@ import {
   BsFillPersonLinesFill,
 } from "react-icons/bs";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
-import {
-  MdArrowBackIos,
-  MdCategory,
-  MdLabelImportant,
-  MdManageAccounts,
-} from "react-icons/md";
+import { MdArrowBackIos, MdCategory, MdManageAccounts } from "react-icons/md";
 
 const Sidebar = () => {
   const router = useRouter();

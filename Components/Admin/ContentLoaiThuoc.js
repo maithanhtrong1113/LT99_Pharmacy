@@ -25,6 +25,8 @@ const ContentLoaiThuoc = () => {
     toggle();
   };
   const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [timeoutId, setTimeoutId] = useState(null);
   useEffect(() => {
     fetch(
       "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
@@ -67,9 +69,6 @@ const ContentLoaiThuoc = () => {
     //     setLoaiThuoc(data);
     //   })
   };
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [timeoutId, setTimeoutId] = useState(null);
 
   //gợi ý tìm kiếm loại Thuốc
   const handleInputChange = (event) => {
@@ -110,7 +109,7 @@ const ContentLoaiThuoc = () => {
   };
   return (
     <Fragment>
-      <ProgressBar />
+      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -139,7 +138,7 @@ const ContentLoaiThuoc = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">STT</th>
+                    <th scope="col">Mã Loại Thuốc</th>
                     <th scope="col">Tên Loại Thuốc</th>
                     <th scope="col">Mô tả chung</th>
                   </tr>

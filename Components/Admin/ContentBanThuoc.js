@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-
 import Sidebar from "./Sidebar";
-
 import {
   BsCheck2,
   BsFillCartCheckFill,
@@ -11,7 +9,6 @@ import {
 } from "react-icons/bs";
 import NguoiDung from "./NguoiDung";
 import DatePicker from "react-datepicker";
-
 import {
   AiFillCloseCircle,
   AiOutlineMinusCircle,
@@ -20,43 +17,14 @@ import {
 import { useForm } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
 import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
-
 import { toast } from "react-toastify";
-
-const onSubmit = (data) => {
-  console.log(data);
-};
 const ContentBanThuoc = () => {
   const {
     register,
 
     formState: { errors },
   } = useForm({});
-  const addThuocHandler = (data) => {
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/${data.maLoai}/thuoc`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tenThuoc: data.tenThuoc,
-          lieuLuong: data.lieuLuong,
-          congDung: data.congDung,
-          donViTinh: data.donViTinh,
-          quyCachDongGoi: data.quyCachDongGoi,
-          tacDungPhu: data.tacDungPhu,
-          huongDanSuDung: data.huongDanSuDung,
-          soLuong: data.soLuong,
-          images: [],
-          dsDoiTuong: [],
-          thuocKeDon: false,
-          moTa: data.moTa,
-        }),
-      }
-    );
-  };
+
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
   const [timeoutId1, setTimeoutId1] = useState(null);
@@ -72,7 +40,13 @@ const ContentBanThuoc = () => {
   const [khachHangCoSan, setKhachHangCoSan] = useState({});
   const [dsNhap1, setDsNhap1] = useState([]);
   const [optionThuoc, setOptionThuoc] = useState("Tất cả");
-  console.log(optionThuoc);
+  const [tab, setTab] = useState("KeDon");
+  const [noiKham, setNoiKham] = useState("");
+  const [noiKhamFocus, setNoiKhamFocus] = useState(false);
+  const [bacSi, setBacSi] = useState("");
+  const [bacSiFocus, setBacSiFocus] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
+  const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
 
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -208,8 +182,6 @@ const ContentBanThuoc = () => {
     const re = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/; // Biểu thức chính quy để kiểm tra số điện thoại
     return re.test(soDienThoai);
   }
-  const [nameFocus, setNameFocus] = useState(false);
-  const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
 
   const hanleFocusName = () => {
     setNameFocus(true);
@@ -218,10 +190,6 @@ const ContentBanThuoc = () => {
     setSoDienThoaiFocus(true);
   };
 
-  const [noiKham, setNoiKham] = useState("");
-  const [noiKhamFocus, setNoiKhamFocus] = useState(false);
-  const [bacSi, setBacSi] = useState("");
-  const [bacSiFocus, setBacSiFocus] = useState(false);
   const hanleFocusBacSi = () => {
     setBacSiFocus(true);
   };
@@ -251,6 +219,8 @@ const ContentBanThuoc = () => {
     ) {
       return;
     }
+
+    // Lập Hóa Đơn Kê Đơn
     if (tab === "KeDon") {
       // Hóa đơn kê đơn
       let dsXuat = dsNhap.map((thuoc) => {
@@ -338,6 +308,7 @@ const ContentBanThuoc = () => {
       });
     }
   };
+  //set Thong Tin vào input
   const setThongTin = (khachHangCoSan) => {
     if (Object.keys(khachHangCoSan).length === 0) {
       setName("");
@@ -396,7 +367,7 @@ const ContentBanThuoc = () => {
         });
       });
   };
-  const [tab, setTab] = useState("KeDon");
+
   useEffect(() => {
     if (tab === "KhongKeDon") {
       setOptionThuoc("Chỉ thuốc không kê đơn");
@@ -487,6 +458,14 @@ const ContentBanThuoc = () => {
                           type="text"
                           className="form-control inputText "
                         />
+                        {name === "" && nameFocus && (
+                          <>
+                            <div className="col-3"></div>
+                            <span className="text-danger col-9">
+                              Vui lòng nhập số điện thoại
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
                     <div className="row d-flex align-items-center my-3">
@@ -501,6 +480,14 @@ const ContentBanThuoc = () => {
                           type="text"
                           className="form-control inputText "
                         />
+                        {soDienThoai === "" && soDienThoaiFocus && (
+                          <>
+                            <div className="col-3"></div>
+                            <span className="text-danger col-9">
+                              Vui lòng nhập số điện thoại
+                            </span>
+                          </>
+                        )}
                         {!kiemTraSoDienThoai(soDienThoai) &&
                           soDienThoai !== "" && (
                             <>
@@ -744,7 +731,6 @@ const ContentBanThuoc = () => {
                           <th>Đơn vị tính</th>
                           <th>Số lượng</th>
                           <th>Thuốc kê đơn</th>
-                          <th>Thành tiền(đang hoàn thiện)</th>
                           <th></th>
                         </tr>
                       </thead>

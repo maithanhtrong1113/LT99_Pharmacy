@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
 import { toast } from "react-toastify";
 const Thuoc = (props) => {
-  let count = 1;
   const router = useRouter();
   const handlerInfo = (data) => {
     router.push(`thuoc/${data}`);
@@ -49,7 +48,7 @@ const Thuoc = (props) => {
           <td>{thuoc.lieuLuong}</td>
           <td>{thuoc.congDung}</td>
           <td>{thuoc.donViTinh}</td>
-          {/* <td>{thuoc.soLuong}</td> */}
+
           <td>{thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
             <button

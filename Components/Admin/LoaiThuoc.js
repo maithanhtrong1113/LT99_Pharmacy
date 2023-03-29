@@ -61,7 +61,7 @@ const LoaiThuoc = (props) => {
       }
     });
   };
-  let count = 1;
+
   return (
     <Fragment>
       {props.loaiThuoc.length === 0 && (
@@ -71,7 +71,7 @@ const LoaiThuoc = (props) => {
       )}
       {props.loaiThuoc.map((loaiThuoc) => (
         <tr key={loaiThuoc.maLoai}>
-          <td>{count++}</td>
+          <td>{loaiThuoc.maLoai}</td>
           <td>{loaiThuoc.tenLoai}</td>
           <td>{loaiThuoc.moTaChung}</td>
           <td className="d-flex">

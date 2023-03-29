@@ -99,7 +99,7 @@ const ContentKhachHang = () => {
   };
   return (
     <Fragment>
-      <ProgressBar />
+      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />

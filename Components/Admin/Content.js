@@ -6,6 +6,7 @@ import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
+
 const index = () => {
   const [dsNhanVien, setDsNhanVien] = useState([]);
   // danh sách nhân viên
@@ -62,7 +63,7 @@ const index = () => {
   };
   return (
     <Fragment>
-      <ProgressBar />
+      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />

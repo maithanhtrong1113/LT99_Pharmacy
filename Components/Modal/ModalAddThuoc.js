@@ -1,25 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { BsCheck2 } from "react-icons/bs";
-import { MdOutlineClose } from "react-icons/md";
 
 function ModalAddThuoc(props) {
-  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("");
-  useEffect(() => {
-    // danh sách loại thuốc truyền vào select option
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setLoaiThuoc(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   // danh sách loại thuốc truyền vào select option
+  //   fetch(
+  //     "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+  //   )
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setLoaiThuoc(data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
   const {
     register,
     handleSubmit,

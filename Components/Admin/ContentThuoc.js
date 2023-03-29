@@ -1,40 +1,32 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { FaAngleLeft, FaAngleRight, FaFileImport } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import Sidebar from "./Sidebar";
 import ModalAddThuoc from "../Modal/ModalAddThuoc";
 import Thuoc from "./Thuoc";
 import { BsSearch } from "react-icons/bs";
-import ProgressBar from "../ProcessBar/ProcessBar";
+
 import NguoiDung from "./NguoiDung";
 import { toast } from "react-toastify";
-import { CSVLink } from "react-csv";
-const ContentThuoc = () => {
+
+const ContentThuoc = (props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [loaiThuoc, setLoaiThuoc] = useState([]);
-  const [dsThuoc, setDsThuoc] = useState([]);
-  const [loaiThuocSelected, setLoaiThuocSelected] = useState("Tất cả thuốc");
+  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
+  const [dsThuoc, setDsThuoc] = useState(props.thuoc);
+  const [loaiThuocSelected, setLoaiThuocSelected] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [timeoutId, setTimeoutId] = useState(null);
 
   // danh sách thuốc theo loại thuốc
   useEffect(() => {
-    if (loaiThuocSelected === "Tất cả thuốc") {
+    if (loaiThuocSelected === "All") {
       // danh sách tất cả thuốc truyền vào table
-      fetch(
-        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setDsThuoc(data);
-        })
-        .catch((error) => console.error(error));
+      setDsThuoc(props.thuoc);
     } else {
       console.log(loaiThuocSelected);
       fetch(
@@ -47,24 +39,6 @@ const ContentThuoc = () => {
         .catch((error) => console.error(error));
     }
   }, [loaiThuocSelected]);
-
-  useEffect(() => {
-    // danh sách loại thuốc truyền vào select option
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setLoaiThuoc(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [timeoutId, setTimeoutId] = useState(null);
 
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -144,13 +118,11 @@ const ContentThuoc = () => {
   };
   return (
     <Fragment>
-      <ProgressBar />
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
           <div className="col-10 ">
             <NguoiDung />
-
             <div className="container border shadow rounded">
               <div className="row my-3 d-flex align-items-center">
                 <div className="col-5">
@@ -163,7 +135,6 @@ const ContentThuoc = () => {
                         value={searchTerm}
                         onChange={handleInputChange}
                       />
-
                       <BsSearch className="position-absolute localIconSearch" />
                     </div>
                   </form>
@@ -178,7 +149,7 @@ const ContentThuoc = () => {
                         setLoaiThuocSelected(e.target.value);
                       }}
                     >
-                      <option value={"Tất cả thuốc"} key={0} defaultValue>
+                      <option value={"All"} key={0} defaultValue>
                         Tất cả thuốc
                       </option>
                       {loaiThuoc.map((loaiThuoc) => (
@@ -190,7 +161,10 @@ const ContentThuoc = () => {
                   </form>
                 </div>
                 <div className="col-2">
-                  <ModalAddThuoc submitHandler={addThuocHandler} />
+                  <ModalAddThuoc
+                    submitHandler={addThuocHandler}
+                    loaiThuoc={props.loaiThuoc}
+                  />
                 </div>
                 {/* <div className="col-2 d-flex align-items-center">
                   <buton
@@ -216,7 +190,6 @@ const ContentThuoc = () => {
                     <th scope="col">Liều Lượng</th>
                     <th scope="col">Công Dụng</th>
                     <th scope="col">Đơn vị Tính</th>
-                    {/* <th scope="col">Số Lượng</th> */}
                     <th scope="col">Tên Loại Thuốc</th>
                   </tr>
                 </thead>
