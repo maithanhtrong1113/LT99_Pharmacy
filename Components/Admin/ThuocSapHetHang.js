@@ -44,7 +44,7 @@ const ThuocSapHetHang = () => {
       .then((response) => response.json())
       .then((data) => {
         let tempLabels = data.map((thuoc) => thuoc.tenThuoc);
-        let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuong);
+        let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuongConLai);
 
         setLabels(tempLabels);
 

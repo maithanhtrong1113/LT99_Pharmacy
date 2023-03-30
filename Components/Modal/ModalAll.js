@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { toast } from "react-toastify";
 import { cartActions } from "@/store/cart-slice";
 import { useDispatch } from "react-redux";
+import { BsTrash } from "react-icons/bs";
 function ModalAll(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -18,8 +19,8 @@ function ModalAll(props) {
   };
   return (
     <div>
-      <Button color="danger" className="btn-sm" onClick={toggle}>
-        Xóa tất cả trong giỏ hàng
+      <Button color="danger" className="btn-sm g" onClick={toggle}>
+        <BsTrash />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle} className="fw-bold">

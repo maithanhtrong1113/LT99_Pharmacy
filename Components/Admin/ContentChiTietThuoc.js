@@ -9,12 +9,9 @@ import NguoiDung from "./NguoiDung";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import VND from "../utils/formatVND";
 
 const ContentChiTietThuoc = (props) => {
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
   const {
     register,
     handleSubmit,

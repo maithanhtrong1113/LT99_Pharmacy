@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
 import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
 import { toast } from "react-toastify";
+import VND from "../utils/formatVND";
 const ContentBanThuoc = () => {
   const {
     register,
@@ -765,7 +766,7 @@ const ContentBanThuoc = () => {
                         </button>
                       )}
                     </div>
-                    <table className="table table-striped table-bordered table-sm shadow border-rounded">
+                    <table className="table table-striped table-bordered table-sm shadow border-rounded ">
                       <thead>
                         <tr className="text-center">
                           <th>Mã thuốc</th>
@@ -784,12 +785,12 @@ const ContentBanThuoc = () => {
                             <td className="fw-bold">{thuoc.thuoc.tenThuoc}</td>
                             {thuoc.thuoc.isThuocKeDon && (
                               <td>
-                                <BsCheck2 className="text-success fs-20 mt-3 " />
+                                <BsCheck2 className="text-success fs-20  " />
                               </td>
                             )}
                             {!thuoc.thuoc.isThuocKeDon && (
                               <td className="fw-bold ">
-                                <MdOutlineClose className="text-danger fs-27 mt-3 " />
+                                <MdOutlineClose className="text-danger fs-27  " />
                               </td>
                             )}
 
@@ -815,7 +816,9 @@ const ContentBanThuoc = () => {
                               />
                               <span className=" text-muted">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                             </td>
-                            <td>{thuoc.thuoc.thanhTien}</td>
+                            <td className="fw-bold">
+                              {VND.format(thuoc.thuoc.thanhTien)}
+                            </td>
                             <td>
                               <button
                                 type="button"
@@ -847,7 +850,7 @@ const ContentBanThuoc = () => {
                         ))}
                         <tr>
                           <td className="fw-bold">
-                            Tổng tiền:{tongTienHoaDon}
+                            Tổng tiền: {VND.format(tongTienHoaDon)}
                           </td>
                         </tr>
                       </tbody>

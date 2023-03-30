@@ -27,7 +27,7 @@ const CardProduct = (props) => {
   };
   return (
     <Fragment>
-      <div className="col-6 col-lg-3  mb-3 shadow">
+      <div className="col-6 col-lg-3  mb-3 shadow pb-3">
         <div className="card cardProductHover h-100">
           <Link
             href={`product/${props.id}`}

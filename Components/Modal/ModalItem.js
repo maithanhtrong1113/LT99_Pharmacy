@@ -18,7 +18,7 @@ function Example(props) {
   };
   return (
     <div>
-      <Button color="danger" onClick={toggle}>
+      <Button color="danger" onClick={toggle} className="btn-mb mb-2">
         {props.content}
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>

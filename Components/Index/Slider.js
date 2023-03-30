@@ -1,12 +1,18 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 const Slider = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Fragment>
-      <div className="row my-10 d-flex align-items-center">
+      <div className="row my-10 d-flex align-items-center ">
         <div
           id="carouselExampleIndicators"
-          className="col-8 carousel slide "
+          className="col-12 col-lg-8 carousel slide "
           data-bs-ride="carousel"
         >
           <div className="carousel-indicators">
@@ -35,19 +41,19 @@ const Slider = () => {
             <div className="carousel-item active ">
               <img
                 src="images/index/banner1.jpg"
-                className="d-block w-100 rounded   "
+                className="d-block w-100 rounded img-fluid h-slider "
               />
             </div>
             <div className="carousel-item">
               <img
                 src="images/index/banner2.jpg"
-                className="d-block w-100 rounded    "
+                className="d-block w-100 rounded  img-fluid  "
               />
             </div>
             <div className="carousel-item">
               <img
                 src="images/index/banner3.jpg"
-                className="d-block w-100 rounded    "
+                className="d-block w-100 rounded   img-fluid   "
               />
             </div>
           </div>
@@ -76,16 +82,18 @@ const Slider = () => {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
-        <div className="col-4">
-          <img
-            src="images/index/banner2.jpg"
-            className="d-block   rounded img-fluid mb-2 "
-          />
-          <img
-            src="images/index/imgHeader.jpg"
-            className="d-block  img-fluid rounded "
-          />
-        </div>
+        {windowWidth > 1000 && (
+          <div className="col-lg-4">
+            <img
+              src="images/index/banner2.jpg"
+              className="d-block   rounded img-fluid mb-2 "
+            />
+            <img
+              src="images/index/imgHeader.jpg"
+              className="d-block  img-fluid rounded "
+            />
+          </div>
+        )}
       </div>
     </Fragment>
   );

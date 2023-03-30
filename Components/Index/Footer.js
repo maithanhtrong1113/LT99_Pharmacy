@@ -40,7 +40,7 @@ const Footer = () => {
           <p>
             Hỗ trợ đơn hàng doanh nghiệp:
             <br />
-            <p className="text-primary overflow-auto">LT99pharmacy@gmail.com</p>
+            <p className="text-primary  fs-12">LT99pharmacy@gmail.com</p>
           </p>
         </div>
         <div className="col-lg-4  col-6 my-3 my-1i">

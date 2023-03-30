@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BsCartPlus, BsStarFill, BsStarHalf } from "react-icons/bs";
 import ListCard from "../Index/ListCard";
 
@@ -9,12 +9,18 @@ import TichDiem from "./TichDiem";
 import TuVanIcon from "./TuVanIcon";
 const Content = () => {
   const router = useRouter();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Fragment>
       <div className="container-fluid my-10">
-        <div className="row">
-          <div className="col-xl-12 col-lg-12 bg-gray mb-3">
-            <nav aria-label="breadcrumb ">
+        <div className="row  ">
+          <div className="col-xl-12 col-lg-12 mb-3  ">
+            <nav aria-label="breadcrumb">
               <ol className="breadcrumb ">
                 <li className="breadcrumb-item">
                   <Link href="/ " className="text-muted text-decoration-none">
