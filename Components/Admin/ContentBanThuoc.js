@@ -47,12 +47,21 @@ const ContentBanThuoc = () => {
   const [bacSiFocus, setBacSiFocus] = useState(false);
   const [nameFocus, setNameFocus] = useState(false);
   const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
-
+  const [tongTienHoaDon, setTongTienHoaDon] = useState(0);
+  const [tongTienHoaDon1, setTongTienHoaDon1] = useState(0);
   useEffect(() => {
     if (tab === "KhongKeDon") {
       setOptionThuoc("Chỉ thuốc không kê đơn");
     }
-  }, [tab]);
+    setTongTienHoaDon(0);
+    dsNhap.forEach((item) => {
+      setTongTienHoaDon((prev) => (prev += item.thuoc.thanhTien));
+    });
+    setTongTienHoaDon1(0);
+    dsNhap1.forEach((item) => {
+      setTongTienHoaDon1((prev) => (prev += item.thuoc.thanhTien));
+    });
+  }, [tab, dsNhap, dsNhap1]);
 
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -127,7 +136,7 @@ const ContentBanThuoc = () => {
       setDsThuoc([]);
     }
   };
-  console.log(dsThuoc);
+
   const handleInputChange1 = (event) => {
     const searchTerm1 = event.target.value;
     setSearchTerm1(searchTerm1);
@@ -157,16 +166,20 @@ const ContentBanThuoc = () => {
     }
   };
   const removeThuocNhap = (maThuoc) => {
-    const isThuocExist = dsNhap.find((item) => item.maThuoc === maThuoc);
-    if (isThuocExist.soLuongBan === 1) {
-      setDsNhap(dsNhap.filter((item) => item.maThuoc !== maThuoc));
+    const isThuocExist = dsNhap.find((item) => item.thuoc.maThuoc === maThuoc);
+    if (isThuocExist.thuoc.soLuongBan === 1) {
+      setDsNhap(dsNhap.filter((item) => item.thuoc.maThuoc !== maThuoc));
     } else {
-      isThuocExist.soLuongBan--;
+      isThuocExist.thuoc.soLuongBan--;
+      console.log(isThuocExist.thuoc.soLuongBan);
+      isThuocExist.thuoc.thanhTien =
+        isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
+
       setDsNhap([...dsNhap]);
     }
   };
   const removeThuoc = (maThuoc) => {
-    setDsNhap(dsNhap.filter((item) => item.maThuoc !== maThuoc));
+    setDsNhap(dsNhap.filter((item) => item.thuoc.maThuoc !== maThuoc));
   };
   const removeALL = () => {
     setDsNhap([]);
@@ -174,17 +187,24 @@ const ContentBanThuoc = () => {
   const addThuocNhap = (maThuoc) => {
     const isThuocExist = dsNhap.find((item) => item.thuoc.maThuoc === maThuoc);
     isThuocExist.thuoc.soLuongBan++;
+
     if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
       isThuocExist.thuoc.soLuongBan = isThuocExist.thuoc.soLuong;
+    isThuocExist.thuoc.thanhTien =
+      isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
     setDsNhap([...dsNhap]);
   };
+
   const NhapSoLuong = (maThuoc, soLuongBan) => {
     const isThuocExist = dsNhap.find((item) => item.thuoc.maThuoc === maThuoc);
-    isThuocExist.soLuongBan = parseInt(soLuongBan);
+    isThuocExist.thuoc.soLuongBan = parseInt(soLuongBan);
     if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
-      isThuocExist.thuoc, (soLuongBan = isThuocExist.thuoc.soLuong);
+      isThuocExist.thuoc.soLuongBan = isThuocExist.thuoc.soLuong;
+    isThuocExist.thuoc.thanhTien =
+      isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
     setDsNhap([...dsNhap]);
   };
+
   function kiemTraSoDienThoai(soDienThoai) {
     const re = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/; // Biểu thức chính quy để kiểm tra số điện thoại
     return re.test(soDienThoai);
@@ -230,9 +250,9 @@ const ContentBanThuoc = () => {
       let dsXuat = dsNhap.map((thuoc) => {
         return {
           thuoc: {
-            maThuoc: thuoc.maThuoc,
+            maThuoc: thuoc.thuoc.maThuoc,
           },
-          soLuongThuocBan: thuoc.soLuongBan,
+          soLuongThuocBan: thuoc.thuoc.soLuongBan,
         };
       });
 
@@ -273,9 +293,9 @@ const ContentBanThuoc = () => {
       let dsXuat = dsNhap1.map((thuoc) => {
         return {
           thuoc: {
-            maThuoc: thuoc.maThuoc,
+            maThuoc: thuoc.thuoc.maThuoc,
           },
-          soLuongThuocBan: thuoc.soLuongBan,
+          soLuongThuocBan: thuoc.thuoc.soLuongBan,
         };
       });
 
@@ -648,9 +668,19 @@ const ContentBanThuoc = () => {
                                 );
                                 if (isThuocExist) {
                                   isThuocExist.thuoc.soLuongBan++;
+                                  if (
+                                    isThuocExist.thuoc.soLuongBan >
+                                    isThuocExist.thuoc.soLuong
+                                  )
+                                    isThuocExist.thuoc.soLuongBan =
+                                      isThuocExist.thuoc.soLuong;
+                                  isThuocExist.thuoc.thanhTien =
+                                    thuoc.giaBanLe *
+                                    isThuocExist.thuoc.soLuongBan;
                                   setDsNhap([...dsNhap]);
                                 } else {
                                   thuoc.thuoc.soLuongBan = 1;
+                                  thuoc.thuoc.thanhTien = thuoc.giaBanLe;
                                   setDsNhap([...dsNhap, thuoc]);
                                 }
                               } else {
@@ -661,9 +691,19 @@ const ContentBanThuoc = () => {
                                 );
                                 if (isThuocExist) {
                                   isThuocExist.thuoc.soLuongBan++;
+                                  if (
+                                    isThuocExist.thuoc.soLuongBan >
+                                    isThuocExist.thuoc.soLuong
+                                  )
+                                    isThuocExist.thuoc.soLuongBan =
+                                      isThuocExist.thuoc.soLuong;
+                                  isThuocExist.thuoc.thanhTien =
+                                    thuoc.giaBanLe *
+                                    isThuocExist.thuoc.soLuongBan;
                                   setDsNhap1([...dsNhap1]);
                                 } else {
                                   thuoc.thuoc.soLuongBan = 1;
+                                  thuoc.thuoc.thanhTien = thuoc.giaBanLe;
                                   setDsNhap1([...dsNhap1, thuoc]);
                                 }
                               }
@@ -673,13 +713,13 @@ const ContentBanThuoc = () => {
                               {thuoc.thuoc.tenThuoc}
                             </span>
                             <div>
-                              {thuoc.soLuong > 1 && (
+                              {thuoc.thuoc.soLuong >= 1 && (
                                 <>
                                   <span className="text-muted  ">{`Số lượng tồn: ${thuoc.thuoc.soLuong} `}</span>
                                   <AiOutlinePlusCircle className="text-info" />
                                 </>
                               )}
-                              {thuoc.soLuong < 1 && (
+                              {thuoc.thuoc.soLuong < 1 && (
                                 <span className="text-danger">{`Số lượng tồn: ${thuoc.thuoc.soLuong} `}</span>
                               )}
                             </div>
@@ -775,7 +815,7 @@ const ContentBanThuoc = () => {
                               />
                               <span className=" text-muted">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                             </td>
-                            <td>{thuoc.thuoc.lieuLuong}</td>
+                            <td>{thuoc.thuoc.thanhTien}</td>
                             <td>
                               <button
                                 type="button"
@@ -806,7 +846,9 @@ const ContentBanThuoc = () => {
                           </tr>
                         ))}
                         <tr>
-                          <td>Tổng tiền:</td>
+                          <td className="fw-bold">
+                            Tổng tiền:{tongTienHoaDon}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -837,7 +879,11 @@ const ContentBanThuoc = () => {
                 </div>
               )}
               {tab === "KhongKeDon" && (
-                <HoaDonKhongKeDon dsNhap1={dsNhap1} setDsNhap1={setDsNhap1} />
+                <HoaDonKhongKeDon
+                  dsNhap1={dsNhap1}
+                  setDsNhap1={setDsNhap1}
+                  tongTienHoaDon1={tongTienHoaDon1}
+                />
               )}
             </form>
           </div>

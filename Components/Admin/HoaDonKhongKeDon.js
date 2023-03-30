@@ -8,34 +8,44 @@ import {
 } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
 
-const HoaDonKhongKeDon = ({ dsNhap1, setDsNhap1 }) => {
+const HoaDonKhongKeDon = ({ dsNhap1, setDsNhap1, tongTienHoaDon1 }) => {
   const removeThuocNhap = (maThuoc) => {
-    const isThuocExist = dsNhap1.find((item) => item.maThuoc === maThuoc);
-    if (isThuocExist.soLuongBan === 1) {
-      setDsNhap1(dsNhap1.filter((item) => item.maThuoc !== maThuoc));
+    const isThuocExist = dsNhap1.find((item) => item.thuoc.maThuoc === maThuoc);
+    if (isThuocExist.thuoc.soLuongBan === 1) {
+      setDsNhap1(dsNhap1.filter((item) => item.thuoc.maThuoc !== maThuoc));
     } else {
-      isThuocExist.soLuongBan--;
+      isThuocExist.thuoc.soLuongBan--;
+      console.log(isThuocExist.thuoc.soLuongBan);
+      isThuocExist.thuoc.thanhTien =
+        isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
+
       setDsNhap1([...dsNhap1]);
     }
   };
   const removeThuoc = (maThuoc) => {
-    setDsNhap1(dsNhap1.filter((item) => item.maThuoc !== maThuoc));
+    setDsNhap1(dsNhap1.filter((item) => item.thuoc.maThuoc !== maThuoc));
   };
   const removeALL = () => {
     setDsNhap1([]);
   };
   const addThuocNhap = (maThuoc) => {
-    const isThuocExist = dsNhap1.find((item) => item.maThuoc === maThuoc);
-    isThuocExist.soLuongBan++;
-    if (isThuocExist.soLuongBan > isThuocExist.soLuong)
-      isThuocExist.soLuongBan = isThuocExist.soLuong;
+    const isThuocExist = dsNhap1.find((item) => item.thuoc.maThuoc === maThuoc);
+    isThuocExist.thuoc.soLuongBan++;
+
+    if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
+      isThuocExist.thuoc.soLuongBan = isThuocExist.thuoc.soLuong;
+    isThuocExist.thuoc.thanhTien =
+      isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
     setDsNhap1([...dsNhap1]);
   };
+
   const NhapSoLuong = (maThuoc, soLuongBan) => {
-    const isThuocExist = dsNhap1.find((item) => item.maThuoc === maThuoc);
-    isThuocExist.soLuongBan = parseInt(soLuongBan);
-    if (isThuocExist.soLuongBan > isThuocExist.soLuong)
-      isThuocExist.soLuongBan = isThuocExist.soLuong;
+    const isThuocExist = dsNhap1.find((item) => item.thuoc.maThuoc === maThuoc);
+    isThuocExist.thuoc.soLuongBan = parseInt(soLuongBan);
+    if (isThuocExist.thuoc.soLuongBan > isThuocExist.thuoc.soLuong)
+      isThuocExist.thuoc.soLuongBan = isThuocExist.thuoc.soLuong;
+    isThuocExist.thuoc.thanhTien =
+      isThuocExist.giaBanLe * isThuocExist.thuoc.soLuongBan;
     setDsNhap1([...dsNhap1]);
   };
   return (
@@ -61,71 +71,74 @@ const HoaDonKhongKeDon = ({ dsNhap1, setDsNhap1 }) => {
               <tr className="text-center">
                 <th>Mã thuốc</th>
                 <th>Tên thuốc</th>
-                <th>Số lượng</th>
-                <th>Đơn vị tính</th>
-                <th>Liều lượng</th>
                 <th>Thuốc kê đơn</th>
+                <th>Đơn vị tính</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {dsNhap1.map((thuoc) => (
-                <tr key={thuoc.maThuoc} className="text-center">
-                  <td>{thuoc.maThuoc}</td>
-                  <td>{thuoc.tenThuoc}</td>
-                  <td className="w-10 ">
+                <tr key={thuoc.thuoc.maThuoc} className="text-center">
+                  <td>{thuoc.thuoc.maThuoc}</td>
+                  <td className="fw-bold">{thuoc.thuoc.tenThuoc}</td>
+                  {thuoc.thuoc.isThuocKeDon && (
+                    <td>
+                      <BsCheck2 className="text-success fs-20 mt-3 " />
+                    </td>
+                  )}
+                  {!thuoc.thuoc.isThuocKeDon && (
+                    <td className="fw-bold ">
+                      <MdOutlineClose className="text-danger fs-27 mt-3 " />
+                    </td>
+                  )}
+
+                  <td>{thuoc.thuoc.donViTinh}</td>
+                  <td className="w-10">
                     <input
                       type="number"
-                      value={thuoc.soLuongBan}
+                      value={thuoc.thuoc.soLuongBan}
                       min={1}
                       onChange={(e) => {
                         if (e.target.value <= 0 || e.target.value === "") {
                           e.target.value = 1;
                         }
-                        NhapSoLuong(thuoc.maThuoc, e.target.value);
+                        NhapSoLuong(thuoc.thuoc.maThuoc, e.target.value);
                       }}
                       className="fw-bold form-control text-center"
                     />
-                    <span className=" text-muted">{`Tồn: ${thuoc.soLuong}`}</span>
+                    <span className=" text-muted">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                   </td>
-
-                  <td>{thuoc.donViTinh}</td>
-                  <td>{thuoc.lieuLuong}</td>
-                  {thuoc.isThuocKeDon && (
-                    <td>
-                      <BsCheck2 className="text-success fs-20 mt-3 " />
-                    </td>
-                  )}
-                  {!thuoc.isThuocKeDon && (
-                    <td className="fw-bold ">
-                      <MdOutlineClose className="text-danger fs-27 mt-3 " />
-                    </td>
-                  )}
+                  <td>{thuoc.thuoc.thanhTien}</td>
                   <td>
                     <button
                       type="button"
                       className="btn btn-sm btn-warning mx-2 px-2 mt-3 shadow"
-                      onClick={() => removeThuocNhap(thuoc.maThuoc)}
+                      onClick={() => removeThuocNhap(thuoc.thuoc.maThuoc)}
                     >
                       <AiOutlineMinusCircle className="text-white" />
                     </button>
                     <button
                       type="button"
                       className="btn btn-sm btn-info mx-2 mt-3 shadow"
-                      onClick={() => addThuocNhap(thuoc.maThuoc)}
+                      onClick={() => addThuocNhap(thuoc.thuoc.maThuoc)}
                     >
                       <BsFillPlusCircleFill className="text-white " />
                     </button>
                     <button
                       type="button"
                       className="btn btn-sm btn-danger mx-2 mt-3 shadow"
-                      onClick={() => removeThuoc(thuoc.maThuoc)}
+                      onClick={() => removeThuoc(thuoc.thuoc.maThuoc)}
                     >
                       <AiFillCloseCircle className="text-white " />
                     </button>
                   </td>
                 </tr>
               ))}
+              <tr>
+                <td className="fw-bold">Tổng tiền:{tongTienHoaDon1}</td>
+              </tr>
             </tbody>
           </table>
         </div>
