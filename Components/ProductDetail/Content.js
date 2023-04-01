@@ -11,11 +11,29 @@ import CartIcon from "./CartIcon";
 import TichDiem from "./TichDiem";
 import TuVanIcon from "./TuVanIcon";
 
-const Content = (props) => {
+const Content = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [thuoc, setThuoc] = useState(props.thuoc);
+  const [thuoc, setThuoc] = useState({});
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${router.query.id}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setThuoc(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  });
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -66,89 +84,91 @@ const Content = (props) => {
                   </div>
                 </div>
                 <div className="col-8">
-                  <div className="container">
-                    <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
-                    <div className="row">
-                      <div className="col-6">
-                        <div className="border rounded p-2 my-3 shadow">
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarHalf className="text-warning" />
-                          <h4 className="text-success me-2 fw-bold">
-                            {VND.format(thuoc.giaBanLe)}
-                          </h4>
-                          <span className="fw-bold">Giá thị trường:</span>
-                          <span className="text-success  bg-ligh me-2">
-                            {`${VND.format(
-                              thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
-                            )}`}
-                          </span>
-                          <span className="text-white bg-info p-1 rounded">
-                            {`Tiết kiệm: ${VND.format(
-                              (thuoc.giaBanLe * 5) / 100
-                            )}(-5%)`}
-                          </span>
-                        </div>
-                        <p>{thuoc.thuoc.moTa}</p>
+                  {Object.keys(thuoc).length !== 0 && (
+                    <div className="container">
+                      <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
+                      <div className="row">
+                        <div className="col-6">
+                          <div className="border rounded p-2 my-3 shadow">
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarHalf className="text-warning" />
+                            <h4 className="text-success me-2 fw-bold">
+                              {VND.format(thuoc.giaBanLe)}
+                            </h4>
+                            <span className="fw-bold">Giá thị trường:</span>
+                            <span className="text-success  bg-ligh me-2">
+                              {` ${VND.format(
+                                thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
+                              )}`}
+                            </span>
+                            <span className="text-white bg-info p-1 rounded">
+                              {`Tiết kiệm: ${VND.format(
+                                (thuoc.giaBanLe * 5) / 100
+                              )}(-5%)`}
+                            </span>
+                          </div>
+                          <p>{thuoc.thuoc.moTa}</p>
 
-                        <div className="w-100 d-flex justify-content-between ">
-                          <button
-                            className="btn btn-info me-4 text-white"
-                            onClick={() => {
-                              addToCart();
-                              router.push("/checkout");
-                            }}
-                          >
-                            Mua Ngay
-                          </button>
-                          <button
-                            className="btn btn-warning text-dark"
-                            onClick={addToCart}
-                          >
-                            <BsCartPlus /> Thêm vào giỏ hàng
-                          </button>
+                          <div className="w-100 d-flex justify-content-between ">
+                            <button
+                              className="btn btn-info me-4 text-white"
+                              onClick={() => {
+                                addToCart();
+                                router.push("/checkout");
+                              }}
+                            >
+                              Mua Ngay
+                            </button>
+                            <button
+                              className="btn btn-warning text-dark"
+                              onClick={addToCart}
+                            >
+                              <BsCartPlus /> Thêm vào giỏ hàng
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="border rounded my-3 p-3 pb-3 ">
-                          <h5 className="fw-bold pb-3">
-                            Các hình thức giao hàng
-                          </h5>
-                          <span className="p-2 rounded bg-primary  me-3 text-white ">
-                            Giao hàng tiết kiệm
-                          </span>
-                          <span className="p-2 rounded bg-primary text-white ">
-                            Ahamove
-                          </span>
-                        </div>
-                        <div className="container border rounded my-3 p-2 pb-3 ">
-                          <div className="row">
-                            <div className="col-4 text-center fw-bold">
-                              <CartIcon />
-                              <span className="my-2">
-                                Miễn phí vận chuyển cho đơn hàng từ 300.000đ
-                              </span>
-                            </div>
-                            <div className="col-4 text-center fw-bold ">
-                              <TuVanIcon />
-                              <span className="my-2">
-                                Đủ thuốc tốt tư vấn nhiệt tình
-                              </span>
-                            </div>
-                            <div className="col-4 text-center fw-bold">
-                              <TichDiem />
-                              <span className="my-2">
-                                Tích điểm thưởng đổi thưởng và sử dụng điểm cho
-                                mọi giao dịch
-                              </span>
+                        <div className="col-6">
+                          <div className="border rounded my-3 p-3 pb-3 ">
+                            <h5 className="fw-bold pb-3">
+                              Các hình thức giao hàng
+                            </h5>
+                            <span className="p-2 rounded bg-primary  me-3 text-white ">
+                              Giao hàng tiết kiệm
+                            </span>
+                            <span className="p-2 rounded bg-primary text-white ">
+                              Ahamove
+                            </span>
+                          </div>
+                          <div className="container border rounded my-3 p-2 pb-3 ">
+                            <div className="row">
+                              <div className="col-4 text-center fw-bold">
+                                <CartIcon />
+                                <span className="my-2">
+                                  Miễn phí vận chuyển cho đơn hàng từ 300.000đ
+                                </span>
+                              </div>
+                              <div className="col-4 text-center fw-bold ">
+                                <TuVanIcon />
+                                <span className="my-2">
+                                  Đủ thuốc tốt tư vấn nhiệt tình
+                                </span>
+                              </div>
+                              <div className="col-4 text-center fw-bold">
+                                <TichDiem />
+                                <span className="my-2">
+                                  Tích điểm thưởng đổi thưởng và sử dụng điểm
+                                  cho mọi giao dịch
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -11,21 +11,10 @@ const page = (props) => {
     <Fragment>
       <GoTopPage />
       <Navigation />
-      <Content thuoc={props.thuoc} />
+      <Content />
       <Footer />
     </Fragment>
   );
 };
-export async function getServerSideProps({ query }) {
-  const res = await fetch(
-    `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${query.id}`
-  );
-  const data = await res.json();
 
-  return {
-    props: {
-      thuoc: data,
-    },
-  };
-}
 export default page;
