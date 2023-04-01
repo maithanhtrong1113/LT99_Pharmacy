@@ -7,20 +7,9 @@ const hoaDon = (props) => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <ContentHoaDon hoaDon={props.hoaDon} />
+      <ContentHoaDon />
     </Fragment>
   );
 };
-export async function getServerSideProps() {
-  const res = await fetch(
-    "http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/"
-  );
-  const data = await res.json();
 
-  return {
-    props: {
-      hoaDon: data,
-    },
-  };
-}
 export default hoaDon;

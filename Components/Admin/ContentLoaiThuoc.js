@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import LoaiThuoc from "./LoaiThuoc";
 import NguoiDung from "./NguoiDung";
 import Sidebar from "./Sidebar";
 
-const ContentLoaiThuoc = (props) => {
+const ContentLoaiThuoc = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
@@ -17,10 +17,26 @@ const ContentLoaiThuoc = (props) => {
     localStorage.removeItem("id");
     toggle();
   };
-  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
-
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setLoaiThuoc(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   // thêm loại thuốc
   const themLoaiThuoc = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {

@@ -5,7 +5,7 @@ import { CSVLink } from "react-csv";
 import { FaFileImport } from "react-icons/fa";
 import { BsCheck2 } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
-const ContentKhachHang = () => {
+const ContentHoaDon = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
   const [dsIn, setDsIn] = useState([]);
   // danh sách khách hàng
@@ -21,7 +21,6 @@ const ContentKhachHang = () => {
             "Mã Hóa Đơn": hoaDon.maHoaDon,
             "Tên Khách Hàng": hoaDon.khachHang.hoTen,
             "Nhân viên bán hàng": hoaDon.nhanVienBanHang.hoTen,
-
             "Ngày lập hóa đơn": `${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
               new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
             }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`,
@@ -161,4 +160,4 @@ const ContentKhachHang = () => {
   );
 };
 
-export default ContentKhachHang;
+export default ContentHoaDon;

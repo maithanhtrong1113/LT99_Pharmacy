@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, { Fragment, useEffect, useState } from "react";
 
 const Slider = () => {
@@ -40,30 +39,21 @@ const Slider = () => {
           </div>
           <div className="carousel-inner  py-2">
             <div className="carousel-item active ">
-              <Image
-                width={500}
-                height={100}
-                alt=""
-                src="/images/index/banner1.jpg"
+              <img
+                src="images/index/banner1.jpg"
                 className="d-block w-100 rounded img-fluid h-slider "
               />
             </div>
             <div className="carousel-item">
-              <Image
-                width={500}
-                height={100}
-                alt=""
-                src="/images/index/banner2.jpg"
-                className="d-block w-100 rounded img-fluid h-slider "
+              <img
+                src="images/index/banner2.jpg"
+                className="d-block w-100 rounded  img-fluid  "
               />
             </div>
             <div className="carousel-item">
-              <Image
-                width={500}
-                height={100}
-                alt=""
-                src="/images/index/banner3.jpg"
-                className="d-block w-100 rounded img-fluid h-slider "
+              <img
+                src="images/index/banner3.jpg"
+                className="d-block w-100 rounded   img-fluid   "
               />
             </div>
           </div>

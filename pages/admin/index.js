@@ -8,20 +8,9 @@ const index = (props) => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <Content nhanVien={props.nhanVien} />
+      <Content />
     </Fragment>
   );
 };
-export async function getServerSideProps() {
-  const res = await fetch(
-    "http://localhost:8080/QLNT-Server/quan-ly/danh-sach-nhan-vien"
-  );
-  const data = await res.json();
 
-  return {
-    props: {
-      nhanVien: data,
-    },
-  };
-}
 export default index;

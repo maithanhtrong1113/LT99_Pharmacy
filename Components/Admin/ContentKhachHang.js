@@ -7,11 +7,27 @@ import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
 
-const ContentKhachHang = (props) => {
-  const [dsKhachHang, setDsKhachHang] = useState(props.khachHang);
+const ContentKhachHang = () => {
+  const [dsKhachHang, setDsKhachHang] = useState([]);
   const [timeoutId1, setTimeoutId1] = useState(null);
   const [searchTerm1, setSearchTerm1] = useState("");
-
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/danh-sach-khach-hang"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setDsKhachHang(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  });
   // thêm khách hàng
   const addKhachHangHandler = (data) => {
     fetch(

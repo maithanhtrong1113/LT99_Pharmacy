@@ -28,7 +28,7 @@ const CardProduct = (props) => {
             className="h-90 text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
           >
             <Image
-              width={100}
+              width={300}
               height={400}
               src={props.images}
               alt=""

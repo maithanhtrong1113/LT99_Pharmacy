@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 
 function ModalAddThuoc(props) {
-  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("");
 
   const {
@@ -20,7 +20,23 @@ function ModalAddThuoc(props) {
     props.submitHandler(data);
     toggle();
   };
-
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setLoaiThuoc(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   return (
     <Fragment>
       <Button onClick={toggle} className="btn bg-primary my-3 text-white">

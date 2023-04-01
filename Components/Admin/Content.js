@@ -4,10 +4,25 @@ import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import { Input } from "reactstrap";
+import { useEffect } from "react";
 
-const index = (props) => {
-  const [dsNhanVien, setDsNhanVien] = useState(props.nhanVien);
-
+const index = () => {
+  const [dsNhanVien, setDsNhanVien] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8080/QLNT-Server/quan-ly/danh-sach-nhan-vien")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setDsNhanVien(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  });
   // thêm nhân viên và tạo tài khoản
   const addNhanVienSubmit = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/nhan-vien", {
@@ -44,11 +59,6 @@ const index = (props) => {
         });
       }
     });
-
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setLoaiThuoc(data);
-    //   })
   };
   return (
     <Fragment>

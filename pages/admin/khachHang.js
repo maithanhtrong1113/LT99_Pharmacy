@@ -7,20 +7,9 @@ const khachHang = (props) => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <ContentKhachHang khachHang={props.khachHang} />
+      <ContentKhachHang />
     </Fragment>
   );
 };
-export async function getServerSideProps() {
-  const res = await fetch(
-    "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/danh-sach-khach-hang"
-  );
-  const data = await res.json();
 
-  return {
-    props: {
-      khachHang: data,
-    },
-  };
-}
 export default khachHang;

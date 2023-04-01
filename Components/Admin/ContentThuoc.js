@@ -9,24 +9,54 @@ import { BsSearch } from "react-icons/bs";
 import NguoiDung from "./NguoiDung";
 import { toast } from "react-toastify";
 
-const ContentThuoc = (props) => {
+const ContentThuoc = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
-  const [dsThuoc, setDsThuoc] = useState(props.thuoc);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [dsThuoc, setDsThuoc] = useState([]);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
-
+  useEffect(() => {
+    fetch(
+      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        setLoaiThuoc(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
   // danh sách thuốc theo loại thuốc
   useEffect(() => {
     if (loaiThuocSelected === "All") {
       // danh sách tất cả thuốc truyền vào table
-      setDsThuoc(props.thuoc);
+      fetch(
+        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc"
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((results) => {
+          setDsThuoc(results);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     } else {
       console.log(loaiThuocSelected);
       fetch(
@@ -161,10 +191,7 @@ const ContentThuoc = (props) => {
                   </form>
                 </div>
                 <div className="col-2">
-                  <ModalAddThuoc
-                    submitHandler={addThuocHandler}
-                    loaiThuoc={props.loaiThuoc}
-                  />
+                  <ModalAddThuoc submitHandler={addThuocHandler} />
                 </div>
                 {/* <div className="col-2 d-flex align-items-center">
                   <buton
