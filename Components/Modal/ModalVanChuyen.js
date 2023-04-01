@@ -18,12 +18,12 @@ function Example(props) {
         <div className="col-xl-12 col-lg-12 d-flex align-items-center text-muted">
           <BsTruck className="me-2" />
           {phuongThucVanChuyen === "nhanh" && (
-            <span>
+            <span className="fs-14">
               Phương thức vận chuyển: <b>Nhanh</b>
             </span>
           )}
           {phuongThucVanChuyen === "tieuChuan" && (
-            <span>
+            <span className="fs-14 mb-2">
               Phương thức vận chuyển: <b>Tiêu Chuẩn</b>
             </span>
           )}

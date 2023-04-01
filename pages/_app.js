@@ -8,15 +8,21 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
+import Head from "next/head";
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <Component {...pageProps} />
-      </PersistGate>
-    </Provider>
+    <>
+      <Head>
+        <title>LT99 Pharmacy</title>
+      </Head>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <Component {...pageProps} />
+        </PersistGate>
+      </Provider>
+    </>
   );
 }

@@ -89,7 +89,7 @@ const ContentKhachHang = () => {
                   </form>
                 </div>
                 <div className="col-2 d-flex align-items-center">
-                  <buton
+                  <button
                     className="btn btn-primary d-flex align-items-center"
                     type="button"
                   >
@@ -101,7 +101,7 @@ const ContentKhachHang = () => {
                       Export
                     </CSVLink>
                     <FaFileImport className="ms-2 text-light fs-15" />
-                  </buton>
+                  </button>
                 </div>
               </div>
               <table className="table table-striped">

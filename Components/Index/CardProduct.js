@@ -3,10 +3,14 @@ import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { cartActions } from "@/store/cart-slice";
 import { toast } from "react-toastify";
+import VND from "../utils/formatVND";
+import Image from "next/image";
+import xuLyTenKhiQuaDai from "../utils/tooLong";
 const CardProduct = (props) => {
   const dispatch = useDispatch();
   const addToCart = () => {
     const { title, price, id, images } = props;
+
     dispatch(cartActions.addItemToCart({ id, title, price, images }));
     toast.success("Đã thêm sản phẩm vào giỏ hàng", {
       position: toast.POSITION.TOP_RIGHT,
@@ -15,30 +19,28 @@ const CardProduct = (props) => {
     });
   };
 
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
-  const xuLyTenKhiQuaDai = (chuoi) => {
-    if (chuoi.length > 40) {
-      chuoi = chuoi.slice(0, 40) + "...";
-    }
-    return chuoi;
-  };
   return (
     <Fragment>
-      <div className="col-6 col-lg-3  mb-3 shadow pb-3">
+      <div className="col-6 col-lg-3  mb-3 shadow pb-3 pt-2 rounded bg-light">
         <div className="card cardProductHover h-100">
           <Link
             href={`product/${props.id}`}
             className="h-90 text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
           >
-            <img src={props.images} className="card-img-top" />
+            <Image
+              width={100}
+              height={400}
+              src={props.images}
+              alt=""
+              className="card-img-top img-fluid"
+            />
             <div className="card-body">
-              <h6 className="card-title text-dark fw-bold">
+              <h6 className="card-title text-dark fw-bold ">
                 {xuLyTenKhiQuaDai(props.title)}
               </h6>
-              <p className="text-info">{VND.format(props.price)}</p>
+              <p className="text-info">
+                {VND.format(props.price) + "/" + props.donViTinh}
+              </p>
             </div>
           </Link>
           <button

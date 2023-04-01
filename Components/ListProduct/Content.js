@@ -30,7 +30,6 @@ const Content = () => {
             <h2 className="fw-bold">Thuốc không kê đơn</h2>
           </div>
         </div>
-
         <Products />
       </Container>
     </Fragment>

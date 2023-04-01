@@ -5,7 +5,7 @@ import Content from "../Components/Index/Content";
 import Navigation from "../Components/Index/Navigation";
 import { ToastContainer } from "react-toastify";
 import BottomNavigation from "@/Components/Index/BottomNavigation";
-const index = () => {
+const index = (props) => {
   return (
     <Fragment>
       <ToastContainer />

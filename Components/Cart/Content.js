@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaAngleRight } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import CartIcon from "../Cart/cartIcon";
+import CartIcon from "../Cart/CartIcon";
 import ModalAll from "../Modal/ModalAll";
 import VND from "../utils/formatVND";
 import CartItem from "./CartItem";
@@ -22,7 +22,7 @@ const Content = () => {
   return (
     <Fragment>
       {windowWidth < 1000 && (
-        <div className="container-fluid my-11">
+        <div className="container-fluid my-12">
           <div className="row">
             <div className=" col-12 ">
               <nav aria-label="breadcrumb">

@@ -1,3 +1,5 @@
+import BottomNavigation from "@/Components/Index/BottomNavigation";
+import Footer from "@/Components/Index/Footer";
 import GoTopPage from "@/Components/Index/GoTopPage";
 import Navigation from "@/Components/Index/Navigation";
 import Content from "@/Components/ListProduct/Content";
@@ -9,6 +11,8 @@ const listProduct = () => {
       <GoTopPage />
       <Navigation />
       <Content />
+      <Footer />
+      <BottomNavigation />
     </Fragment>
   );
 };

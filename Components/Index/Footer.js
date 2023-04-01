@@ -40,8 +40,8 @@ const Footer = () => {
           <p>
             Hỗ trợ đơn hàng doanh nghiệp:
             <br />
-            <p className="text-primary  fs-12">LT99pharmacy@gmail.com</p>
           </p>
+          <p className="text-dark fs-12">LT99pharmacy@gmail.com</p>
         </div>
         <div className="col-lg-4  col-6 my-3 my-1i">
           <p className="fw-bold h-60 d-flex align-items-center ">
@@ -49,37 +49,37 @@ const Footer = () => {
           </p>
           <hr />
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Câu hỏi thường gặp
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Tìm cửa hàng gần bạn
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Chính sách giao hàng
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Phương thức thanh toán
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Chính sách đổi trả
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Chính sách bảo mật
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-muted text-decoration-none">
+            <Link href="/" className="fw-bold text-dark text-decoration-none">
               Thể lệ chương trình Thẻ thành viên
             </Link>
           </p>
@@ -93,7 +93,7 @@ const Footer = () => {
             <BsFacebook className="colorFb me-4" />
             <Link
               href="https://www.facebook.com/"
-              className="text-decoration-none text-dark"
+              className="text-decoration-none text-dark fw-bold"
             >
               Facebook
             </Link>
@@ -102,7 +102,7 @@ const Footer = () => {
             <BsYoutube className="colorYoutube me-4" />
             <Link
               href="https://www.youtube.com/"
-              className="text-decoration-none text-dark"
+              className="text-decoration-none text-dark fw-bold"
             >
               Youtube
             </Link>
@@ -117,7 +117,7 @@ const Footer = () => {
             />
             <Link
               href="https://zalo.me/pc"
-              className="text-decoration-none text-dark"
+              className="text-decoration-none text-dark fw-bold"
             >
               Zalo
             </Link>
@@ -129,7 +129,7 @@ const Footer = () => {
           <hr />
         </div>
         <div className="col-12">
-          <p className="fw-bold text-muted text-center">
+          <p className="fw-bold text-dark text-center">
             © Copyright 2023 LT99pharmacy.com. All rights reserved.
           </p>
         </div>

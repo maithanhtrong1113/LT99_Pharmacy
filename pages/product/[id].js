@@ -5,18 +5,27 @@ import Content from "@/Components/ProductDetail/Content";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
 
-const page = () => {
+const page = (props) => {
   const router = useRouter();
-  const productId = router.query.id;
-
   return (
     <Fragment>
       <GoTopPage />
       <Navigation />
-      <Content />
+      <Content thuoc={props.thuoc} />
       <Footer />
     </Fragment>
   );
 };
+export async function getServerSideProps({ query }) {
+  const res = await fetch(
+    `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${query.id}`
+  );
+  const data = await res.json();
 
+  return {
+    props: {
+      thuoc: data,
+    },
+  };
+}
 export default page;

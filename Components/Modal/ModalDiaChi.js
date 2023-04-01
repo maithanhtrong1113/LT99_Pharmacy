@@ -11,63 +11,102 @@ function ModalAll(props) {
   } = useForm();
 
   const [modal, setModal] = useState(false);
-  let quan = [];
-  let phuong = [];
+
   const toggle = () => {
     setModal(!modal);
   };
   const [data, setData] = useState([]);
-  const [city, setCity] = useState("");
-  const [district, setDistrict] = useState("");
-  const [ward, setWard] = useState("");
+  const [err, setErr] = useState({ show: false, mess: "" });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [diaChi, setDiaChi] = useState("");
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].Name === city) {
-      quan = data[i].Districts;
+  const [dsTinh, setDsTinh] = useState([]);
+  const [tinhSelected, setTinhSelected] = useState({
+    name: "",
+    code: "",
+  });
+  const [dsQuan, setDsQuan] = useState([{ name: "Chọn quận/huyện" }]);
+  const [quanSelected, setQuanSelected] = useState({
+    name: "",
+    code: "",
+  });
+  const [dsXa, setDsXa] = useState([{ name: "Chọn phường/xã" }]);
+  const [xaSelected, setXaSelected] = useState({
+    name: "",
+    code: "",
+  });
+  const onSubmit = (data) => {
+    if (xaSelected.name === "") {
+      setErr({ show: true, mess: "Vui Lòng Chọn Xã/Phường" });
     }
-  }
-  console.log(quan);
-  for (let i = 0; i < quan.length; i++) {
-    if (quan[i].Name === district) {
-      phuong = quan[i].Wards;
+    if (quanSelected.name === "") {
+      setErr({ show: true, mess: "Vui Lòng Chọn Quận/Huyện" });
     }
-  }
+    if (tinhSelected.name === "") {
+      setErr({ show: true, mess: "Vui Lòng Chọn Tỉnh" });
+    }
 
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-      });
-    if (modal) {
-      setDiaChi("");
-      setName("");
-      setPhone("");
-      setCity("");
-      setDistrict("");
-      setWard("");
+    if (
+      tinhSelected.name === "" ||
+      quanSelected.name === "" ||
+      xaSelected.name === ""
+    ) {
+      return;
     }
-  }, [modal]);
-  const onSubmit = async (data) => {
-    setDiaChi(data.diaChi);
-    setName(data.name);
-    setPhone(data.phone);
-    toggle();
-    await props.sendDataToCheckOut({
-      name,
-      phone,
-      diaChi,
-      district,
-      ward,
-      city,
-    });
+    data.diaChi =
+      data.diaChi +
+      " " +
+      JSON.parse(xaSelected).name +
+      " " +
+      JSON.parse(quanSelected).name +
+      " " +
+      JSON.parse(tinhSelected).name;
+
+    console.log(data);
   };
 
+  useEffect(() => {
+    if (
+      tinhSelected.name !== "" &&
+      quanSelected.name !== "" &&
+      xaSelected.name !== ""
+    ) {
+      setErr({ show: false, mess: " " });
+    }
+    // Danh sách tỉnh
+    fetch(`https://provinces.open-api.vn/api/p/`)
+      .then((response) => response.json())
+      .then((data) => {
+        setDsTinh(data);
+      })
+      .catch((error) => console.error(error));
+    // Danh sách quận huyện
+    if (tinhSelected.code !== "") {
+      fetch(
+        `https://provinces.open-api.vn/api/p/${
+          JSON.parse(tinhSelected).code
+        }?depth=2`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDsQuan(data.districts);
+        })
+        .catch((error) => console.error(error));
+    }
+    if (quanSelected.code !== "") {
+      fetch(
+        `https://provinces.open-api.vn/api/d/${
+          JSON.parse(quanSelected).code
+        }?depth=2`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDsXa(data.wards);
+        })
+        .catch((error) => console.error(error));
+    }
+  }, [tinhSelected, quanSelected, xaSelected]);
   return (
     <Fragment>
       <button onClick={toggle} className="btn bg-light">
@@ -95,7 +134,13 @@ function ModalAll(props) {
             </Fragment>
           )}
       </button>
-      <Modal isOpen={modal} toggle={toggle} backdrop="static" {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        backdrop="static"
+        className="w-modalDiaChi"
+        {...props}
+      >
         <ModalHeader className="fw-bold">Thêm địa chỉ nhận hàng</ModalHeader>
         <ModalBody>
           <div className="container">
@@ -153,81 +198,69 @@ function ModalAll(props) {
                 </div>
                 <div className="col-12 my-3">
                   <select
-                    className="form-select form-select-sm py-2 "
-                    aria-label=".form-select-sm "
-                    {...register("tinhh", {
-                      required: true,
-                    })}
+                    className="form-select"
                     onChange={(e) => {
-                      setCity(e.target.value);
+                      setTinhSelected(e.target.value);
+                      setQuanSelected({ name: "", code: "" });
+                      setXaSelected({ name: "", code: "" });
+                      setDsXa([]);
                     }}
                   >
-                    <option value="" defaultValue>
-                      Chọn tỉnh thành
-                    </option>
-                    {data.map((city) => (
-                      <option value={city.Name} key={city.Id}>
-                        {city.Name}
+                    {dsTinh.map((tinh) => (
+                      <option
+                        key={tinh.code}
+                        value={JSON.stringify({
+                          name: tinh.name,
+                          code: tinh.code,
+                        })}
+                      >
+                        {tinh.name}
                       </option>
                     ))}
                   </select>
-                  {errors?.tinh?.type === "required" && (
-                    <span className="text-danger">Vui lòng chọn tỉnh</span>
-                  )}
+                  <div className="col-12 my-3">
+                    <select
+                      className="form-select"
+                      onChange={(e) => {
+                        setQuanSelected(e.target.value);
+                        setXaSelected({ name: "", code: "" });
+                      }}
+                    >
+                      {dsQuan.map((quan) => (
+                        <option
+                          key={quan.code}
+                          value={JSON.stringify({
+                            name: quan.name,
+                            code: quan.code,
+                          })}
+                        >
+                          {quan.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-12 my-3">
+                    <select
+                      className="form-select"
+                      onChange={(e) => {
+                        setXaSelected(e.target.value);
+                      }}
+                    >
+                      {dsXa.map((xa) => (
+                        <option
+                          value={JSON.stringify({
+                            name: xa.name,
+                            code: xa.code,
+                          })}
+                          key={xa.code}
+                        >
+                          {xa.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div className="col-12 my-3">
-                  <select
-                    className="form-select form-select-sm py-2"
-                    id="district"
-                    aria-label=".form-select-md"
-                    {...register("quan", {
-                      required: true,
-                    })}
-                    onChange={(e) => {
-                      setDistrict(e.target.value);
-                    }}
-                  >
-                    <option value="" defaultValue>
-                      Chọn quận huyện
-                    </option>
 
-                    {quan.map((quan) => (
-                      <option value={quan.Name} key={quan.Id}>
-                        {quan.Name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors?.quan?.type === "required" && (
-                    <span className="text-danger">
-                      Vui lòng chọn quận huyện
-                    </span>
-                  )}
-                </div>
-                <div className="col-12 my-3">
-                  <select
-                    className="form-select form-select-sm py-2"
-                    id="ward"
-                    aria-label=".form-select-sm"
-                    {...register("phuong", {
-                      required: true,
-                    })}
-                    onChange={(e) => {
-                      setWard(e.target.value);
-                    }}
-                  >
-                    <option value="" defaultValue>
-                      Chọn phường xã
-                    </option>
-                    {phuong.map((phuong) => (
-                      <option value={phuong.Name} key={phuong.Id}>
-                        {phuong.Name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors?.phuong?.type === "required" && (
-                    <span className="text-danger">Vui lòng chọn phường xã</span>
-                  )}
-                </div>
                 <div className="col-12 my-3">
                   <label>
                     Địa chỉ người nhận<span className="text-danger">*</span>
@@ -244,6 +277,9 @@ function ModalAll(props) {
                   {errors?.diaChi?.type === "required" && (
                     <span className="text-danger">Vui lòng nhập địa chỉ</span>
                   )}
+                </div>
+                <div className="col-12 mb-1">
+                  {err.show && <span className="text-danger">{err.mess}</span>}
                 </div>
                 <div className="col-6 d-inline-block">
                   <Button color="primary" type="submit">
