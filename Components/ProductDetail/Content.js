@@ -173,6 +173,7 @@ const Content = () => {
               </div>
             </div>
           </div>
+          <div className="row line-space my-2"></div>
           <ListCard />
         </div>
       )}

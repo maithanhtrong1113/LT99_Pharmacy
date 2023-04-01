@@ -24,7 +24,7 @@ const CardProduct = (props) => {
       <div className="col-6 col-lg-3  mb-3 shadow pb-3 pt-2 rounded bg-light">
         <div className="card cardProductHover h-100">
           <Link
-            href={`product/${props.id}`}
+            href={`/product/${props.id}`}
             className="h-90 text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
           >
             <Image
