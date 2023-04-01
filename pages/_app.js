@@ -13,7 +13,7 @@ import { Poppins } from "@next/font/google";
 const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    import("bootstrap/dist/js/bootstrap.bundle.min.js");
+    import("../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
 
   return (
@@ -23,9 +23,9 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <main className={inter.className}>
+          <div className={inter.className}>
             <Component {...pageProps} />
-          </main>
+          </div>
         </PersistGate>
       </Provider>
     </>
