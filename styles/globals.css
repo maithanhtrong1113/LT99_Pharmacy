@@ -89,8 +89,8 @@ body {
   border-radius: 10px;
 }
 .my-10 {
-  margin-top: 8rem;
-  margin-bottom: 3rem;
+  margin-top: 8rem !important;
+  margin-bottom: 3rem !important;
 }
 
 .my-9 {
