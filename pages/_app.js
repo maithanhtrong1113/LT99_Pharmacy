@@ -9,12 +9,16 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-datepicker/dist/react-datepicker.css";
 import Head from "next/head";
 import { Poppins } from "@next/font/google";
+import { useRouter } from "next/router";
 
 const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 export default function MyApp({ Component, pageProps }) {
+  const router = useRouter();
   useEffect(() => {
-    import("bootstrap/dist/js/bootstrap");
-  }, []);
+    typeof document !== undefined
+      ? require("bootstrap/dist/js/bootstrap")
+      : null;
+  }, [router.events]);
 
   return (
     <>
