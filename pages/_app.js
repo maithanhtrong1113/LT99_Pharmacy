@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Head from "next/head";
 import { Poppins } from "@next/font/google";
 
-const inter = Poppins({ subsets: ["latin"], weight: ["500"] });
+const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     import("bootstrap/dist/js/bootstrap.bundle.min.js");
