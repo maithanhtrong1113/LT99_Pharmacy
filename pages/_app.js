@@ -13,7 +13,7 @@ import { Poppins } from "@next/font/google";
 const inter = Poppins({ subsets: ["latin"], weight: ["400"] });
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    import("../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+    import("bootstrap/dist/js/bootstrap");
   }, []);
 
   return (
