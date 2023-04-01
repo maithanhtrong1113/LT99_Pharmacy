@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import ModalAddNhanVien1 from "../Modal/ModalAddNhanVien1";
+import ModalAddNhanVien from "../Modal/ModalAddNhanVien";
 import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
@@ -80,7 +80,7 @@ const index = () => {
                   </form>
                 </div>
                 <div className="col-8">
-                  <ModalAddNhanVien1 addNhanVienHandler={addNhanVienSubmit} />
+                  <ModalAddNhanVien addNhanVienHandler={addNhanVienSubmit} />
                 </div>
               </div>
               <table className="table table-striped">
