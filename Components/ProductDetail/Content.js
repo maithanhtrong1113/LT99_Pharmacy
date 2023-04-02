@@ -49,11 +49,6 @@ const Content = () => {
       images: "/images/index/products/product1.jpg",
     };
     dispatch(cartActions.addItemToCart(obj));
-    toast.success("Thêm sản phẩm vào giỏ hàng thành công", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 500,
-      theme: "light",
-    });
   };
   return (
     <Fragment>
@@ -132,6 +127,14 @@ const Content = () => {
                             <button
                               className="btn btn-warning text-dark"
                               onClick={() => {
+                                toast.success(
+                                  "Thêm sản phẩm vào giỏ hàng thành công",
+                                  {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    autoClose: 500,
+                                    theme: "light",
+                                  }
+                                );
                                 addToCart();
                               }}
                             >
