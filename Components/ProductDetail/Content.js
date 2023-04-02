@@ -124,10 +124,7 @@ const Content = () => {
                               className="btn btn-info me-4 text-white"
                               onClick={() => {
                                 addToCart();
-
-                                setTimeout(() => {
-                                  router.push("/checkout");
-                                }, 1000);
+                                router.push("/checkout");
                               }}
                             >
                               Mua Ngay
