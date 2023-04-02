@@ -3,6 +3,10 @@
   margin: 0;
   box-sizing: border-box;
 }
+html {
+  font-size: 90%;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
