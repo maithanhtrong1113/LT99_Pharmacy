@@ -27,7 +27,7 @@ const ContentKhachHang = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  });
+  },[]);
   // thêm khách hàng
   const addKhachHangHandler = (data) => {
     fetch(

@@ -22,7 +22,7 @@ const index = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  });
+  }, []);
   // thêm nhân viên và tạo tài khoản
   const addNhanVienSubmit = (data) => {
     fetch("http://localhost:8080/QLNT-Server/quan-ly/nhan-vien", {
