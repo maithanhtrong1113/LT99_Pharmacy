@@ -41,9 +41,9 @@ const Content = () => {
   }, []);
   const addToCart = () => {
     const obj = {
-      id: props.thuoc.thuoc.maThuoc,
-      title: props.thuoc.thuoc.tenThuoc,
-      price: props.thuoc.giaBanLe,
+      id: thuoc.thuoc.maThuoc,
+      title: thuoc.thuoc.tenThuoc,
+      price: thuoc.giaBanLe,
       images: "/images/index/products/product1.jpg",
     };
     dispatch(cartActions.addItemToCart(obj));
@@ -124,7 +124,9 @@ const Content = () => {
                             </button>
                             <button
                               className="btn btn-warning text-dark"
-                              onClick={addToCart}
+                              onClick={() => {
+                                addToCart();
+                              }}
                             >
                               <BsCartPlus /> Thêm vào giỏ hàng
                             </button>
@@ -249,14 +251,18 @@ const Content = () => {
                           <button
                             className="btn btn-info mx-4 text-white"
                             onClick={() => {
-                              router.push("/cart");
+                              addToCart();
+                              router.push("/checkout");
                             }}
                           >
                             Mua Ngay
                           </button>
                           <button
                             className="btn btn-warning text-dark"
-                            onClick={() => router.push("/cart")}
+                            onClick={() => {
+                              addToCart();
+                              router.push("/cart");
+                            }}
                           >
                             <BsCartPlus /> Thêm vào giỏ hàng
                           </button>
