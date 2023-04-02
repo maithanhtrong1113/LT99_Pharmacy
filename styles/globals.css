@@ -3,8 +3,10 @@
   margin: 0;
   box-sizing: border-box;
 }
-html {
-  font-size: 90%;
+@media (max-width: 1300px) {
+  html {
+    font-size: 90%;
+  }
 }
 
 body {
@@ -40,7 +42,7 @@ body {
 }
 .line-space {
   background-color: rgba(194, 187, 187, 0.5);
-  height: 60px;
+  height: 50px;
 }
 .text-pink {
   color: #ff19d9;
