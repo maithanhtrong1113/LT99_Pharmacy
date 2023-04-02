@@ -6,23 +6,66 @@ import CheckOutItem from "./CheckOutItem";
 import ModalDiaChi from "../Modal/ModalDiaChi";
 import ModalVanChuyen from "../Modal/ModalVanChuyen";
 import { useSelector } from "react-redux";
+import VND from "../utils/formatVND";
+import { toast } from "react-toastify";
 const Content = () => {
   const [giaVanChuyen, setGiaVanChuyen] = useState(16000);
   const cartItems = useSelector((state) => state.cart.items);
   const totalPriceCartt = useSelector((state) => state.cart.totalPriceCart);
-
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
+  const [thongTinKhachHang, setThongTinKhachHang] = useState("");
   const xuliGia = (data) => {
     console.log(data);
     if (data === "nhanh") {
       setGiaVanChuyen(25000);
     } else setGiaVanChuyen(16000);
   };
+
   const getDiaChi = (data) => {
-    console.log(data);
+    setThongTinKhachHang(data);
+  };
+  const [ghiChu, setGhiChu] = useState("");
+  const datHangHandler = () => {
+    if (thongTinKhachHang === "") {
+      toast.warning("Vui lòng nhập thông tin giao hàng", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+        theme: "light",
+      });
+      return;
+    } else {
+      const cartSend = cartItems.map((thuoc) => {
+        return {
+          thuoc: { maThuoc: thuoc.id },
+          soLuongThuocDat: thuoc.quantity,
+        };
+      });
+      console.log(cartSend);
+      fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          diaChiGiaoHang: thongTinKhachHang.diaChi,
+          khachHang: 10007,
+          orderDetails: cartSend,
+        }),
+      }).then((response) => {
+        if (response.ok) {
+          toast.success("Đặt hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        } else {
+          toast.error("Đặt hàng không thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
+        }
+      });
+    }
   };
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
@@ -98,7 +141,7 @@ const Content = () => {
               </div>
               <div className="container px-3 border rounded shadow py-3 mt-3">
                 <div className="row px-2">
-                  <h5 className="fw-bold text-dark">Giao hàng tận nơi</h5>
+                  <h5 className="fw-bold text-dark">Thông tin giao hàng</h5>
                   <ModalDiaChi sendDataToCheckOut={getDiaChi} />
 
                   <ModalVanChuyen handlerChangeVanChuyen={xuliGia} />
@@ -222,7 +265,13 @@ const Content = () => {
                 </div>
                 <div className="">
                   <p className="text-muted">Ghi chú đơn hàng</p>
-                  <textarea className="customer-note border-none rounded shadow w-100"></textarea>
+                  <textarea
+                    className="customer-note border-none rounded shadow w-100"
+                    value={ghiChu}
+                    onChange={(e) => {
+                      setGhiChu(e.target.value);
+                    }}
+                  />
                 </div>
                 {totalPriceCartt > 0 && (
                   <div className="row py-3">
@@ -230,7 +279,11 @@ const Content = () => {
                       href="/checkout"
                       className="text-decoration-none text-dark col-12"
                     >
-                      <button className="btn btn-warning text-center btn-lg text-light w-100">
+                      <button
+                        type="button"
+                        className="btn btn-warning text-center btn-lg text-light w-100"
+                        onClick={datHangHandler}
+                      >
                         <span className="fw-bold ">Đặt hàng</span>
                         <FaAngleRight />
                       </button>
