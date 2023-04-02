@@ -25,6 +25,7 @@ const Content = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+        console.log("////");
         return response.json();
       })
       .then((results) => {
