@@ -4,11 +4,13 @@ import Navigation from "@/Components/Index/Navigation";
 import Content from "@/Components/ProductDetail/Content";
 import { useRouter } from "next/router";
 import React, { Fragment } from "react";
+import { ToastContainer } from "react-toastify";
 
 const page = (props) => {
   const router = useRouter();
   return (
     <Fragment>
+      <ToastContainer />
       <GoTopPage />
       <Navigation />
       <Content />

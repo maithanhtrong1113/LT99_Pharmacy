@@ -10,6 +10,7 @@ import VND from "../utils/formatVND";
 import CartIcon from "./CartIcon";
 import TichDiem from "./TichDiem";
 import TuVanIcon from "./TuVanIcon";
+import { toast } from "react-toastify";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Content = () => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-        console.log("////");
+
         return response.json();
       })
       .then((results) => {
@@ -48,6 +49,11 @@ const Content = () => {
       images: "/images/index/products/product1.jpg",
     };
     dispatch(cartActions.addItemToCart(obj));
+    toast.success("Thêm sản phẩm vào giỏ hàng thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 500,
+      theme: "light",
+    });
   };
   return (
     <Fragment>
@@ -118,7 +124,10 @@ const Content = () => {
                               className="btn btn-info me-4 text-white"
                               onClick={() => {
                                 addToCart();
-                                router.push("/checkout");
+
+                                setTimeout(() => {
+                                  router.push("/checkout");
+                                }, 300);
                               }}
                             >
                               Mua Ngay
