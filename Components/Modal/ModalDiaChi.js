@@ -36,6 +36,7 @@ function ModalAll(props) {
     name: "",
     code: "",
   });
+  const [diaChiFull, setDiaChiFull] = useState("");
   const onSubmit = (data) => {
     if (xaSelected.name === "") {
       setErr({ show: true, mess: "Vui Lòng Chọn Xã/Phường" });
@@ -56,14 +57,15 @@ function ModalAll(props) {
     }
     data.diaChi =
       data.diaChi +
-      " " +
+      ", " +
       JSON.parse(xaSelected).name +
-      " " +
+      ", " +
       JSON.parse(quanSelected).name +
-      " " +
+      ", " +
       JSON.parse(tinhSelected).name;
-
-    console.log(data);
+    setDiaChiFull(data.diaChi);
+    props.sendDataToCheckOut(data);
+    toggle();
   };
 
   useEffect(() => {
@@ -110,9 +112,14 @@ function ModalAll(props) {
   return (
     <Fragment>
       <button onClick={toggle} className="btn bg-light">
-        <div className="col-xl-12 col-lg-12 d-flex align-items-center text-muted">
-          <GoLocation className="me-2" />
-          <span>Địa chỉ nhận hàng</span>
+        <div className="col-xl-12 col-lg-12 d-flex align-items-start flex-column justify-content-start text-muted">
+          <div>
+            <GoLocation />
+            <span className=" ms-1 mb-0 ">Địa chỉ nhận hàng:</span>
+          </div>
+          <div>
+            <span className="mb-0 fw-bold"> {diaChiFull}</span>
+          </div>
         </div>
         {name !== "" &&
           phone !== "" &&
