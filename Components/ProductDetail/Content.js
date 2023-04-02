@@ -127,7 +127,7 @@ const Content = () => {
 
                                 setTimeout(() => {
                                   router.push("/checkout");
-                                }, 300);
+                                }, 500);
                               }}
                             >
                               Mua Ngay
