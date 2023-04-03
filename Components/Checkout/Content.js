@@ -60,12 +60,14 @@ const Content = () => {
         }
       ).then((response) => {
         if (response.ok) {
-          toast.success("Đặt hàng thành công", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-            theme: "light",
-          });
           dispatch(cartActions.removeAllItem());
+          setTimeout(() => {
+            toast.success("Đặt hàng thành công", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+              theme: "light",
+            });
+          }, 1000);
           router.push("/");
         } else {
           toast.error("Đặt hàng không thành công", {
