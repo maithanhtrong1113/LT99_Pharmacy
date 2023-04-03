@@ -5,19 +5,19 @@ import React, { Fragment, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 const index = (props) => {
-  const router = useRouter();
-  const { pathname } = router;
-  const [hasAdminString, setHasAmdminString] = useState(false);
+  // const router = useRouter();
+  // const { pathname } = router;
+  // const [hasAdminString, setHasAmdminString] = useState(false);
 
-  useEffect(() => {
-    setHasAmdminString(pathname.includes("admin"));
-    const fbRoot = document.getElementById("fb-root");
+  // useEffect(() => {
+  //   setHasAmdminString(pathname.includes("admin"));
+  //   const fbRoot = document.getElementById("fb-root");
 
-    if (hasAdminString) fbRoot.classList.add("invisible");
-    else {
-      fbRoot.className = " ";
-    }
-  }, [router]);
+  //   if (hasAdminString) fbRoot.className("invisible");
+  //   else {
+  //     fbRoot.className = " fb_reset";
+  //   }
+  // }, [router.pathname]);
 
   return (
     <Fragment>
