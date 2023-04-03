@@ -8,7 +8,9 @@
     font-size: 90%;
   }
 }
-
+html {
+  scroll-behavior: smooth !important;
+}
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -41,7 +43,11 @@ body {
   background: #b9b6b6;
 }
 .line-space {
-  background-color: rgba(194, 187, 187, 0.5);
+  background: linear-gradient(
+    to left,
+    rgba(212, 204, 204, 0.5),
+    rgba(104, 103, 103, 0.5)
+  );
   height: 50px;
 }
 .text-pink {
@@ -79,6 +85,10 @@ body {
 }
 .fs-20 {
   font-size: 30px;
+}
+.fs-35 {
+  font-size: 33px;
+  color: #19ffff;
 }
 .fs-27 {
   font-size: 27px !important;
@@ -130,11 +140,10 @@ body {
   color: #f2f8fe !important;
 }
 .bg-customNav {
-  /* background-color: rgb(69, 237, 237); */
   background: linear-gradient(to right, rgb(69, 237, 237), rgb(51, 199, 199));
 }
 .bg-customNav1 {
-  background-color: rgb(91, 236, 221, 0.5);
+  background: linear-gradient(to right, rgb(38, 164, 164), rgb(69, 237, 237));
 }
 .header {
   background-color: #f2f8fe !important;

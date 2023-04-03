@@ -46,7 +46,7 @@ const Slider = () => {
           <div className="carousel-inner ">
             <div className="carousel-item active ">
               <img
-                src="images/index/t41.png"
+                src="images/index/t4.jpg"
                 className="d-block w-100 rounded img-fluid  "
               />
             </div>
@@ -56,16 +56,16 @@ const Slider = () => {
                 className="d-block w-100 rounded img-fluid  "
               />
             </div>
-            <div className="carousel-item">
+            <div className="carousel-item active ">
               <img
-                src="images/index/banner1.jpg"
+                src="images/index/t4.jpg"
                 className="d-block w-100 rounded img-fluid  "
               />
             </div>
             <div className="carousel-item">
               <img
-                src="images/index/banner2.jpg"
-                className="d-block w-100 rounded  img-fluid  "
+                src="images/index/t41.png"
+                className="d-block w-100 rounded img-fluid  "
               />
             </div>
           </div>

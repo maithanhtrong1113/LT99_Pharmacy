@@ -6,7 +6,7 @@ const GoTopPage = () => {
     const listenToScroll = () => {
       const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
-      if (winScroll < 300) {
+      if (winScroll < 250) {
         setIsVisible((prev) => {
           prev = !prev;
         });
@@ -25,7 +25,7 @@ const GoTopPage = () => {
       {isVisible && (
         <div className="fixed-bottomm pointer">
           <FaArrowCircleUp
-            className="fs-20 text-info"
+            className="fs-35 color1"
             onClick={scrollTopOnClick}
           />
         </div>
