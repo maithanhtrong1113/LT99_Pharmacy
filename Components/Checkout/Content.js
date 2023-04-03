@@ -62,13 +62,13 @@ const Content = () => {
         if (response.ok) {
           dispatch(cartActions.removeAllItem());
           setTimeout(() => {
-            toast.success("Đặt hàng thành công", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-              theme: "light",
-            });
+            router.push("/");
           }, 1000);
-          router.push("/");
+          toast.success("Đặt hàng thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+            theme: "light",
+          });
         } else {
           toast.error("Đặt hàng không thành công", {
             position: toast.POSITION.TOP_RIGHT,
