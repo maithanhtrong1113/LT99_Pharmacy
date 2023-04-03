@@ -37,15 +37,15 @@ const Navigation = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  const [bg, setbg] = useState("bg-info");
+  const [bg, setbg] = useState("bg-customNav");
   useEffect(() => {
     const listenToScroll = () => {
       const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
       if (winScroll < 200) {
-        setbg("bg-info");
-      } else {
         setbg("bg-customNav");
+      } else {
+        setbg("bg-customNav1");
       }
     };
     window.addEventListener("scroll", listenToScroll);

@@ -130,7 +130,10 @@ body {
   color: #f2f8fe !important;
 }
 .bg-customNav {
-  background-color: rgba(6, 202, 241, 0.8);
+  background-color: rgb(70, 237, 220);
+}
+.bg-customNav1 {
+  background-color: rgb(91, 236, 221, 0.5);
 }
 .header {
   background-color: #f2f8fe !important;
