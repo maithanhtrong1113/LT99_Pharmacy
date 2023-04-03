@@ -10,10 +10,10 @@ const showMess = () => {
     setHasAmdminString(pathname.includes("admin"));
     const fbRoot = document.getElementById("fb-root");
 
-    if (hasAdminString) fbRoot.classList.add("invisible ");
+    if (hasAdminString) fbRoot.classList.add("invisible");
     else {
       fbRoot.className = " ";
     }
-  }, [pathname]);
+  }, [router]);
 };
 export default showMess;
