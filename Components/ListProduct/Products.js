@@ -4,9 +4,16 @@ import { FaAngleDown } from "react-icons/fa";
 import CardProduct from "../Index/CardProduct";
 const Products = () => {
   const [dsThuoc, setDsThuoc] = useState([]);
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   useEffect(() => {
     fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/danh-sach-thuoc-khong-ke-don?keyword=a"
+      "http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/danh-sach-thuoc"
     )
       .then((response) => {
         if (!response.ok) {
@@ -20,12 +27,6 @@ const Products = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
     <Fragment>
@@ -146,31 +147,15 @@ const Products = () => {
                 </div>
               </div>
               <div className="row">
-                <CardProduct
-                  images="/images/index/products/product1.jpg"
-                  price="310000"
-                  title="Thực phẩm bảo vệ sức khỏe"
-                />
-                <CardProduct
-                  images="/images/index/products/product1.jpg"
-                  price="310000"
-                  title="Thực phẩm bảo vệ sức khỏe"
-                />
-                <CardProduct
-                  images="/images/index/products/product1.jpg"
-                  price="310000"
-                  title="Thực phẩm bảo vệ sức khỏe"
-                />
-                <CardProduct
-                  images="/images/index/products/product1.jpg"
-                  price="310000"
-                  title="Thực phẩm bảo vệ sức khỏe"
-                />
-                <CardProduct
-                  images="/images/index/products/product1.jpg"
-                  price="310000"
-                  title="Thực phẩm bảo vệ sức khỏe"
-                />
+                {dsThuoc.map((thuoc) => (
+                  <CardProduct
+                    images="/images/index/products/product1.jpg"
+                    price={thuoc.giaBanLe}
+                    title={thuoc.thuoc.tenThuoc}
+                    id={thuoc.thuoc.maThuoc}
+                    donViTinh={thuoc.thuoc.donViTinh}
+                  />
+                ))}
               </div>
             </div>
           </div>
