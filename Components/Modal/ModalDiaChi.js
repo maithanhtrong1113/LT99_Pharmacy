@@ -289,15 +289,15 @@ function ModalAll(props) {
                 <div className="col-12 mb-1">
                   {err.show && <span className="text-danger">{err.mess}</span>}
                 </div>
-                <div className="col-6 d-inline-block">
-                  <Button color="primary" type="submit">
-                    Lưu
+
+                <div className="col-6 d-inline-block ">
+                  <Button color="secondary" className="w-50" onClick={toggle}>
+                    Hủy
                   </Button>
                 </div>
-
                 <div className="col-6 d-inline-block text-end">
-                  <Button color="secondary" className="ms-5" onClick={toggle}>
-                    Hủy
+                  <Button color="primary" type="submit" className="w-50">
+                    Lưu
                   </Button>
                 </div>
               </form>

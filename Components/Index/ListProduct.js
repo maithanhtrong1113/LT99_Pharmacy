@@ -10,19 +10,19 @@ const ListProduct = () => {
           <h3 className="fw-bold">Danh mục sản phẩm</h3>
         </div>
       </div>
-      <div className="row my-3 d-flex  my-1i">
+      <div className="row my-3 d-flex  my-1i ">
         <div className="col-lg-2 col-4">
           <Product images="images/index/duocPham.jpg" tenDanhMuc="Dược phẩm" />
         </div>
         <div className="col-lg-2 col-4">
           <Product
-            images="images/index/Cham_soc_suc_khoe.jpg"
+            images="images/index/khauTrang.jpg"
             tenDanhMuc="Chăm sóc sức khỏe"
           />
         </div>
         <div className="col-lg-2 col-4">
           <Product
-            images="images/index/Cham_soc_ca_nhan.jpg"
+            images="images/index/caNhan.jpg"
             tenDanhMuc="Chăm sóc cá nhân"
           />
         </div>
@@ -33,15 +33,12 @@ const ListProduct = () => {
           />
         </div>
         <div className="col-lg-2 col-4">
-          <Product
-            images="images/index/Cham_soc_suc_khoe.jpg"
-            tenDanhMuc="Chăm sóc sức khỏe"
-          />
+          <Product images="images/index/meBe.jpg" tenDanhMuc="Mẹ và Bé" />
         </div>
         <div className="col-lg-2 col-4">
           <Product
-            images="images/index/Cham_soc_suc_khoe.jpg"
-            tenDanhMuc="Chăm sóc sức khỏe"
+            images="images/index/tienLoi.jpg"
+            tenDanhMuc="Sản phẩm tiện lợi"
           />
         </div>
       </div>

@@ -7,7 +7,7 @@ const Product = (props) => {
       <div className="productHover my-2 w-100">
         <Link
           href="/listProduct"
-          className="d-flex flex-column justify-content-between align-items-center text-decoration-none"
+          className="d-flex flex-column justify-content-between align-items-center text-decoration-none bg-list"
         >
           <img src={props.images} className="img-fluid sizeImageProduct " />
           <p className="text-dark text-center ">{props.tenDanhMuc}</p>

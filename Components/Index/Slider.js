@@ -36,12 +36,30 @@ const Slider = () => {
               data-bs-slide-to="2"
               aria-label="Slide 3"
             ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="3"
+              aria-label="Slide 4"
+            ></button>
           </div>
-          <div className="carousel-inner  py-2">
+          <div className="carousel-inner ">
             <div className="carousel-item active ">
               <img
+                src="images/index/t41.png"
+                className="d-block w-100 rounded img-fluid  "
+              />
+            </div>
+            <div className="carousel-item">
+              <img
+                src="images/index/t41.png"
+                className="d-block w-100 rounded img-fluid  "
+              />
+            </div>
+            <div className="carousel-item">
+              <img
                 src="images/index/banner1.jpg"
-                className="d-block w-100 rounded img-fluid h-slider "
+                className="d-block w-100 rounded img-fluid  "
               />
             </div>
             <div className="carousel-item">
@@ -50,13 +68,8 @@ const Slider = () => {
                 className="d-block w-100 rounded  img-fluid  "
               />
             </div>
-            <div className="carousel-item">
-              <img
-                src="images/index/banner3.jpg"
-                className="d-block w-100 rounded   img-fluid   "
-              />
-            </div>
           </div>
+
           <button
             className="carousel-control-prev"
             type="button"
@@ -85,12 +98,12 @@ const Slider = () => {
         {windowWidth > 1000 && (
           <div className="col-lg-4">
             <img
-              src="images/index/banner2.jpg"
-              className="d-block   rounded img-fluid mb-2 "
+              src="images/index/sideimg.jpg"
+              className="d-block img-fluid rounded mb-2 w-100"
             />
             <img
-              src="images/index/imgHeader.jpg"
-              className="d-block  img-fluid rounded "
+              src="images/index/banner2.jpg"
+              className="d-block  rounded img-fluid mb-2 "
             />
           </div>
         )}

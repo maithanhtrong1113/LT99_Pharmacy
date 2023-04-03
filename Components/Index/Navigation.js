@@ -37,6 +37,20 @@ const Navigation = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  const [bg, setbg] = useState("bg-info");
+  useEffect(() => {
+    const listenToScroll = () => {
+      const winScroll =
+        document.body.scrollTop || document.documentElement.scrollTop;
+      if (winScroll < 200) {
+        setbg("bg-info");
+      } else {
+        setbg("bg-customNav");
+      }
+    };
+    window.addEventListener("scroll", listenToScroll);
+    return () => window.removeEventListener("scroll", listenToScroll);
+  }, []);
   return (
     <Fragment>
       {windowWidth < 1000 && (
@@ -217,7 +231,7 @@ const Navigation = () => {
         </div>
       )}
       {windowWidth > 1000 && (
-        <div className="container-fluid bg-info fixed-top shadow">
+        <div className={`container-fluid ${bg} fixed-top shadow`}>
           <div className="row align-items-center py-3">
             <div className="col-lg-1  d-block">
               <Link href="/">

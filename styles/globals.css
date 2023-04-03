@@ -84,7 +84,7 @@ body {
   font-size: 27px !important;
 }
 .bg-cart {
-  font-size: 9px;
+  font-size: 7px;
   background-color: #da2319;
   border-radius: 100%;
 }
@@ -123,12 +123,14 @@ body {
   height: auto;
   width: auto;
 }
-
 .nav-link:hover {
   background-color: #19d6ff;
   border-radius: 5px;
   border-radius: 10px;
   color: #f2f8fe !important;
+}
+.bg-customNav {
+  background-color: rgba(6, 202, 241, 0.8);
 }
 .header {
   background-color: #f2f8fe !important;
