@@ -1,11 +1,14 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Document() {
   const router = useRouter();
   const { pathname } = router;
-  const hasAdminString = pathname.includes("admin");
-
+  const [hasAdminString, setHasAdminString] = useState(false);
+  useEffect(() => {
+    setHasAdminString(pathname.includes("admin"));
+  });
   return (
     <Html lang="en">
       <Head>
