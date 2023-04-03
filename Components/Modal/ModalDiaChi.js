@@ -154,7 +154,7 @@ function ModalAll(props) {
             <div className="row">
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="col-12 my-3">
-                  <h6 className="text-dark">
+                  <h6 className="text-dark fw-bold">
                     Tên người nhận <span className="text-danger">*</span>
                   </h6>
                   <input
@@ -177,7 +177,7 @@ function ModalAll(props) {
                   )}
                 </div>
                 <div className="col-12 my-3">
-                  <h6 className="text-dark">
+                  <h6 className="text-dark fw-bold">
                     Số điện thoại người nhận
                     <span className="text-danger">*</span>
                   </h6>
@@ -269,8 +269,9 @@ function ModalAll(props) {
                 </div>
 
                 <div className="col-12 my-3">
-                  <label className="text-dark">
-                    Địa chỉ cụ thể<span className="text-danger">*</span>
+                  <label className="fw-bold">
+                    Địa chỉ cụ thể
+                    <span className="text-danger">*</span>
                   </label>
                   <input
                     {...register("diaChi", {
