@@ -8,7 +8,7 @@ import {
   BsFillCartPlusFill,
   BsFillPersonLinesFill,
 } from "react-icons/bs";
-import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { FaRegMoneyBillAlt, FaShippingFast } from "react-icons/fa";
 import { MdArrowBackIos, MdCategory, MdManageAccounts } from "react-icons/md";
 
 const Sidebar = () => {
@@ -20,6 +20,7 @@ const Sidebar = () => {
   const [activeThongKe, setActiveThongKe] = useState("");
   const [activeHoaDon, setActiveHoaDon] = useState("");
   const [activeBanThuoc, setActiveBanThuoc] = useState("");
+  const [activeDonHang, setActiveDonHang] = useState("");
 
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
@@ -36,6 +37,8 @@ const Sidebar = () => {
       setActiveHoaDon("bg-info rounded");
     } else if (router.pathname === "/admin/banThuoc") {
       setActiveBanThuoc("bg-info rounded");
+    } else if (router.pathname === "/admin/donHang") {
+      setActiveDonHang("bg-info rounded");
     }
   }, []);
 
@@ -105,6 +108,14 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
               <FaRegMoneyBillAlt className="text-success me-2 fs-25 " /> Hóa Đơn
+            </Link>
+          </li>
+          <li className={`${activeThongKe} mb-3`}>
+            <Link
+              href="/admin/donHang"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <FaShippingFast className="text-secondary me-2 fs-25" /> Đơn hàng
             </Link>
           </li>
           <li className={`${activeThongKe} mb-3`}>

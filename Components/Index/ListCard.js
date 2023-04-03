@@ -5,7 +5,7 @@ const ListCard = () => {
   const [dsThuoc, setDsThuoc] = useState([]);
   useEffect(() => {
     fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/danh-sach-thuoc-khong-ke-don?keyword=a"
+      "http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/danh-sach-thuoc"
     )
       .then((response) => {
         if (!response.ok) {
