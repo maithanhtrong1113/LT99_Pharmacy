@@ -48,7 +48,6 @@ const Thuoc = (props) => {
           <td>{thuoc.lieuLuong}</td>
           <td>{thuoc.congDung}</td>
           <td>{thuoc.soLuong}</td>
-
           <td>{thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
             <button
