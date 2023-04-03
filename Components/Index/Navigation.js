@@ -42,10 +42,10 @@ const Navigation = () => {
     const listenToScroll = () => {
       const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
-      if (winScroll < 200) {
+      if (winScroll < 250) {
         setbg("bg-customNav");
       } else {
-        setbg("bg-customNav1");
+        setbg("bg-customNav");
       }
     };
     window.addEventListener("scroll", listenToScroll);

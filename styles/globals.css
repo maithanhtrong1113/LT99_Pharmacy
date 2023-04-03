@@ -44,8 +44,8 @@ body {
 }
 .line-space {
   background: linear-gradient(
-    to left,
-    rgba(212, 204, 204, 0.5),
+    to right,
+    rgba(193, 187, 187, 0.5),
     rgba(104, 103, 103, 0.5)
   );
   height: 50px;
@@ -140,10 +140,10 @@ body {
   color: #f2f8fe !important;
 }
 .bg-customNav {
-  background: linear-gradient(to right, rgb(69, 237, 237), rgb(51, 199, 199));
+  background: linear-gradient(to right, rgb(69, 237, 237), rgb(53, 185, 185));
 }
 .bg-customNav1 {
-  background: linear-gradient(to right, rgb(38, 164, 164), rgb(69, 237, 237));
+  background: linear-gradient(to right, rgb(53, 185, 185), rgb(69, 237, 237));
 }
 .header {
   background-color: #f2f8fe !important;
