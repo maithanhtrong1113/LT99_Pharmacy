@@ -60,8 +60,8 @@ const Content = () => {
         }
       ).then((response) => {
         if (response.ok) {
-          dispatch(cartActions.removeAllItem());
           setTimeout(() => {
+            dispatch(cartActions.removeAllItem());
             router.push("/");
           }, 1000);
           toast.success("Đặt hàng thành công", {
