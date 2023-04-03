@@ -40,17 +40,20 @@ const Content = () => {
         };
       });
       console.log(cartSend);
-      fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          diaChiGiaoHang: thongTinKhachHang.diaChi,
-          khachHang: 10007,
-          orderDetails: cartSend,
-        }),
-      }).then((response) => {
+      fetch(
+        "http://localhost:8080/QLNT-Server/khach-hang/don-hang/tao-don-hang",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            diaChiGiaoHang: thongTinKhachHang.diaChi,
+            khachHang: { maKhachHang: 10007 },
+            orderDetails: cartSend,
+          }),
+        }
+      ).then((response) => {
         if (response.ok) {
           toast.success("Đặt hàng thành công", {
             position: toast.POSITION.TOP_RIGHT,
