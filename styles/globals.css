@@ -130,7 +130,8 @@ body {
   color: #f2f8fe !important;
 }
 .bg-customNav {
-  background-color: rgb(69, 237, 237);
+  /* background-color: rgb(69, 237, 237); */
+  background: linear-gradient(to right, rgb(69, 237, 237), rgb(51, 199, 199));
 }
 .bg-customNav1 {
   background-color: rgb(91, 236, 221, 0.5);
