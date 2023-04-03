@@ -73,7 +73,7 @@ body {
 }
 .fixed-bottomm {
   position: fixed;
-  bottom: 8%;
+  bottom: 15%;
   right: 2%;
   z-index: 1000;
 }
