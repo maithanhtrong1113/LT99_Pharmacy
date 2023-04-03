@@ -110,7 +110,7 @@ const Sidebar = () => {
               <FaRegMoneyBillAlt className="text-success me-2 fs-25 " /> Hóa Đơn
             </Link>
           </li>
-          <li className={`${activeThongKe} mb-3`}>
+          <li className={`${activeDonHang} mb-3`}>
             <Link
               href="/admin/donHang"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "

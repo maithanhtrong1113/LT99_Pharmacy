@@ -14,6 +14,7 @@ const ListCard = () => {
         return response.json();
       })
       .then((results) => {
+        results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
         setDsThuoc(results);
       })
       .catch((error) => {
