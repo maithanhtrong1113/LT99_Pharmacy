@@ -1,6 +1,11 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { useRouter } from "next/router";
 
 export default function Document() {
+  const router = useRouter();
+  const { pathname } = router;
+  const hasAdminString = pathname.includes("admin");
+
   return (
     <Html lang="en">
       <Head>
@@ -9,7 +14,7 @@ export default function Document() {
       <body>
         <Main />
         <NextScript />
-        <div id="fb-root"></div>
+        <div id="fb-root" className={hasAdminString ? "invisible" : " "}></div>
         <script
           dangerouslySetInnerHTML={{
             __html: `
