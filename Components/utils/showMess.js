@@ -1,10 +1,12 @@
-const showMess = (router) => {
-  const hasAdminString = router.pathname.includes("admin");
-  const fbRoot = document.getElementById("fb-root");
+import { useRouter } from "next/router";
 
-  if (hasAdminString) fbRoot.className = " fb_reset invisible";
-  else {
+const NotShowMess = () => {
+  const router = useRouter();
+  const fbRoot = document.getElementById("fb-root");
+  if (router.pathname.includes("admin")) {
+    fbRoot.className = " fb_reset invisible";
+  } else {
     fbRoot.className = " fb_reset";
   }
 };
-export default showMess;
+export default NotShowMess;

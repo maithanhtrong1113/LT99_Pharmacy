@@ -1,16 +1,14 @@
 import Content from "@/Components/Admin/Content";
 import GoTopPage from "@/Components/Index/GoTopPage";
+import NotShowMess from "@/Components/utils/showMess";
 import showMess from "@/Components/utils/showMess";
 import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useState } from "react";
+
+import React, { Fragment, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 
 const index = () => {
-  const router = useRouter();
-  useEffect(() => {
-    showMess(router);
-  }, [router.asPath]);
-
+  NotShowMess();
   return (
     <Fragment>
       <ToastContainer />
