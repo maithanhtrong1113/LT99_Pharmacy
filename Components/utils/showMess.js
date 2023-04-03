@@ -1,20 +1,10 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+const showMess = (router) => {
+  const hasAdminString = router.pathname.includes("admin");
+  const fbRoot = document.getElementById("fb-root");
 
-const showMess = () => {
-  const router = useRouter();
-  const { pathname } = router;
-  const [hasAdminString, setHasAmdminString] = useState(false);
-
-  useEffect(() => {
-    setHasAmdminString(pathname.includes("admin"));
-    const fbRoot = document.getElementById("fb-root");
-
-    if (hasAdminString) fbRoot.classList.add("invisible");
-    else {
-      fbRoot.className = " ";
-    }
-  }, [router]);
-  return hasAdminString;
+  if (hasAdminString) fbRoot.className = " fb_reset invisible";
+  else {
+    fbRoot.className = " fb_reset";
+  }
 };
 export default showMess;
