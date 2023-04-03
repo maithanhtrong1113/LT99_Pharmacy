@@ -5,10 +5,14 @@ import { FaAngleRight } from "react-icons/fa";
 import CheckOutItem from "./CheckOutItem";
 import ModalDiaChi from "../Modal/ModalDiaChi";
 import ModalVanChuyen from "../Modal/ModalVanChuyen";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import VND from "../utils/formatVND";
 import { toast } from "react-toastify";
+import { cartActions } from "@/store/cart-slice";
+import { useRouter } from "next/router";
 const Content = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [giaVanChuyen, setGiaVanChuyen] = useState(16000);
   const cartItems = useSelector((state) => state.cart.items);
   const totalPriceCartt = useSelector((state) => state.cart.totalPriceCart);
@@ -31,6 +35,7 @@ const Content = () => {
         autoClose: 1000,
         theme: "light",
       });
+
       return;
     } else {
       const cartSend = cartItems.map((thuoc) => {
@@ -60,6 +65,8 @@ const Content = () => {
             autoClose: 1000,
             theme: "light",
           });
+          dispatch(cartActions.removeAllItem());
+          router.push("/");
         } else {
           toast.error("Đặt hàng không thành công", {
             position: toast.POSITION.TOP_RIGHT,
