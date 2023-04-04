@@ -2,7 +2,7 @@ import React, { Fragment, use, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from "react-hook-form";
 import { GoLocation } from "react-icons/go";
-import { toast } from "react-toastify";
+import ModalDiaChi from "./ModalDiaChi";
 import { MdLocationPin } from "react-icons/md";
 
 function ModalAll(props) {
@@ -171,6 +171,10 @@ function ModalAll(props) {
             if (results.length > 0) setDsKhachHang(results);
             else {
               setDsKhachHang([]);
+              setErrDT(true);
+              setValueText(
+                "Không tìm thấy thông tin của bạn hãy chọn nhập thông tin"
+              );
             }
           });
       }, 500);
@@ -267,9 +271,6 @@ function ModalAll(props) {
                     <div className="d-flex">
                       <div>{`${khachHang.hoTen} `}</div>
                     </div>
-                    <div className="text-info fw-bold">
-                      Thêm địa chỉ nhận hàng{" "}
-                    </div>
                   </button>
                 ))}
               </div>
@@ -280,7 +281,7 @@ function ModalAll(props) {
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="col-8">
-                      <input
+                      <textarea
                         placeholder="Nhập địa chỉ giao hàng của bạn"
                         className="form-control "
                         value={diaChiFull}
@@ -290,25 +291,10 @@ function ModalAll(props) {
                       />
                     </div>
                     <div className="col-4 text-end">
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          if (diaChiFull === "") {
-                            setErrDiaChiCoSan(true);
-                            return;
-                          } else {
-                            setErrDiaChiCoSan(false);
-                          }
-                          setKhachHangFull({
-                            ...khachHangFull,
-                            diaChi: diaChiFull,
-                          });
-                          props.sendDataToCheckOut(khachHangFull);
-                          toggle();
-                        }}
-                      >
-                        Thêm địa chỉ giao hàng <MdLocationPin />
-                      </button>
+                      <ModalDiaChi
+                        diaChiFull={diaChiFull}
+                        setDiaChiFull={setDiaChiFull}
+                      />
                     </div>
                   </div>
                   {errDiaChiCoSan && (
@@ -337,6 +323,11 @@ function ModalAll(props) {
                     } else {
                       setErrDiaChiCoSan(false);
                     }
+                    setKhachHangFull({
+                      ...khachHangFull,
+                      diaChi: diaChiFull,
+                    });
+                    props.sendDataToCheckOut(khachHangFull);
                     toggle();
                   }}
                   className="w-25 btn btn-info"

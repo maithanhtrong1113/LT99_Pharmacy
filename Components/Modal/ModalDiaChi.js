@@ -64,7 +64,7 @@ function ModalAll(props) {
       ", " +
       JSON.parse(tinhSelected).name;
     setDiaChiFull(data.diaChi);
-    props.sendDataToCheckOut(data);
+    props.setDiaChiFull(data.diaChi);
     toggle();
   };
 
@@ -111,14 +111,11 @@ function ModalAll(props) {
   }, [tinhSelected, quanSelected, xaSelected]);
   return (
     <Fragment>
-      <button onClick={toggle} className="btn bg-light">
-        <div className="col-xl-12 col-lg-12 d-flex align-items-start flex-column justify-content-start text-muted">
+      <button onClick={toggle} className="btn btn-secondary btn-sm">
+        <div className="col-xl-12 col-lg-12 d-flex align-items-start flex-column justify-content-start ">
           <div>
             <GoLocation />
-            <span className=" ms-1 mb-0 ">Địa chỉ nhận hàng:</span>
-          </div>
-          <div>
-            <span className="mb-0 fw-bold"> {diaChiFull}</span>
+            <span className="ms-1 mb-0 "> Thêm địa chỉ nhận hàng</span>
           </div>
         </div>
         {name !== "" &&
@@ -154,56 +151,6 @@ function ModalAll(props) {
           <div className="container">
             <div className="row">
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                <div className="col-12 my-3">
-                  <h6 className="text-dark fw-bold">
-                    Tên người nhận <span className="text-danger">*</span>
-                  </h6>
-                  <input
-                    {...register("name", {
-                      required: true,
-                      maxLength: 20,
-                    })}
-                    type="text"
-                    required
-                    placeholder="Tên người nhận"
-                    className="form-control"
-                  />
-                  {errors?.name?.type === "required" && (
-                    <span className="text-danger">Tên không được trống</span>
-                  )}
-                  {errors?.name?.type === "maxLength" && (
-                    <span className="text-danger">
-                      Tên không vượt qua 20 ký tự
-                    </span>
-                  )}
-                </div>
-                <div className="col-12 my-3">
-                  <h6 className="text-dark fw-bold">
-                    Số điện thoại người nhận
-                    <span className="text-danger">*</span>
-                  </h6>
-                  <input
-                    {...register("phone", {
-                      required: true,
-                      pattern:
-                        /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/i,
-                    })}
-                    type="text"
-                    required
-                    placeholder="Số điện thoại người nhận"
-                    className="form-control inputText"
-                  />
-                  {errors?.phone?.type === "required" && (
-                    <span className=" text-danger">
-                      Vui lòng nhập số điện thoại
-                    </span>
-                  )}
-                  {errors?.phone?.type === "pattern" && (
-                    <span className="ms-5 text-danger">
-                      Số điện thoại không tồn tại
-                    </span>
-                  )}
-                </div>
                 <div className="col-12 my-3">
                   <select
                     className="form-select"
