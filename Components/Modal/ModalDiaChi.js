@@ -141,6 +141,7 @@ function ModalAll(props) {
             </Fragment>
           )}
       </button>
+
       <Modal
         isOpen={modal}
         toggle={toggle}

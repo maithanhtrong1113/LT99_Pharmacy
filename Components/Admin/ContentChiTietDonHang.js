@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
 import { useRouter } from "next/router";
+import { FaAngleLeft } from "react-icons/fa";
 
 const ContentChiTietDonHang = () => {
   const router = useRouter();
@@ -28,6 +29,17 @@ const ContentChiTietDonHang = () => {
             <div className="container border shadow rounded ">
               {Object.keys(chiTiet).length !== 0 && detail.length !== 0 && (
                 <div className="row py-2">
+                  <div className="col-1 my-2">
+                    <button
+                      className="btn btn-dark"
+                      onClick={() => {
+                        router.push("/admin/donHang");
+                      }}
+                    >
+                      <FaAngleLeft />
+                    </button>
+                  </div>
+                  <div className="col-11"></div>
                   <div className="col-6">
                     <h5 className="text-info">Thông tin khách hàng</h5>
                     <div className="container border rounded shadow my-3">

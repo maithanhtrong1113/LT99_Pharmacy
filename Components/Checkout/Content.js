@@ -5,6 +5,7 @@ import { FaAngleRight } from "react-icons/fa";
 import CheckOutItem from "./CheckOutItem";
 import ModalDiaChi from "../Modal/ModalDiaChi";
 import ModalVanChuyen from "../Modal/ModalVanChuyen";
+import ModalAddThongTinKH from "../Modal/ModalAddThongTinKH";
 import { useDispatch, useSelector } from "react-redux";
 import VND from "../utils/formatVND";
 import { toast } from "react-toastify";
@@ -30,7 +31,7 @@ const Content = () => {
   const [ghiChu, setGhiChu] = useState("");
   const datHangHandler = () => {
     if (thongTinKhachHang === "") {
-      toast.warning("Vui lòng nhập thông tin giao hàng", {
+      toast.warning("Vui lòng nhập đầy đủ thông tin giao hàng", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
         theme: "light",
@@ -54,7 +55,7 @@ const Content = () => {
           },
           body: JSON.stringify({
             diaChiGiaoHang: thongTinKhachHang.diaChi,
-            khachHang: { maKhachHang: 10007 },
+            khachHang: { maKhachHang: thongTinKhachHang.maKhachHang },
             orderDetails: cartSend,
           }),
         }
@@ -154,8 +155,8 @@ const Content = () => {
               <div className="container px-3 border rounded shadow py-3 mt-3">
                 <div className="row px-2">
                   <h5 className="fw-bold text-dark">Thông tin giao hàng</h5>
-                  <ModalDiaChi sendDataToCheckOut={getDiaChi} />
 
+                  <ModalAddThongTinKH sendDataToCheckOut={getDiaChi} />
                   <ModalVanChuyen handlerChangeVanChuyen={xuliGia} />
                 </div>
               </div>
