@@ -183,6 +183,12 @@ function ModalAll(props) {
   const [showNhapCoSan, setShowNhapCoSan] = useState(false);
   const [diaChiFull, setDiaChiFull] = useState("");
   const [errDiaChiCoSan, setErrDiaChiCoSan] = useState(false);
+  useEffect(() => {
+    if (diaChiFull !== "") {
+      setErrDiaChiCoSan(false);
+    }
+  }, [diaChiFull]);
+
   return (
     <Fragment>
       <button onClick={toggle} className="btn bg-light">
@@ -324,7 +330,15 @@ function ModalAll(props) {
                 </button>
                 <button
                   type="button"
-                  onClick={toggle}
+                  onClick={() => {
+                    if (diaChiFull === "") {
+                      setErrDiaChiCoSan(true);
+                      return;
+                    } else {
+                      setErrDiaChiCoSan(false);
+                    }
+                    toggle();
+                  }}
                   className="w-25 btn btn-info"
                 >
                   Xác Nhận
