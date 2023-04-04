@@ -193,10 +193,12 @@ function ModalAll(props) {
           </div>
           {Object.keys(khachHangFull).length !== 0 && (
             <div className="d-flex flex-column align-items-start">
-              <span className="mb-0 fw-bold">
+              <span className="mb-0 fw-bold text-info">
                 {`${khachHangFull.hoTen}, ${khachHangFull.soDienThoai} `}
               </span>
-              <span className="mb-0 fw-bold">{khachHangFull.diaChi}</span>
+              <span className="mb-0 fw-bold text-success">
+                {khachHangFull.diaChi}
+              </span>
             </div>
           )}
         </div>
@@ -313,19 +315,19 @@ function ModalAll(props) {
               <div className="row d-flex justify-content-between my-3">
                 <button
                   type="button"
-                  onClick={toggle}
-                  className="w-25 btn btn-secondary"
-                >
-                  Hủy
-                </button>
-                <button
-                  type="button"
                   onClick={() => {
                     setShowNhap(false);
                   }}
                   className="w-50 btn btn-primary"
                 >
                   Nhập thông tin của bạn
+                </button>
+                <button
+                  type="button"
+                  onClick={toggle}
+                  className="w-25 btn btn-info"
+                >
+                  Xác Nhận
                 </button>
               </div>
             </div>
