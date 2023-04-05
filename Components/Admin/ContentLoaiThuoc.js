@@ -1,75 +1,31 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import ModalAddLoaiThuoc from "../Modal/ModalAddLoaiThuoc";
 import LoaiThuoc from "./LoaiThuoc";
 import NguoiDung from "./NguoiDung";
 import Sidebar from "./Sidebar";
+import { getAllLoaiThuoc, themLoaiThuoc } from "@/api/loaiThuocApi";
 
 const ContentLoaiThuoc = () => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
-  const logOutHandler = () => {
-    dispatch(authActions.logout());
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
-    toggle();
-  };
+
   const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        setLoaiThuoc(results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    fetchData();
   }, []);
-  // thêm loại thuốc
-  const themLoaiThuoc = (data) => {
-    fetch("http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tenLoai: data.tenLoai,
-        moTaChung: data.moTaChung,
-      }),
-    }).then((response) => {
-      if (response.ok) {
-        toast.success("Thêm loại thuốc thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Thêm loại thuốc không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
-
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setLoaiThuoc(data);
-    //   })
+  async function fetchData() {
+    const data = await getAllLoaiThuoc();
+    setLoaiThuoc(data);
+  }
+  const themLoaiThuocc = async (data) => {
+    const res = await themLoaiThuoc(data);
+    setLoaiThuoc(res);
   };
-
   //gợi ý tìm kiếm loại Thuốc
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -109,7 +65,6 @@ const ContentLoaiThuoc = () => {
   };
   return (
     <Fragment>
-      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -132,7 +87,7 @@ const ContentLoaiThuoc = () => {
                   </form>
                 </div>
                 <div className="col-7">
-                  <ModalAddLoaiThuoc submitHandler={themLoaiThuoc} />
+                  <ModalAddLoaiThuoc submitHandler={themLoaiThuocc} />
                 </div>
               </div>
               <table className="table table-striped">
@@ -144,7 +99,10 @@ const ContentLoaiThuoc = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <LoaiThuoc loaiThuoc={loaiThuoc} />
+                  <LoaiThuoc
+                    loaiThuoc={loaiThuoc}
+                    setLoaiThuoc={setLoaiThuoc}
+                  />
                 </tbody>
               </table>
             </div>

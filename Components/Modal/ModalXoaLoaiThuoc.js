@@ -8,7 +8,7 @@ function ModalXoaLoaiThuoc(props) {
   const deleteHandler = () => {
     const loaiThuocId = props.loaiThuoc.maLoai;
     props.handlerSubmit(loaiThuocId);
-    console.log(loaiThuocId);
+
     toggle();
   };
   return (

@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
 
 function ModalAddThuoc(props) {
   const [loaiThuoc, setLoaiThuoc] = useState([]);
@@ -20,22 +21,12 @@ function ModalAddThuoc(props) {
     props.submitHandler(data);
     toggle();
   };
+  async function fetchData() {
+    const data = await getAllLoaiThuoc();
+    setLoaiThuoc(data);
+  }
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        setLoaiThuoc(results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    fetchData();
   }, []);
   return (
     <Fragment>

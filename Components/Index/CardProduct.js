@@ -34,7 +34,7 @@ const CardProduct = (props) => {
               alt=""
               className="card-img-top img-fluid"
             />
-            <div className="card-body">
+            <div className="card-body float-left">
               <h6 className="card-title text-dark fw-bold ">
                 {xuLyTenKhiQuaDai(props.title)}
               </h6>

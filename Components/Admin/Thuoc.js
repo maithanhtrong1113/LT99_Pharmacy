@@ -1,39 +1,17 @@
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
-import { toast } from "react-toastify";
+import { xoaThuoc } from "@/api/thuocApi";
 const Thuoc = (props) => {
   const router = useRouter();
   const handlerInfo = (data) => {
     router.push(`thuoc/${data}`);
   };
 
-  const DeleteHandler = (data) => {
-    fetch(
-      `  http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${data}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((response) => {
-      if (response.ok) {
-        toast.success("Xóa thuốc thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Xóa thuốc không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
+  const DeleteHandler = async (data) => {
+    const res = await xoaThuoc(data);
+    props.setDsThuoc(res);
   };
-
   return (
     <Fragment>
       {props.dsThuoc.length === 0 && (

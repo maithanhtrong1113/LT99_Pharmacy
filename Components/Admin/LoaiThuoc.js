@@ -1,67 +1,19 @@
 import React, { Fragment } from "react";
-import { toast } from "react-toastify";
+
 import ModalChinhSuaLoaiThuoc from "../Modal/ModalChinhSuaLoaiThuoc";
 import ModalXemLoaiThuoc from "../Modal/ModalXemLoaiThuoc";
 import ModalXoaLoaiThuoc from "../Modal/ModalXoaLoaiThuoc";
+import { chinhSuaThuoc, xoaLoaiThuoc } from "@/api/loaiThuocApi";
 
 const LoaiThuoc = (props) => {
-  const xoaLoaiThuoc = (data) => {
-    //xóa loại thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((response) => {
-      if (response.ok) {
-        toast.success("Xóa loại thuốc thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Xóa loại thuốc không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
+  const xoaLoaiThuochanler = async (id) => {
+    const res = await xoaLoaiThuoc(id);
+    props.setLoaiThuoc(res);
   };
-  const chinhSuaLoaiThuocHandler = (data) => {
-    // chỉnh sửa thông tin loại thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data.maLoai}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tenLoai: data.tenLoai,
-          moTaChung: data.moTaChung,
-        }),
-      }
-    ).then((response) => {
-      if (response.ok) {
-        toast.success("Chỉnh sửa loại thuốc thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Chỉnh sửa loại thuốc không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
+  const chinhSuaLoaiThuocHandler = async (id) => {
+    const res = await chinhSuaThuoc(id);
+    props.setLoaiThuoc(res);
   };
-
   return (
     <Fragment>
       {props.loaiThuoc.length === 0 && (
@@ -82,7 +34,7 @@ const LoaiThuoc = (props) => {
             />
             <ModalXoaLoaiThuoc
               loaiThuoc={loaiThuoc}
-              handlerSubmit={xoaLoaiThuoc}
+              handlerSubmit={xoaLoaiThuochanler}
             />
           </td>
         </tr>

@@ -5,9 +5,9 @@ import Sidebar from "./Sidebar";
 import ModalAddThuoc from "../Modal/ModalAddThuoc";
 import Thuoc from "./Thuoc";
 import { BsSearch } from "react-icons/bs";
-
 import NguoiDung from "./NguoiDung";
-import { toast } from "react-toastify";
+import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
+import { getAllThuoc, getThuocTheoLoai, themThuoc } from "@/api/thuocApi";
 
 const ContentThuoc = () => {
   const {
@@ -15,58 +15,34 @@ const ContentThuoc = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [dsThuoc, setDsThuoc] = useState([]);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
+  //Lấy all loại thuốc
+
+  async function fetchData() {
+    const data = await getAllLoaiThuoc();
+    setLoaiThuoc(data);
+  }
+
+  // lấy all thuốc
+  async function DanhSachThuoc() {
+    const data = await getAllThuoc();
+    setDsThuoc(data);
+  }
+  // lấy thuốc theo loại
+  async function DanhSachThuocTheoLoai(loai) {
+    const data = await getThuocTheoLoai(loai);
+    setDsThuoc(data);
+  }
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        setLoaiThuoc(results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-  // danh sách thuốc theo loại thuốc
-  useEffect(() => {
+    fetchData();
     if (loaiThuocSelected === "All") {
-      // danh sách tất cả thuốc truyền vào table
-      fetch(
-        "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc"
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((results) => {
-          setDsThuoc(results);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+      DanhSachThuoc();
     } else {
-      console.log(loaiThuocSelected);
-      fetch(
-        `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/${loaiThuocSelected}/thuoc`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setDsThuoc(data);
-        })
-        .catch((error) => console.error(error));
+      DanhSachThuocTheoLoai(loaiThuocSelected);
     }
   }, [loaiThuocSelected]);
 
@@ -106,45 +82,9 @@ const ContentThuoc = () => {
     }
   };
   // Thêm thuốc
-  const addThuocHandler = (data) => {
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/${data.maLoai}/thuoc`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          tenThuoc: data.tenThuoc,
-          lieuLuong: data.lieuLuong,
-          congDung: data.congDung,
-          donViTinh: data.donViTinh,
-          quyCachDongGoi: data.quyCachDongGoi,
-          tacDungPhu: data.tacDungPhu,
-          huongDanSuDung: data.huongDanSuDung,
-          soLuong: 0,
-          isThuocKeDon: data.thuocKeDon,
-          images: [],
-          dsDoiTuong: [],
-          thuocKeDon: false,
-          moTa: data.moTa,
-        }),
-      }
-    ).then((response) => {
-      if (response.ok) {
-        toast.success("Thêm thuốc thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Thêm thuốc không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
+  const addThuocHandler = async (data) => {
+    const res = await themThuoc(data);
+    setDsThuoc(res);
   };
   return (
     <Fragment>
@@ -206,7 +146,7 @@ const ContentThuoc = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <Thuoc dsThuoc={dsThuoc} />
+                  <Thuoc dsThuoc={dsThuoc} setDsThuoc={setDsThuoc} />
                   <tr>
                     <td>
                       <button className="btn btn-sm bg-dark rounded me-2 my-2">
