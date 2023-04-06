@@ -28,6 +28,8 @@ const Sidebar = () => {
   const [activeBanThuoc, setActiveBanThuoc] = useState("");
   const [activeDonHang, setActiveDonHang] = useState("");
   const [activeCaLamViec, setActiveCalamViec] = useState("");
+  const [activeNhaCungCap, setActiveNhaCungCap] = useState("");
+
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -47,6 +49,8 @@ const Sidebar = () => {
       setActiveDonHang("bg-info rounded");
     } else if (router.pathname === "/admin/caLamViec") {
       setActiveCalamViec("bg-info rounded");
+    } else if (router.pathname === "/admin/nhaCungCap") {
+      setActiveNhaCungCap("bg-info rounded");
     }
   }, []);
 
@@ -133,9 +137,9 @@ const Sidebar = () => {
               <MdWork className="text-light me-2 fs-25" /> Ca Làm Việc
             </Link>
           </li>
-          <li className={`${activeCaLamViec} mb-3`}>
+          <li className={`${activeNhaCungCap} mb-3`}>
             <Link
-              href="/admin/caLamViec"
+              href="/admin/nhaCungCap"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
               <BsTruck className="text-warning me-2 fs-25" /> Nhà Cung Cấp
