@@ -1,51 +1,64 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
-
 import "react-datepicker/dist/react-datepicker.css";
-
-function ModalChinhSuaNhaCungCap(props) {
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { kiemTraSoDienThoai } from "../utils/kiemTraSoDienThoai";
+import { themNhaCungCap } from "@/api/nhaCungCapApi";
+function ModalAddNhaCungCap1(props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [tenNhaCungCap, setTenNhaCungCap] = useState("");
+  const [tenNhaCungCapFocus, setTenNhaCungCapFocus] = useState(false);
+  const tenFocused = () => {
+    setTenNhaCungCapFocus(true);
+  };
+  const [soDienThoai, setSoDienThoai] = useState("");
+  const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
+  const [errSDT, setErrSDT] = useState(false);
+  const phoneFocused = () => {
+    setSoDienThoaiFocus(true);
+  };
+  const [diaChi, setDiaChi] = useState("");
+  const [diaChiFocus, setDiaChiFocus] = useState(false);
+  const diaChiFocused = () => {
+    setDiaChiFocus(true);
+  };
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const [tenNhaCungCap, setTenNhaCungCap] = useState(
-    props.nhaCungCap.tenNhaCungCap
-  );
-  const [diaChi, setDiaChi] = useState(props.nhaCungCap.diaChi);
-  const [soDienThoai, setSoDienThoai] = useState(props.nhaCungCap.soDienThoai);
+
   const onSubmit = (data) => {
-    data.maNhaCungCap = props.nhaCungCap.maNhaCungCap;
-    data.tenNhaCungCap = tenNhaCungCap;
-    data.diaChi = diaChi;
-    data.soDienThoai = soDienThoai;
-    props.chinhSuaNhaCungCapHandler(data);
+    props.submitHandler(data);
     toggle();
   };
-  function handleInputChange(event) {
-    setTenNhaCungCap(event.target.value);
-  }
-
-  function handleInputChange1(event) {
-    const value = event.target.value;
-    setDiaChi(value);
-  }
-  function handleInputChange2(event) {
-    const value = event.target.value;
-    setSoDienThoai(value);
-  }
-
+  const addNhaCungCapOnThuoc = async () => {
+    if (!kiemTraSoDienThoai(soDienThoai)) {
+      return;
+    }
+    if (soDienThoai === "" || diaChi === "" || tenNhaCungCap === "") {
+      return;
+    }
+    const data = { soDienThoai, diaChi, tenNhaCungCap };
+    const res = await themNhaCungCap(data);
+    props.setNhaCungCap(res);
+    toggle();
+  };
+  useEffect(() => {
+    if (!kiemTraSoDienThoai(soDienThoai)) {
+      setErrSDT(true);
+    } else setErrSDT(false);
+  }, [soDienThoai]);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn btn-warning btn-sm me-2">
-        Chỉnh sửa
+      <Button onClick={toggle} className="btn bg-primary btn-sm  text-white">
+        Thêm Nhà Cung Cấp <AiOutlinePlusCircle />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold">Chỉnh Sửa Nhà Cung Cấp</span>
+          <span className="fw-bold">Thêm Nhà Cung Cấp</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -58,19 +71,17 @@ function ModalChinhSuaNhaCungCap(props) {
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("tenNhaCungCap", {
-                          required: true,
-                        })}
+                        onChange={(e) => setTenNhaCungCap(e.target.value)}
+                        value={tenNhaCungCap}
+                        onFocus={tenFocused}
                         type="text"
                         required
-                        value={tenNhaCungCap}
-                        onChange={handleInputChange}
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.tenNhaCungCap?.type === "required" && (
+                      {tenNhaCungCap === "" && tenNhaCungCapFocus && (
                         <span className="text-danger">
                           Vui lòng nhập tên nhà cung cấp
                         </span>
@@ -79,23 +90,23 @@ function ModalChinhSuaNhaCungCap(props) {
                   </div>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Địa chỉ
+                      Địa Chỉ
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("diaChi", {
-                          required: true,
-                        })}
+                        value={diaChi}
+                        onChange={(e) => {
+                          setDiaChi(e.target.value);
+                        }}
+                        onFocus={diaChiFocused}
                         type="text"
                         required
-                        value={diaChi}
-                        onChange={handleInputChange1}
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.diaChi?.type === "required" && (
+                      {diaChi === "" && diaChiFocus && (
                         <span className="text-danger">
                           Vui lòng nhập địa chỉ
                         </span>
@@ -108,45 +119,38 @@ function ModalChinhSuaNhaCungCap(props) {
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("soDienThoai", {
-                          required: true,
-                          pattern:
-                            /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/i,
-                        })}
-                        type="tel"
-                        required
                         value={soDienThoai}
-                        onChange={handleInputChange2}
+                        onFocus={phoneFocused}
+                        onChange={(e) => {
+                          setSoDienThoai(e.target.value);
+                        }}
+                        type="text"
+                        required
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.soDienThoai?.type === "required" && (
+                      {soDienThoai === "" && soDienThoaiFocus && (
                         <span className="text-danger">
                           Vui lòng nhập số điện thoại
                         </span>
                       )}
-                      {errors?.soDienThoai?.type === "pattern" && (
+                      {errSDT && soDienThoai !== "" && (
                         <span className="text-danger">
                           Số điện thoại không tồn tại
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-between ">
+
+                  <div className="row d-flex justify-content-center ">
                     <button
-                      className="btn btn-secondary my-3  text-white fw-bold w-25"
+                      className="btn btn-info my-3  text-white fw-bold w-100"
                       type="button"
-                      onClick={toggle}
+                      onClick={addNhaCungCapOnThuoc}
                     >
-                      Hủy
-                    </button>
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-50"
-                      type="submit"
-                    >
-                      Chỉnh Sửa Nhà Cung Cấp
+                      Thêm Nhà Cung Cấp
                     </button>
                   </div>
                 </form>
@@ -159,4 +163,4 @@ function ModalChinhSuaNhaCungCap(props) {
   );
 }
 
-export default ModalChinhSuaNhaCungCap;
+export default ModalAddNhaCungCap1;
