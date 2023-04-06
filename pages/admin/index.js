@@ -1,4 +1,4 @@
-import Content from "@/Components/Admin/Content";
+import ContentNhanVien from "@/Components/Admin/ContentNhanVien";
 import GoTopPage from "@/Components/Index/GoTopPage";
 import NotShowMess from "@/Components/utils/showMess";
 import showMess from "@/Components/utils/showMess";
@@ -13,7 +13,7 @@ const index = () => {
     <Fragment>
       <ToastContainer />
       <GoTopPage />
-      <Content />
+      <ContentNhanVien />
     </Fragment>
   );
 };

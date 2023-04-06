@@ -6,6 +6,8 @@ import Sidebar from "./Sidebar";
 import { toast } from "react-toastify";
 import NguoiDung from "./NguoiDung";
 import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
+import { BsThreeDots } from "react-icons/bs";
+import xuLyTenKhiQuaDai from "../utils/tooLong";
 
 const ContentKhachHang = () => {
   const [dsKhachHang, setDsKhachHang] = useState([]);
@@ -27,7 +29,7 @@ const ContentKhachHang = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  },[]);
+  }, []);
   // thêm khách hàng
   const addKhachHangHandler = (data) => {
     fetch(
@@ -145,10 +147,35 @@ const ContentKhachHang = () => {
                       <td>{khachHang.maKhachHang}</td>
                       <td>{khachHang.hoTen}</td>
                       <td>{khachHang.soDienThoai}</td>
-                      <td>{khachHang.diaChi}</td>
-                      <td>{khachHang.gioiTinh}</td>
-                      <td>{khachHang.ngaySinh}</td>
-                      <td></td>
+                      <td>
+                        {khachHang.diaChi === null ||
+                        khachHang.diaChi === "" ? (
+                          <BsThreeDots className="text-success fs-20" />
+                        ) : (
+                          xuLyTenKhiQuaDai(khachHang.diaChi)
+                        )}
+                      </td>
+                      <td>
+                        {khachHang.gioiTinh === null ||
+                        khachHang.gioiTinh === "" ? (
+                          <BsThreeDots className="text-success fs-20" />
+                        ) : (
+                          khachHang.gioiTinh
+                        )}
+                      </td>
+                      <td>
+                        {khachHang.ngaySinh === null ||
+                        khachHang.ngaySinh === "" ? (
+                          <BsThreeDots className="text-success fs-20" />
+                        ) : (
+                          khachHang.ngaySinh
+                        )}
+                      </td>
+                      <td>
+                        <button className="btn btn-sm btn-info">
+                          Xem Chi Tiết
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

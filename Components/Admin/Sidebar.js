@@ -9,7 +9,12 @@ import {
   BsFillPersonLinesFill,
 } from "react-icons/bs";
 import { FaRegMoneyBillAlt, FaShippingFast } from "react-icons/fa";
-import { MdArrowBackIos, MdCategory, MdManageAccounts } from "react-icons/md";
+import {
+  MdArrowBackIos,
+  MdCategory,
+  MdManageAccounts,
+  MdWork,
+} from "react-icons/md";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -21,7 +26,7 @@ const Sidebar = () => {
   const [activeHoaDon, setActiveHoaDon] = useState("");
   const [activeBanThuoc, setActiveBanThuoc] = useState("");
   const [activeDonHang, setActiveDonHang] = useState("");
-
+  const [activeCaLamViec, setActiveCalamViec] = useState("");
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -39,6 +44,8 @@ const Sidebar = () => {
       setActiveBanThuoc("bg-info rounded");
     } else if (router.pathname === "/admin/donHang") {
       setActiveDonHang("bg-info rounded");
+    } else if (router.pathname === "/admin/caLamViec") {
+      setActiveCalamViec("bg-info rounded");
     }
   }, []);
 
@@ -55,7 +62,6 @@ const Sidebar = () => {
             alt=""
           />
         </Link>
-
         <hr className="text-white" />
         <ul className="list-unstyled  navbarSideLiHover  vh-100 ">
           <li className={`${active} mb-3`}>
@@ -63,8 +69,8 @@ const Sidebar = () => {
               className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
               href="/admin"
             >
-              <MdManageAccounts className="text-secondary me-2 fs-25" /> Quản lý
-              tài khoản
+              <MdManageAccounts className="text-secondary me-2 fs-25" /> Quản Lý
+              Nhân Viên
             </Link>
           </li>
           <li className={`${activeKhachHang} mb-3`}>
@@ -115,7 +121,15 @@ const Sidebar = () => {
               href="/admin/donHang"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaShippingFast className="text-secondary me-2 fs-25" /> Đơn hàng
+              <FaShippingFast className="text-secondary me-2 fs-25" /> Đơn Hàng
+            </Link>
+          </li>
+          <li className={`${activeCaLamViec} mb-3`}>
+            <Link
+              href="/admin/caLamViec"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <MdWork className="text-light me-2 fs-25" /> Ca Làm Việc
             </Link>
           </li>
           <li className={`${activeThongKe} mb-3`}>

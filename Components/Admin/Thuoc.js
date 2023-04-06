@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
 import { xoaThuoc } from "@/api/thuocApi";
+import { MdOutlineClose } from "react-icons/md";
+import { BsCheck2 } from "react-icons/bs";
 const Thuoc = (props) => {
   const router = useRouter();
   const handlerInfo = (data) => {
@@ -23,7 +25,13 @@ const Thuoc = (props) => {
         <tr key={thuoc.maThuoc}>
           <th scope="row">{thuoc.maThuoc}</th>
           <td>{thuoc.tenThuoc}</td>
-          <td>{thuoc.lieuLuong}</td>
+          <td>
+            {thuoc.isThuocKeDon === true ? (
+              <BsCheck2 className="text-success fs-20" />
+            ) : (
+              <MdOutlineClose className="text-danger fs-20" />
+            )}
+          </td>
           <td>{thuoc.congDung}</td>
           <td>{thuoc.soLuong}</td>
           <td>{thuoc.loaiThuoc.tenLoai}</td>

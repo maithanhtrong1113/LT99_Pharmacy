@@ -1,46 +1,44 @@
 import { toast } from "react-toastify";
-
-export const getAllLoaiThuoc = async () => {
+export const getAllCaLamViec = async () => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/`
+    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/`
   );
   const data = await response.json();
   return data;
 };
-
-export const themLoaiThuoc = async (data) => {
+export const themCaLamViec = async (data) => {
   const response = await fetch(
-    "http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc",
+    "http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/ ",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tenLoai: data.tenLoai,
-        moTaChung: data.moTaChung,
+        tenCa: data.tenCa,
+        soGioLam: data.soGioLam,
       }),
     }
   );
   if (response.ok) {
-    toast.success("Thêm loại thuốc thành công", {
+    toast.success("Thêm ca làm việc thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.error("Thêm loại thuốc không thành công", {
+    toast.error("Thêm ca làm việc không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const loaiThuoc = await getAllLoaiThuoc();
-  return loaiThuoc;
+  const caLamViec = await getAllCaLamViec();
+  return caLamViec;
 };
-export const xoaLoaiThuoc = async (id) => {
+export const xoaCaLamViec = async (id) => {
   const res = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${id}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -49,48 +47,48 @@ export const xoaLoaiThuoc = async (id) => {
     }
   );
   if (!res.ok) {
-    toast.error("Xóa loại thuốc không thành công", {
+    toast.error("Xóa ca làm việc không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.success("Xóa loại thuốc thành công", {
+    toast.success("Xóa ca làm việc thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const loaithuoc = await getAllLoaiThuoc();
-  return loaithuoc;
+  const caLamViec = await getAllCaLamViec();
+  return caLamViec;
 };
-export const chinhSuaThuoc = async (data) => {
+export const chinhSuaCaLamViec = async (data) => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/loai-thuoc/${data.maLoai}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${data.maCaLam}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tenLoai: data.tenLoai,
-        moTaChung: data.moTaChung,
+        tenCa: data.tenCa,
+        soGioLam: data.soGioLam,
       }),
     }
   );
   if (response.ok) {
-    toast.success("Chỉnh sửa loại thuốc thành công", {
+    toast.success("Chỉnh sửa ca làm việc thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.error("Chỉnh sửa loại thuốc không thành công", {
+    toast.error("Chỉnh sửa ca làm việc không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const loaithuoc = await getAllLoaiThuoc();
-  return loaithuoc;
+  const caLamViec = await getAllCaLamViec();
+  return caLamViec;
 };

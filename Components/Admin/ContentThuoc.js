@@ -139,7 +139,7 @@ const ContentThuoc = () => {
                   <tr>
                     <th scope="col">Mã Thuốc</th>
                     <th scope="col">Tên Thuốc</th>
-                    <th scope="col">Liều Lượng</th>
+                    <th scope="col">Thuốc kê đơn</th>
                     <th scope="col">Công Dụng</th>
                     <th scope="col">Số Lượng</th>
                     <th scope="col">Tên Loại Thuốc</th>

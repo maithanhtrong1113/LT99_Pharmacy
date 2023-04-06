@@ -19,6 +19,7 @@ import { MdOutlineClose } from "react-icons/md";
 import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
 import { toast } from "react-toastify";
 import VND from "../utils/formatVND";
+import khachHang from "@/pages/admin/khachHang";
 const ContentBanThuoc = () => {
   const {
     register,
@@ -338,23 +339,11 @@ const ContentBanThuoc = () => {
     if (Object.keys(khachHangCoSan).length === 0) {
       setName("");
       setSoDienThoai("");
-      setDiaChi("");
-      setBacSi("");
-      setNoiKham("");
       setKhachHangCoSan({});
       return;
     }
-    const input = khachHangCoSan.ngaySinh.split("/");
-    console.log(khachHangCoSan.ngaySinh);
-    // "yyyy-mm-dd"
-    //const ngaySinhKHCoSan = input[2] + "/" + input[1] + "/" + input[0];
-    //  để tạo đối tượng Date, chuỗi ngày tháng phải có định dạng "yyyy-mm-dd" hoặc "MM/dd/yyyy".
-    // data lay ra 3/28/2023 MM/dd/yyyy data can
     setName(khachHangCoSan.hoTen);
     setSoDienThoai(khachHangCoSan.soDienThoai);
-    setDiaChi(khachHangCoSan.diaChi);
-    setGioiTinh(khachHangCoSan.gioiTinh);
-    setNgaySinh(new Date(khachHangCoSan.ngaySinh));
   };
   const themKhachHangMoi = () => {
     if (name === "" || soDienThoai === "") {
@@ -376,15 +365,13 @@ const ContentBanThuoc = () => {
         body: JSON.stringify({
           hoTen: name,
           soDienThoai: soDienThoai,
-          diaChi: diaChi,
-          gioiTinh: gioiTinh,
-          ngaySinh: ngaySinh.toISOString().slice(0, 10),
         }),
       }
     )
       .then((response) => response.json())
       .then((results) => {
         setThongTin(results);
+        setKhachHangCoSan(results);
         toast.success("Thêm khách hàng thành công", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -471,13 +458,26 @@ const ContentBanThuoc = () => {
                         <label className="fw-bold">Tên</label>
                       </div>
                       <div className="col-9">
-                        <input
-                          value={name}
-                          onFocus={hanleFocusName}
-                          onChange={(e) => setName(e.target.value)}
-                          type="text"
-                          className="form-control inputText "
-                        />
+                        {Object.keys(khachHangCoSan).length === 0 && (
+                          <input
+                            value={name}
+                            onFocus={hanleFocusName}
+                            onChange={(e) => setName(e.target.value)}
+                            type="text"
+                            className="form-control inputText "
+                          />
+                        )}
+                        {Object.keys(khachHangCoSan).length !== 0 && (
+                          <input
+                            value={name}
+                            onFocus={hanleFocusName}
+                            onChange={(e) => setName(e.target.value)}
+                            type="text"
+                            readOnly
+                            className="form-control inputText opacity-50"
+                          />
+                        )}
+
                         {name === "" && nameFocus && (
                           <>
                             <div className="col-3"></div>
@@ -493,13 +493,26 @@ const ContentBanThuoc = () => {
                         <label className="fw-bold">Số điện thoại</label>
                       </div>
                       <div className="col-9">
-                        <input
-                          value={soDienThoai}
-                          onChange={(e) => setSoDienThoai(e.target.value)}
-                          onFocus={hanleFocusSoDienThoai}
-                          type="text"
-                          className="form-control inputText "
-                        />
+                        {Object.keys(khachHangCoSan).length === 0 && (
+                          <input
+                            value={soDienThoai}
+                            onChange={(e) => setSoDienThoai(e.target.value)}
+                            onFocus={hanleFocusSoDienThoai}
+                            type="text"
+                            className="form-control inputText"
+                          />
+                        )}
+                        {Object.keys(khachHangCoSan).length !== 0 && (
+                          <input
+                            value={soDienThoai}
+                            onChange={(e) => setSoDienThoai(e.target.value)}
+                            onFocus={hanleFocusSoDienThoai}
+                            type="text"
+                            readOnly
+                            className="form-control inputText opacity-50"
+                          />
+                        )}
+
                         {soDienThoai === "" && soDienThoaiFocus && (
                           <>
                             <div className="col-3"></div>
@@ -519,7 +532,7 @@ const ContentBanThuoc = () => {
                           )}
                       </div>
                     </div>
-                    <div className="row d-flex align-items-center my-3">
+                    {/* <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
                         <label className="fw-bold">Địa chỉ</label>
                       </div>
@@ -531,9 +544,9 @@ const ContentBanThuoc = () => {
                           className="form-control inputText "
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="row d-flex align-items-center my-3">
-                      <div className="col-3">
+                      {/* <div className="col-3">
                         <label className="fw-bold">Giới tính</label>
                       </div>
                       <div className="col-3">
@@ -557,7 +570,7 @@ const ContentBanThuoc = () => {
                           onChange={(date) => setNgaySinh(date)}
                           dateFormat="dd-MM-yyyy"
                         />
-                      </div>
+                      </div> */}
                       <div className="d-flex justify-content-between">
                         {Object.keys(khachHangCoSan).length === 0 && (
                           <button
@@ -568,13 +581,15 @@ const ContentBanThuoc = () => {
                             Thêm khách hàng
                           </button>
                         )}
-                        <button
-                          className="btn btn-warning my-3 w-25 float-right btn-sm"
-                          type="button"
-                          onClick={() => setThongTin({})}
-                        >
-                          Xóa thông tin nhập
-                        </button>
+                        {Object.keys(khachHangCoSan).length !== 0 && (
+                          <button
+                            className="btn btn-warning my-3 w-25 float-right btn-sm"
+                            type="button"
+                            onClick={() => setThongTin({})}
+                          >
+                            Xóa thông tin nhập
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
 import { CSVLink } from "react-csv";
 import { FaFileImport } from "react-icons/fa";
-import { BsCheck2 } from "react-icons/bs";
+import { BsCheck2, BsThreeDots } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
 const ContentHoaDon = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
@@ -122,20 +122,19 @@ const ContentHoaDon = () => {
                       <td>{hoaDon.maHoaDon}</td>
                       <td>{hoaDon.khachHang.hoTen}</td>
                       <td>{hoaDon.nhanVienBanHang.hoTen}</td>
-
                       <td>{`${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
                         new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
                       }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>
                       <td>
                         {hoaDon.bacSiChiDinh === null ? (
-                          <MdOutlineClose className="text-danger fs-20" />
+                          <BsThreeDots className="text-warning fs-20" />
                         ) : (
                           hoaDon.bacSiChiDinh
                         )}
                       </td>
                       <td>
                         {hoaDon.noiKham === null ? (
-                          <MdOutlineClose className="text-danger fs-20" />
+                          <BsThreeDots className="text-warning fs-20" />
                         ) : (
                           hoaDon.noiKham
                         )}

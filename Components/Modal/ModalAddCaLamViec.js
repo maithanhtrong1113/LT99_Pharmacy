@@ -2,8 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
-
-function ModalAddLoaiThuoc(props) {
+function ModalAddCaLamViec(props) {
   const {
     register,
     handleSubmit,
@@ -13,7 +12,6 @@ function ModalAddLoaiThuoc(props) {
   const toggle = () => setModal(!modal);
 
   const onSubmit = (data) => {
-    // themLoaiThuoc(data);
     props.submitHandler(data);
     toggle();
   };
@@ -21,11 +19,11 @@ function ModalAddLoaiThuoc(props) {
   return (
     <Fragment>
       <Button onClick={toggle} className="btn bg-primary my-3 text-white">
-        Thêm Loại Thuốc
+        Thêm Ca Làm Việc
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold"> Thêm Loại Thuốc</span>
+          <span className="fw-bold"> Thêm Ca Làm Việc</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -34,11 +32,11 @@ function ModalAddLoaiThuoc(props) {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Tên Loại Thuốc:
+                      Tên Ca Làm Việc:
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("tenLoai", {
+                        {...register("tenCa", {
                           required: true,
                         })}
                         type="text"
@@ -48,20 +46,20 @@ function ModalAddLoaiThuoc(props) {
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.tenLoai?.type === "required" && (
+                      {errors?.tenCa?.type === "required" && (
                         <span className="text-danger">
-                          Vui lòng nhập tên loại thuốc
+                          Vui lòng nhập tên ca làm việc
                         </span>
                       )}
                     </div>
                   </div>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Mô tả chung
+                      Số Giờ Làm
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("moTaChung", {
+                        {...register("soGioLam", {
                           required: true,
                         })}
                         type="text"
@@ -71,10 +69,8 @@ function ModalAddLoaiThuoc(props) {
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.moTaChung?.type === "required" && (
-                        <span className="text-danger">
-                          Vui lòng nhập mô tả chung
-                        </span>
+                      {errors?.soGioLam?.type === "required" && (
+                        <span className="text-danger">Vui lòng số giờ làm</span>
                       )}
                     </div>
                   </div>
@@ -83,7 +79,7 @@ function ModalAddLoaiThuoc(props) {
                       className="btn btn-info my-3  text-white fw-bold w-100"
                       type="submit"
                     >
-                      Thêm Loại Thuốc
+                      Thêm Ca Làm Việc
                     </button>
                   </div>
                 </form>
@@ -96,4 +92,4 @@ function ModalAddLoaiThuoc(props) {
   );
 }
 
-export default ModalAddLoaiThuoc;
+export default ModalAddCaLamViec;

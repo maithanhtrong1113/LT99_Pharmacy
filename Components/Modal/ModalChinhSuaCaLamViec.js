@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
+
 import "react-datepicker/dist/react-datepicker.css";
 
-function ModalAddLoaiThuoc(props) {
+function ModalChinhSuaCaLamViec(props) {
   const {
     register,
     handleSubmit,
@@ -11,21 +12,38 @@ function ModalAddLoaiThuoc(props) {
   } = useForm();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+  const [tenCa, setTenCa] = useState(props.caLamViec.tenCa);
+  const [soGioLam, setSoGioLam] = useState(props.caLamViec.soGioLam);
 
   const onSubmit = (data) => {
-    // themLoaiThuoc(data);
-    props.submitHandler(data);
+    data.maCaLam = props.caLamViec.maCaLam;
+    data.tenCa = tenCa;
+    data.soGioLam = soGioLam;
+    props.chinhSuaCaLamViecHandler(data);
     toggle();
   };
+  function handleInputChange(event) {
+    setTenCa(event.target.value);
+  }
 
+  function handleInputChange1(event) {
+    const value = event.target.value;
+    setSoGioLam(value);
+  }
+  const validateSoGioLam = (value) => {
+    if (!Number.isInteger(Number(value)) || Number(value) <= 0) {
+      return "Số giờ làm phải là số nguyên lớn hơn 0";
+    }
+    return true;
+  };
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary my-3 text-white">
-        Thêm Loại Thuốc
+      <Button onClick={toggle} className="btn btn-warning btn-sm me-2">
+        Chỉnh sửa
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold"> Thêm Loại Thuốc</span>
+          <span className="fw-bold"> Chỉnh Sửa Ca Làm Việc</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -34,56 +52,72 @@ function ModalAddLoaiThuoc(props) {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Tên Loại Thuốc:
+                      Tên Ca Làm Việc:
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("tenLoai", {
+                        {...register("tenCa", {
                           required: true,
                         })}
                         type="text"
                         required
+                        value={tenCa}
+                        onChange={handleInputChange}
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.tenLoai?.type === "required" && (
+                      {errors?.tenCa?.type === "required" && (
                         <span className="text-danger">
-                          Vui lòng nhập tên loại thuốc
+                          Vui lòng nhập tên ca làm việc
                         </span>
                       )}
                     </div>
                   </div>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Mô tả chung
+                      Số Giờ Làm Việc
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("moTaChung", {
+                        {...register("soGioLam", {
                           required: true,
+                          validate: validateSoGioLam,
                         })}
-                        type="text"
+                        type="number"
                         required
+                        value={soGioLam}
+                        onChange={handleInputChange1}
                         className="form-control form-control-sm inputText"
                       />
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.moTaChung?.type === "required" && (
+                      {errors?.soGioLam?.type === "required" && (
                         <span className="text-danger">
-                          Vui lòng nhập mô tả chung
+                          Vui lòng nhập số giờ làm
+                        </span>
+                      )}
+                      {errors.soGioLam && (
+                        <span className="text-danger">
+                          {errors.soGioLam.message}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
+                  <div className="row d-flex justify-content-between ">
                     <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
+                      className="btn btn-secondary my-3  text-white fw-bold w-25"
+                      type="button"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      className="btn btn-info my-3  text-white fw-bold w-50"
                       type="submit"
                     >
-                      Thêm Loại Thuốc
+                      Chỉnh Sửa Ca Làm Việc
                     </button>
                   </div>
                 </form>
@@ -96,4 +130,4 @@ function ModalAddLoaiThuoc(props) {
   );
 }
 
-export default ModalAddLoaiThuoc;
+export default ModalChinhSuaCaLamViec;
