@@ -7,6 +7,7 @@ import {
   BsFillBarChartFill,
   BsFillCartPlusFill,
   BsFillPersonLinesFill,
+  BsTruck,
 } from "react-icons/bs";
 import { FaRegMoneyBillAlt, FaShippingFast } from "react-icons/fa";
 import {
@@ -132,6 +133,15 @@ const Sidebar = () => {
               <MdWork className="text-light me-2 fs-25" /> Ca Làm Việc
             </Link>
           </li>
+          <li className={`${activeCaLamViec} mb-3`}>
+            <Link
+              href="/admin/caLamViec"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <BsTruck className="text-warning me-2 fs-25" /> Nhà Cung Cấp
+            </Link>
+          </li>
+
           <li className={`${activeThongKe} mb-3`}>
             <Link
               href="/admin/thongKe"

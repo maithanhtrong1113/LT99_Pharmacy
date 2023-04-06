@@ -283,7 +283,8 @@ function ModalAll(props) {
                     <div className="col-8">
                       <textarea
                         placeholder="Nhập địa chỉ giao hàng của bạn"
-                        className="form-control "
+                        className="form-control opacity-50"
+                        readOnly
                         value={diaChiFull}
                         onChange={(e) => {
                           setDiaChiFull(e.target.value);
@@ -299,7 +300,7 @@ function ModalAll(props) {
                   </div>
                   {errDiaChiCoSan && (
                     <div className="col-12 text-danger">
-                      <span>Vui lòng nhập địa chỉ giao hàng</span>
+                      <span>Vui lòng thêm địa chỉ nhận hàng</span>
                     </div>
                   )}
                 </div>

@@ -886,7 +886,7 @@ const ContentBanThuoc = () => {
                         <div className="col-3 mb-3 ">
                           <button
                             className="btn btn-secondary d-flex align-items-center"
-                            type="Submit"
+                            type="button"
                           >
                             <BsFillCartCheckFill className="fs-5 me-2" />
                             In Hóa Đơn

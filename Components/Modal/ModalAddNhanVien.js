@@ -4,6 +4,8 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllCaLamViec } from "@/api/caLamViecApi";
+import ModalAddCaLamViec from "./ModalAddCaLamViec";
+import ModalAddCaLamViec1 from "./ModalAddCaLamViec1";
 
 function ModalAddNhanVien(props) {
   const {
@@ -28,6 +30,9 @@ function ModalAddNhanVien(props) {
     const data = await getAllCaLamViec();
     setCaLamViec(data);
   }
+  const addCaLamViecInModal = (data) => {
+    setCaLamViec(data);
+  };
   return (
     <Fragment>
       <Button onClick={toggle} className="btn bg-primary my-3 text-white">
@@ -227,7 +232,7 @@ function ModalAddNhanVien(props) {
                     </div>
                   </div>
                   {/* Ca làm Việc và Quyền */}
-                  <div className="form-group row my-2">
+                  <div className="row my-2">
                     <div className="col-3">
                       <label className="fw-bold text-info">Ca làm việc</label>
                     </div>
@@ -248,6 +253,11 @@ function ModalAddNhanVien(props) {
                           ))}
                         </select>
                       )}
+                    </div>
+                    <div className="col-6">
+                      <ModalAddCaLamViec1
+                        addCaLamViecHandler={addCaLamViecInModal}
+                      />
                     </div>
                   </div>
                   <div className="row d-flex justify-content-center ">

@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
-function ModalAddCaLamViec(props) {
+import { themCaLamViec } from "@/api/caLamViecApi";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+function ModalAddCaLamViec1(props) {
   const {
     register,
     handleSubmit,
@@ -10,21 +12,46 @@ function ModalAddCaLamViec(props) {
   } = useForm();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-
+  const [tenCa, setTenCa] = useState("");
+  const [soGioLam, setSoGioLam] = useState("");
+  const [tenCaFocus, setTenCaFocus] = useState(false);
+  const [soGioLamFocus, setSoGioLamFocus] = useState(false);
+  const [errSoGiolam, setErrSoGioLam] = useState(false);
   const onSubmit = (data) => {
-    props.submitHandler(data);
+    // props.submitHandler(data);
+    toggle();
+  };
+  const soGioLamFocused = () => {
+    setSoGioLamFocus(true);
+  };
+  const tenCaFocused = () => {
+    setTenCaFocus(true);
+  };
+  const addCa = async () => {
+    if (!validateSoGioLam(soGioLam)) {
+      setErrSoGioLam(true);
+      return;
+    }
+    console.log(tenCa, soGioLam);
+    const res = await themCaLamViec({ tenCa, soGioLam });
+    props.addCaLamViecHandler(res);
     toggle();
   };
   const validateSoGioLam = (value) => {
     if (!Number.isInteger(Number(value)) || Number(value) <= 0) {
-      return "Số giờ làm phải là số nguyên lớn hơn 0";
+      return false;
     }
     return true;
   };
+  useEffect(() => {
+    if (validateSoGioLam(soGioLam)) {
+      setErrSoGioLam(false);
+    }
+  }, [soGioLam]);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary  text-white">
-        Thêm Ca Làm Việc
+      <Button onClick={toggle} className="btn bg-primary btn-sm  text-white">
+        Thêm Ca Làm Việc <AiOutlinePlusCircle />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
@@ -41,9 +68,11 @@ function ModalAddCaLamViec(props) {
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("tenCa", {
-                          required: true,
-                        })}
+                        value={tenCa}
+                        onChange={(e) => {
+                          setTenCa(e.target.value);
+                        }}
+                        onFocus={tenCaFocused}
                         type="text"
                         required
                         className="form-control form-control-sm inputText"
@@ -51,7 +80,7 @@ function ModalAddCaLamViec(props) {
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.tenCa?.type === "required" && (
+                      {tenCa === "" && tenCaFocus && (
                         <span className="text-danger">
                           Vui lòng nhập tên ca làm việc
                         </span>
@@ -64,10 +93,11 @@ function ModalAddCaLamViec(props) {
                     </label>
                     <div className="col-sm-8">
                       <input
-                        {...register("soGioLam", {
-                          required: true,
-                          validate: validateSoGioLam,
-                        })}
+                        value={soGioLam}
+                        onChange={(e) => {
+                          setSoGioLam(e.target.value);
+                        }}
+                        onFocus={soGioLamFocused}
                         type="number"
                         required
                         className="form-control form-control-sm inputText"
@@ -75,14 +105,14 @@ function ModalAddCaLamViec(props) {
                     </div>
                     <div className="col-sm-4"></div>
                     <div className="col-sm-8">
-                      {errors?.soGioLam?.type === "required" && (
+                      {soGioLam === "" && soGioLamFocus && (
                         <span className="text-danger">
-                          Vui lòng nhập số giờ làm
+                          Vui lòng nhập số giờ làm việc
                         </span>
                       )}
-                      {errors.soGioLam && (
+                      {errSoGiolam && soGioLam !== "" && (
                         <span className="text-danger">
-                          {errors.soGioLam.message}
+                          Số giờ làm phải là số nguyên và lớn hơn 0
                         </span>
                       )}
                     </div>
@@ -90,7 +120,8 @@ function ModalAddCaLamViec(props) {
                   <div className="row d-flex justify-content-center ">
                     <button
                       className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="submit"
+                      type="button"
+                      onClick={addCa}
                     >
                       Thêm Ca Làm Việc
                     </button>
@@ -105,4 +136,4 @@ function ModalAddCaLamViec(props) {
   );
 }
 
-export default ModalAddCaLamViec;
+export default ModalAddCaLamViec1;
