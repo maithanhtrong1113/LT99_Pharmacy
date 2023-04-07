@@ -27,7 +27,7 @@ const LoaiThuoc = (props) => {
           <td>{loaiThuoc.tenLoai}</td>
           <td>{loaiThuoc.moTaChung}</td>
           <td className="d-flex">
-            <ModalXemLoaiThuoc loaiThuocId={loaiThuoc.maLoai} />
+            <ModalXemLoaiThuoc loaiThuoc={loaiThuoc} />
             <ModalChinhSuaLoaiThuoc
               loaiThuoc={loaiThuoc}
               chinhSuaLoaiThuoc={chinhSuaLoaiThuocHandler}

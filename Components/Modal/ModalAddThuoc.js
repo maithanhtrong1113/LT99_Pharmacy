@@ -19,7 +19,7 @@ function ModalAddThuoc(props) {
   } = useForm();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
-  const [nhaCungCap, setNhaCungCap] = useState([]);
+
   const onSubmit = (data) => {
     props.submitHandler(data);
     toggle();
@@ -28,12 +28,8 @@ function ModalAddThuoc(props) {
     const data = await getAllLoaiThuoc();
     setLoaiThuoc(data);
   }
-  async function fetchDataNhaCungCap() {
-    const data = await getAllNhaCungCap();
-    setNhaCungCap(data);
-  }
+
   useEffect(() => {
-    fetchDataNhaCungCap();
     fetchData();
   }, []);
   return (
@@ -79,27 +75,7 @@ function ModalAddThuoc(props) {
                       )}
                     </div>
                   </div>
-                  {/* nhà cung cấp */}
-                  <div className="form-group row my-2  d-flex align-items-center">
-                    <label className="col-sm-4 col-form-label fw-bold">
-                      Nhà Cung Cấp:
-                    </label>
-                    <div className="col-sm-4">
-                      <select className="form-select">
-                        {nhaCungCap.map((nhaCungCap) => (
-                          <option
-                            key={nhaCungCap.maNhaCungCap}
-                            value={nhaCungCap.maNhaCungCap}
-                          >
-                            {nhaCungCap.tenNhaCungCap}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="col-sm-4">
-                      <ModalAddNhaCungCap1 setNhaCungCap={setNhaCungCap} />
-                    </div>
-                  </div>
+
                   {/* Loại thuốc */}
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">

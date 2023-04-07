@@ -18,7 +18,7 @@ function ModalAddNhaCungCap(props) {
 
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary  text-white">
+      <Button onClick={toggle} className="btn bg-primary btn-sm text-white">
         Thêm Nhà Cung Cấp
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>

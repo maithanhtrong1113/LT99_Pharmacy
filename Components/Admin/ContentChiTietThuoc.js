@@ -10,6 +10,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import VND from "../utils/formatVND";
+import ModalAddNhaCungCap1 from "../Modal/ModalAddNhaCungCap1";
+import { getAllNhaCungCap } from "@/api/nhaCungCapApi";
+import { BsThreeDots } from "react-icons/bs";
 
 const ContentChiTietThuoc = (props) => {
   const {
@@ -45,6 +48,7 @@ const ContentChiTietThuoc = (props) => {
   const [thuocKeDon, setThuocKeDon] = useState("");
   const { id } = router.query;
   const [isShow, setIsShow] = useState(false);
+  const [nhaCungCap, setNhaCungCap] = useState([]);
   const toggleShow = () => {
     if (isShowNhapThuoc === true) setIsShowNhapThuoc(false);
     setIsShow(!isShow);
@@ -70,6 +74,7 @@ const ContentChiTietThuoc = (props) => {
     return true;
   };
   useEffect(() => {
+    fetchDataNhaCungCap();
     // danh sách loại thuốc truyền vào select option
     fetch(
       "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
@@ -171,10 +176,14 @@ const ContentChiTietThuoc = (props) => {
       }
     });
   };
-
+  const [selectedNCC, setNCC] = useState({});
   const onSubmitNhapThuoc = (dataa) => {
     if (ngayHetHan <= today || ngaySanXuat >= today) return;
-    console.log(today.toISOString().slice(0, 10));
+    const nhaCungCapValue =
+      Object.keys(selectedNCC).length === 0
+        ? { maNhaCungCap: nhaCungCap[0].maNhaCungCap }
+        : { maNhaCungCap: selectedNCC };
+    console.log(nhaCungCapValue);
     fetch(
       `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${id}/nhap-thuoc`,
       {
@@ -191,6 +200,7 @@ const ContentChiTietThuoc = (props) => {
           giaNhap: dataa.giaNhap,
           giaBanSi: dataa.giaBanSi,
           giaBanLe: dataa.giaBanLe,
+          nhaCungCap: nhaCungCapValue,
         }),
       }
     ).then((response) => {
@@ -210,6 +220,10 @@ const ContentChiTietThuoc = (props) => {
       }
     });
   };
+  async function fetchDataNhaCungCap() {
+    const data = await getAllNhaCungCap();
+    setNhaCungCap(data);
+  }
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -585,7 +599,13 @@ const ContentChiTietThuoc = (props) => {
                           <td className="fw-bold">
                             {VND.format(lichSu.giaBanLe)}
                           </td>
-                          <td>{lichSu.nhaCungCap}</td>
+                          <td>
+                            {lichSu.nhaCungCap === null ? (
+                              <BsThreeDots />
+                            ) : (
+                              lichSu.nhaCungCap.tenNhaCungCap
+                            )}
+                          </td>
                           <td>{lichSu.nuocSanXuat}</td>
                         </tr>
                       ))}
@@ -775,6 +795,34 @@ const ContentChiTietThuoc = (props) => {
                         onChange={(date) => setNgayNhapThuoc(date)}
                         dateFormat="yyyy/MM/dd"
                       />
+                    </div>
+                  </div>
+                  {/* nhà cung cấp */}
+                  <div className="form-group row my-2  d-flex align-items-center">
+                    <label className="col-sm-3 col-form-label fw-bold">
+                      Nhà Cung Cấp:
+                    </label>
+                    <div className="col-sm-3">
+                      <select
+                        className="form-select"
+                        value={selectedNCC}
+                        defaultValue={nhaCungCap[0]}
+                        onChange={(e) => {
+                          setNCC(e.target.value);
+                        }}
+                      >
+                        {nhaCungCap.map((nhaCungCap) => (
+                          <option
+                            key={nhaCungCap.maNhaCungCap}
+                            value={nhaCungCap.maNhaCungCap}
+                          >
+                            {nhaCungCap.tenNhaCungCap}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-sm-3">
+                      <ModalAddNhaCungCap1 setNhaCungCap={setNhaCungCap} />
                     </div>
                   </div>
                   <button type="submit" className="btn btn-primary my-3">

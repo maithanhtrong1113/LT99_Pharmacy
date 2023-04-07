@@ -5,7 +5,7 @@ export const getNhanVienTheoCaLamViec = async (maCaLam) => {
   const data = await response.json();
   return data;
 };
-export const getAllNhanVien = async (maCaLam) => {
+export const getAllNhanVien = async () => {
   const response = await fetch(
     `http://localhost:8080/QLNT-Server/quan-ly/danh-sach-nhan-vien`
   );

@@ -8,65 +8,24 @@ import NguoiDung from "./NguoiDung";
 import ModalAddKhachHang from "../Modal/ModalAddKhachHang";
 import { BsThreeDots } from "react-icons/bs";
 import xuLyTenKhiQuaDai from "../utils/tooLong";
+import { getAllKhachHang, themKhachHang } from "@/api/khachHangApi";
+import ModalXemChiTietKH from "../Modal/ModalXemChiTietKH";
 
 const ContentKhachHang = () => {
   const [dsKhachHang, setDsKhachHang] = useState([]);
   const [timeoutId1, setTimeoutId1] = useState(null);
   const [searchTerm1, setSearchTerm1] = useState("");
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/danh-sach-khach-hang"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        setDsKhachHang(results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    fetchData();
   }, []);
+  async function fetchData() {
+    const res = await getAllKhachHang();
+    setDsKhachHang(res);
+  }
   // thêm khách hàng
-  const addKhachHangHandler = (data) => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/nhan-vien/quan-ly-khach-hang/khach-hang",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          hoTen: data.name,
-          soDienThoai: data.phone,
-          diaChi: data.diaChi,
-          gioiTinh: data.gender,
-          ngaySinh: data.date,
-        }),
-      }
-    ).then((response) => {
-      if (response.ok) {
-        toast.success("Thêm khách hàng thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      } else {
-        toast.error("Thêm khách hàng không thành công", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          theme: "light",
-        });
-      }
-    });
-
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setLoaiThuoc(data);
-    //   })
+  const addKhachHangHandler = async (data) => {
+    const res = await themKhachHang(data);
+    setDsKhachHang(res);
   };
   const handleInputChange1 = (event) => {
     const searchTerm1 = event.target.value;
@@ -172,9 +131,7 @@ const ContentKhachHang = () => {
                         )}
                       </td>
                       <td>
-                        <button className="btn btn-sm btn-info">
-                          Xem Chi Tiết
-                        </button>
+                        <ModalXemChiTietKH khachHang={khachHang} />
                       </td>
                     </tr>
                   ))}

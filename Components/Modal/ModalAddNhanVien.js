@@ -35,7 +35,10 @@ function ModalAddNhanVien(props) {
   };
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary my-3 text-white">
+      <Button
+        onClick={toggle}
+        className="btn bg-primary my-3 btn-sm text-white"
+      >
         Thêm nhân viên
       </Button>
       <Modal

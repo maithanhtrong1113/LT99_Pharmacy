@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { getAllCaLamViec } from "@/api/caLamViecApi";
 import { getAllNhanVien, getNhanVienTheoCaLamViec } from "@/api/nhanVienApi";
 import xuLyTenKhiQuaDai, { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
+import ModalXemChiTietKH from "../Modal/ModalXemChiTietNV";
 
 const index = () => {
   const [dsNhanVien, setDsNhanVien] = useState([]);
@@ -124,7 +125,7 @@ const index = () => {
                     <th scope="col">Tên</th>
                     <th scope="col">Số điện thoại</th>
                     <th scope="col">Địa chỉ</th>
-                    <th scope="col">Giới tính</th>
+
                     <th scope="col">Ngày sinh</th>
                     <th scope="col">Ca Làm Việc</th>
                     <th scope="col"></th>
@@ -137,13 +138,10 @@ const index = () => {
                       <td>{nhanVien.hoTen}</td>
                       <td>{nhanVien.soDienThoai}</td>
                       <td>{xuLyDiaChiKhiQuaDai(nhanVien.diaChi)}</td>
-                      <td>{nhanVien.gioiTinh}</td>
                       <td>{nhanVien.ngaySinh}</td>
                       <td>{nhanVien.caLamViec.tenCa}</td>
                       <td>
-                        <button className="btn btn-info btn-sm">
-                          Xem chi tiết
-                        </button>
+                        <ModalXemChiTietKH nhanVien={nhanVien} />
                       </td>
                     </tr>
                   ))}

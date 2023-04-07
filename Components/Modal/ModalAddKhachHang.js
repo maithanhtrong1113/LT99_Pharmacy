@@ -25,7 +25,7 @@ function ModalAddKhachHang(props) {
     <Fragment>
       <Button
         onClick={toggle}
-        className="btn bg-primary text-white "
+        className="btn bg-primary btn-sm text-white "
         type="button"
       >
         Thêm khách hàng

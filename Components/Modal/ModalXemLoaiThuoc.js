@@ -14,20 +14,7 @@ function ModalXemLoaiThuoc(props) {
   const toggle = () => {
     setModal(!modal);
   };
-  const [tenLoai, setTenLoai] = useState("");
-  const [moTa, setMota] = useState("");
-  useEffect(() => {
-    // lấy thông tin loại thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/${props.loaiThuocId}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setTenLoai(data.tenLoai);
-        setMota(data.moTaChung);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const [loaiThuoc, setLoaiThuoc] = useState(props.loaiThuoc);
   return (
     <Fragment>
       <Button onClick={toggle} className="btn btn-info btn-sm me-2">
@@ -44,10 +31,18 @@ function ModalXemLoaiThuoc(props) {
                 <form noValidate>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
+                      Mã Loại Thuốc:
+                    </label>
+                    <div className="col-sm-8 fw-bold text-info">
+                      <label>{loaiThuoc.maLoai}</label>
+                    </div>
+                  </div>
+                  <div className="form-group row my-2 d-flex align-items-center">
+                    <label className="col-sm-4 col-form-label fw-bold">
                       Tên Loại Thuốc:
                     </label>
                     <div className="col-sm-8">
-                      <label>{tenLoai}</label>
+                      <label>{loaiThuoc.tenLoai}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
@@ -55,7 +50,7 @@ function ModalXemLoaiThuoc(props) {
                       Mô tả chung:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{loaiThuoc.moTaChung}</label>
                     </div>
                   </div>
                   <div className="row d-flex justify-content-center "></div>
