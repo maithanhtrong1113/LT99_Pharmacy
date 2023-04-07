@@ -53,10 +53,10 @@ function ModalChinhSuaNhaCungCap(props) {
               <div className="col-xl-12 col-lg-12">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Tên Nhà Cung Cấp:
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         {...register("tenNhaCungCap", {
                           required: true,
@@ -68,8 +68,8 @@ function ModalChinhSuaNhaCungCap(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {errors?.tenNhaCungCap?.type === "required" && (
                         <span className="text-danger">
                           Vui lòng nhập tên nhà cung cấp
@@ -78,10 +78,10 @@ function ModalChinhSuaNhaCungCap(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Địa chỉ
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         {...register("diaChi", {
                           required: true,
@@ -93,8 +93,8 @@ function ModalChinhSuaNhaCungCap(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {errors?.diaChi?.type === "required" && (
                         <span className="text-danger">
                           Vui lòng nhập địa chỉ
@@ -103,10 +103,10 @@ function ModalChinhSuaNhaCungCap(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Số Điện Thoại
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         {...register("soDienThoai", {
                           required: true,
@@ -120,8 +120,8 @@ function ModalChinhSuaNhaCungCap(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {errors?.soDienThoai?.type === "required" && (
                         <span className="text-danger">
                           Vui lòng nhập số điện thoại

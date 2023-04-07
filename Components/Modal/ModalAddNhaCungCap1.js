@@ -66,10 +66,10 @@ function ModalAddNhaCungCap1(props) {
               <div className="col-xl-12 col-lg-12">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Tên Nhà Cung Cấp:
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         onChange={(e) => setTenNhaCungCap(e.target.value)}
                         value={tenNhaCungCap}
@@ -79,8 +79,8 @@ function ModalAddNhaCungCap1(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {tenNhaCungCap === "" && tenNhaCungCapFocus && (
                         <span className="text-danger">
                           Vui lòng nhập tên nhà cung cấp
@@ -89,10 +89,10 @@ function ModalAddNhaCungCap1(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Địa Chỉ
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         value={diaChi}
                         onChange={(e) => {
@@ -104,8 +104,8 @@ function ModalAddNhaCungCap1(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {diaChi === "" && diaChiFocus && (
                         <span className="text-danger">
                           Vui lòng nhập địa chỉ
@@ -114,10 +114,10 @@ function ModalAddNhaCungCap1(props) {
                     </div>
                   </div>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Số Điện Thoại
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         value={soDienThoai}
                         onFocus={phoneFocused}
@@ -129,8 +129,8 @@ function ModalAddNhaCungCap1(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {soDienThoai === "" && soDienThoaiFocus && (
                         <span className="text-danger">
                           Vui lòng nhập số điện thoại
