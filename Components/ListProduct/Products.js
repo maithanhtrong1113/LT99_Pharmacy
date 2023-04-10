@@ -155,6 +155,7 @@ const Products = () => {
                     title={thuoc.thuoc.tenThuoc}
                     id={thuoc.thuoc.maThuoc}
                     donViTinh={thuoc.thuoc.donViTinh}
+                    inventory={thuoc.thuoc.inventory}
                   />
                 ))}
               </div>
