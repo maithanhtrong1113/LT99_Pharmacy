@@ -54,7 +54,7 @@ const Navigation = () => {
   return (
     <Fragment>
       {windowWidth < 1000 && (
-        <div className="container-fluid bg-info fixed-top shadow">
+        <div className="container-fluid bg-customNav fixed-top shadow">
           <div className="row align-items-center py-3 d-flex">
             <div className="col-3">
               <Link href="/">

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import ModalItem from "../Modal/ModalItem";
 import VND from "../utils/formatVND";
 const CartItem = (props) => {
-  const { title, quantity, total, price, id, image } = props.item;
+  const { title, quantity, total, price, id, image, inventory } = props.item;
   const dispatch = useDispatch();
   const addItem = () => {
     dispatch(
@@ -15,6 +15,7 @@ const CartItem = (props) => {
         image,
         title,
         price,
+        inventory,
       })
     );
   };
@@ -53,21 +54,25 @@ const CartItem = (props) => {
               ></ModalItem>
             </div>
             <div className="text-primary">{VND.format(total)}</div>
-
-            <div className="border rounded d-flex justify-content-between align-items-center mt-2 w-100">
-              <button
-                className="btn btn-sm bg-light btnSoLuong border "
-                onClick={removeItem}
-              >
-                -
-              </button>
-              <span>{quantity}</span>
-              <button
-                className="btn btn-sm bg-light btnSoLuong  border "
-                onClick={addItem}
-              >
-                +
-              </button>
+            <div className="d-flexflex-columnn ">
+              <div className="border rounded d-flex justify-content-between align-items-center mt-2 w-50">
+                <button
+                  className="btn btn-sm bg-light btnSoLuong border "
+                  onClick={removeItem}
+                >
+                  -
+                </button>
+                <span>{quantity}</span>
+                <button
+                  className="btn btn-sm bg-light btnSoLuong  border "
+                  onClick={addItem}
+                >
+                  +
+                </button>
+              </div>
+              <div>
+                <span>3</span>
+              </div>
             </div>
           </div>
         </div>
@@ -89,20 +94,23 @@ const CartItem = (props) => {
           </td>
           <td className="text-info">{VND.format(price)}</td>
           <td>
-            <div className="border rounded d-flex justify-content-between">
-              <button
-                className="btn btn-sm bg-light btnSoLuong border "
-                onClick={removeItem}
-              >
-                -
-              </button>
-              <span>{quantity}</span>
-              <button
-                className="btn btn-sm bg-light btnSoLuong  border "
-                onClick={addItem}
-              >
-                +
-              </button>
+            <div className="d-flex flex-column align-items-center">
+              <div className="border rounded d-flex justify-content-between w-100">
+                <button
+                  className="btn btn-sm bg-light btnSoLuong border "
+                  onClick={removeItem}
+                >
+                  -
+                </button>
+                <span>{quantity}</span>
+                <button
+                  className="btn btn-sm bg-light btnSoLuong  border "
+                  onClick={addItem}
+                >
+                  +
+                </button>
+              </div>
+              <div className="text-muted">Số lượng tồn:{`${inventory}`}</div>
             </div>
           </td>
           <td className=" text-info">{VND.format(total)}</td>

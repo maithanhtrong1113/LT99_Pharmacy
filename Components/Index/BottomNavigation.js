@@ -3,7 +3,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsCart, BsCartCheck } from "react-icons/bs";
 import { FaShippingFast } from "react-icons/fa";
-import { MdOutlineMedicalServices } from "react-icons/md";
+import { MdLocalShipping, MdOutlineMedicalServices } from "react-icons/md";
 
 const BottomNavigation = () => {
   const router = useRouter();
@@ -18,10 +18,10 @@ const BottomNavigation = () => {
     <Fragment>
       {windowWidth < 1000 && (
         <div className="container fixed-bottom bg-light shadow">
-          <div className="row py-2">
+          <div className="row py-2 mx-2">
             <div
               className={`col-3 d-flex justify-content-center flex-column align-items-center ${
-                router.asPath === "/" ? "active" : " "
+                router.asPath === "/" ? "bg-customNav2" : " "
               }`}
               onClick={() => {
                 router.push("/");
@@ -32,7 +32,7 @@ const BottomNavigation = () => {
             </div>
             <div
               className={`col-3 d-flex justify-content-center flex-column align-items-center ${
-                router.asPath === "/listProduct" ? "active" : " "
+                router.asPath === "/listProduct" ? "bg-customNav2" : " "
               }`}
               onClick={() => {
                 router.push("/listProduct");
@@ -42,7 +42,7 @@ const BottomNavigation = () => {
               <span className="fw-bold fs-12">Danh mục</span>
             </div>
             <div className="col-3  d-flex justify-content-center flex-column align-items-center">
-              <FaShippingFast className="fs-20" />
+              <MdLocalShipping className="fs-20" />
               <span className="fw-bold fs-12">Đơn hàng</span>
             </div>
           </div>

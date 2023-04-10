@@ -9,9 +9,11 @@ import xuLyTenKhiQuaDai from "../utils/tooLong";
 const CardProduct = (props) => {
   const dispatch = useDispatch();
   const addToCart = () => {
-    const { title, price, id, images } = props;
+    const { title, price, id, images, inventory } = props;
 
-    dispatch(cartActions.addItemToCart({ id, title, price, images }));
+    dispatch(
+      cartActions.addItemToCart({ id, title, price, images, inventory })
+    );
     toast.success("Đã thêm sản phẩm vào giỏ hàng", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 300,

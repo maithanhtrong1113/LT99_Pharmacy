@@ -137,6 +137,7 @@ function ModalAll(props) {
   const [dsKhachHang, setDsKhachHang] = useState([]);
   const [errDT, setErrDT] = useState(false);
   const [valueText, setValueText] = useState();
+
   const handleInputChange1 = (event) => {
     const searchTerm1 = event.target.value;
     setSearchTerm1(searchTerm1);
@@ -198,7 +199,7 @@ function ModalAll(props) {
       <button onClick={toggle} className="btn bg-light">
         <div className="col-xl-12 col-lg-12 d-flex align-items-start flex-column justify-content-start text-muted">
           <div>
-            <GoLocation />
+            <GoLocation className="text-info" />
             <span className=" ms-1 mb-0 ">Thông tin của người nhận hàng :</span>
           </div>
           {Object.keys(khachHangFull).length !== 0 && (
@@ -311,7 +312,7 @@ function ModalAll(props) {
                   onClick={() => {
                     setShowNhap(false);
                   }}
-                  className="w-50 btn btn-primary"
+                  className="col-7 btn btn-primary"
                 >
                   Nhập thông tin của bạn
                 </button>
@@ -331,7 +332,7 @@ function ModalAll(props) {
                     props.sendDataToCheckOut(khachHangFull);
                     toggle();
                   }}
-                  className="w-25 btn btn-info"
+                  className="col-4 btn btn-info "
                 >
                   Xác Nhận
                 </button>
@@ -483,17 +484,17 @@ function ModalAll(props) {
                     )}
                   </div>
 
-                  <div className="col-6 d-inline-block ">
+                  <div className="col-7 d-inline-block ">
                     <Button
                       type="button"
                       color="warning"
-                      className="w-75"
+                      className="w-100"
                       onClick={() => setShowNhap(true)}
                     >
                       Bạn đã từng mua hàng
                     </Button>
                   </div>
-                  <div className="col-6 d-inline-block text-end">
+                  <div className="col-5 d-inline-block text-end">
                     <Button color="primary" type="submit" className="w-50">
                       Lưu
                     </Button>

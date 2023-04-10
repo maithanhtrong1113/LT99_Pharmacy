@@ -34,7 +34,11 @@ function ModalAddThuoc(props) {
   }, []);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary my-3 text-white">
+      <Button
+        onClick={toggle}
+        color="primary"
+        className="btn  btn-sm my-3 text-white"
+      >
         Thêm Thuốc
       </Button>
       <Modal

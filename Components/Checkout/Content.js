@@ -1,9 +1,8 @@
-import axios from "axios";
 import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import CheckOutItem from "./CheckOutItem";
-import ModalDiaChi from "../Modal/ModalDiaChi";
+
 import ModalVanChuyen from "../Modal/ModalVanChuyen";
 import ModalAddThongTinKH from "../Modal/ModalAddThongTinKH";
 import { useDispatch, useSelector } from "react-redux";
@@ -366,7 +365,7 @@ const Content = () => {
               <div className="container px-3 border rounded shadow py-3 mt-3">
                 <div className="row px-2">
                   <h5 className="fw-bold text-dark">Giao hàng tận nơi</h5>
-                  <ModalDiaChi sendDataToCheckOut={getDiaChi} />
+                  <ModalAddThongTinKH sendDataToCheckOut={getDiaChi} />
 
                   <ModalVanChuyen handlerChangeVanChuyen={xuliGia} />
                 </div>

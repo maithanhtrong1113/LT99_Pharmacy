@@ -208,6 +208,7 @@ const Content = () => {
                               quantity: item.quantity,
                               total: item.totalPrice,
                               price: item.price,
+                              inventory: item.inventory,
                             }}
                           />
                         ))}

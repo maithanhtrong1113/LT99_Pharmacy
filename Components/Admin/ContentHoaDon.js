@@ -87,7 +87,7 @@ const ContentHoaDon = () => {
                     />
                   </form>
                 </div>
-                <div className="col-2 d-flex align-items-center">
+                {/* <div className="col-2 d-flex align-items-center">
                   <button
                     className="btn btn-primary d-flex align-items-center"
                     type="button"
@@ -101,7 +101,7 @@ const ContentHoaDon = () => {
                     </CSVLink>
                     <FaFileImport className="ms-2 text-light fs-15" />
                   </button>
-                </div>
+                </div> */}
               </div>
               <table className="table table-striped">
                 <thead>
@@ -110,7 +110,7 @@ const ContentHoaDon = () => {
                     <th scope="col">Tên khách hàng</th>
                     <th scope="col">Nhân viên bán hàng</th>
                     <th scope="col">Ngày tạo hóa đơn</th>
-                    <th scope="col">Bác sĩ chỉ định</th>
+                    <th scope="col">Mã phiếu khám</th>
                     <th scope="col">Nơi khám</th>
                     <th scope="col">Hóa đơn kê đơn</th>
                     <th scope="col"></th>

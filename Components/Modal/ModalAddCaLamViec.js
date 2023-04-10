@@ -23,7 +23,7 @@ function ModalAddCaLamViec(props) {
   };
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary  text-white">
+      <Button onClick={toggle} className="btn bg-primary btn-sm text-white">
         Thêm Ca Làm Việc
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>

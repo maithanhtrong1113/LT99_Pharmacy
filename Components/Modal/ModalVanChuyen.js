@@ -16,7 +16,7 @@ function Example(props) {
     <Fragment>
       <button onClick={toggle} className="btn bg-light my-3">
         <div className="col-xl-12 col-lg-12 d-flex align-items-center text-muted">
-          <BsTruck className="me-2" />
+          <BsTruck className="me-2 text-success " />
           {phuongThucVanChuyen === "nhanh" && (
             <span className="fs-14">
               Phương thức vận chuyển: <b>Nhanh</b>

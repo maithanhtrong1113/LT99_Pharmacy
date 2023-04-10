@@ -145,6 +145,10 @@ body {
 .bg-customNav1 {
   background: linear-gradient(to right, rgb(53, 185, 185), rgb(69, 237, 237));
 }
+.bg-customNav2 {
+  background: linear-gradient(to right, rgb(69, 237, 237), rgb(53, 185, 185));
+  border-radius: 5%;
+}
 .header {
   background-color: #f2f8fe !important;
 }

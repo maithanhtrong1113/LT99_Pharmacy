@@ -602,10 +602,10 @@ const ContentBanThuoc = () => {
                         Thông tin nơi cấp đơn thuốc
                       </h4>
                       <div className="row d-flex align-items-center my-3 ">
-                        <div className="col-3">
+                        <div className="col-4">
                           <label className="fw-bold">Nơi khám</label>
                         </div>
-                        <div className="col-9">
+                        <div className="col-8">
                           <input
                             value={noiKham}
                             onFocus={hanleFocusNoiKham}
@@ -616,18 +616,18 @@ const ContentBanThuoc = () => {
                         </div>
                         {noiKham === "" && noiKhamFocus && (
                           <>
-                            <div className="col-3"></div>
-                            <span className="text-danger col-9">
+                            <div className="col-4"></div>
+                            <span className="text-danger col-8">
                               Vui lòng nhập nơi khám bệnh
                             </span>
                           </>
                         )}
                       </div>
                       <div className="row d-flex align-items-center my-3">
-                        <div className="col-3">
-                          <label className="fw-bold">Bác sĩ</label>
+                        <div className="col-4">
+                          <label className="fw-bold">Phiếu Khám</label>
                         </div>
-                        <div className="col-9">
+                        <div className="col-8">
                           <input
                             value={bacSi}
                             onChange={(e) => setBacSi(e.target.value)}
@@ -638,9 +638,9 @@ const ContentBanThuoc = () => {
                         </div>
                         {bacSiFocus && bacSi === "" && (
                           <>
-                            <div className="col-3"></div>
-                            <span className="col-9 text-danger">
-                              Vui Lòng Nhập Bác Sĩ kê đơn
+                            <div className="col-4"></div>
+                            <span className="col-8 text-danger">
+                              Vui lòng nhập mã phiếu khám
                             </span>
                           </>
                         )}
