@@ -1,47 +1,45 @@
 import { toast } from "react-toastify";
-export const getAllNhaCungCap = async () => {
+export const getAllNuocSanXuat = async () => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/nha-cung-cap/`
+    `http://localhost:8080/QLNT-Server/quan-ly/nuoc-san-xuat/`
   );
   if (response.status === 204) return [];
   const data = await response.json();
 
   return data;
 };
-export const themNhaCungCap = async (data) => {
+export const themNuocSanXuat = async (data) => {
   const response = await fetch(
-    "http://localhost:8080/QLNT-Server/quan-ly/nha-cung-cap/",
+    "http://localhost:8080/QLNT-Server/quan-ly/nuoc-san-xuat",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tenNhaCungCap: data.tenNhaCungCap,
-        diaChi: data.diaChi,
-        soDienThoai: data.soDienThoai,
+        tenNuoc: data.tenNuoc,
       }),
     }
   );
   if (response.ok) {
-    toast.success("Thêm nhà cung cấp thành công", {
+    toast.success("Thêm nước sản xuất thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.error("Thêm nhà cung cấp không thành công", {
+    toast.error("Thêm nước sản xuất không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const nhaCungCap = await getAllNhaCungCap();
-  return nhaCungCap;
+  const nuocSanXuat = await getAllNuocSanXuat();
+  return nuocSanXuat;
 };
-export const xoaNhaCungCap = async (id) => {
+export const xoaCaLamViec = async (id) => {
   const res = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/nha-cung-cap/${id}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -50,49 +48,48 @@ export const xoaNhaCungCap = async (id) => {
     }
   );
   if (!res.ok) {
-    toast.error("Xóa nhà cung cấp không thành công", {
+    toast.error("Xóa ca làm việc không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.success("Xóa nhà cung cấp thành công", {
+    toast.success("Xóa ca làm việc thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const nhaCungCap = await getAllNhaCungCap();
-  return nhaCungCap;
+  const caLamViec = await getAllCaLamViec();
+  return caLamViec;
 };
-export const chinhSuaNhaCungCap = async (data) => {
+export const chinhSuaCaLamViec = async (data) => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/nha-cung-cap/${data.maNhaCungCap}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${data.maCaLam}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tenNhaCungCap: data.tenNhaCungCap,
-        diaChi: data.diaChi,
-        soDienThoai: data.soDienThoai,
+        tenCa: data.tenCa,
+        soGioLam: data.soGioLam,
       }),
     }
   );
   if (response.ok) {
-    toast.success("Chỉnh sửa nhà cung cấp thành công", {
+    toast.success("Chỉnh sửa ca làm việc thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.error("Chỉnh sửa nhà cung cấp không thành công", {
+    toast.error("Chỉnh sửa ca làm việc không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const nhaCungCap = await getAllNhaCungCap();
-  return nhaCungCap;
+  const caLamViec = await getAllCaLamViec();
+  return caLamViec;
 };
