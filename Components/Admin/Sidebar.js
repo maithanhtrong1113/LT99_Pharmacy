@@ -7,9 +7,15 @@ import {
   BsFillBarChartFill,
   BsFillCartPlusFill,
   BsFillPersonLinesFill,
+  BsFlag,
+  BsFlagFill,
   BsTruck,
 } from "react-icons/bs";
-import { FaRegMoneyBillAlt, FaShippingFast } from "react-icons/fa";
+import {
+  FaRegMoneyBillAlt,
+  FaShippingFast,
+  FaTruckMoving,
+} from "react-icons/fa";
 import {
   MdArrowBackIos,
   MdCategory,
@@ -29,7 +35,7 @@ const Sidebar = () => {
   const [activeDonHang, setActiveDonHang] = useState("");
   const [activeCaLamViec, setActiveCalamViec] = useState("");
   const [activeNhaCungCap, setActiveNhaCungCap] = useState("");
-
+  const [activeNuoc, setActiveNuoc] = useState("");
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -51,6 +57,8 @@ const Sidebar = () => {
       setActiveCalamViec("bg-info rounded");
     } else if (router.pathname === "/admin/nhaCungCap") {
       setActiveNhaCungCap("bg-info rounded");
+    } else if (router.pathname === "/admin/nuocSanXuat") {
+      setActiveNuoc("bg-info rounded");
     }
   }, []);
 
@@ -124,17 +132,17 @@ const Sidebar = () => {
           <li className={`${activeDonHang} mb-3`}>
             <Link
               href="/admin/donHang"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
             >
-              <FaShippingFast className="text-secondary me-2 fs-25" /> Đơn Hàng
+              <FaShippingFast className="text-white me-2 fs-25" /> Đơn Hàng
             </Link>
           </li>
           <li className={`${activeCaLamViec} mb-3`}>
             <Link
               href="/admin/caLamViec"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
             >
-              <MdWork className="text-light me-2 fs-25" /> Ca Làm Việc
+              <MdWork className="text-secondary me-2 fs-25" /> Ca Làm Việc
             </Link>
           </li>
           <li className={`${activeNhaCungCap} mb-3`}>
@@ -142,7 +150,15 @@ const Sidebar = () => {
               href="/admin/nhaCungCap"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsTruck className="text-warning me-2 fs-25" /> Nhà Cung Cấp
+              <FaTruckMoving className="text-warning me-2 fs-25" /> Nhà Cung Cấp
+            </Link>
+          </li>
+          <li className={`${activeNuoc} mb-3`}>
+            <Link
+              href="/admin/nuocSanXuat"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <BsFlagFill className="text-danger me-2 fs-25" /> Nước Sản Xuất
             </Link>
           </li>
 

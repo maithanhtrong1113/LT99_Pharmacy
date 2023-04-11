@@ -37,9 +37,9 @@ export const themNuocSanXuat = async (data) => {
   const nuocSanXuat = await getAllNuocSanXuat();
   return nuocSanXuat;
 };
-export const xoaCaLamViec = async (id) => {
+export const xoaNuocSanXuat = async (id) => {
   const res = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${id}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/nuoc-san-xuat/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -48,48 +48,47 @@ export const xoaCaLamViec = async (id) => {
     }
   );
   if (!res.ok) {
-    toast.error("Xóa ca làm việc không thành công", {
+    toast.error("Xóa nước sản xuất không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.success("Xóa ca làm việc thành công", {
+    toast.success("Xóa nước sản xuất thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const caLamViec = await getAllCaLamViec();
-  return caLamViec;
+  const nuocSanXuat = await getAllNuocSanXuat();
+  return nuocSanXuat;
 };
-export const chinhSuaCaLamViec = async (data) => {
+export const chinhSuaNuocSanXuat = async (data) => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/${data.maCaLam}`,
+    `http://localhost:8080/QLNT-Server/quan-ly/nuoc-san-xuat/${data.maNuoc}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tenCa: data.tenCa,
-        soGioLam: data.soGioLam,
+        tenNuoc: data.tenNuoc,
       }),
     }
   );
   if (response.ok) {
-    toast.success("Chỉnh sửa ca làm việc thành công", {
+    toast.success("Chỉnh sửa nước sản xuất thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   } else {
-    toast.error("Chỉnh sửa ca làm việc không thành công", {
+    toast.error("Chỉnh sửa nước sản xuất không thành công", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
     });
   }
-  const caLamViec = await getAllCaLamViec();
-  return caLamViec;
+  const nuocSanXuat = await getAllNuocSanXuat();
+  return nuocSanXuat;
 };

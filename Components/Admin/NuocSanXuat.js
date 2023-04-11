@@ -1,16 +1,16 @@
-import { chinhSuaCaLamViec, xoaCaLamViec } from "@/api/caLamViecApi";
 import React, { Fragment } from "react";
-import ModalChinhSuaCaLamViec from "../Modal/ModalChinhSuaCaLamViec";
-import ModalXoaCaLamViec from "../Modal/ModalXoaCaLamViec";
+import ModalChinhSuaNuocSanXuat from "../Modal/ModalChinhSuaNuocSanXuat";
+import { chinhSuaNuocSanXuat, xoaNuocSanXuat } from "@/api/nuocSanXuatApi";
+import ModalXoaNuocSanXuat from "../Modal/ModalXoaNuocSanXuat";
 
 const NuocSanXuat = (props) => {
-  const xoaCaLamViecHandler = async (id) => {
-    const res = await xoaCaLamViec(id);
-    props.setCaLamViec(res);
+  const xoaNuocSanXuatHandler = async (id) => {
+    const res = await xoaNuocSanXuat(id);
+    props.setNuocSanXuat(res);
   };
-  const chinhSuaCaLamViecc = async (id) => {
-    const res = await chinhSuaCaLamViec(id);
-    props.setCaLamViec(res);
+  const chinhSuaNuocSanXuatt = async (id) => {
+    const res = await chinhSuaNuocSanXuat(id);
+    props.setNuocSanXuat(res);
   };
   return (
     <Fragment>
@@ -24,14 +24,14 @@ const NuocSanXuat = (props) => {
           <td>{nuocSanXuat.maNuoc}</td>
           <td>{nuocSanXuat.tenNuoc}</td>
           <td className="d-flex">
-            {/* <ModalChinhSuaCaLamViec
+            <ModalChinhSuaNuocSanXuat
               nuocSanXuat={nuocSanXuat}
-              chinhSuaCaLamViecHandler={chinhSuaCaLamViecc}
+              chinhSuaNuocSanXuatHandler={chinhSuaNuocSanXuatt}
             />
-            <ModalXoaCaLamViec
-              caLamViec={caLamViec}
-              handlerSubmit={xoaCaLamViecHandler}
-            /> */}
+            <ModalXoaNuocSanXuat
+              nuocSanXuat={nuocSanXuat}
+              handlerSubmit={xoaNuocSanXuatHandler}
+            />
           </td>
         </tr>
       ))}
