@@ -82,17 +82,16 @@ const Sidebar = () => {
               className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
               href="/admin"
             >
-              <MdManageAccounts className="text-secondary me-2 fs-25" /> Quản Lý
-              Nhân Viên
+              <MdManageAccounts className="text-secondary me-2 fs-icon-SideBar" />{" "}
+              Quản Lý Nhân Viên
             </Link>
           </li>
-          <li className={`${activeKhachHang} mb-3`}>
+          <li className={`${activeCaLamViec} mb-3`}>
             <Link
-              href="/admin/khachHang"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+              href="/admin/caLamViec"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
             >
-              <BsFillPersonLinesFill className="text-light me-2 fs-25" />
-              Khách Hàng
+              <MdWork className="text-white me-2 fs-icon-SideBar" /> Ca Làm Việc
             </Link>
           </li>
           <li className={`${activeBanThuoc} mb-3`}>
@@ -100,8 +99,8 @@ const Sidebar = () => {
               href="/admin/banThuoc"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillCartPlusFill className="text-primary me-2 fs-25" /> Bán
-              Thuốc
+              <BsFillCartPlusFill className="text-primary me-2 fs-icon-SideBar" />{" "}
+              Bán Thuốc
             </Link>
           </li>
           <li className={`${activeLoaiThuoc} mb-3`}>
@@ -109,7 +108,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
               href="/admin/loaiThuoc"
             >
-              <MdCategory className="text-danger me-2 fs-25" />
+              <MdCategory className="text-info me-2 fs-icon-SideBar" />
               Loại thuốc
             </Link>
           </li>
@@ -118,7 +117,8 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
               href="/admin/thuoc"
             >
-              <AiFillMedicineBox className="text-warning me-2 fs-25" /> Thuốc
+              <AiFillMedicineBox className="text-warning me-2 fs-icon-SideBar" />{" "}
+              Thuốc
             </Link>
           </li>
           <li className={`${activeHoaDon} mb-3`}>
@@ -126,7 +126,17 @@ const Sidebar = () => {
               href="/admin/hoaDon"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaRegMoneyBillAlt className="text-success me-2 fs-25 " /> Hóa Đơn
+              <FaRegMoneyBillAlt className="text-success me-2 fs-icon-SideBar " />{" "}
+              Hóa Đơn
+            </Link>
+          </li>
+          <li className={`${activeKhachHang} mb-3`}>
+            <Link
+              href="/admin/khachHang"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <BsFillPersonLinesFill className="text-light me-2 fs-icon-SideBar" />
+              Khách Hàng
             </Link>
           </li>
           <li className={`${activeDonHang} mb-3`}>
@@ -134,23 +144,18 @@ const Sidebar = () => {
               href="/admin/donHang"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
             >
-              <FaShippingFast className="text-white me-2 fs-25" /> Đơn Hàng
+              <FaShippingFast className="text-info me-2 fs-icon-SideBar" /> Đơn
+              Hàng
             </Link>
           </li>
-          <li className={`${activeCaLamViec} mb-3`}>
-            <Link
-              href="/admin/caLamViec"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
-            >
-              <MdWork className="text-secondary me-2 fs-25" /> Ca Làm Việc
-            </Link>
-          </li>
+
           <li className={`${activeNhaCungCap} mb-3`}>
             <Link
               href="/admin/nhaCungCap"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <FaTruckMoving className="text-warning me-2 fs-25" /> Nhà Cung Cấp
+              <FaTruckMoving className="text-warning me-2 fs-icon-SideBar" />{" "}
+              Nhà Cung Cấp
             </Link>
           </li>
           <li className={`${activeNuoc} mb-3`}>
@@ -158,7 +163,8 @@ const Sidebar = () => {
               href="/admin/nuocSanXuat"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFlagFill className="text-danger me-2 fs-25" /> Nước Sản Xuất
+              <BsFlagFill className="text-danger me-2 fs-icon-SideBar" /> Nước
+              Sản Xuất
             </Link>
           </li>
 
@@ -167,8 +173,8 @@ const Sidebar = () => {
               href="/admin/thongKe"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillBarChartFill className="text-primary me-2 fs-25" /> Thống
-              Kê
+              <BsFillBarChartFill className="text-primary me-2 fs-icon-SideBar" />{" "}
+              Thống Kê
             </Link>
           </li>
         </ul>

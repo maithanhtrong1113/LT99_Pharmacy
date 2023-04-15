@@ -31,10 +31,10 @@ function ModalAddNuocSanXuat(props) {
               <div className="col-xl-12 col-lg-12">
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
-                    <label className="col-sm-4 col-form-label fw-bold">
+                    <label className="col-sm-5 col-form-label fw-bold">
                       Tên nước sản xuất:
                     </label>
-                    <div className="col-sm-8">
+                    <div className="col-sm-7">
                       <input
                         {...register("tenNuoc", {
                           required: true,
@@ -44,8 +44,8 @@ function ModalAddNuocSanXuat(props) {
                         className="form-control form-control-sm inputText"
                       />
                     </div>
-                    <div className="col-sm-4"></div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-5"></div>
+                    <div className="col-sm-7">
                       {errors?.tenNuoc?.type === "required" && (
                         <span className="text-danger">
                           Vui lòng nhập tên nước sản xuất

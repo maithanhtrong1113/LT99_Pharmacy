@@ -13,6 +13,8 @@ import VND from "../utils/formatVND";
 import ModalAddNhaCungCap1 from "../Modal/ModalAddNhaCungCap1";
 import { getAllNhaCungCap } from "@/api/nhaCungCapApi";
 import { BsThreeDots } from "react-icons/bs";
+import { lichSuNhapThuoc } from "@/api/lichSuNhapThuocApi";
+import ModalAddNuocSanXuat from "../Modal/ModalAddNuocSanXuat";
 
 const ContentChiTietThuoc = (props) => {
   const {
@@ -211,6 +213,7 @@ const ContentChiTietThuoc = (props) => {
           theme: "light",
         });
         fetchData();
+        fetchDataLichSuNhapThuoc(id);
       } else {
         toast.error("Nhập thuốc không thành công", {
           position: toast.POSITION.TOP_RIGHT,
@@ -223,6 +226,10 @@ const ContentChiTietThuoc = (props) => {
   async function fetchDataNhaCungCap() {
     const data = await getAllNhaCungCap();
     setNhaCungCap(data);
+  }
+  async function fetchDataLichSuNhapThuoc(id) {
+    const data = await lichSuNhapThuoc(id);
+    setLichSus(data);
   }
   return (
     <Fragment>
@@ -243,7 +250,7 @@ const ContentChiTietThuoc = (props) => {
                 </div>
                 <div className="col-11 d-flex justify-content-center">
                   <h3 className="text-info fw-bold">
-                    Thông tin chi tiết của thuốc
+                    Chỉnh sửa thông tin thuốc
                   </h3>
                 </div>
                 {Object.keys(Thuoc).length !== 0 && (
@@ -799,7 +806,7 @@ const ContentChiTietThuoc = (props) => {
                   </div>
                   {/* nhà cung cấp */}
                   <div className="form-group row my-2  d-flex align-items-center">
-                    <label className="col-sm-3 col-form-label fw-bold">
+                    <label className="col-sm-3 col-form-label fw-bold text-info">
                       Nhà Cung Cấp:
                     </label>
                     <div className="col-sm-3">
@@ -823,6 +830,34 @@ const ContentChiTietThuoc = (props) => {
                     </div>
                     <div className="col-sm-3">
                       <ModalAddNhaCungCap1 setNhaCungCap={setNhaCungCap} />
+                    </div>
+                  </div>
+                  {/* nước sản xuất */}
+                  <div className="form-group row my-2  d-flex align-items-center">
+                    <label className="col-sm-3 col-form-label fw-bold text-info">
+                      Nước Sản Xuất
+                    </label>
+                    <div className="col-sm-3">
+                      <select
+                        className="form-select"
+                        value={selectedNCC}
+                        defaultValue={nhaCungCap[0]}
+                        onChange={(e) => {
+                          setNCC(e.target.value);
+                        }}
+                      >
+                        {nhaCungCap.map((nhaCungCap) => (
+                          <option
+                            key={nhaCungCap.maNhaCungCap}
+                            value={nhaCungCap.maNhaCungCap}
+                          >
+                            {nhaCungCap.tenNhaCungCap}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-sm-3">
+                      <ModalAddNuocSanXuat setNhaCungCap={setNhaCungCap} />
                     </div>
                   </div>
                   <button type="submit" className="btn btn-primary my-3">

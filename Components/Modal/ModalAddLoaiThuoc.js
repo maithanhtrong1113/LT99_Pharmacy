@@ -20,7 +20,10 @@ function ModalAddLoaiThuoc(props) {
 
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary my-3 text-white">
+      <Button
+        onClick={toggle}
+        className="btn bg-primary btn-sm my-3 text-white"
+      >
         Thêm Loại Thuốc
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>

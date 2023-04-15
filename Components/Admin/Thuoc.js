@@ -38,9 +38,15 @@ const Thuoc = (props) => {
           <td className="d-flex">
             <button
               className="btn btn-sm btn-info ms-2"
-              onClick={() => handlerInfo(thuoc.maThuoc)}
+              // onClick={() => handlerInfo(thuoc.maThuoc)}
             >
               Xem chi tiết
+            </button>
+            <button
+              className="btn btn-sm btn-warning ms-2"
+              onClick={() => handlerInfo(thuoc.maThuoc)}
+            >
+              Chỉnh sửa
             </button>
             <ModalXoaThuoc maThuoc={thuoc.maThuoc} OnClickYes={DeleteHandler} />
           </td>

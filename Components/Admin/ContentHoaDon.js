@@ -5,37 +5,18 @@ import { CSVLink } from "react-csv";
 import { FaFileImport } from "react-icons/fa";
 import { BsCheck2, BsThreeDots } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
+import { getAllHoaDon } from "@/api/hoaDonApi";
+import ModalXemChiTietHoaDon from "../Modal/ModalXemChiTietHoaDon";
 const ContentHoaDon = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
   const [dsIn, setDsIn] = useState([]);
   // danh sách khách hàng
+  async function fetchData() {
+    const res = await getAllHoaDon();
+    setDanhSachHoaDon(res.content);
+  }
   useEffect(() => {
-    fetch(`http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setDanhSachHoaDon(data.content);
-
-        let arr = data.content.map((hoaDon) => {
-          return {
-            "Mã Hóa Đơn": hoaDon.maHoaDon,
-            "Tên Khách Hàng": hoaDon.khachHang.hoTen,
-            "Nhân viên bán hàng": hoaDon.nhanVienBanHang.hoTen,
-            "Ngày lập hóa đơn": `${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
-              new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
-            }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`,
-            "Bác sĩ chỉ định": hoaDon.bacSiChiDinh,
-            "Nơi khám": hoaDon.noiKham,
-            "Hóa đơn kê đơn": hoaDon.hoaDonKeDon
-              ? "Hóa đơn Kê đơn"
-              : "Hóa đơn không kê đơn",
-            "Ghi chú": hoaDon.ghiChu,
-          };
-        });
-        setDsIn(arr);
-      })
-
-      .catch((error) => console.error(error));
+    fetchData();
   }, []);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -65,6 +46,7 @@ const ContentHoaDon = () => {
       }, 500);
       setTimeoutId(newTimeoutId);
     } else {
+      fetchData();
     }
   };
   return (
@@ -87,28 +69,12 @@ const ContentHoaDon = () => {
                     />
                   </form>
                 </div>
-                {/* <div className="col-2 d-flex align-items-center">
-                  <button
-                    className="btn btn-primary d-flex align-items-center"
-                    type="button"
-                  >
-                    <CSVLink
-                      data={dsIn}
-                      filename={"dataHoaDon"}
-                      className="text-white text-decoration-none"
-                    >
-                      Export
-                    </CSVLink>
-                    <FaFileImport className="ms-2 text-light fs-15" />
-                  </button>
-                </div> */}
               </div>
               <table className="table table-striped">
                 <thead>
                   <tr>
                     <th scope="col">Mã Hóa Đơn</th>
                     <th scope="col">Tên khách hàng</th>
-                    <th scope="col">Nhân viên bán hàng</th>
                     <th scope="col">Ngày tạo hóa đơn</th>
                     <th scope="col">Mã phiếu khám</th>
                     <th scope="col">Nơi khám</th>
@@ -121,7 +87,6 @@ const ContentHoaDon = () => {
                     <tr key={hoaDon.maHoaDon}>
                       <td>{hoaDon.maHoaDon}</td>
                       <td>{hoaDon.khachHang.hoTen}</td>
-                      <td>{hoaDon.nhanVienBanHang.hoTen}</td>
                       <td>{`${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
                         new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
                       }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>
@@ -146,7 +111,12 @@ const ContentHoaDon = () => {
                           <MdOutlineClose className="text-danger fs-20" />
                         )}
                       </td>
-                      <td></td>
+                      <td>
+                        <ModalXemChiTietHoaDon
+                          nhanvienBanHang={hoaDon.nhanVienBanHang.hoTen}
+                          hoaDon={hoaDon}
+                        />
+                      </td>
                     </tr>
                   ))}
                 </tbody>

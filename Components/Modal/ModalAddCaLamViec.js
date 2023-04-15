@@ -46,6 +46,7 @@ function ModalAddCaLamViec(props) {
                         })}
                         type="text"
                         required
+                        placeholder="Nhập tên ca làm việc"
                         className="form-control form-control-sm inputText"
                       />
                     </div>
@@ -70,6 +71,7 @@ function ModalAddCaLamViec(props) {
                         })}
                         type="number"
                         required
+                        placeholder="Nhập số giờ làm"
                         className="form-control form-control-sm inputText"
                       />
                     </div>

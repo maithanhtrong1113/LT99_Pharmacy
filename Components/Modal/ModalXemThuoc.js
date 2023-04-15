@@ -38,7 +38,7 @@ function ModalXemThuoc(props) {
           <span className="fw-bold text-info"> Thông Tin Loại Thuốc</span>
         </ModalHeader>
         <ModalBody>
-          <div className="container">
+          <div className="container rounded border shadow">
             <div className="row">
               <div className="col-xl-12 col-lg-12">
                 <form noValidate>
