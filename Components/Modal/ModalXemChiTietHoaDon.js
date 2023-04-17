@@ -34,7 +34,7 @@ function ModalXemChiTietHoaDon(props) {
         isOpen={modal}
         toggle={toggle}
         {...props}
-        className="w-modalAddNhanVien"
+        className="w-modalAddNhanVien1"
       >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info"> Thông tin hóa đơn</span>
