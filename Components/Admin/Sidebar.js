@@ -33,7 +33,7 @@ const Sidebar = () => {
   const [activeHoaDon, setActiveHoaDon] = useState("");
   const [activeBanThuoc, setActiveBanThuoc] = useState("");
   const [activeDonHang, setActiveDonHang] = useState("");
-  const [activeCaLamViec, setActiveCalamViec] = useState("");
+  // const [activeCaLamViec, setActiveCalamViec] = useState("");
   const [activeNhaCungCap, setActiveNhaCungCap] = useState("");
   const [activeNuoc, setActiveNuoc] = useState("");
   useEffect(() => {
@@ -53,13 +53,15 @@ const Sidebar = () => {
       setActiveBanThuoc("bg-info rounded");
     } else if (router.pathname === "/admin/donHang") {
       setActiveDonHang("bg-info rounded");
-    } else if (router.pathname === "/admin/caLamViec") {
-      setActiveCalamViec("bg-info rounded");
-    } else if (router.pathname === "/admin/nhaCungCap") {
-      setActiveNhaCungCap("bg-info rounded");
-    } else if (router.pathname === "/admin/nuocSanXuat") {
-      setActiveNuoc("bg-info rounded");
     }
+
+    // } else if (router.pathname === "/admin/caLamViec") {
+    //   setActiveCalamViec("bg-info rounded");
+    // } else if (router.pathname === "/admin/nhaCungCap") {
+    //   setActiveNhaCungCap("bg-info rounded");
+    // } else if (router.pathname === "/admin/nuocSanXuat") {
+    //   setActiveNuoc("bg-info rounded");
+    // }
   }, []);
 
   return (
@@ -86,14 +88,14 @@ const Sidebar = () => {
               Quản Lý Nhân Viên
             </Link>
           </li>
-          <li className={`${activeCaLamViec} mb-3`}>
+          {/* <li className={`${activeCaLamViec} mb-3`}>
             <Link
               href="/admin/caLamViec"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
             >
               <MdWork className="text-white me-2 fs-icon-SideBar" /> Ca Làm Việc
             </Link>
-          </li>
+          </li> */}
           <li className={`${activeBanThuoc} mb-3`}>
             <Link
               href="/admin/banThuoc"
@@ -108,7 +110,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
               href="/admin/loaiThuoc"
             >
-              <MdCategory className="text-info me-2 fs-icon-SideBar" />
+              <MdCategory className="text-danger me-2 fs-icon-SideBar" />
               Loại thuốc
             </Link>
           </li>
@@ -149,7 +151,7 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          <li className={`${activeNhaCungCap} mb-3`}>
+          {/* <li className={`${activeNhaCungCap} mb-3`}>
             <Link
               href="/admin/nhaCungCap"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
@@ -157,8 +159,8 @@ const Sidebar = () => {
               <FaTruckMoving className="text-warning me-2 fs-icon-SideBar" />{" "}
               Nhà Cung Cấp
             </Link>
-          </li>
-          <li className={`${activeNuoc} mb-3`}>
+          </li> */}
+          {/* <li className={`${activeNuoc} mb-3`}>
             <Link
               href="/admin/nuocSanXuat"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
@@ -166,14 +168,14 @@ const Sidebar = () => {
               <BsFlagFill className="text-danger me-2 fs-icon-SideBar" /> Nước
               Sản Xuất
             </Link>
-          </li>
+          </li> */}
 
           <li className={`${activeThongKe} mb-3`}>
             <Link
               href="/admin/thongKe"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillBarChartFill className="text-primary me-2 fs-icon-SideBar" />{" "}
+              <BsFillBarChartFill className="text-success me-2 fs-icon-SideBar" />{" "}
               Thống Kê
             </Link>
           </li>

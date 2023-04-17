@@ -122,15 +122,21 @@ function ModalXemChiTietHoaDon(props) {
                           </span>
                         </div>
                         <div className="col-4">
-                          <b> Tổng tiền sau thuế:</b>
+                          <b>Tổng tiền sau thuế:</b>
                           <span className="text-info">
                             {` ${VND.format(hoaDon.hoaDon.tongSauThue)}`}
                           </span>
                         </div>
-                        <div className="col-12">
+                        <div className="col-6 my-3">
                           <b> Nhân viên bán hàng:</b>
                           <span className="text-info">
                             {` ${props.nhanvienBanHang}`}
+                          </span>
+                        </div>
+                        <div className="col-6 my-3">
+                          <b> Ngày lập hóa đơn:</b>
+                          <span className="text-info">
+                            {` ${hoaDon.hoaDon.ngayLapHoaDon}`}
                           </span>
                         </div>
                       </div>

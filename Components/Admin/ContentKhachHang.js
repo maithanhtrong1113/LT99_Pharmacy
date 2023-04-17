@@ -94,7 +94,7 @@ const ContentKhachHang = () => {
                     <th scope="col">Mã khách hàng</th>
                     <th scope="col">Họ và tên</th>
                     <th scope="col">Số điện thoại</th>
-                    <th scope="col">Địa chỉ</th>
+
                     <th scope="col">Giới tính</th>
                     <th scope="col">Ngày sinh</th>
                     <th scope="col"></th>
@@ -106,14 +106,6 @@ const ContentKhachHang = () => {
                       <td>{khachHang.maKhachHang}</td>
                       <td>{khachHang.hoTen}</td>
                       <td>{khachHang.soDienThoai}</td>
-                      <td>
-                        {khachHang.diaChi === null ||
-                        khachHang.diaChi === "" ? (
-                          <BsThreeDots className="text-success fs-20" />
-                        ) : (
-                          xuLyTenKhiQuaDai(khachHang.diaChi)
-                        )}
-                      </td>
                       <td>
                         {khachHang.gioiTinh === null ||
                         khachHang.gioiTinh === "" ? (

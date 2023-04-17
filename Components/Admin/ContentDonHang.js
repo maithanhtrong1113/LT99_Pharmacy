@@ -1,14 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
-import { CSVLink } from "react-csv";
-import { FaFileImport } from "react-icons/fa";
-import { BsCheck2 } from "react-icons/bs";
-import { MdOutlineClose } from "react-icons/md";
 import { useRouter } from "next/router";
+import ModalXemChiTietDonHang from "../Modal/ModalXemChiTietDonHang";
 const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
-  const [dsIn, setDsIn] = useState([]);
+
   const router = useRouter();
   // danh sách đơn hàng
   useEffect(() => {
@@ -77,23 +74,14 @@ const ContentDonHang = () => {
                       <td>{`${new Date(donHang.ngayTaoDon).getDate()}/${
                         new Date(donHang.ngayTaoDon).getMonth() + 1
                       }/${new Date(donHang.ngayTaoDon).getFullYear()}`}</td>
-                      {/* <td>{donHang.diaChiGiaoHang}</td> */}
+
                       <td>{donHang.khachHang.hoTen}</td>
                       <td>{donHang.trangThaiDonHang}</td>
                       <td></td>
                       <td>
                         {
                           <>
-                            <button
-                              className="btn btn-info btn-sm"
-                              onClick={() => {
-                                router.push(
-                                  `/admin/donHang/${donHang.maDonHang}`
-                                );
-                              }}
-                            >
-                              Xem Chi Tiết
-                            </button>
+                            {/* <ModalXemChiTietDonHang /> */}
                             <button className="btn btn-warning btn-sm ms-2">
                               Trạng thái đơn hàng
                             </button>
