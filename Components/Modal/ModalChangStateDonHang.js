@@ -3,6 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { acpDonHang, getAllDonHang } from "@/api/donHangApi";
+import { toast } from "react-toastify";
 
 function ModalChangStateDonHang(props) {
   const {
@@ -30,6 +32,18 @@ function ModalChangStateDonHang(props) {
       setColor("success denied");
     }
   }, [donHang]);
+  const acpHandler = async () => {
+    const resp = await acpDonHang(donHang.maDonHang);
+    toast.success("Đã chấp nhận đơn hàng", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+    toggle();
+    const res = await getAllDonHang();
+    props.setDanhSachDonHang(res.content);
+  };
+
   return (
     <Fragment>
       <Button
@@ -55,7 +69,11 @@ function ModalChangStateDonHang(props) {
             <div className="row">
               {color === "warning" && (
                 <div className="col-12 d-flex justify-content-between">
-                  <button className="btn btn-success">
+                  <button
+                    className="btn btn-success"
+                    type="button"
+                    onClick={acpHandler}
+                  >
                     Chấp nhận đơn hàng
                   </button>
                   <button className="btn btn-danger">Từ chối đơn hàng</button>

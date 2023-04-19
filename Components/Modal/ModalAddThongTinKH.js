@@ -81,6 +81,7 @@ function ModalAll(props) {
           hoTen: data.name,
           soDienThoai: data.phone,
           diaChi: data.diaChi,
+          email: data.email,
         }),
       }
     )
@@ -424,6 +425,31 @@ function ModalAll(props) {
                     {errors?.phone?.type === "pattern" && (
                       <span className=" text-danger">
                         Số điện thoại không tồn tại
+                      </span>
+                    )}
+                  </div>
+                  <div className="col-12 my-3">
+                    <h6 className="text-dark fw-bold">
+                      Email
+                      <span className="text-danger">*</span>
+                    </h6>
+                    <input
+                      {...register("email", {
+                        required: true,
+
+                        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      })}
+                      type="text"
+                      required
+                      placeholder="Nhập địa chỉ email của bạn"
+                      className="form-control inputText"
+                    />
+                    {errors?.email?.type === "required" && (
+                      <span className=" text-danger">Vui lòng nhập email</span>
+                    )}
+                    {errors?.email?.type === "pattern" && (
+                      <span className=" text-danger">
+                        Email không đúng định dạng
                       </span>
                     )}
                   </div>

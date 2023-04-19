@@ -15,7 +15,9 @@ const ContentDonHang = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const dsChange = (data) => {
+    setDanhSachDonHang(data.content);
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -51,7 +53,10 @@ const ContentDonHang = () => {
                         {
                           <>
                             <ModalXemChiTietDonHang donHang={donHang} />
-                            <ModalChangStateDonHang donHang={donHang} />
+                            <ModalChangStateDonHang
+                              donHang={donHang}
+                              setDanhSachDonHang={setDanhSachDonHang}
+                            />
                           </>
                         }
                       </td>
