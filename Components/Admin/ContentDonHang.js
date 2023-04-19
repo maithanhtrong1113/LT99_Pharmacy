@@ -36,6 +36,37 @@ const ContentDonHang = () => {
     setDanhSachDonHang([]);
     fetchData();
   };
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [timeoutId, setTimeoutId] = useState(null);
+  const handleInputChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    console.log(searchTerm);
+    if (timeoutId) {
+      clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
+    }
+
+    if (searchTerm.length > 0) {
+      const newTimeoutId = setTimeout(() => {
+        fetch(
+          `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online/tim-don-hang?keyword=${encodeURIComponent(
+            searchTerm
+          )}`
+        )
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.length > 0) setDanhSachDonHang(results);
+            else {
+              setDanhSachDonHang([]);
+            }
+          });
+      }, 500);
+      setTimeoutId(newTimeoutId);
+    } else {
+      fetchData();
+    }
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -44,7 +75,19 @@ const ContentDonHang = () => {
           <div className="col-10 ">
             <NguoiDung />
             <div className="container border shadow rounded ">
-              <div className="row my-3 d-flex align-items-center"></div>
+              <div className="row my-3 d-flex align-items-center">
+                <div className="col-6">
+                  <form>
+                    <input
+                      type="text"
+                      placeholder="Nhập mã đơn hàng hoặc số điện thoại khách hàng"
+                      className="form-control w-100 px-2"
+                      value={searchTerm}
+                      onChange={handleInputChange}
+                    />
+                  </form>
+                </div>
+              </div>
               <table className="table table-striped">
                 <thead>
                   <tr>
