@@ -24,3 +24,9 @@ export const acpDonHang = (maDonHang) => {
   );
   return response;
 };
+export const deniedDonHang = (maDonHang) => {
+  const response = fetch(
+    `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online/${maDonHang}/cap-nhat-trang-thai?deny= `
+  );
+  return response;
+};

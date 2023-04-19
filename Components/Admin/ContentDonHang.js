@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
-import { useRouter } from "next/router";
+
 import ModalXemChiTietDonHang from "../Modal/ModalXemChiTietDonHang";
-import { getAllDonHang } from "@/api/donHangApi";
+import { acpDonHang, deniedDonHang, getAllDonHang } from "@/api/donHangApi";
 import ModalChangStateDonHang from "../Modal/ModalChangStateDonHang";
+import { toast } from "react-toastify";
 const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
   async function fetchData() {
@@ -15,8 +16,25 @@ const ContentDonHang = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const dsChange = (data) => {
-    setDanhSachDonHang(data.content);
+  const changStateDonHang = async (data) => {
+    const res = await acpDonHang(data);
+    toast.success("Đã chấp nhận đơn hàng", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+    setDanhSachDonHang([]);
+    fetchData();
+  };
+  const changStateDonHang1 = async (data) => {
+    const res = await deniedDonHang(data);
+    toast.success("Đã từ chối đơn hàng", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+    setDanhSachDonHang([]);
+    fetchData();
   };
   return (
     <Fragment>
@@ -55,7 +73,8 @@ const ContentDonHang = () => {
                             <ModalXemChiTietDonHang donHang={donHang} />
                             <ModalChangStateDonHang
                               donHang={donHang}
-                              setDanhSachDonHang={setDanhSachDonHang}
+                              submitAcp={changStateDonHang}
+                              deniedDonHang={changStateDonHang1}
                             />
                           </>
                         }
