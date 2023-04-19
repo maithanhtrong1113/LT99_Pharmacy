@@ -3,7 +3,9 @@ export const getAllCaLamViec = async () => {
   const response = await fetch(
     `http://localhost:8080/QLNT-Server/quan-ly/ca-lam-viec/`
   );
+  if (response.status === 204) return [];
   const data = await response.json();
+
   return data;
 };
 export const themCaLamViec = async (data) => {

@@ -3,50 +3,19 @@ import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
 import { useRouter } from "next/router";
 import ModalXemChiTietDonHang from "../Modal/ModalXemChiTietDonHang";
+import { getAllDonHang } from "@/api/donHangApi";
+import ModalChangStateDonHang from "../Modal/ModalChangStateDonHang";
 const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
-
-  const router = useRouter();
+  async function fetchData() {
+    const res = await getAllDonHang();
+    setDanhSachDonHang(res.content);
+  }
   // danh sách đơn hàng
   useEffect(() => {
-    fetch(`http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setDanhSachDonHang(data.content);
-      })
-      .catch((error) => console.error(error));
+    fetchData();
   }, []);
-  //   const [searchTerm, setSearchTerm] = useState("");
 
-  //   const [timeoutId, setTimeoutId] = useState(null);
-  //   const handleInputChange = (event) => {
-  //     const searchTerm = event.target.value;
-  //     setSearchTerm(searchTerm);
-  //     console.log(searchTerm);
-  //     if (timeoutId) {
-  //       clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
-  //     }
-
-  //     if (searchTerm.length > 0) {
-  //       const newTimeoutId = setTimeout(() => {
-  //         fetch(
-  //           `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/tim-hoa-don-theo-khach-hang?keyword=${encodeURIComponent(
-  //             searchTerm
-  //           )}`
-  //         )
-  //           .then((response) => response.json())
-  //           .then((results) => {
-  //             if (results.length > 0) setDanhSachHoaDon(results);
-  //             else {
-  //               setDanhSachHoaDon([]);
-  //             }
-  //           });
-  //       }, 500);
-  //       setTimeoutId(newTimeoutId);
-  //     } else {
-  //     }
-  //   };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -81,10 +50,8 @@ const ContentDonHang = () => {
                       <td>
                         {
                           <>
-                            {/* <ModalXemChiTietDonHang /> */}
-                            <button className="btn btn-warning btn-sm ms-2">
-                              Trạng thái đơn hàng
-                            </button>
+                            <ModalXemChiTietDonHang donHang={donHang} />
+                            <ModalChangStateDonHang donHang={donHang} />
                           </>
                         }
                       </td>

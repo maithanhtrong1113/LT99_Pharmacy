@@ -44,7 +44,7 @@ const Content = () => {
           soLuongThuocDat: thuoc.quantity,
         };
       });
-      console.log(cartSend);
+      console.log(thongTinKhachHang.diaChi);
       fetch(
         "http://localhost:8080/QLNT-Server/khach-hang/don-hang/tao-don-hang",
         {

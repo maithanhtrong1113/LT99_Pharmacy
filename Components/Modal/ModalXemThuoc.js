@@ -3,6 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { BsCheck2 } from "react-icons/bs";
+import { MdOutlineClose } from "react-icons/md";
 
 function ModalXemThuoc(props) {
   const {
@@ -14,26 +16,19 @@ function ModalXemThuoc(props) {
   const toggle = () => {
     setModal(!modal);
   };
-  const [tenLoai, setTenLoai] = useState("");
-  const [moTa, setMota] = useState("");
-  useEffect(() => {
-    // lấy thông tin loại thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/thuoc/${props.thuoc.maThuoc}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setTenLoai(data.tenLoai);
-        setMota(data.moTaChung);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const [thuoc, setThuoc] = useState(props.thuoc);
+
   return (
     <Fragment>
       <Button onClick={toggle} className="btn btn-info btn-sm me-2">
         Xem Chi Tiết
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        {...props}
+        className="w-modalDiaChi"
+      >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info"> Thông Tin Loại Thuốc</span>
         </ModalHeader>
@@ -44,10 +39,36 @@ function ModalXemThuoc(props) {
                 <form noValidate>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
+                      Mã Thuốc:
+                    </label>
+                    <div className="col-sm-4">
+                      <label className="text-info">{thuoc.maThuoc}</label>
+                    </div>
+                    <label className="col-sm-4 col-form-label fw-bold">
+                      Thuốc Kê Đơn:
+                      {thuoc.isThuocKeDon === true ? (
+                        <BsCheck2 className="ms-3 text-success fs-20" />
+                      ) : (
+                        <MdOutlineClose className=" ms-3 text-danger fs-20" />
+                      )}
+                    </label>
+                  </div>
+                  <div className="form-group row my-2 d-flex align-items-center">
+                    <label className="col-sm-4 col-form-label fw-bold">
                       Tên Thuốc:
                     </label>
                     <div className="col-sm-8">
-                      <label>{tenLoai}</label>
+                      <label className="fw-bold text-info">
+                        {thuoc.tenThuoc}
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group row my-2 d-flex align-items-center">
+                    <label className="col-sm-4 col-form-label fw-bold">
+                      Loại Thuốc:
+                    </label>
+                    <div className="col-sm-8">
+                      <label>{thuoc.loaiThuoc.tenLoai}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
@@ -55,63 +76,55 @@ function ModalXemThuoc(props) {
                       Liều Lượng:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.lieuLuong}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Công dụng
+                      Công Dụng:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.congDung}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Đơn vị tính
+                      Đơn Vị Tính:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.donViTinh}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Quy cách đóng gói
+                      Quy Cách Đóng Gói:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.quyCachDongGoi}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Tác dụng phụ
+                      Tác Dụng Phụ:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.tacDungPhu}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Hướng dẫn sử dụng
+                      Hướng Dẫn Sử Dụng:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.huongDanSuDung}</label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Số Lượng
+                      Mô Tả:
                     </label>
                     <div className="col-sm-8">
-                      <label>{moTa}</label>
-                    </div>
-                  </div>
-                  <div className="form-group row my-2 d-flex align-items-center">
-                    <label className="col-sm-4 col-form-label fw-bold">
-                      Mô Tả
-                    </label>
-                    <div className="col-sm-8">
-                      <label>{moTa}</label>
+                      <label>{thuoc.moTa}</label>
                     </div>
                   </div>
                   {/* <div className="form-group row my-2 d-flex align-items-center">

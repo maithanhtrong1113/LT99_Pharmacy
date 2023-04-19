@@ -15,6 +15,8 @@ import { getAllNhaCungCap } from "@/api/nhaCungCapApi";
 import { BsThreeDots } from "react-icons/bs";
 import { lichSuNhapThuoc } from "@/api/lichSuNhapThuocApi";
 import ModalAddNuocSanXuat from "../Modal/ModalAddNuocSanXuat";
+import { getAllNuocSanXuat } from "@/api/nuocSanXuatApi";
+import ModalAddNuocSanXuat1 from "../Modal/ModalAddNuocSanXuat1";
 
 const ContentChiTietThuoc = (props) => {
   const {
@@ -51,6 +53,7 @@ const ContentChiTietThuoc = (props) => {
   const { id } = router.query;
   const [isShow, setIsShow] = useState(false);
   const [nhaCungCap, setNhaCungCap] = useState([]);
+  const [nuocSanXuat, setNuocSanXuat] = useState([]);
   const toggleShow = () => {
     if (isShowNhapThuoc === true) setIsShowNhapThuoc(false);
     setIsShow(!isShow);
@@ -77,6 +80,7 @@ const ContentChiTietThuoc = (props) => {
   };
   useEffect(() => {
     fetchDataNhaCungCap();
+    fetchDataNuocSanXuat();
     // danh sách loại thuốc truyền vào select option
     fetch(
       "http://localhost:8080/QLNT-Server/nhan-vien/thuoc-va-loai-thuoc/loai-thuoc/"
@@ -179,13 +183,18 @@ const ContentChiTietThuoc = (props) => {
     });
   };
   const [selectedNCC, setNCC] = useState({});
+  const [selectedNSX, setNSX] = useState({});
   const onSubmitNhapThuoc = (dataa) => {
     if (ngayHetHan <= today || ngaySanXuat >= today) return;
     const nhaCungCapValue =
       Object.keys(selectedNCC).length === 0
         ? { maNhaCungCap: nhaCungCap[0].maNhaCungCap }
         : { maNhaCungCap: selectedNCC };
-    console.log(nhaCungCapValue);
+    const NSXvalue =
+      Object.keys(selectedNSX).length === 0
+        ? { maNuoc: nuocSanXuat[0].maNuoc }
+        : { maNuoc: selectedNSX };
+
     fetch(
       `http://localhost:8080/QLNT-Server/quan-ly/thuoc-va-loai-thuoc/thuoc/${id}/nhap-thuoc`,
       {
@@ -203,6 +212,7 @@ const ContentChiTietThuoc = (props) => {
           giaBanSi: dataa.giaBanSi,
           giaBanLe: dataa.giaBanLe,
           nhaCungCap: nhaCungCapValue,
+          nuocSanXuat: NSXvalue,
         }),
       }
     ).then((response) => {
@@ -226,6 +236,10 @@ const ContentChiTietThuoc = (props) => {
   async function fetchDataNhaCungCap() {
     const data = await getAllNhaCungCap();
     setNhaCungCap(data);
+  }
+  async function fetchDataNuocSanXuat() {
+    const data = await getAllNuocSanXuat();
+    setNuocSanXuat(data);
   }
   async function fetchDataLichSuNhapThuoc(id) {
     const data = await lichSuNhapThuoc(id);
@@ -613,7 +627,11 @@ const ContentChiTietThuoc = (props) => {
                               lichSu.nhaCungCap.tenNhaCungCap
                             )}
                           </td>
-                          <td>{lichSu.nuocSanXuat}</td>
+                          <td>
+                            {lichSu.nuocSanXuat === null
+                              ? ""
+                              : lichSu.nuocSanXuat.tenNuoc}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -840,24 +858,24 @@ const ContentChiTietThuoc = (props) => {
                     <div className="col-sm-3">
                       <select
                         className="form-select"
-                        value={selectedNCC}
-                        defaultValue={nhaCungCap[0]}
+                        value={selectedNSX}
+                        defaultValue={nuocSanXuat[0]}
                         onChange={(e) => {
-                          setNCC(e.target.value);
+                          setNSX(e.target.value);
                         }}
                       >
-                        {nhaCungCap.map((nhaCungCap) => (
+                        {nuocSanXuat.map((nuocSanXuat) => (
                           <option
-                            key={nhaCungCap.maNhaCungCap}
-                            value={nhaCungCap.maNhaCungCap}
+                            key={nuocSanXuat.maNuoc}
+                            value={nuocSanXuat.maNuoc}
                           >
-                            {nhaCungCap.tenNhaCungCap}
+                            {nuocSanXuat.tenNuoc}
                           </option>
                         ))}
                       </select>
                     </div>
                     <div className="col-sm-3">
-                      <ModalAddNuocSanXuat setNhaCungCap={setNhaCungCap} />
+                      <ModalAddNuocSanXuat1 setNuocSanXuat={setNuocSanXuat} />
                     </div>
                   </div>
                   <button type="submit" className="btn btn-primary my-3">

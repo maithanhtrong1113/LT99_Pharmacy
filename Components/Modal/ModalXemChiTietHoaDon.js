@@ -102,7 +102,9 @@ function ModalXemChiTietHoaDon(props) {
                                 </td>
                                 <td>{thuoc.soLuong}</td>
                                 <td>{thuoc.donGia}</td>
-                                <td>{VND.format(thuoc.thanhTien)}</td>
+                                <td className="fw-bold">
+                                  {VND.format(thuoc.thanhTien)}
+                                </td>
                               </tr>
                             ))}
                           </tbody>

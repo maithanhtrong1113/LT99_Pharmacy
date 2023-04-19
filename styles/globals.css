@@ -415,6 +415,9 @@ body {
 .w-modalAddNhanVien1 {
   max-width: 700px;
 }
+.denied {
+  cursor: not-allowed !important;
+}
 .w-modalAddKhachHang {
   max-width: 650px;
 }

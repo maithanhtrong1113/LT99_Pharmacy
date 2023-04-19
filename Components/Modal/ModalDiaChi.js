@@ -64,7 +64,7 @@ function ModalAll(props) {
       ", " +
       JSON.parse(tinhSelected).name;
     setDiaChiFull(data.diaChi);
-    props.setDiaChiFull(data.diaChi);
+    props.setAddDiaChi(data.diaChi);
     toggle();
   };
 

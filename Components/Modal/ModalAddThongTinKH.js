@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { GoLocation } from "react-icons/go";
 import ModalDiaChi from "./ModalDiaChi";
 import { MdLocationPin } from "react-icons/md";
+import khachHang from "@/pages/admin/khachHang";
 
 function ModalAll(props) {
   const {
@@ -38,7 +39,7 @@ function ModalAll(props) {
     name: "",
     code: "",
   });
-  const [khachHangFull, setKhachHangFull] = useState("");
+  const [khachHangFull, setKhachHangFull] = useState({});
   const onSubmit = (data) => {
     if (xaSelected.name === "") {
       setErr({ show: true, mess: "Vui Lòng Chọn Xã/Phường" });
@@ -188,12 +189,20 @@ function ModalAll(props) {
   const [showNhapCoSan, setShowNhapCoSan] = useState(false);
   const [diaChiFull, setDiaChiFull] = useState("");
   const [errDiaChiCoSan, setErrDiaChiCoSan] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailerr, setEmailErr] = useState(false);
   useEffect(() => {
     if (diaChiFull !== "") {
       setErrDiaChiCoSan(false);
     }
   }, [diaChiFull]);
-
+  const addDiaChiFromModal = (data) => {
+    setDiaChiFull(data);
+    setKhachHangFull({
+      ...khachHangFull,
+      diaChi: data,
+    });
+  };
   return (
     <Fragment>
       <button onClick={toggle} className="btn bg-light">
@@ -264,6 +273,7 @@ function ModalAll(props) {
                     className="col-12 d-flex justify-content-between btn btn-light"
                     onClick={() => {
                       setDiaChiFull(khachHang.diaChi);
+                      setEmail(khachHang.email);
                       setKhachHangFull(khachHang);
                       setShowNhapCoSan(true);
                       setDsKhachHang([]);
@@ -295,7 +305,7 @@ function ModalAll(props) {
                     <div className="col-4 text-end">
                       <ModalDiaChi
                         diaChiFull={diaChiFull}
-                        setDiaChiFull={setDiaChiFull}
+                        setAddDiaChi={addDiaChiFromModal}
                       />
                     </div>
                   </div>
@@ -304,6 +314,24 @@ function ModalAll(props) {
                       <span>Vui lòng thêm địa chỉ nhận hàng</span>
                     </div>
                   )}
+                  <div className=" my-3">
+                    <div className="col-8">
+                      <input
+                        placeholder="Nhập email của bạn"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                      />
+                    </div>
+                    <div className="col-4"></div>
+                    {emailerr && (
+                      <div className="col-12 text-danger">
+                        <span>Vui lòng nhập địa chỉ email</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
               <div className="row d-flex justify-content-between my-3">
@@ -318,21 +346,25 @@ function ModalAll(props) {
                 </button>
                 <button
                   type="button"
+                  className="col-4 btn btn-info "
                   onClick={() => {
-                    if (diaChiFull === "") {
+                    if (diaChiFull === "" || diaChiFull === null) {
                       setErrDiaChiCoSan(true);
                       return;
                     } else {
                       setErrDiaChiCoSan(false);
                     }
-                    setKhachHangFull({
-                      ...khachHangFull,
-                      diaChi: diaChiFull,
-                    });
-                    props.sendDataToCheckOut(khachHangFull);
+                    if (email === "" || email === null) {
+                      setEmailErr(true);
+                      return;
+                    } else {
+                      setEmailErr(false);
+                    }
+
+                    props.sendDataToCheckOut(khachHangFull, email);
+                    console.log(khachHangFull);
                     toggle();
                   }}
-                  className="col-4 btn btn-info "
                 >
                   Xác Nhận
                 </button>

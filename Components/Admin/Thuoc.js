@@ -4,6 +4,7 @@ import ModalXoaThuoc from "../Modal/ModalXoaThuoc";
 import { xoaThuoc } from "@/api/thuocApi";
 import { MdOutlineClose } from "react-icons/md";
 import { BsCheck2 } from "react-icons/bs";
+import ModalXemThuoc from "../Modal/ModalXemThuoc";
 const Thuoc = (props) => {
   const router = useRouter();
   const handlerInfo = (data) => {
@@ -36,12 +37,7 @@ const Thuoc = (props) => {
           <td>{thuoc.soLuong}</td>
           <td>{thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
-            <button
-              className="btn btn-sm btn-info ms-2"
-              // onClick={() => handlerInfo(thuoc.maThuoc)}
-            >
-              Xem chi tiết
-            </button>
+           <ModalXemThuoc thuoc={thuoc}/>
             <button
               className="btn btn-sm btn-warning ms-2"
               onClick={() => handlerInfo(thuoc.maThuoc)}

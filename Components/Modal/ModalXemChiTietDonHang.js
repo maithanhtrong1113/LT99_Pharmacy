@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
-import { getChiTietHoaDon } from "@/api/hoaDonApi";
-import { BsCheck2 } from "react-icons/bs";
+
+import { getChiTietDonHang } from "@/api/donHangApi";
 import { MdOutlineClose } from "react-icons/md";
 import VND from "../utils/formatVND";
 
@@ -17,13 +17,13 @@ function ModalXemChiTietDonHang(props) {
   const toggle = () => {
     setModal(!modal);
   };
-  const [hoaDon, setHoaDon] = useState({});
-  async function ChiTietHoaDon(maHoaDon) {
-    const data = await getChiTietHoaDon(maHoaDon);
-    setHoaDon(data);
+  const [donHang, setDonHang] = useState({});
+  async function ChiTietDonHang(maDonHang) {
+    const data = await getChiTietDonHang(maDonHang);
+    setDonHang(data);
   }
   useEffect(() => {
-    ChiTietHoaDon(props.hoaDon.maHoaDon);
+    ChiTietDonHang(props.donHang.maDonHang);
   }, []);
   return (
     <Fragment>
@@ -40,7 +40,7 @@ function ModalXemChiTietDonHang(props) {
           <span className="fw-bold text-info"> Thông tin đơn hàng</span>
         </ModalHeader>
         <ModalBody>
-          {Object.keys(hoaDon).length !== 0 && (
+          {Object.keys(donHang).length !== 0 && (
             <>
               <span className=" fst-italic text-muted">
                 Thông tin khách hàng
@@ -54,7 +54,7 @@ function ModalXemChiTietDonHang(props) {
                           Tên khách hàng:
                         </label>
                         <div className="col-sm-8 fw-bold text-info">
-                          <label>{hoaDon.hoaDon.tenKhachHang}</label>
+                          <label>{donHang.hoaDon.tenKhachHang}</label>
                         </div>
                       </div>
                       <div className="form-group row my-2 d-flex align-items-center">
@@ -62,7 +62,31 @@ function ModalXemChiTietDonHang(props) {
                           Số điện thoại:
                         </label>
                         <div className="col-sm-8">
-                          <label>{hoaDon.hoaDon.sdtKhachHang}</label>
+                          <label>{donHang.hoaDon.sdtKhachHang}</label>
+                        </div>
+                      </div>
+                      <div className="form-group row my-2 d-flex align-items-center">
+                        <label className="col-sm-4 col-form-label fw-bold">
+                          Địa chỉ giao hàng
+                        </label>
+                        <div className="col-sm-8">
+                          <label>{donHang.hoaDon.diaChiGiaoHang}</label>
+                        </div>
+                      </div>
+                      <div className="form-group row my-2 d-flex align-items-center">
+                        <label className="col-sm-4 col-form-label fw-bold">
+                          Trạng thái đơn hàng
+                        </label>
+                        <div className="col-sm-8">
+                          <label>{donHang.hoaDon.trangThai}</label>
+                        </div>
+                      </div>
+                      <div className="form-group row my-2 d-flex align-items-center">
+                        <label className="col-sm-4 col-form-label fw-bold">
+                          Ngày đặt đơn hàng
+                        </label>
+                        <div className="col-sm-8">
+                          <label>{donHang.hoaDon.ngayTaoDonhHang}</label>
                         </div>
                       </div>
 
@@ -71,7 +95,9 @@ function ModalXemChiTietDonHang(props) {
                   </div>
                 </div>
               </div>
-              <span className=" fst-italic text-muted ">Thông tin hóa đơn</span>
+              <span className=" fst-italic text-muted ">
+                Thông tin đơn hàng
+              </span>
               <div className="container rounded border shadow ">
                 <div className="row">
                   <div className="col-xl-12 col-lg-12">
@@ -82,61 +108,34 @@ function ModalXemChiTietDonHang(props) {
                             <tr>
                               <th scope="col">Mã Thuốc</th>
                               <th scope="col">Tên Thuốc</th>
-                              <th>Thuốc kê đơn</th>
+                              <th>Đơn vị tính</th>
                               <th>Số lượng</th>
                               <th>Đơn giá</th>
                               <th>Thành tiền</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {hoaDon.hoaDon.chiTietHoaDon.map((thuoc) => (
+                            {donHang.hoaDon.chiTietDonHang.map((thuoc) => (
                               <tr>
                                 <td>{thuoc.thuoc.maThuoc}</td>
                                 <td>{thuoc.thuoc.tenThuoc}</td>
-                                <td>
-                                  {thuoc.thuoc.keDon === true ? (
-                                    <BsCheck2 className="text-success fs-25" />
-                                  ) : (
-                                    <MdOutlineClose className="text-danger fs-25" />
-                                  )}
-                                </td>
+                                <td>{thuoc.thuoc.donViTinh}</td>
+
                                 <td>{thuoc.soLuong}</td>
-                                <td>{thuoc.donGia}</td>
-                                <td>{VND.format(thuoc.thanhTien)}</td>
+                                <td>{VND.format(thuoc.donGia)}</td>
+                                <td className="fw-bold">
+                                  {VND.format(thuoc.thanhTien)}
+                                </td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                       </div>
-                      <div className="form-group row my-2 d-flex align-items-center ">
-                        <div className="col-5">
-                          <b>Tổng tiền trước thuế:</b>
-                          <span className="text-warning">
-                            {` ${VND.format(hoaDon.hoaDon.tongTruocThue)}`}
-                          </span>
-                        </div>
-                        <div className="col-3">
-                          <b> Thuế:</b>
-                          <span className="text-danger">
-                            {` ${VND.format(hoaDon.hoaDon.thue)}`}
-                          </span>
-                        </div>
-                        <div className="col-4">
-                          <b> Tổng tiền sau thuế:</b>
-                          <span className="text-info">
-                            {` ${VND.format(hoaDon.hoaDon.tongSauThue)}`}
-                          </span>
-                        </div>
-                        <div className="col-6">
-                          <b> Nhân viên bán hàng:</b>
-                          <span className="text-info">
-                            {` ${props.nhanvienBanHang}`}
-                          </span>
-                        </div>
-                        <div className="col-6">
-                          <b> Nhân viên bán hàng:</b>
-                          <span className="text-info">
-                            {` ${props.nhanvienBanHang}`}
+                      <div className="form-group row d-flex align-items-center ">
+                        <div className="col-12">
+                          <b> Tổng tiền đơn hàng sau thuế:</b>
+                          <span className="text-info fw-bold fs-25">
+                            {` ${VND.format(donHang.hoaDon.tongSauThue)}`}
                           </span>
                         </div>
                       </div>
