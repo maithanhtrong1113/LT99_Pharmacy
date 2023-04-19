@@ -6,16 +6,34 @@ import ModalXemChiTietDonHang from "../Modal/ModalXemChiTietDonHang";
 import { acpDonHang, deniedDonHang, getAllDonHang } from "@/api/donHangApi";
 import ModalChangStateDonHang from "../Modal/ModalChangStateDonHang";
 import { toast } from "react-toastify";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
-  async function fetchData() {
-    const res = await getAllDonHang();
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const buttons = [];
+  for (let i = 1; i <= totalPage; i++) {
+    buttons.push(
+      <div className="col-1">
+        <button
+          className="btn btn-info rounded-circle w-50 "
+          key={i}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </button>
+      </div>
+    );
+  }
+  async function fetchData(data) {
+    const res = await getAllDonHang(data);
+    setTotalPage(res.totalPages);
     setDanhSachDonHang(res.content);
   }
   // danh sách đơn hàng
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(page);
+  }, [page]);
   const changStateDonHang = async (data) => {
     const res = await acpDonHang(data);
     toast.success("Đã chấp nhận đơn hàng", {
@@ -64,7 +82,7 @@ const ContentDonHang = () => {
       }, 500);
       setTimeoutId(newTimeoutId);
     } else {
-      fetchData();
+      fetchData(1);
     }
   };
   return (
@@ -88,14 +106,13 @@ const ContentDonHang = () => {
                   </form>
                 </div>
               </div>
-              <table className="table table-striped">
+              <table className="table table-striped my-0">
                 <thead>
                   <tr>
                     <th scope="col">Mã Đơn Hàng</th>
                     <th scope="col">Ngày Đặt Hàng</th>
                     <th scope="col">Tên khách hàng</th>
                     <th scope="col">Trạng Thái</th>
-
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -122,11 +139,35 @@ const ContentDonHang = () => {
                           </>
                         }
                       </td>
-                      <td>{}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
+              {totalPage > 0 && (
+                <div className="row d-flex justify-content-center align-items-center my-2">
+                  <div className="col-1">
+                    <button
+                      className="btn btn-info"
+                      onClick={() => {
+                        setPage(page === 0 ? page : page - 1);
+                      }}
+                    >
+                      <AiOutlineDoubleLeft />
+                    </button>
+                  </div>
+                  {buttons}
+                  <div className="col-1">
+                    <button
+                      className="btn btn-info"
+                      onClick={() => {
+                        setPage(page === totalPage ? page : page + 1);
+                      }}
+                    >
+                      <AiOutlineDoubleRight />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

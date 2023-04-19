@@ -7,17 +7,34 @@ import { BsCheck2, BsThreeDots } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
 import { getAllHoaDon } from "@/api/hoaDonApi";
 import ModalXemChiTietHoaDon from "../Modal/ModalXemChiTietHoaDon";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 const ContentHoaDon = () => {
   const [dsHoaDon, setDanhSachHoaDon] = useState([]);
-  const [dsIn, setDsIn] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const buttons = [];
+  for (let i = 1; i <= totalPage; i++) {
+    buttons.push(
+      <div className="col-1">
+        <button
+          className="btn btn-info rounded-circle w-50 "
+          key={i}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </button>
+      </div>
+    );
+  }
   // danh sách khách hàng
-  async function fetchData() {
-    const res = await getAllHoaDon();
+  async function fetchData(data) {
+    const res = await getAllHoaDon(data);
+    setTotalPage(res.totalPages);
     setDanhSachHoaDon(res.content);
   }
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(page);
+  }, [page]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const [timeoutId, setTimeoutId] = useState(null);
@@ -46,7 +63,7 @@ const ContentHoaDon = () => {
       }, 500);
       setTimeoutId(newTimeoutId);
     } else {
-      fetchData();
+      fetchData(1);
     }
   };
   return (
@@ -121,6 +138,31 @@ const ContentHoaDon = () => {
                   ))}
                 </tbody>
               </table>
+              {totalPage > 0 && (
+                <div className="row d-flex justify-content-center align-items-center my-2">
+                  <div className="col-1">
+                    <button
+                      className="btn btn-info"
+                      onClick={() => {
+                        setPage(page === 0 ? page : page - 1);
+                      }}
+                    >
+                      <AiOutlineDoubleLeft />
+                    </button>
+                  </div>
+                  {buttons}
+                  <div className="col-1">
+                    <button
+                      className="btn btn-info"
+                      onClick={() => {
+                        setPage(page === totalPage ? page : page + 1);
+                      }}
+                    >
+                      <AiOutlineDoubleRight />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,5 +1,3 @@
-import { toast } from "react-toastify";
-
 export const getChiTietDonHang = async (maDonHang) => {
   const response = await fetch(
     `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online/${maDonHang}`
@@ -9,9 +7,9 @@ export const getChiTietDonHang = async (maDonHang) => {
 
   return data;
 };
-export const getAllDonHang = async () => {
+export const getAllDonHang = async (pageNo) => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online`
+    `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online?pageNo=${pageNo}`
   );
   if (response.status === 204) return [];
   const data = await response.json();

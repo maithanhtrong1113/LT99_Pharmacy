@@ -1,7 +1,6 @@
-import { toast } from "react-toastify";
-export const getAllHoaDon = async () => {
+export const getAllHoaDon = async (pageNo) => {
   const response = await fetch(
-    `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/`
+    `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don?pageNo=${pageNo}`
   );
   if (response.status === 204) return [];
   const data = await response.json();
