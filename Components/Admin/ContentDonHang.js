@@ -42,7 +42,7 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-    fetchData();
+    fetchData(page);
   };
   const changStateDonHang1 = async (data) => {
     const res = await deniedDonHang(data);
