@@ -95,7 +95,7 @@ const ContentDonHang = () => {
                     <th scope="col">Ngày Đặt Hàng</th>
                     <th scope="col">Tên khách hàng</th>
                     <th scope="col">Trạng Thái</th>
-                    <th scope="col">Tổng Tiền</th>
+
                     <th scope="col"></th>
                   </tr>
                 </thead>
