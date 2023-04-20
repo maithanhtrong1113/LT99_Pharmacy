@@ -1,116 +1,29 @@
-import { useRouter } from "next/router";
-import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { BsPerson, BsInfoCircle, BsLock } from "react-icons/bs";
-import { AiOutlineLogout } from "react-icons/ai";
-import authApi from "../../api/authApi";
-import { FiLock } from "react-icons/fi";
-
 import Link from "next/link";
-import { authActions } from "@/store/auth";
-const ContentLichSuDonHang = () => {
-  const router = useRouter();
-  let user = {};
-  const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  useEffect(() => {
-    authApi.fetchUser().then((res) => {
-      user = res.data.user;
-      setName(user.name);
-      setPhone(user.phone);
-      setEmail(user.email);
-    });
-  }, []);
+import { Fragment } from "react";
 
-  const logOutHandler = () => {
-    dispatch(authActions.logout());
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
-    router.push("/");
-  };
+const ContentLichSuDonHang = () => {
   return (
     <Fragment>
-      <div className="container my-10   ">
+      <div className="container-fluid my-10">
         <div className="row">
-          <div className="col-4  rounded shadow py-3">
-            <div className="container">
-              <div className="row">
-                <div className="col-4">
-                  <img
-                    src="/images/user-profile.jpg"
-                    className="img-fluid size-img-profile"
-                  />
-                </div>
-                <div className="col-8">
-                  <h4>{name}</h4>
-                  <span>{email}</span>
-                </div>
-              </div>
-              <hr />
-              <div
-                className="row py-3 my-2 link-me  "
-                onClick={() => {
-                  router.push("/me");
-                }}
-              >
-                <div className="col-1">
-                  <BsPerson />
-                </div>
-                <div className="col-11 ">
-                  <Link href="/me" className="text-decoration-none  text-dark ">
-                    Thông tin cá nhân
+          <div className="col-xl-12 col-lg-12">
+            <nav aria-label="breadcrumb ">
+              <ol className="breadcrumb ">
+                <li className="breadcrumb-item">
+                  <Link href="/" className="text-muted text-decoration-none">
+                    Trang chủ
                   </Link>
-                </div>
-              </div>
-              <div
-                className="row py-3 my-2 link-me  active"
-                onClick={() => {
-                  router.push("/doiMatKhau");
-                }}
-              >
-                <div className="col-1">
-                  <BsInfoCircle />
-                </div>
-                <div className="col-11  ">
+                </li>
+                <li className="breadcrumb-item">
                   <Link
                     href="/donHang"
-                    className="text-decoration-none  text-dark"
+                    className="text-info text-decoration-none"
                   >
-                    Lịch sử đơn hàng
+                    Đơn hàng của bạn
                   </Link>
-                </div>
-              </div>
-              <div
-                className="row py-3 my-2 link-me"
-                onClick={() => {
-                  router.push("/doiMatKhau");
-                }}
-              >
-                <div className="col-1">
-                  <FiLock />
-                </div>
-                <div className="col-11  ">
-                  <Link
-                    href="/doiMatKhau"
-                    className="text-decoration-none  text-dark"
-                  >
-                    Đổi mật khẩu
-                  </Link>
-                </div>
-              </div>
-              <div className="row py-3 my-2 link-me" onClick={logOutHandler}>
-                <div className="col-1">
-                  <AiOutlineLogout />
-                </div>
-                <div className="col-11  ">
-                  <Link href="/" className="text-decoration-none  text-dark">
-                    Đăng xuất
-                  </Link>
-                </div>
-              </div>
-            </div>
+                </li>
+              </ol>
+            </nav>
           </div>
         </div>
       </div>

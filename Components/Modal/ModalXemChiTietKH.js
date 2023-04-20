@@ -59,7 +59,13 @@ function ModalXemChiTietKH(props) {
                       Email:
                     </label>
                     <div className="col-sm-8">
-                      <label>{khachHang.email}</label>
+                      <label>
+                        {khachHang.email === "" || khachHang.email === null ? (
+                          <BsThreeDots className="text-success fs-20" />
+                        ) : (
+                          khachHang.email
+                        )}
+                      </label>
                     </div>
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">

@@ -204,6 +204,28 @@ function ModalAll(props) {
       diaChi: data,
     });
   };
+  const changein4Customer = () => {
+    fetch(
+      `http://localhost:8080/QLNT-Server/khach-hang/thong-tin-khach-hang/${khachHangFull.maKhachHang}/cap-nhat-thong-tin-ca-nhan`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          soDienThoai: khachHangFull.soDienThoai,
+          hoTen: khachHangFull.hoTen,
+          email: email,
+          diaChi: diaChiFull,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setKhachHangFull(data);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <Fragment>
       <button onClick={toggle} className="btn bg-light">
@@ -362,8 +384,8 @@ function ModalAll(props) {
                       setEmailErr(false);
                     }
 
-                    props.sendDataToCheckOut(khachHangFull, email);
-                    console.log(khachHangFull);
+                    props.sendDataToCheckOut(khachHangFull);
+                    changein4Customer();
                     toggle();
                   }}
                 >

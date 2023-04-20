@@ -143,7 +143,7 @@ const ContentDonHang = () => {
                   ))}
                 </tbody>
               </table>
-              {totalPage > 0 && (
+              {totalPage > 1 && (
                 <div className="row d-flex justify-content-center align-items-center my-2">
                   <div className="col-1">
                     <button
