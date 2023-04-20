@@ -56,6 +56,14 @@ function ModalXemChiTietKH(props) {
                   </div>
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
+                      Email:
+                    </label>
+                    <div className="col-sm-8">
+                      <label>{khachHang.email}</label>
+                    </div>
+                  </div>
+                  <div className="form-group row my-2 d-flex align-items-center">
+                    <label className="col-sm-4 col-form-label fw-bold">
                       Địa Chỉ:
                     </label>
                     <div className="col-sm-8">

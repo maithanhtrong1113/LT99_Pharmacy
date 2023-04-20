@@ -147,16 +147,6 @@ const ContentThuoc = () => {
                 </thead>
                 <tbody>
                   <Thuoc dsThuoc={dsThuoc} setDsThuoc={setDsThuoc} />
-                  <tr>
-                    <td>
-                      <button className="btn btn-sm bg-dark rounded me-2 my-2">
-                        <FaAngleLeft className="text-white" />
-                      </button>
-                      <button className="btn btn-sm bg-dark rounded my-2">
-                        <FaAngleRight className="text-white" />
-                      </button>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>

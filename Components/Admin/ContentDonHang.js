@@ -46,7 +46,7 @@ const ContentDonHang = () => {
   };
   const changStateDonHang1 = async (data) => {
     const res = await deniedDonHang(data);
-    toast.success("Đã từ chối đơn hàng", {
+    toast.warning("Đã từ chối đơn hàng", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",

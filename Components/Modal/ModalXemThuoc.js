@@ -39,10 +39,10 @@ function ModalXemThuoc(props) {
         className="w-modalDiaChi"
       >
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold text-info"> Thông Tin Loại Thuốc</span>
+          <span className="fw-bold text-info"> Thông Tin  Thuốc</span>
         </ModalHeader>
         <ModalBody>
-          <div className="container rounded border shadow">
+          <div className="container ">
             <div className="row">
               <div className="col-xl-12 col-lg-12">
                 {Object.keys(thuoc).length !== 0 && (

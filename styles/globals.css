@@ -93,6 +93,9 @@ body {
   font-size: 33px;
   color: #19ffff;
 }
+.vh-90 {
+  height: 85vh !important;
+}
 .fs-27 {
   font-size: 27px !important;
 }
