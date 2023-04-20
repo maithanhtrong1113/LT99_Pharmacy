@@ -13,6 +13,7 @@ import {
   huyDonHangPhiaKhach,
 } from "@/api/donHangApi";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const ContentChiTietDonHang = () => {
   const router = useRouter();
@@ -30,8 +31,12 @@ const ContentChiTietDonHang = () => {
   }, [id]);
   const huyDonHangClick = async () => {
     const res = await huyDonHangPhiaKhach(chiTiet.hoaDon.maDonHang);
-
     setChiTiet(res);
+    toast.success("Hủy đơn hàng thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
   };
   return (
     <Fragment>
@@ -189,7 +194,7 @@ const ContentChiTietDonHang = () => {
                   </div>
                   <div className="col-12 mt-5">
                     <h6 className="fw-bold">
-                      Sản phẩm đã đặt: <b>{chiTiet.hoaDon.ngayTaoDonhHang}</b>
+                      Ngày tạo đơn: <b>{chiTiet.hoaDon.ngayTaoDonhHang}</b>
                     </h6>
                   </div>
                   <table className="table">
