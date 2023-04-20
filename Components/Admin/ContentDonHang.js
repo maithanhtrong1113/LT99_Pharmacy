@@ -52,7 +52,7 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-    fetchData();
+    fetchData(page);
   };
   const [searchTerm, setSearchTerm] = useState("");
 
