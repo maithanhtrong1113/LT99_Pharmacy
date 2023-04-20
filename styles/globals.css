@@ -93,6 +93,9 @@ body {
   font-size: 33px;
   color: #19ffff;
 }
+.fs-40 {
+  font-size: 40px !important;
+}
 .vh-90 {
   height: 85vh !important;
 }
@@ -147,6 +150,9 @@ body {
 }
 .bg-customNav {
   background: linear-gradient(to right, rgb(69, 237, 237), rgb(53, 185, 185));
+}
+.bg-xanhLo {
+  background-color: rgb(69, 237, 237) !important;
 }
 .bg-customNav1 {
   background: linear-gradient(to right, rgb(53, 185, 185), rgb(69, 237, 237));
@@ -326,6 +332,13 @@ body {
 .fs-30 {
   font-size: 30px;
 }
+.fs-40 {
+  font-size: 40px;
+}
+.fs-dh {
+  font-size: 12px;
+}
+
 .localMorePerson {
   width: 12rem;
   top: 90%;

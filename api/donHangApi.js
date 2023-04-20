@@ -28,3 +28,26 @@ export const deniedDonHang = (maDonHang) => {
   );
   return response;
 };
+export const getChiTietDonHangPhiaKhach = async (maDonHang) => {
+  const response = await fetch(
+    `http://localhost:8080/QLNT-Server/khach-hang/don-hang/${maDonHang}`
+  );
+  if (response.status === 204) return {};
+  const data = await response.json();
+
+  return data;
+};
+export const huyDonHangPhiaKhach = async (maDonHang) => {
+  const response = await fetch(
+    `http://localhost:8080/QLNT-Server/khach-hang/don-hang/${maDonHang}/huy-don`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const chiTiet = await getChiTietDonHangPhiaKhach(maDonHang);
+  return chiTiet;
+};
