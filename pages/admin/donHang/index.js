@@ -3,14 +3,15 @@ import { ToastContainer } from "react-toastify";
 import GoTopPage from "@/Components/Index/GoTopPage";
 import NotShowMess from "@/Components/utils/showMess";
 import ContentDonHang from "@/Components/Admin/ContentDonHang";
+import RouteGuard from "@/Components/RouteGuard/RouteGuard";
 const donHang = (props) => {
   NotShowMess();
   return (
-    <Fragment>
+    <RouteGuard>
       <ToastContainer />
       <GoTopPage />
       <ContentDonHang />
-    </Fragment>
+    </RouteGuard>
   );
 };
 

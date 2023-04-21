@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
-import { AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineUnlock } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
+import ModalChangePass from "../Modal/ModalChangePass";
 
 const NguoiDung = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -33,30 +34,34 @@ const NguoiDung = () => {
             alt=""
           />
           <span>
-            Mai Thanh Trọng <FaAngleDown />
+            Xin chào: <b>{localStorage.getItem("tenNhanVien")}</b>
+            <FaAngleDown />
           </span>
         </button>
         {!isOpen && (
           <div className="container-fluid sub-menu-admin position-absolute bg-white rounded shadow ">
-            <div
-              className="row p-2 d-flex align-items-center pointer border border-info rounded my-2 mx-1"
-              onClick={() => {
-                router.push("/me");
-              }}
-            >
+            <div className="row p-2 d-flex align-items-center pointer border border-info rounded my-2 mx-1">
               <div className="col-2">
                 <BsPerson className="fs-20 text-info" />
               </div>
               <div className="col-8">
-                <Link
-                  href="/me"
-                  className="text-decoration-none text-info text-center"
-                >
-                  Hồ sơ cá nhân
-                </Link>
+                <button className="btn btn-sm btn-white w-100 text-start fw-bold text-info">
+                  Cập nhập thông tin cá nhân
+                </button>
               </div>
               <div className="col-2">
-                <FaAngleRight className="text-info" />
+                <FaAngleRight className="text-info fs-20" />
+              </div>
+            </div>
+            <div className="row p-2 d-flex align-items-center  border border-warning rounded my-2 mx-1">
+              <div className="col-2 pointer">
+                <AiOutlineUnlock className="fs-20 text-warning" />
+              </div>
+              <div className="col-8">
+                <ModalChangePass />
+              </div>
+              <div className="col-2 pointer">
+                <FaAngleRight className="text-warning fs-20" />
               </div>
             </div>
             <div
@@ -67,12 +72,12 @@ const NguoiDung = () => {
                 <AiOutlineLogout className="fs-20 text-danger" />
               </div>
               <div className="col-8">
-                <button className="btn btn-white w-100 d-flex justify-content-between align-items-center">
+                <button className="fw-bold text-danger btn btn-white w-100 d-flex justify-content-between align-items-center">
                   Đăng xuất
                 </button>
               </div>
               <div className="col-2 pointer">
-                <FaAngleRight className="text-danger" />
+                <FaAngleRight className="text-danger fs-20" />
               </div>
             </div>
           </div>
