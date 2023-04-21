@@ -524,15 +524,15 @@ const ContentChiTietThuoc = (props) => {
                           </div>
                         </div>
                         <div className="row ">
-                          <div className="col-4">
+                          <div className="col-7">
                             <button
-                              className="btn btn-warning me-2"
+                              className="btn btn-warning me-2 w-50"
                               type="submit"
                             >
                               Sửa thông tin thuốc
                             </button>
                             <button
-                              className="btn btn-secondary ms-2"
+                              className="btn btn-danger btn- ms-2 w-25"
                               type="button"
                               onClick={() => {
                                 router.push("/admin/thuoc");
@@ -541,7 +541,7 @@ const ContentChiTietThuoc = (props) => {
                               Hủy
                             </button>
                           </div>
-                          <div className="col-8 text-end">
+                          <div className="col-5 text-end">
                             <button
                               className="btn btn-primary me-2 "
                               type="button"
@@ -878,9 +878,21 @@ const ContentChiTietThuoc = (props) => {
                       <ModalAddNuocSanXuat1 setNuocSanXuat={setNuocSanXuat} />
                     </div>
                   </div>
-                  <button type="submit" className="btn btn-primary my-3">
-                    Nhập Thuốc
-                  </button>
+                  <div className="row d-flex justify-content-between mx-2">
+                    <button
+                      type="button"
+                      className="btn btn-danger btn-sm my-3 w-25"
+                      onClick={toggleShowNhapThuoc}
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-sm my-3 w-25"
+                    >
+                      Nhập thuốc
+                    </button>
+                  </div>
                 </form>
               </div>
             )}

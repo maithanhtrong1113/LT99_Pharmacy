@@ -53,8 +53,8 @@ function ModalAddNhaCungCap1(props) {
   }, [soDienThoai]);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary btn-sm  text-white">
-        Thêm Nhà Cung Cấp <AiOutlinePlusCircle />
+      <Button onClick={toggle} className="btn bg-secondary btn-sm  text-white">
+        <AiOutlinePlusCircle />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
@@ -144,14 +144,25 @@ function ModalAddNhaCungCap1(props) {
                     </div>
                   </div>
 
-                  <div className="row d-flex justify-content-center ">
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="button"
-                      onClick={addNhaCungCapOnThuoc}
-                    >
-                      Thêm Nhà Cung Cấp
-                    </button>
+                  <div className="row d-flex justify-content-between ">
+                    <div className="col-4">
+                      <button
+                        className="btn btn-danger my-3 btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={toggle}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                    <div className="col-5">
+                      <button
+                        className="btn btn-info my-3 btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={addNhaCungCapOnThuoc}
+                      >
+                        Thêm Nhà Cung Cấp
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

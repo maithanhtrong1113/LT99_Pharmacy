@@ -107,13 +107,25 @@ function ModalAddNhaCungCap(props) {
                     </div>
                   </div>
 
-                  <div className="row d-flex justify-content-center ">
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="submit"
-                    >
-                      Thêm Nhà Cung Cấp
-                    </button>
+                  <div className="row d-flex justify-content-center justify-content-between">
+                    <div className="col-4">
+                      {" "}
+                      <button
+                        className="btn btn-danger my-3 btn-sm  text-white fw-bold w-100"
+                        type="submit"
+                      >
+                        Hủy
+                      </button>
+                    </div>
+
+                    <div className="col-5">
+                      <button
+                        className="btn btn-info my-3 btn-sm  text-white fw-bold w-100"
+                        type="submit"
+                      >
+                        Thêm Nhà Cung Cấp
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

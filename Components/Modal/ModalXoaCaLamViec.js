@@ -26,7 +26,7 @@ function ModalXoaCaLamViec(props) {
           </Button>
           <Button color="danger" onClick={deleteHandler}>
             Xóa
-          </Button>{" "}
+          </Button>
         </ModalFooter>
       </Modal>
     </div>

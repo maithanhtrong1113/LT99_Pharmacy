@@ -50,8 +50,8 @@ function ModalAddCaLamViec1(props) {
   }, [soGioLam]);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary btn-sm  text-white">
-        Thêm Ca Làm Việc <AiOutlinePlusCircle />
+      <Button onClick={toggle} className=" btn bg-primary btn-sm  text-white">
+        <AiOutlinePlusCircle />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
@@ -117,14 +117,26 @@ function ModalAddCaLamViec1(props) {
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="button"
-                      onClick={addCa}
-                    >
-                      Thêm Ca Làm Việc
-                    </button>
+                  <div className="row d-flex justify-content-between ">
+                    <div className="col-4">
+                      <button
+                        className="btn btn-danger my-3 btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={toggle}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                    <div className="col-5">
+                      {" "}
+                      <button
+                        className="btn btn-info my-3 btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={addCa}
+                      >
+                        Thêm Ca Làm Việc
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

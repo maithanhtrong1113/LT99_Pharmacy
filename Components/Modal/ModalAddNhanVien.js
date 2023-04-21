@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -263,9 +263,17 @@ function ModalAddNhanVien(props) {
                       />
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
+                  <hr />
+                  <div className="row d-flex justify-content-center justify-content-between">
                     <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
+                      className="btn btn-danger  text-white fw-bold w-25"
+                      type="button"
+                      onClick={toggle}
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      className="btn btn-info   text-white fw-bold w-25"
                       type="submit"
                     >
                       Tạo tài khoản

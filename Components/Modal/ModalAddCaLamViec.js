@@ -89,13 +89,24 @@ function ModalAddCaLamViec(props) {
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="submit"
-                    >
-                      Thêm Ca Làm Việc
-                    </button>
+                  <div className="row d-flex justify-content-center justify-content-between ">
+                    <div className="col-4">
+                      <button
+                        className="btn btn-danger btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={toggle}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                    <div className="col-4">
+                      <button
+                        className="btn btn-info btn-sm text-white fw-bold w-100"
+                        type="submit"
+                      >
+                        Thêm Ca Làm Việc
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

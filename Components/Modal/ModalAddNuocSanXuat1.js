@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { themNuocSanXuat } from "@/api/nuocSanXuatApi";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 function ModalAddNuocSanXuat1(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -17,8 +18,8 @@ function ModalAddNuocSanXuat1(props) {
 
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn bg-primary btn-sm text-white">
-        Thêm nước sản xuất
+      <Button onClick={toggle} className="btn bg-secondary btn-sm text-white">
+        <AiOutlinePlusCircle />
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
@@ -57,14 +58,25 @@ function ModalAddNuocSanXuat1(props) {
                     </div>
                   </div>
 
-                  <div className="row d-flex justify-content-center ">
-                    <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
-                      type="button"
-                      onClick={submitHandler}
-                    >
-                      Thêm nước sản xuất
-                    </button>
+                  <div className="row d-flex justify-content-between ">
+                    <div className="col-4">
+                      <button
+                        className="btn btn-danger btn-sm  text-white fw-bold w-100"
+                        type="button"
+                        onClick={toggle}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                    <div className="col-6">
+                      <button
+                        className="btn btn-info btn-sm text-white fw-bold w-100"
+                        type="button"
+                        onClick={submitHandler}
+                      >
+                        Thêm nước sản xuất
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

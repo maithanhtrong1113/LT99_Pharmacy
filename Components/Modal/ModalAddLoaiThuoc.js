@@ -81,9 +81,16 @@ function ModalAddLoaiThuoc(props) {
                       )}
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-center ">
+                  <div className="row d-flex justify-content-center justify-content-between">
                     <button
-                      className="btn btn-info my-3  text-white fw-bold w-100"
+                      className="btn btn-danger my-3 btn-sm text-white fw-bold w-25"
+                      type="button"
+                      onClick={toggle}
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      className="btn btn-info my-3 btn-sm text-white fw-bold w-25"
                       type="submit"
                     >
                       Thêm Loại Thuốc

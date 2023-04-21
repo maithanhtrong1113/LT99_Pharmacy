@@ -66,13 +66,14 @@ function ModalChinhSuaNuocSanXuat(props) {
 
                   <div className="row d-flex justify-content-between ">
                     <button
-                      className="btn btn-secondary my-3  text-white fw-bold w-25"
+                      className="btn btn-danger btn-sm my-3  text-white fw-bold w-25"
                       type="button"
+                      onClick={toggle}
                     >
                       Hủy
                     </button>
                     <button
-                      className="btn btn-info my-3  text-white fw-bold w-50"
+                      className="btn btn-info my-3 btn-sm  text-white fw-bold w-50"
                       type="submit"
                     >
                       Chỉnh Sửa Ca Làm Việc
