@@ -34,7 +34,7 @@ const NguoiDung = () => {
             alt=""
           />
           <span>
-            {/* Xin chào: <b>{localStorage.getItem("tenNhanVien")}</b> */}
+            Xin chào: <b>{localStorage.getItem("tenNhanVien")}</b>
             <FaAngleDown />
           </span>
         </button>
