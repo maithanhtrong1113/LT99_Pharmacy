@@ -22,6 +22,7 @@ import {
   MdManageAccounts,
   MdWork,
 } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -36,6 +37,8 @@ const Sidebar = () => {
   const [activeCaLamViec, setActiveCalamViec] = useState("");
   const [activeNhaCungCap, setActiveNhaCungCap] = useState("");
   const [activeNuoc, setActiveNuoc] = useState("");
+  const role = useSelector((state) => state.auth.role);
+
   useEffect(() => {
     if (router.pathname === "/admin/thuoc") {
       setActiveThuoc("bg-info rounded");
@@ -77,23 +80,29 @@ const Sidebar = () => {
         </Link>
         <hr className="text-white" />
         <ul className="list-unstyled  navbarSideLiHover  vh-90 ">
-          <li className={`${active} mb-3`}>
-            <Link
-              className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
-              href="/admin"
-            >
-              <MdManageAccounts className="text-secondary me-2 fs-icon-SideBar" />{" "}
-              Quản Lý Nhân Viên
-            </Link>
-          </li>
-          <li className={`${activeCaLamViec} mb-3`}>
-            <Link
-              href="/admin/caLamViec"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
-            >
-              <MdWork className="text-white me-2 fs-icon-SideBar" /> Ca Làm Việc
-            </Link>
-          </li>
+          {role === 1 && (
+            <li className={`${active} mb-3`}>
+              <Link
+                className="btn btn-toggle rounded collapsed w-100 text-white d-flex align-items-center   "
+                href="/admin"
+              >
+                <MdManageAccounts className="text-secondary me-2 fs-icon-SideBar" />{" "}
+                Quản Lý Nhân Viên
+              </Link>
+            </li>
+          )}
+
+          {role === 1 && (
+            <li className={`${activeCaLamViec} mb-3`}>
+              <Link
+                href="/admin/caLamViec"
+                className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center"
+              >
+                <MdWork className="text-white me-2 fs-icon-SideBar" /> Ca Làm
+                Việc
+              </Link>
+            </li>
+          )}
           <li className={`${activeBanThuoc} mb-3`}>
             <Link
               href="/admin/banThuoc"
@@ -103,15 +112,17 @@ const Sidebar = () => {
               Bán Thuốc
             </Link>
           </li>
-          <li className={`${activeLoaiThuoc} mb-3`}>
-            <Link
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
-              href="/admin/loaiThuoc"
-            >
-              <MdCategory className="text-danger me-2 fs-icon-SideBar" />
-              Loại thuốc
-            </Link>
-          </li>
+          {role === 1 && (
+            <li className={`${activeLoaiThuoc} mb-3`}>
+              <Link
+                className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center "
+                href="/admin/loaiThuoc"
+              >
+                <MdCategory className="text-danger me-2 fs-icon-SideBar" />
+                Loại thuốc
+              </Link>
+            </li>
+          )}
           <li className={`${activeThuoc} mb-3`}>
             <Link
               className="btn btn-toggle w-100 rounded collapsed text-white d-flex  align-items-center "
@@ -149,24 +160,28 @@ const Sidebar = () => {
             </Link>
           </li>
 
-          <li className={`${activeNhaCungCap} mb-3`}>
-            <Link
-              href="/admin/nhaCungCap"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
-            >
-              <FaTruckMoving className="text-warning me-2 fs-icon-SideBar" />{" "}
-              Nhà Cung Cấp
-            </Link>
-          </li>
-          <li className={`${activeNuoc} mb-3`}>
-            <Link
-              href="/admin/nuocSanXuat"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
-            >
-              <BsFlagFill className="text-danger me-2 fs-icon-SideBar" /> Nước
-              Sản Xuất
-            </Link>
-          </li>
+          {role === 1 && (
+            <li className={`${activeNhaCungCap} mb-3`}>
+              <Link
+                href="/admin/nhaCungCap"
+                className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+              >
+                <FaTruckMoving className="text-warning me-2 fs-icon-SideBar" />{" "}
+                Nhà Cung Cấp
+              </Link>
+            </li>
+          )}
+          {role === 1 && (
+            <li className={`${activeNuoc} mb-3`}>
+              <Link
+                href="/admin/nuocSanXuat"
+                className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+              >
+                <BsFlagFill className="text-danger me-2 fs-icon-SideBar" /> Nước
+                Sản Xuất
+              </Link>
+            </li>
+          )}
 
           <li className={`${activeThongKe} mb-3`}>
             <Link

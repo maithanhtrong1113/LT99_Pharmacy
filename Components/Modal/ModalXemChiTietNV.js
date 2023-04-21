@@ -16,9 +16,12 @@ function ModalXemChiTietKH(props) {
     setModal(!modal);
   };
   const [nhanVien, setNhanVien] = useState(props.nhanVien);
+  if (nhanVien !== props.nhanVien) {
+    setNhanVien(props.nhanVien);
+  }
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn btn-info btn-sm me-2">
+      <Button onClick={toggle} className="btn btn-info btn-sm">
         Xem Chi Tiết
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>

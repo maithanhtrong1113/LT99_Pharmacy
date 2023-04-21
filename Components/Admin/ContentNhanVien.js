@@ -6,9 +6,14 @@ import NguoiDung from "./NguoiDung";
 import { Input } from "reactstrap";
 import { useEffect } from "react";
 import { getAllCaLamViec } from "@/api/caLamViecApi";
-import { getAllNhanVien, getNhanVienTheoCaLamViec } from "@/api/nhanVienApi";
+import {
+  chinhSuaNhanVienByQuanLy,
+  getAllNhanVien,
+  getNhanVienTheoCaLamViec,
+} from "@/api/nhanVienApi";
 import xuLyTenKhiQuaDai, { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
 import ModalXemChiTietKH from "../Modal/ModalXemChiTietNV";
+import ModalChangeIn4ByQL from "../Modal/ModalChangeIn4ByQL";
 
 const index = () => {
   const [dsNhanVien, setDsNhanVien] = useState([]);
@@ -75,6 +80,11 @@ const index = () => {
   const changeCaLamViec = (e) => {
     setCaLamViecSelect(e.target.value);
   };
+  const changeNVHandler = async (data) => {
+    console.log(data);
+    const res = await chinhSuaNhanVienByQuanLy(data);
+    setDsNhanVien(res);
+  };
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -124,7 +134,6 @@ const index = () => {
                     <th scope="col">Mã nhân viên</th>
                     <th scope="col">Tên</th>
                     <th scope="col">Số điện thoại</th>
-                    <th scope="col">Địa chỉ</th>
 
                     <th scope="col">Ngày sinh</th>
                     <th scope="col">Ca Làm Việc</th>
@@ -137,11 +146,16 @@ const index = () => {
                       <td>{nhanVien.maNhanVien}</td>
                       <td>{nhanVien.hoTen}</td>
                       <td>{nhanVien.soDienThoai}</td>
-                      <td>{xuLyDiaChiKhiQuaDai(nhanVien.diaChi)}</td>
                       <td>{nhanVien.ngaySinh}</td>
                       <td>{nhanVien.caLamViec.tenCa}</td>
                       <td>
                         <ModalXemChiTietKH nhanVien={nhanVien} />
+                      </td>
+                      <td>
+                        <ModalChangeIn4ByQL
+                          nhanVien={nhanVien}
+                          changeNVSubmit={changeNVHandler}
+                        />
                       </td>
                     </tr>
                   ))}

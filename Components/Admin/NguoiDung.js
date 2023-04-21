@@ -15,6 +15,7 @@ const NguoiDung = () => {
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(authActions.logout());
+    router.push("/signin");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     toggle();
