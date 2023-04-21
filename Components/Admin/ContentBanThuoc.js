@@ -64,7 +64,7 @@ const ContentBanThuoc = () => {
       setTongTienHoaDon1((prev) => (prev += item.thuoc.thanhTien));
     });
   }, [tab, dsNhap, dsNhap1]);
-  const idNhanVien = localStorage.getItem("id");
+  // const idNhanVien = localStorage.getItem("id");
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
@@ -266,7 +266,7 @@ const ContentBanThuoc = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            nhanVienBanHang: { maNhanVien: idNhanVien },
+            nhanVienBanHang: { maNhanVien: "2" },
             khachHang: {
               maKhachHang: khachHangCoSan.maKhachHang,
             },
@@ -309,7 +309,7 @@ const ContentBanThuoc = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            nhanVienBanHang: { maNhanVien: idNhanVien },
+            nhanVienBanHang: { maNhanVien: "2" },
             khachHang: {
               maKhachHang: khachHangCoSan.maKhachHang,
             },
