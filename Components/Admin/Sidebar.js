@@ -112,6 +112,15 @@ const Sidebar = () => {
               Bán Thuốc
             </Link>
           </li>
+          <li className={`${activeKhachHang} mb-3`}>
+            <Link
+              href="/admin/khachHang"
+              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
+            >
+              <BsFillPersonLinesFill className="text-light me-2 fs-icon-SideBar" />
+              Khách Hàng
+            </Link>
+          </li>
           {role === 1 && (
             <li className={`${activeLoaiThuoc} mb-3`}>
               <Link
@@ -141,15 +150,7 @@ const Sidebar = () => {
               Hóa Đơn
             </Link>
           </li>
-          <li className={`${activeKhachHang} mb-3`}>
-            <Link
-              href="/admin/khachHang"
-              className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
-            >
-              <BsFillPersonLinesFill className="text-light me-2 fs-icon-SideBar" />
-              Khách Hàng
-            </Link>
-          </li>
+
           <li className={`${activeDonHang} mb-3`}>
             <Link
               href="/admin/donHang"
@@ -177,8 +178,8 @@ const Sidebar = () => {
                 href="/admin/nuocSanXuat"
                 className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
               >
-                <BsFlagFill className="text-danger me-2 fs-icon-SideBar" /> Nước
-                Sản Xuất
+                <BsFlagFill className="text-secondary me-2 fs-icon-SideBar" />{" "}
+                Nước Sản Xuất
               </Link>
             </li>
           )}
@@ -188,7 +189,7 @@ const Sidebar = () => {
               href="/admin/thongKe"
               className="btn btn-toggle w-100 rounded collapsed text-white  d-flex align-items-center   "
             >
-              <BsFillBarChartFill className="text-success me-2 fs-icon-SideBar" />{" "}
+              <BsFillBarChartFill className="text-danger me-2 fs-icon-SideBar" />{" "}
               Thống Kê
             </Link>
           </li>

@@ -1,5 +1,6 @@
 import ContentThongKe from "@/Components/Admin/ContentThongKe";
 import GoTopPage from "@/Components/Index/GoTopPage";
+import RouteGuard from "@/Components/RouteGuard/RouteGuard";
 import NotShowMess from "@/Components/utils/showMess";
 import React, { Fragment } from "react";
 import { ToastContainer } from "react-toastify";
@@ -7,11 +8,11 @@ import { ToastContainer } from "react-toastify";
 const thongKe = () => {
   NotShowMess();
   return (
-    <Fragment>
+    <RouteGuard>
       <ToastContainer />
       <GoTopPage />
       <ContentThongKe />
-    </Fragment>
+    </RouteGuard>
   );
 };
 

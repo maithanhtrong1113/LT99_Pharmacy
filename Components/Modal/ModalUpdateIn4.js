@@ -61,7 +61,7 @@ function ModalUpdateIn4(props) {
       <Button
         onClick={toggle}
         color="white"
-        className="btn btn-sm btn-white w-100 text-start fw-bold text-info"
+        className="btn btn-sm    btn-white w-100 text-start fw-bold text-info"
       >
         Cập nhập thông tin
       </Button>
