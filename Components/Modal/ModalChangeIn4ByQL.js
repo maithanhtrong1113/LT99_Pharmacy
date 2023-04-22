@@ -51,7 +51,10 @@ function ModalChangeIn4ByQL(props) {
 
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn btn-warning btn-sm">
+      <Button
+        onClick={toggle}
+        className="btn btn-white text-warning fw-bold w-100 text-start"
+      >
         Cập nhập thông tin
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
