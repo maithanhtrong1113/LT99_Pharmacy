@@ -8,6 +8,7 @@ import { BsPerson } from "react-icons/bs";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import ModalChangePass from "../Modal/ModalChangePass";
+import ModalUpdateIn4 from "../Modal/ModalUpdateIn4";
 
 const NguoiDung = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -45,9 +46,7 @@ const NguoiDung = () => {
                 <BsPerson className="fs-20 text-info" />
               </div>
               <div className="col-8">
-                <button className="btn btn-sm btn-white w-100 text-start fw-bold text-info">
-                  Cập nhập thông tin cá nhân
-                </button>
+                <ModalUpdateIn4 />
               </div>
               <div className="col-2">
                 <FaAngleRight className="text-info fs-20" />
