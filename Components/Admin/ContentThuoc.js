@@ -33,8 +33,8 @@ const ContentThuoc = () => {
     setDsThuoc(data);
   }
   // lấy thuốc theo loại
-  async function DanhSachThuocTheoLoai(loai) {
-    const data = await getThuocTheoLoai(loai);
+  async function DanhSachThuocTheoLoai(loaiThuocSelected) {
+    const data = await getThuocTheoLoai(loaiThuocSelected);
     setDsThuoc(data);
   }
   useEffect(() => {
@@ -146,7 +146,11 @@ const ContentThuoc = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <Thuoc dsThuoc={dsThuoc} setDsThuoc={setDsThuoc} />
+                  <Thuoc
+                    dsThuoc={dsThuoc}
+                    setDsThuoc={setDsThuoc}
+                    loaiThuocSelected={loaiThuocSelected}
+                  />
                 </tbody>
               </table>
             </div>

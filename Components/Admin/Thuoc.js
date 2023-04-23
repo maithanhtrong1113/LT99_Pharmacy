@@ -15,6 +15,7 @@ const Thuoc = (props) => {
     const res = await xoaThuoc(data);
     props.setDsThuoc(res);
   };
+
   return (
     <Fragment>
       {props.dsThuoc.length === 0 && (
@@ -23,28 +24,31 @@ const Thuoc = (props) => {
         </tr>
       )}
       {props.dsThuoc.map((thuoc) => (
-        <tr key={thuoc.maThuoc}>
-          <th scope="row">{thuoc.maThuoc}</th>
-          <td>{thuoc.tenThuoc}</td>
+        <tr key={thuoc.thuoc.maThuoc}>
+          <th scope="row">{thuoc.thuoc.maThuoc}</th>
+          <td>{thuoc.thuoc.tenThuoc}</td>
           <td>
-            {thuoc.isThuocKeDon === true ? (
+            {thuoc.thuoc.isThuocKeDon === true ? (
               <BsCheck2 className="text-success fs-20" />
             ) : (
               <MdOutlineClose className="text-danger fs-20" />
             )}
           </td>
-          <td>{thuoc.congDung}</td>
-          <td>{thuoc.soLuong}</td>
-          <td>{thuoc.loaiThuoc.tenLoai}</td>
+          <td>{thuoc.thuoc.congDung}</td>
+          <td>{thuoc.thuoc.soLuong}</td>
+          <td>{thuoc.thuoc.loaiThuoc.tenLoai}</td>
           <td className="d-flex">
-           <ModalXemThuoc thuoc={thuoc}/>
+            <ModalXemThuoc thuoc={thuoc.thuoc} />
             <button
               className="btn btn-sm btn-warning ms-2"
-              onClick={() => handlerInfo(thuoc.maThuoc)}
+              onClick={() => handlerInfo(thuoc.thuoc.maThuoc)}
             >
               Chỉnh sửa
             </button>
-            <ModalXoaThuoc maThuoc={thuoc.maThuoc} OnClickYes={DeleteHandler} />
+            <ModalXoaThuoc
+              maThuoc={thuoc.thuoc.maThuoc}
+              OnClickYes={DeleteHandler}
+            />
           </td>
         </tr>
       ))}
