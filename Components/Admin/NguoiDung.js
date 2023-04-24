@@ -22,7 +22,7 @@ const NguoiDung = () => {
     localStorage.removeItem("id");
     toggle();
   };
-
+  const [name, setName] = useState(localStorage.getItem("tenNhanVien"));
   return (
     <Fragment>
       <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
@@ -35,7 +35,7 @@ const NguoiDung = () => {
             alt=""
           />
           <span>
-            Xin chào: <b>{localStorage.getItem("tenNhanVien")}</b>
+            Xin chào: <b>{name}</b>
             <FaAngleDown />
           </span>
         </button>
@@ -46,7 +46,7 @@ const NguoiDung = () => {
                 <BsPerson className="fs-20 text-info" />
               </div>
               <div className="col-8">
-                <ModalUpdateIn4 />
+                <ModalUpdateIn4 toggleMain={toggle} setName={setName} />
               </div>
               <div className="col-2">
                 <FaAngleRight className="text-info fs-20" />
@@ -57,7 +57,7 @@ const NguoiDung = () => {
                 <AiOutlineUnlock className="fs-20 text-warning" />
               </div>
               <div className="col-8">
-                <ModalChangePass />
+                <ModalChangePass toggleMain={toggle} />
               </div>
               <div className="col-2 pointer">
                 <FaAngleRight className="text-warning fs-20" />

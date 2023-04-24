@@ -5,9 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsThreeDots } from "react-icons/bs";
 import DatePicker from "react-datepicker";
-import { getAllCaLamViec } from "@/api/caLamViecApi";
 import { useEffect } from "react";
-import { isSameDay } from "../utils/sanDay";
+import { chinhSuaThongTinCaNhan, getThongTinMe } from "@/api/nhanVienApi";
 
 function ModalUpdateIn4(props) {
   const {
@@ -20,20 +19,35 @@ function ModalUpdateIn4(props) {
   const toggle = () => {
     setModal(!modal);
   };
-  const [nhanVien, setNhanVien] = useState({
-    hoTen: "Trọng",
-    soDienThoai: "0912346789",
-    diaChi: "abc",
-    gioiTinh: "Nam",
-    ngaySinh: "01/01/2023",
-    caLamViec: { maCaLam: 1 },
-  });
+  const [nhanVien, setNhanVien] = useState({});
   const [caLamViec, setCaLamViec] = useState([]);
-  const [hoTen, setHoTen] = useState(nhanVien.hoTen);
-  const [soDienThoai, setSoDienThoai] = useState(nhanVien.soDienThoai);
-  const [diaChi, setDiaChi] = useState(nhanVien.diaChi);
-  const [selectedGT, setGT] = useState(nhanVien.gioiTinh);
-  const [caLamViecsl, setCaLamViecSL] = useState(nhanVien.caLamViec.maCaLam);
+  const [hoTen, setHoTen] = useState("");
+  const [soDienThoai, setSoDienThoai] = useState("");
+  const [diaChi, setDiaChi] = useState("");
+  const [selectedGT, setGT] = useState("");
+  const [ngaySinh, setNgaySinh] = useState("");
+  const [caLamViecsl, setCaLamViecSL] = useState("");
+  const [initNS, setInitNS] = useState([]);
+  useEffect(() => {
+    const id = localStorage.getItem("id");
+    fetch(
+      `http://localhost:8080/QLNT-Server/quan-ly/nhan-vien/xem-thong-tin-nhan-vien/${id}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setNhanVien(data);
+        setHoTen(data.hoTen);
+        setSoDienThoai(data.soDienThoai);
+        setDiaChi(data.diaChi);
+        setGT(data.gioiTinh);
+        setCaLamViecSL(data.caLamViec.maCaLam);
+        setNgaySinh(data.ngaySinh);
+        setInitNS(data.ngaySinh.split("/"));
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const onSubmit = (data) => {
     data.date = new Date(data.date).toLocaleDateString("vi-VN");
     const trung =
@@ -42,19 +56,15 @@ function ModalUpdateIn4(props) {
       ? (data.ngaySinh = props.nhanVien.ngaySinh)
       : (data.ngaySinh = data.date);
     data.gioiTinh = selectedGT;
-    data.caLamViec = { maCaLam: caLamViecsl };
     data.maNhanVien = nhanVien.maNhanVien;
+    data.caLamViec = { maCaLam: caLamViecsl };
     console.log(data);
-    props.changeNVSubmit(data);
+    localStorage.setItem("tenNhanVien", data.hoTen);
+    chinhSuaThongTinCaNhan(data);
     toggle();
+    props.toggleMain();
+    props.setName(localStorage.getItem("tenNhanVien"));
   };
-  async function fetchData() {
-    const res = await getAllCaLamViec();
-    setCaLamViec(res);
-  }
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Fragment>
@@ -173,30 +183,34 @@ function ModalUpdateIn4(props) {
                       </select>
                     </div>
                   </div>
-                  <div className="form-group row my-2 d-flex align-items-center">
-                    <label className="col-sm-4 col-form-label fw-bold">
-                      Ngày Sinh:
-                    </label>
-                    <div className="col-sm-8">
-                      <Controller
-                        className="w-100 pr-opx"
-                        name="date"
-                        control={control}
-                        defaultValue={new Date()}
-                        render={({ field }) => (
-                          <DatePicker
-                            {...field}
-                            selected={field.value}
-                            className="my-datepicker-input form-select form-control form-control-sm"
-                            onChange={(date) => field.onChange(date)}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="Select a date"
-                          />
-                        )}
-                      />
+                  {
+                    <div className="form-group row my-2 d-flex align-items-center">
+                      <label className="col-sm-4 col-form-label fw-bold">
+                        Ngày Sinh:
+                      </label>
+                      <div className="col-sm-8">
+                        <Controller
+                          className="w-100 pr-opx"
+                          name="date"
+                          control={control}
+                          defaultValue={
+                            new Date(+initNS[2], initNS[1] - 1, +initNS[0])
+                          }
+                          render={({ field }) => (
+                            <DatePicker
+                              {...field}
+                              selected={field.value}
+                              className="my-datepicker-input form-select form-control form-control-sm"
+                              onChange={(date) => field.onChange(date)}
+                              dateFormat="dd/MM/yyyy"
+                              placeholderText="Select a date"
+                            />
+                          )}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row my-2 d-flex align-items-center">
+                  }
+                  {/* <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Ca Làm Việc:
                     </label>
@@ -216,7 +230,7 @@ function ModalUpdateIn4(props) {
                         ))}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                   <ModalFooter className="d-flex justify-content-between">
                     <Button color="danger" onClick={toggle} className="w-25">
                       Hủy

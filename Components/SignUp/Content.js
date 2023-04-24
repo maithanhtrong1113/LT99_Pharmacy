@@ -22,8 +22,8 @@ const Content = (props) => {
       localStorage.setItem("id", res.user_profile_details.account_id);
       localStorage.setItem("token", res.user_profile_details.token);
       localStorage.setItem("tenNhanVien", res.user_profile_details.tenNhanVien);
+      localStorage.setItem("username", res.user_profile_details.username);
       dispatch(authActions.login(res.user_profile_details.maQuyen));
-
       router.push("/admin/banThuoc");
     }
 

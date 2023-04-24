@@ -2,6 +2,9 @@ import React, { Fragment, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";
+import { changePass } from "@/api/nhanVienApi";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "@/store/auth";
 function ModalChangePass(props) {
   const {
     register,
@@ -10,11 +13,18 @@ function ModalChangePass(props) {
     watch,
   } = useForm();
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
-
+  const dispatch = useDispatch();
+  const toggle = () => {
+    setModal(!modal);
+  };
+  const role = useSelector((state) => state.auth.role);
   const onSubmit = (data) => {
-    console.log(data);
+    changePass(data, role);
     toggle();
+    props.toggleMain();
+    setTimeout(() => {
+      dispatch(authActions.logout());
+    }, [2000]);
   };
 
   return (

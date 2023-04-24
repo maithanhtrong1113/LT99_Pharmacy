@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 export const getNhanVienTheoCaLamViec = async (maCaLam) => {
@@ -47,4 +48,67 @@ export const chinhSuaNhanVienByQuanLy = async (data) => {
   }
   const nhanVien = await getAllNhanVien();
   return nhanVien;
+};
+export const changePass = async (data, role) => {
+  const id = localStorage.getItem("id");
+  const url =
+    role === 1
+      ? `http://localhost:8080/QLNT-Server/quan-ly/doi-mat-khau/${id}`
+      : `http://localhost:8080/QLNT-Server/nhan-vien/doi-mat-khau/${id}`;
+  const response = await fetch(`${url}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userName: localStorage.getItem("username"),
+      newPass: data.password,
+    }),
+  });
+  if (response.ok) {
+    toast.success("Đổi mật khẩu thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+  } else {
+    toast.error("Đổi mật khẩu không thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+  }
+};
+
+export const chinhSuaThongTinCaNhan = async (data) => {
+  const response = await fetch(
+    `http://localhost:8080/QLNT-Server/quan-ly/cap-nhat-thong-tin-ca-nhan/${data.maNhanVien}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        hoTen: data.hoTen,
+        soDienThoai: data.soDienThoai,
+        diaChi: data.diaChi,
+        gioiTinh: data.gioiTinh,
+        ngaySinh: data.ngaySinh,
+        caLamViec: data.caLamViec,
+      }),
+    }
+  );
+  if (response.ok) {
+    toast.success("Chỉnh sửa thông tin thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+  } else {
+    toast.error("Chỉnh sửa thông tin không thành công", {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+      theme: "light",
+    });
+  }
 };

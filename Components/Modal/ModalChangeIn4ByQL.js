@@ -27,6 +27,7 @@ function ModalChangeIn4ByQL(props) {
   const [diaChi, setDiaChi] = useState(nhanVien.diaChi);
   const [selectedGT, setGT] = useState(nhanVien.gioiTinh);
   const [caLamViecsl, setCaLamViecSL] = useState(nhanVien.caLamViec.maCaLam);
+  const dateParts = nhanVien.ngaySinh.split("/");
   const onSubmit = (data) => {
     data.date = new Date(data.date).toLocaleDateString("vi-VN");
     const trung =
@@ -54,7 +55,7 @@ function ModalChangeIn4ByQL(props) {
       <Button
         onClick={toggle}
         color="warning"
-        className="btn btn-white text-dark fw-bold w-100 text-start"
+        className="btn btn-white btn-sm text-dark fw-bold w-100 text-start"
       >
         Cập nhập thông tin
       </Button>
@@ -177,7 +178,13 @@ function ModalChangeIn4ByQL(props) {
                         className="w-100 pr-opx"
                         name="date"
                         control={control}
-                        defaultValue={new Date()}
+                        defaultValue={
+                          new Date(
+                            +dateParts[2],
+                            dateParts[1] - 1,
+                            +dateParts[0]
+                          )
+                        }
                         render={({ field }) => (
                           <DatePicker
                             {...field}
