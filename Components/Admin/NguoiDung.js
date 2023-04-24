@@ -13,20 +13,20 @@ import ModalUpdateIn4 from "../Modal/ModalUpdateIn4";
 const NguoiDung = () => {
   const [isOpen, setIsOpen] = useState(true);
   const router = useRouter();
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle1 = () => setIsOpen(!isOpen);
   const dispatch = useDispatch();
   const logOutHandler = () => {
     dispatch(authActions.logout());
     router.push("/signin");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
-    toggle();
+    toggle1();
   };
   const [name, setName] = useState(localStorage.getItem("tenNhanVien"));
   return (
     <Fragment>
       <div className="container d-flex justify-content-end rounded border shadow mb-4 position-relative ">
-        <button className="btn" onClick={toggle}>
+        <button className="btn" onClick={toggle1}>
           <Image
             src="/images/user-profile.jpg"
             className="img-profile me-2"
@@ -46,7 +46,7 @@ const NguoiDung = () => {
                 <BsPerson className="fs-20 text-info" />
               </div>
               <div className="col-8">
-                <ModalUpdateIn4 toggleMain={toggle} setName={setName} />
+                <ModalUpdateIn4 toggleMain={toggle1} setName={setName} />
               </div>
               <div className="col-2">
                 <FaAngleRight className="text-info fs-20" />
@@ -57,7 +57,7 @@ const NguoiDung = () => {
                 <AiOutlineUnlock className="fs-20 text-warning" />
               </div>
               <div className="col-8">
-                <ModalChangePass toggleMain={toggle} />
+                <ModalChangePass toggl={toggle1} />
               </div>
               <div className="col-2 pointer">
                 <FaAngleRight className="text-warning fs-20" />

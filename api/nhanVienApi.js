@@ -62,6 +62,7 @@ export const changePass = async (data, role) => {
     },
     body: JSON.stringify({
       userName: localStorage.getItem("username"),
+      oldPass: data.passwordold,
       newPass: data.password,
     }),
   });
@@ -71,12 +72,14 @@ export const changePass = async (data, role) => {
       autoClose: 1000,
       theme: "light",
     });
+    return true;
   } else {
     toast.error("Đổi mật khẩu không thành công", {
-      position: toast.POSITION.TOP_RIGHT,
+      position: toast.POSITION.TOP_LEFT,
       autoClose: 1000,
       theme: "light",
     });
+    return false;
   }
 };
 
