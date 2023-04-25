@@ -28,11 +28,11 @@ const CheckOutItem = (props) => {
           <div className="col-3">
             <img src={props.item.image} className="img-fluid sizeImgCart"></img>
           </div>
-          <div className=" col-9 text-dark fw-bold  ">
+          <div className="col-9 text-dark fw-bold  ">
             <p> {props.item.title}</p>
             <p className="text-info mb-0 ">{`${VND.format(
               props.item.price
-            )}/đơn vị tính `}</p>
+            )} `}</p>
           </div>
         </div>
       )}

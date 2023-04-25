@@ -445,7 +445,10 @@ const Content = () => {
                         href="/checkout"
                         className="text-decoration-none text-dark col-12"
                       >
-                        <button className="btn btn-warning text-center btn-lg text-light w-100">
+                        <button
+                          className="btn btn-warning text-center btn-lg text-light w-100"
+                          onClick={datHangHandler}
+                        >
                           <span className="fw-bold ">Đặt hàng</span>
                           <FaAngleRight />
                         </button>

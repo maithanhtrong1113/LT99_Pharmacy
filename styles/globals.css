@@ -319,7 +319,10 @@ body {
 .active a {
   color: white !important;
 }
-
+.scrolbarCustomDanhMuc::-webkit-scrollbar {
+  width: 10px !important;
+  background-color: #f1f1f1;
+}
 .sub-menu-admin {
   width: 30%;
   top: 100%;

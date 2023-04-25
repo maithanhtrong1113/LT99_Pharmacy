@@ -2,11 +2,13 @@ import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import CardProduct from "../Index/CardProduct";
+import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
 const Products = () => {
   const [dsThuoc, setDsThuoc] = useState([]);
-
+  const [slected, setSelected] = useState("");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
+    fetchData();
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -29,54 +31,44 @@ const Products = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  async function fetchData() {
+    const data = await getAllLoaiThuocKhach();
+    setLoaiThuoc(data);
+  }
+  const danhMucs = [];
+  const danhMuc = [];
+
+  for (let i = 1; i <= loaiThuoc.length; i++) {
+    if (i === 0) {
+      setSelected(loaiThuoc[i - 1].maLoaiThuoc);
+    }
+    danhMuc.push(
+      <li className="nav-item my-2 liList">
+        <Link
+          className="nav-link d-flex justify-content-between align-items-center px-2"
+          href="/"
+        >
+          {loaiThuoc[i - 1].tenLoai}
+          <FaAngleDown />
+        </Link>
+      </li>
+    );
+    danhMucs.push(
+      <option value={loaiThuoc[i - 1].maLoaiThuoc}>
+        {loaiThuoc[i - 1].tenLoai}
+      </option>
+    );
+  }
   return (
     <Fragment>
       {windowWidth > 1000 && (
         <div className="row mt-3">
           <div className="col-xl-3 col-lg-3">
             <h4 className="fw-bold ms-1">Danh mục</h4>
-
             <nav className="navbar bg-white border rounded shadow">
               <div className="container-fluid ">
-                <ul className="navbar-nav w-100 ">
-                  <li className="nav-item my-2 liList">
-                    <Link
-                      className="nav-link d-flex justify-content-between align-items-center px-2"
-                      href="/"
-                    >
-                      Dược phẩm
-                      <FaAngleDown />
-                    </Link>
-                  </li>
-
-                  <li className="nav-item my-2 liList ">
-                    <Link
-                      className="nav-link d-flex justify-content-between align-items-center px-2"
-                      href="/"
-                    >
-                      Chăm sóc sức khỏe
-                      <FaAngleDown />
-                    </Link>
-                  </li>
-                  <li className="nav-item my-2 liList ">
-                    <Link
-                      className="nav-link d-flex justify-content-between align-items-center px-2"
-                      href="/"
-                    >
-                      Chăm sóc cá nhân
-                      <FaAngleDown />
-                    </Link>
-                  </li>
-                  <li className="nav-item my-2 liList ">
-                    <Link
-                      className="nav-link d-flex justify-content-between align-items-center px-2"
-                      href="/"
-                    >
-                      Thực phẩm chức năng
-                      <FaAngleDown />
-                    </Link>
-                  </li>
-                </ul>
+                <ul className="navbar-nav w-100 ">{danhMuc}</ul>
               </div>
             </nav>
           </div>
@@ -172,13 +164,13 @@ const Products = () => {
             <nav className="navbar bg-white border rounded shadow">
               <div className="container-fluid ">
                 <div className="ms-1 row w-75">
-                  <select className="form-select form-control ">
-                    <option>Dược phẩm</option>
-                    <option>Dược phẩm</option>
-                    <option>Dược phẩm</option>
-                    <option>Dược phẩm</option>
-                    <option>Dược phẩm</option>
-                    <option>Dược phẩm</option>
+                  <select
+                    className="form-select form-control "
+                    onChange={(e) => {
+                      setSelected(e.target.value);
+                    }}
+                  >
+                    {danhMucs}
                   </select>
                 </div>
               </div>

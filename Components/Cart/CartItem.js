@@ -54,8 +54,8 @@ const CartItem = (props) => {
               ></ModalItem>
             </div>
             <div className="text-primary">{VND.format(total)}</div>
-            <div className="d-flexflex-columnn ">
-              <div className="border rounded d-flex justify-content-between align-items-center mt-2 w-50">
+            <div className="d-flex justify-content-evenly">
+              <div className="border rounded d-flex align-items-center space-content-between mt-2 w-50">
                 <button
                   className="btn btn-sm bg-light btnSoLuong border "
                   onClick={removeItem}
@@ -69,9 +69,6 @@ const CartItem = (props) => {
                 >
                   +
                 </button>
-              </div>
-              <div>
-                <span>3</span>
               </div>
             </div>
           </div>

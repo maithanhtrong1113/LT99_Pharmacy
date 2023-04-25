@@ -223,99 +223,101 @@ const Content = () => {
                   </div>
                 </div>
                 <div className="col-12 my-2">
-                  <div className="container">
-                    <h4 className="fw-bold">
-                      Thực phẩm bảo vệ sức khỏe viên uống tinh dầu hoa anh thảo
-                      Blackmores Evening Primrose Oil (Chai 190 viên)
-                    </h4>
-                    <div className="row">
-                      <div className="col-12">
-                        <div className="border rounded p-2 mt-1 mb-3 shadow">
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarFill className="text-warning" />
-                          <BsStarHalf className="text-warning" />
-                          <h4 className="text-success me-2 fw-bold mb-0">
-                            {VND.format(700000)}
-                          </h4>
-                          <span className="fw-bold">Giá thị trường:</span>
-                          <span className="text-success  bg-ligh w-100">
-                            {" " + VND.format(700000 + (700000 * 20) / 100)}
-                          </span>
-                          <p className="text-muted rounded mb-0 fst-italic bg-info mt-2">
-                            {`Tiết kiệm: ${VND.format(
-                              (700000 * 20) / 100
-                            )} (-20%)`}
-                          </p>
-                        </div>
-                        <p>
-                          Thực phẩm bảo vệ sức khỏe viên uống tinh dầu hoa anh
-                          thảo Blackmores Evening Primrose Oil được nhập khẩu từ
-                          Úc, giúp cung cấp nguồn acid béo thiết yếu omega-6,
-                          acid gamma-linolenic (GLA), có tác dụng chống oxy hóa,
-                          hỗ trợ làm giảm các triệu chứng tiền kinh nguyệt.
-                        </p>
+                  {Object.keys(thuoc).length !== 0 && (
+                    <div className="container">
+                      <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
+                      <div className="row">
+                        <div className="col-12">
+                          <div className="border rounded p-2 mt-1 mb-3 shadow">
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarFill className="text-warning" />
+                            <BsStarHalf className="text-warning" />
+                            <h4 className="text-success me-2 fw-bold mb-0">
+                              {VND.format(thuoc.giaBanLe)}
+                            </h4>
+                            <span className="fw-bold">Giá thị trường:</span>
+                            <span className="text-success  bg-ligh w-100">
+                              {` ${VND.format(
+                                thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
+                              )}`}
+                            </span>
+                            <p className="text-muted rounded mb-0 fst-italic bg-info mt-2">
+                              {`Tiết kiệm: ${VND.format(
+                                (thuoc.giaBanLe * 5) / 100
+                              )}(-5%)`}
+                            </p>
+                          </div>
+                          <p>{thuoc.thuoc.moTa}</p>
 
-                        <div className=" fixed-bottom bg-light py-3">
-                          <button
-                            className="btn btn-info mx-4 text-white"
-                            onClick={() => {
-                              addToCart();
-                              router.push("/checkout");
-                            }}
-                          >
-                            Mua Ngay
-                          </button>
-                          <button
-                            className="btn btn-warning text-dark"
-                            onClick={() => {
-                              addToCart();
-                              router.push("/cart");
-                            }}
-                          >
-                            <BsCartPlus /> Thêm vào giỏ hàng
-                          </button>
+                          <div className="fixed-bottom bg-light py-3 d-flex justify-content-between px-3">
+                            <button
+                              className="btn btn-info mx-4 text-white"
+                              onClick={() => {
+                                addToCart();
+                                router.push("/checkout");
+                              }}
+                            >
+                              Mua Ngay
+                            </button>
+                            <button
+                              className="btn btn-warning text-dark"
+                              onClick={() => {
+                                toast.success(
+                                  "Thêm sản phẩm vào giỏ hàng thành công",
+                                  {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    autoClose: 500,
+                                    theme: "light",
+                                  }
+                                );
+                                addToCart();
+                              }}
+                            >
+                              <BsCartPlus /> Thêm vào giỏ hàng
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-12">
-                        <div className="border rounded my-3 p-3 pb-3 ">
-                          <h5 className="fw-bold pb-3">
-                            Các hình thức giao hàng
-                          </h5>
-                          <span className="p-2 rounded bg-primary  me-4 text-white ">
-                            Giao hàng tiết kiệm
-                          </span>
-                          <span className="p-2 rounded bg-primary text-white ">
-                            Ahamove
-                          </span>
-                        </div>
-                        <div className="container border rounded my-3 p-2 pb-3 ">
-                          <div className="row">
-                            <div className="col-4 text-center fw-bold">
-                              <CartIcon />
-                              <span className="my-2 fs-12 ">
-                                Miễn phí vận chuyển cho đơn hàng từ 300.000đ
-                              </span>
-                            </div>
-                            <div className="col-4 text-center fw-bold ">
-                              <TuVanIcon />
-                              <span className="my-2 fs-12">
-                                Đủ thuốc tốt tư vấn nhiệt tình
-                              </span>
-                            </div>
-                            <div className="col-4 text-center fw-bold">
-                              <TichDiem />
-                              <span className="my-2 fs-12">
-                                Tích điểm thưởng đổi thưởng và sử dụng điểm cho
-                                mọi giao dịch
-                              </span>
+                        <div className="col-12">
+                          <div className="border rounded my-3 p-3 pb-3 ">
+                            <h5 className="fw-bold pb-3">
+                              Các hình thức giao hàng
+                            </h5>
+                            <span className="p-2 rounded bg-primary  me-4 text-white ">
+                              Giao hàng tiết kiệm
+                            </span>
+                            <span className="p-2 rounded bg-primary text-white ">
+                              Ahamove
+                            </span>
+                          </div>
+                          <div className="container border rounded my-3 p-2 pb-3 ">
+                            <div className="row">
+                              <div className="col-4 text-center fw-bold">
+                                <CartIcon />
+                                <span className="my-2 fs-12 ">
+                                  Miễn phí vận chuyển cho đơn hàng từ 300.000đ
+                                </span>
+                              </div>
+                              <div className="col-4 text-center fw-bold ">
+                                <TuVanIcon />
+                                <span className="my-2 fs-12">
+                                  Đủ thuốc tốt tư vấn nhiệt tình
+                                </span>
+                              </div>
+                              <div className="col-4 text-center fw-bold">
+                                <TichDiem />
+                                <span className="my-2 fs-12">
+                                  Tích điểm thưởng đổi thưởng và sử dụng điểm
+                                  cho mọi giao dịch
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

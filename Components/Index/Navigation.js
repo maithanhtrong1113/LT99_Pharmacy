@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Image from "next/image";
+import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
 
 const Navigation = () => {
   const cartQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -39,6 +40,7 @@ const Navigation = () => {
   }, []);
   const [bg, setbg] = useState("bg-customNav");
   useEffect(() => {
+    fetchData();
     const listenToScroll = () => {
       const winScroll =
         document.body.scrollTop || document.documentElement.scrollTop;
@@ -51,6 +53,24 @@ const Navigation = () => {
     window.addEventListener("scroll", listenToScroll);
     return () => window.removeEventListener("scroll", listenToScroll);
   }, []);
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+
+  async function fetchData() {
+    const data = await getAllLoaiThuocKhach();
+    setLoaiThuoc(data);
+  }
+  const danhMuc = [];
+  for (let i = 1; i <= loaiThuoc.length; i++) {
+    danhMuc.push(
+      <li className="mb-1">
+        <Link href="/listProduct">
+          <button className="btn btn-toggle  rounded ">
+            {loaiThuoc[i - 1].tenLoai}
+          </button>
+        </Link>
+      </li>
+    );
+  }
   return (
     <Fragment>
       {windowWidth < 1000 && (
@@ -82,36 +102,7 @@ const Navigation = () => {
                   className="flex-shrink-0 p-3  border rounded bg-white"
                   style={{ width: "300px" }}
                 >
-                  <ul className="list-unstyled ps-0 ">
-                    <li className="mb-1">
-                      <Link href="/listProduct">
-                        <button className="btn btn-toggle  rounded ">
-                          Dược phẩm
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle  rounded ">
-                          Chăm sóc sức khỏe
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle rounded ">
-                          Chăm sóc cá nhân
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle rounded ">
-                          Thực phẩm chức năng
-                        </button>
-                      </Link>
-                    </li>
-                  </ul>
+                  <ul className="list-unstyled ps-0 ">{danhMuc}</ul>
                 </div>
               </div>
             )}
@@ -121,27 +112,12 @@ const Navigation = () => {
                   <input
                     type="text"
                     className="form-control form-control-sm mx-2 rounded"
-                    placeholder="Bạn đang muốn tìm gì"
+                    placeholder="...."
                   />
                 </div>
               </form>
             </div>
             <div className="col-2 d-flex justify-content-evenly ">
-              {isAuth && (
-                <div
-                  className="profile-user position-relative pointer bg-white px-2 py-1 rounded d-flex align-items-center"
-                  onClick={toggle1}
-                >
-                  <Image
-                    src="/images/anh-dai-dien.jpg"
-                    className="img-fluid size-img-profile rounded-circle me-2"
-                    alt=""
-                    width={100}
-                    height={100}
-                  />
-                  <span className="text-dark">Mai Thanh Trọng</span>
-                </div>
-              )}
               {!isOpen1 && (
                 <div className="container-fluid sub-menu position-absolute bg-white rounded shadow ">
                   <div
@@ -261,36 +237,7 @@ const Navigation = () => {
                   className="flex-shrink-0 p-3  border rounded bg-white"
                   style={{ width: "300px" }}
                 >
-                  <ul className="list-unstyled ps-0 ">
-                    <li className="mb-1">
-                      <Link href="/listProduct">
-                        <button className="btn btn-toggle  rounded ">
-                          Dược phẩm
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle  rounded ">
-                          Chăm sóc sức khỏe
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle rounded ">
-                          Chăm sóc cá nhân
-                        </button>
-                      </Link>
-                    </li>
-                    <li className="mb-1">
-                      <Link href="/">
-                        <button className="btn btn-toggle rounded ">
-                          Thực phẩm chức năng
-                        </button>
-                      </Link>
-                    </li>
-                  </ul>
+                  <ul className="list-unstyled ps-0 ">{danhMuc}</ul>
                 </div>
               </div>
             )}

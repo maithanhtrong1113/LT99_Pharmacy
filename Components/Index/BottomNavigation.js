@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
-import { BsCart, BsCartCheck } from "react-icons/bs";
-import { FaShippingFast } from "react-icons/fa";
+import { BsCart, BsCartCheck, BsTruck } from "react-icons/bs";
+import { FaShippingFast, FaShoppingCart } from "react-icons/fa";
 import { MdLocalShipping, MdOutlineMedicalServices } from "react-icons/md";
 
 const BottomNavigation = () => {
@@ -41,9 +41,23 @@ const BottomNavigation = () => {
               <MdOutlineMedicalServices className="fs-20" />
               <span className="fw-bold fs-12">Danh mục</span>
             </div>
-            <div className="col-3  d-flex justify-content-center flex-column align-items-center">
-              <MdLocalShipping className="fs-20" />
-              <span className="fw-bold fs-12">Đơn hàng</span>
+            <div
+              className="col-3  d-flex justify-content-center flex-column align-items-center"
+              onClick={() => {
+                router.push("/cart");
+              }}
+            >
+              <BsCart className="fs-20" />
+              <span className="fw-bold fs-12">Giỏ hàng</span>
+            </div>
+            <div
+              className="col-3  d-flex justify-content-center flex-column align-items-center px-0"
+              onClick={() => {
+                router.push("/checkout");
+              }}
+            >
+              <BsTruck className="fs-20" />
+              <span className="fw-bold fs-12">Thanh toán</span>
             </div>
           </div>
         </div>

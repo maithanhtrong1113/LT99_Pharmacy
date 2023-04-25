@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 const Product = (props) => {
   return (
     <Fragment>
-      <div className="productHover my-2 w-100">
+      <div className="productHover my-2 w-100 ">
         <Link
           href="/listProduct"
           className="d-flex flex-column justify-content-between align-items-center text-decoration-none bg-list"

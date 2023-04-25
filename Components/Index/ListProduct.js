@@ -31,8 +31,10 @@ const ListProduct = () => {
           <h3 className="fw-bold">Danh mục sản phẩm</h3>
         </div>
       </div>
-      <div className="row my-3 d-flex  my-1i ">{danhMuc}</div>
-      <div className=" row line-space"></div>
+      <div className="my-3 d-flex  my-1i row scrolbarCustomDanhMuc">
+        {danhMuc}
+      </div>
+      <div className="row line-space"></div>
     </Fragment>
   );
 };
