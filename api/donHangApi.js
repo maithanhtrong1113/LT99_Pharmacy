@@ -51,3 +51,12 @@ export const huyDonHangPhiaKhach = async (maDonHang) => {
   const chiTiet = await getChiTietDonHangPhiaKhach(maDonHang);
   return chiTiet;
 };
+export const getDonHangTheoTrangThai = async (pageNo, dhsl) => {
+  const url = `http://localhost:8080/QLNT-Server/nhan-vien/don-hang-online/lay-don-hang-theo-trang-thai?pageNo=${pageNo}&trangThai=${dhsl}`;
+  console.log(url);
+  const response = await fetch(url);
+  if (response.status === 204) return [];
+  const data = await response.json();
+
+  return data;
+};

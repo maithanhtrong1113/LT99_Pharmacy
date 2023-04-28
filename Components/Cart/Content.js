@@ -226,7 +226,7 @@ const Content = () => {
                   <span className="fw-bold">{VND.format(totalPriceCartt)}</span>
                 </div>
                 <div className="d-flex justify-content-between row py-3">
-                  <Link href="/" className="text-decoration-none  col-6">
+                  <Link href="/" className="text-decoration-none  col-6 p-0">
                     <button className="btn btn-info text-light ">
                       {" "}
                       <span className="fw-bold">Mua Thêm</span>
@@ -235,10 +235,10 @@ const Content = () => {
                   {totalPriceCartt > 0 && (
                     <Link
                       href="/checkout"
-                      className="text-decoration-none text-dark col-6 text-end"
+                      className="text-decoration-none text-dark col-6 text-end p-0"
                     >
                       <button className="btn btn-warning text-light">
-                        <span className="fw-bold">Đặt hàng</span>
+                        <span className="fw-bold">Thanh Toán</span>
                         <FaAngleRight />
                       </button>
                     </Link>

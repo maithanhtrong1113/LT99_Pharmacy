@@ -3,7 +3,12 @@ import Sidebar from "./Sidebar";
 import NguoiDung from "./NguoiDung";
 
 import ModalXemChiTietDonHang from "../Modal/ModalXemChiTietDonHang";
-import { acpDonHang, deniedDonHang, getAllDonHang } from "@/api/donHangApi";
+import {
+  acpDonHang,
+  deniedDonHang,
+  getAllDonHang,
+  getDonHangTheoTrangThai,
+} from "@/api/donHangApi";
 import ModalChangStateDonHang from "../Modal/ModalChangStateDonHang";
 import { toast } from "react-toastify";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
@@ -11,6 +16,7 @@ const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const [dhsl, setDhsl] = useState("All");
   const buttons = [];
   for (let i = 1; i <= totalPage; i++) {
     buttons.push(
@@ -30,10 +36,22 @@ const ContentDonHang = () => {
     setTotalPage(res.totalPages);
     setDanhSachDonHang(res.content);
   }
+  async function fetchDataTheoTrangThai(data) {
+    const res = await getDonHangTheoTrangThai(data, dhsl);
+
+    setTotalPage(res.totalPages);
+    setDanhSachDonHang(res.content);
+  }
+
   // danh sách đơn hàng
+
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    if (dhsl == "All") {
+      fetchData(page);
+    } else {
+      fetchDataTheoTrangThai(page, dhsl);
+    }
+  }, [page, dhsl]);
   const changStateDonHang = async (data) => {
     const res = await acpDonHang(data);
     toast.success("Đã chấp nhận đơn hàng", {
@@ -42,7 +60,7 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-    fetchData(page);
+    fetchDataTheoTrangThai(page, dhsl);
   };
   const changStateDonHang1 = async (data) => {
     const res = await deniedDonHang(data);
@@ -52,7 +70,7 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-    fetchData(page);
+    fetchDataTheoTrangThai(page, dhsl);
   };
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -85,6 +103,7 @@ const ContentDonHang = () => {
       fetchData(1);
     }
   };
+
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -103,6 +122,30 @@ const ContentDonHang = () => {
                       value={searchTerm}
                       onChange={handleInputChange}
                     />
+                  </form>
+                </div>
+                <div className="col-3">
+                  <form>
+                    <select
+                      className="form-select form-select-sm py-2"
+                      aria-label=".form-select-sm"
+                      onChange={(e) => {
+                        setDhsl(e.target.value);
+                      }}
+                    >
+                      <option value="All" key={0} defaultValue>
+                        Tất cả đơn hàng
+                      </option>
+                      <option value="WAITTING" key={1}>
+                        Đơn hàng chờ xác nhận
+                      </option>
+                      <option value="ACCEPTED" key={2}>
+                        Đơn hàng đã chấp nhận
+                      </option>
+                      <option value="DENIED" key={3}>
+                        Đơn hàng đã hủy
+                      </option>
+                    </select>
                   </form>
                 </div>
               </div>
@@ -125,17 +168,19 @@ const ContentDonHang = () => {
                       }/${new Date(donHang.ngayTaoDon).getFullYear()}`}</td>
 
                       <td>{donHang.khachHang.hoTen}</td>
-                      <td>{donHang.trangThaiDonHang}</td>
+                      <td>
+                        {" "}
+                        <ModalChangStateDonHang
+                          donHang={donHang}
+                          submitAcp={changStateDonHang}
+                          deniedDonHang={changStateDonHang1}
+                        />
+                      </td>
                       <td></td>
                       <td>
                         {
                           <>
                             <ModalXemChiTietDonHang donHang={donHang} />
-                            <ModalChangStateDonHang
-                              donHang={donHang}
-                              submitAcp={changStateDonHang}
-                              deniedDonHang={changStateDonHang1}
-                            />
                           </>
                         }
                       </td>
