@@ -34,6 +34,11 @@ function ModalCacLoThuoc(props) {
           <span className="fw-bold text-info"> Các lô thuốc đã cung cấp</span>
         </ModalHeader>
         <ModalBody className="">
+          {Object.keys(lichSus).length == 0 && (
+            <span className="fw-bold">
+              Không tìm thấy lô thuốc đã nhập từ nhà cung cung cấp
+            </span>
+          )}
           {Object.keys(lichSus).length !== 0 && (
             <>
               <span className=" fst-italic text-muted">
