@@ -96,3 +96,12 @@ export const chinhSuaNhaCungCap = async (data) => {
   const nhaCungCap = await getAllNhaCungCap();
   return nhaCungCap;
 };
+export const getAllLoThuocFromNhaCungCap = async (maNhaCungCap) => {
+  const response = await fetch(
+    `http://localhost:8080/QLNT-Server/quan-ly/nha-cung-cap/${maNhaCungCap}/xem-lo-thuoc-da-cung-cap`
+  );
+  if (response.status === 204) return [];
+  const data = await response.json();
+
+  return data;
+};

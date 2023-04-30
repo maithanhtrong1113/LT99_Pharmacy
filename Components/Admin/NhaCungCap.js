@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { chinhSuaNhaCungCap, xoaNhaCungCap } from "@/api/nhaCungCapApi";
 import ModalChinhSuaNhaCungCap from "../Modal/ModalChinhSuaNhaCungCap";
 import ModalXoaNhaCungCap from "../Modal/ModalXoaNhaCungCap";
+import ModalCacLoThuoc from "../Modal/ModalCacLoThuoc";
 
 const NhaCungCap = (props) => {
   const xoaNhaCungCapHandler = async (id) => {
@@ -26,6 +27,7 @@ const NhaCungCap = (props) => {
           <td>{nhaCungCap.diaChi}</td>
           <td>{nhaCungCap.soDienThoai}</td>
           <td className="d-flex">
+            <ModalCacLoThuoc nhaCungCap={nhaCungCap} />
             <ModalChinhSuaNhaCungCap
               nhaCungCap={nhaCungCap}
               chinhSuaNhaCungCapHandler={chinhSuaNhaCungCapp}

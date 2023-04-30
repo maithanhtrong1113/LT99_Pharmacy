@@ -27,7 +27,7 @@ function ModalXemChiTietDonHang(props) {
   }, []);
   return (
     <Fragment>
-      <Button onClick={toggle} className="btn btn-info btn-sm me-2">
+      <Button onClick={toggle} className="btn btn-info btn-sm me-2 text-white">
         Xem Chi Tiết Đơn Hàng
       </Button>
       <Modal

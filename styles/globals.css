@@ -32,6 +32,7 @@ body {
 .bg-gray2 {
   background-color: rgb(242, 246, 254);
 }
+
 ::-webkit-scrollbar {
   width: 0.5rem;
 }
@@ -335,6 +336,9 @@ body {
 .fs-40 {
   font-size: 40px;
 }
+.height1 {
+  height: 200px !important;
+}
 .fs-dh {
   font-size: 12px;
 }
@@ -428,6 +432,13 @@ body {
 .w-modalAddNhanVien {
   max-width: 650px;
 }
+.w-modalLoThuocFromNhaCungCap {
+  max-width: 1200px;
+}
+.w-modalLoThuocFromNhaCungCap {
+  max-width: 1200px;
+}
+
 .w-modalAddNhanVien1 {
   max-width: 700px;
 }

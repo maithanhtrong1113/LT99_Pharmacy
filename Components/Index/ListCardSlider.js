@@ -1,15 +1,35 @@
 import React, { Fragment, useEffect, useState } from "react";
+import CardProduct from "./CardProduct";
+import CardProduct1 from "./CardProduct1";
 
-const Slider = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+const ListCardSlider = () => {
+  const [dsThuoc, setDsThuoc] = useState([]);
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    fetch(
+      "http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/danh-sach-thuoc"
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((results) => {
+        results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
+        setDsThuoc(results);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, []);
   return (
     <Fragment>
-      <div className="row my-10 d-flex align-items-center ">
+      <div className="row my-3 my-1i">
+        <div className="col-12">
+          <h3 className="fw-bold">Sản phẩm bán chạy</h3>
+        </div>
+      </div>
+      <div className="row my-2">
         <div
           id="carouselExampleIndicators"
           className="col-12 col-lg-8 carousel slide "
@@ -44,32 +64,17 @@ const Slider = () => {
             ></button>
           </div>
           <div className="carousel-inner ">
-            <div className="carousel-item active ">
-              <img
-                src="images/index/t4.jpg"
-                className="d-block w-100 rounded img-fluid  "
+            {dsThuoc.map((thuoc, index) => (
+              <CardProduct1
+                images="/images/index/products/product1.jpg"
+                price={thuoc.giaBanLe}
+                title={thuoc.thuoc.tenThuoc}
+                id={thuoc.thuoc.maThuoc}
+                donViTinh={thuoc.thuoc.donViTinh}
+                inventory={thuoc.thuoc.soLuong}
               />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/index/t41.png"
-                className="d-block w-100 rounded img-fluid  "
-              />
-            </div>
-            <div className="carousel-item  ">
-              <img
-                src="images/index/t4.jpg"
-                className="d-block w-100 rounded img-fluid  "
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="images/index/t41.png"
-                className="d-block w-100 rounded img-fluid  "
-              />
-            </div>
+            ))}
           </div>
-
           <button
             className="carousel-control-prev"
             type="button"
@@ -95,21 +100,9 @@ const Slider = () => {
             <span className="visually-hidden">Next</span>
           </button>
         </div>
-        {windowWidth > 1000 && (
-          <div className="col-lg-4">
-            <img
-              src="images/index/sideimg.jpg"
-              className="d-block img-fluid rounded mb-2 w-100"
-            />
-            <img
-              src="images/index/banner2.jpg"
-              className="d-block  rounded img-fluid mb-2 "
-            />
-          </div>
-        )}
       </div>
     </Fragment>
   );
 };
 
-export default Slider;
+export default ListCardSlider;
