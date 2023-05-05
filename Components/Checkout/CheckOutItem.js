@@ -32,7 +32,7 @@ const CheckOutItem = (props) => {
             <p> {props.item.title}</p>
             <p className="text-info mb-0 ">{`${VND.format(
               props.item.price
-            )} `}</p>
+            )} x ${props.item.quantity} `}</p>
           </div>
         </div>
       )}

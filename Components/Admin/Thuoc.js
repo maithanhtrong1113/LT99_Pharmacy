@@ -5,6 +5,7 @@ import { xoaThuoc } from "@/api/thuocApi";
 import { MdOutlineClose } from "react-icons/md";
 import { BsCheck2 } from "react-icons/bs";
 import ModalXemThuoc from "../Modal/ModalXemThuoc";
+import xuLyTenKhiQuaDai, { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
 const Thuoc = (props) => {
   const router = useRouter();
   const handlerInfo = (data) => {
@@ -26,7 +27,7 @@ const Thuoc = (props) => {
       {props.dsThuoc.map((thuoc) => (
         <tr key={thuoc.thuoc.maThuoc}>
           <th scope="row">{thuoc.thuoc.maThuoc}</th>
-          <td>{thuoc.thuoc.tenThuoc}</td>
+          <td>{xuLyDiaChiKhiQuaDai(thuoc.thuoc.tenThuoc)}</td>
           <td>
             {thuoc.thuoc.isThuocKeDon === true ? (
               <BsCheck2 className="text-success fs-20" />

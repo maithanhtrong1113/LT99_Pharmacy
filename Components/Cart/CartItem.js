@@ -40,9 +40,9 @@ const CartItem = (props) => {
           <div className="col-5 ">
             <Link
               href={`/product/${id}`}
-              className="text-dark text-center text-decoration-none fs-12"
+              className="text-dark text-center text-decoration-none "
             >
-              {title}
+              <b className="fw-bold">{title}</b>
             </Link>
           </div>
 
@@ -53,9 +53,9 @@ const CartItem = (props) => {
                 id={id}
               ></ModalItem>
             </div>
-            <div className="text-primary">{VND.format(total)}</div>
-            <div className="d-flex justify-content-evenly">
-              <div className="border rounded d-flex align-items-center space-content-between mt-2 w-50">
+            <div className="text-success fw-bold">{VND.format(total)}</div>
+            <div className="d-flex justify-content-evenly w-100">
+              <div className=" rounded d-flex align-items-center justify-content-between mt-2 w-100">
                 <button
                   className="btn btn-sm bg-light btnSoLuong border "
                   onClick={removeItem}
@@ -91,8 +91,8 @@ const CartItem = (props) => {
           </td>
           <td className="text-info">{VND.format(price)}</td>
           <td>
-            <div className="d-flex flex-column align-items-center w-100">
-              <div className=" rounded d-flex justify-content-between w-50">
+            <div className="d-flex flex-column align-items-center w-100 justify-content-center">
+              <div className=" rounded d-flex justify-content-between w-50 align-items-center">
                 <button
                   className="btn btn-sm bg-light btnSoLuong border "
                   onClick={removeItem}

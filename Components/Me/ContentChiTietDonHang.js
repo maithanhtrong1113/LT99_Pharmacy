@@ -126,7 +126,7 @@ const ContentChiTietDonHang = () => {
                 <div className="col-10"></div>
               </div>
               {Object.keys(chiTiet).length !== 0 && (
-                <div className="row">
+                <div className="row d-flex align-items-center">
                   <div className="col-8 my-3">
                     <h5 className="fw-bold ">
                       Chi tiết đơn hàng{" "}
@@ -141,7 +141,7 @@ const ContentChiTietDonHang = () => {
                         className="btn btn-secondary"
                         onClick={huyDonHangClick}
                       >
-                        Hủy Đơn Hàng
+                        Hủy Đơn
                       </button>
                     </div>
                   )}
