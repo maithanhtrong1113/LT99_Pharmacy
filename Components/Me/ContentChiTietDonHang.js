@@ -38,6 +38,12 @@ const ContentChiTietDonHang = () => {
       theme: "light",
     });
   };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Fragment>
       <div className="container-fluid my-10">
@@ -166,7 +172,7 @@ const ContentChiTietDonHang = () => {
                     <h6 className="fw-bold">Thông tin khách hàng</h6>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-50 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center text-muted">
                       <BsPerson className="me-2" />
                       Tên người nhận
                     </div>
@@ -175,7 +181,7 @@ const ContentChiTietDonHang = () => {
                     <span>{chiTiet.hoaDon.tenKhachHang}</span>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-50 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center text-muted">
                       <BsTelephone className="me-2" />
                       Số điện thoại
                     </div>
@@ -184,55 +190,86 @@ const ContentChiTietDonHang = () => {
                     <span>{chiTiet.hoaDon.sdtKhachHang}</span>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-50 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center text-muted">
                       <MdOutlineLocationOn className="me-2" />
                       Địa chỉ giao hàng
                     </div>
                   </div>
                   <div className="col-6 my-2">
-                    <span>Nguyễn Kiêm</span>
+                    <span>{chiTiet.hoaDon.diaChiGiaoHang}</span>
                   </div>
                   <div className="col-12 mt-5">
                     <h6 className="fw-bold">
                       Ngày tạo đơn: <b>{chiTiet.hoaDon.ngayTaoDonhHang}</b>
                     </h6>
                   </div>
-                  <table className="table">
-                    <thead className="thead-light">
-                      <tr>
-                        <th scope="col">Sản phẩm</th>
-                        <th scope="col">Tên sản phẩm</th>
-                        <th scope="col">Đơn giá</th>
-                        <th scope="col">Số Lượng</th>
-                        <th scope="col">Thành tiền</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
+                  {windowWidth > 1000 && (
+                    <table className="table">
+                      <thead className="thead-light">
                         <tr>
-                          <td>
+                          <th scope="col">Sản phẩm</th>
+                          <th scope="col">Tên sản phẩm</th>
+                          <th scope="col">Đơn giá</th>
+                          <th scope="col">Số Lượng</th>
+                          <th scope="col">Thành tiền</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
+                          <tr>
+                            <td>
+                              <Link href={`/product/${thuoc.thuoc.maThuoc}`}>
+                                <img
+                                  src={`/images/index/products/product1.jpg`}
+                                  className="img-fluid sizeImgCart"
+                                />
+                              </Link>
+                            </td>
+                            <td>
+                              <Link
+                                href={`/product/${thuoc.thuoc.maThuoc}`}
+                                className="text-decoration-none"
+                              >
+                                {thuoc.thuoc.tenThuoc}
+                              </Link>
+                            </td>
+                            <td>{VND.format(thuoc.donGia)}</td>
+                            <td>{thuoc.soLuong}</td>
+                            <td>{VND.format(thuoc.thanhTien)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                  {windowWidth < 1000 && (
+                    <div className="container">
+                      {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
+                        <div className="row">
+                          <div className="col-5">
                             <Link href={`/product/${thuoc.thuoc.maThuoc}`}>
                               <img
                                 src={`/images/index/products/product1.jpg`}
                                 className="img-fluid sizeImgCart"
                               />
                             </Link>
-                          </td>
-                          <td>
+                          </div>
+                          <div className="col-7 d-flex  flex-column">
                             <Link
                               href={`/product/${thuoc.thuoc.maThuoc}`}
                               className="text-decoration-none"
                             >
                               {thuoc.thuoc.tenThuoc}
                             </Link>
-                          </td>
-                          <td>{VND.format(thuoc.donGia)}</td>
-                          <td>{thuoc.soLuong}</td>
-                          <td>{VND.format(thuoc.thanhTien)}</td>
-                        </tr>
+                            <div>
+                              <span>{VND.format(thuoc.donGia) + " "}</span>
+                              <span>x</span>
+                              <span>{" " + thuoc.soLuong}</span>
+                            </div>
+                          </div>
+                        </div>
                       ))}
-                    </tbody>
-                  </table>
+                    </div>
+                  )}
                   <hr />
                   <div className="col-12">
                     Tổng tiền:{" "}
