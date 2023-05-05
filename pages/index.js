@@ -6,16 +6,19 @@ import Navigation from "../Components/Index/Navigation";
 import { ToastContainer } from "react-toastify";
 import BottomNavigation from "@/Components/Index/BottomNavigation";
 import NotShowMess from "@/Components/utils/showMess";
+import LoadingScreen from "@/Components/Index/LoadingScreen";
 const index = (props) => {
   NotShowMess();
   return (
     <Fragment>
-      <ToastContainer />
-      <GoTopPage />
-      <Navigation />
-      <Content />
-      <BottomNavigation />
-      <Footer />
+      <LoadingScreen>
+        <ToastContainer />
+        <GoTopPage />
+        <Navigation />
+        <Content />
+        <BottomNavigation />
+        <Footer />
+      </LoadingScreen>
     </Fragment>
   );
 };

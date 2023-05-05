@@ -12,6 +12,7 @@ import {
 import ModalChangStateDonHang from "../Modal/ModalChangStateDonHang";
 import { toast } from "react-toastify";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+import { LocDonHangTheoTrangThai } from "../utils/filterDonHangByStatus";
 const ContentDonHang = () => {
   const [dsDonHang, setDanhSachDonHang] = useState([]);
   const [page, setPage] = useState(1);
@@ -22,7 +23,9 @@ const ContentDonHang = () => {
     buttons.push(
       <div className="col-1">
         <button
-          className="btn btn-info rounded-circle w-50 "
+          className={`btn btn-info rounded-circle w-50 ${
+            page === i ? "active" : ""
+          } `}
           key={i}
           onClick={() => setPage(i)}
         >
@@ -36,17 +39,15 @@ const ContentDonHang = () => {
     setTotalPage(res.totalPages);
     setDanhSachDonHang(res.content);
   }
-  async function fetchDataTheoTrangThai(data) {
-    const res = await getDonHangTheoTrangThai(data, dhsl);
-
-    setTotalPage(res.totalPages);
-    setDanhSachDonHang(res.content);
+  async function fetchDataTheoTrangThai(page, dhsl) {
+    const res = await LocDonHangTheoTrangThai(page, dhsl);
+    setDanhSachDonHang(res);
   }
 
   // danh sách đơn hàng
 
   useEffect(() => {
-    if (dhsl == "All") {
+    if (dhsl === "All") {
       fetchData(page);
     } else {
       fetchDataTheoTrangThai(page, dhsl);
@@ -60,7 +61,9 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-    fetchDataTheoTrangThai(page, dhsl);
+  
+      fetchDataTheoTrangThai(page, dhsl);
+   
   };
   const changStateDonHang1 = async (data) => {
     const res = await deniedDonHang(data);
@@ -144,6 +147,9 @@ const ContentDonHang = () => {
                       </option>
                       <option value="DENIED" key={3}>
                         Đơn hàng đã hủy
+                      </option>
+                      <option value="CANCELLED" key={4}>
+                        Đơn hàng đã từ chối
                       </option>
                     </select>
                   </form>

@@ -3,6 +3,7 @@ import React from "react";
 import { Container } from "reactstrap";
 import { BsFacebook, BsYoutube } from "react-icons/bs";
 import Image from "next/image";
+import bg from "../../public/images/footer-back.jpg";
 const Footer = () => {
   return (
     <Container fluid className="bg-gray">
@@ -49,37 +50,37 @@ const Footer = () => {
           </p>
           <hr />
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Câu hỏi thường gặp
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Tìm cửa hàng gần bạn
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Chính sách giao hàng
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Phương thức thanh toán
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Chính sách đổi trả
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Chính sách bảo mật
             </Link>
           </p>
           <p>
-            <Link href="/" className="fw-bold text-dark text-decoration-none">
+            <Link href="/" className="fw-bold text-dark  text-decoration-none">
               Thể lệ chương trình Thẻ thành viên
             </Link>
           </p>
@@ -124,11 +125,10 @@ const Footer = () => {
           </p>
         </div>
       </div>
-      <div className="row">
-        <div className="col-12">
-          <hr />
-        </div>
-        <div className="col-12">
+      <div className="row  ">
+        <hr className="text-dark " />
+
+        <div className="col-12 ">
           <p className="fw-bold text-dark text-center">
             © Copyright 2023 LT99pharmacy.com. All rights reserved.
           </p>
