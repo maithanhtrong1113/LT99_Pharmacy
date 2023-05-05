@@ -17,7 +17,9 @@ const ContentHoaDon = () => {
     buttons.push(
       <div className="col-1">
         <button
-          className="btn btn-info rounded-circle w-50 "
+          className={`btn btn-info rounded-circle w-50 ${
+            page === i ? "active" : ""
+          } `}
           key={i}
           onClick={() => setPage(i)}
         >
