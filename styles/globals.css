@@ -62,11 +62,26 @@ body {
   border-bottom: 15px solid white;
   position: absolute;
   top: -13px;
-  left: 17%;
+  left: 50%;
 }
 .localDanhMuc {
   top: 6rem;
   z-index: 99 !important;
+  transition: 0.5s ease-in-out;
+  transform: scale(0);
+  will-change: transform;
+}
+.w-300 {
+}
+.localDanhMuc1 {
+  top: 6rem;
+  z-index: 99 !important;
+}
+.hoverDanhMucShow .hoverDanhMuc:hover + .localDanhMuc {
+  transform: scale(1);
+}
+.localDanhMuc:hover {
+  transform: scale(1);
 }
 .bg-info1 {
   background-color: rgba(43, 101, 177, 0.4);
@@ -329,6 +344,16 @@ body {
   top: 100%;
   right: 0%;
   z-index: 9999;
+  transition: 0.5s ease-in-out;
+  transform: scale(0);
+  will-change: transform;
+}
+
+.hoverEvent .showMenu:hover + .sub-menu-admin {
+  transform: scale(1);
+}
+.hoverEvent .sub-menu-admin:hover {
+  transform: scale(1);
 }
 .fs-30 {
   font-size: 30px;
@@ -522,6 +547,16 @@ body {
   .carousel-indicators {
     visibility: hidden !important;
   }
+  .arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid white;
+    position: absolute;
+    top: -13px;
+    left: 30%;
+  }
   .h-600 {
     height: 10px;
   }
@@ -544,8 +579,9 @@ body {
     background-color: #da2319;
     border-radius: 50%;
   }
-  .localDanhMuc {
-    top: 7rem;
+  .localDanhMuc1 {
+    top: 6rem;
+    left: 0;
     z-index: 99 !important;
   }
   .btnSoLuong {

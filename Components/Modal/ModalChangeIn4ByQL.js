@@ -55,7 +55,7 @@ function ModalChangeIn4ByQL(props) {
       <Button
         onClick={toggle}
         color="warning"
-        className="btn btn-white btn-sm text-dark fw-bold w-100 text-start"
+        className="btn btn-white btn-sm text-dark fw-bold  text-start"
       >
         Cập nhập thông tin
       </Button>

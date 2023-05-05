@@ -75,7 +75,8 @@ const Products = () => {
           <div className="col-xl-9 col-lg-9">
             <div className="container-fluid">
               <div className="row my-2">
-                <div className="col-xl-12 col-lg-12">
+                <span className="text-muted">Lọc:</span>
+                <div className="col-xl-12 col-lg-12 d-flex justify-content-between">
                   <div className="dropdown">
                     <button
                       className="btn btn-info dropdown-toggle"
@@ -106,11 +107,6 @@ const Products = () => {
                       </li>
                     </ul>
                   </div>
-                </div>
-              </div>
-              <div className="row my-2 ">
-                <div className="col-xl-12 col-lg-12 d-flex justify-content-between">
-                  <p className="text-muted">Lọc:</p>
                   <div className="dropdown">
                     <button
                       className="btn btn-secondary dropdown-toggle"
@@ -139,6 +135,7 @@ const Products = () => {
                   </div>
                 </div>
               </div>
+              
               <div className="row">
                 {dsThuoc.map((thuoc) => (
                   <CardProduct

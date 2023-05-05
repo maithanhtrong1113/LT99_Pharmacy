@@ -60,14 +60,16 @@ const Content = () => {
         }
       ).then((response) => {
         if (response.ok) {
-          setTimeout(() => {
-            dispatch(cartActions.removeAllItem());
-            router.push("/");
-          }, 1000);
-          toast.success("Đặt hàng thành công", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-            theme: "light",
+          response.json().then((data) => {
+            toast.success("Đặt hàng thành công", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+              theme: "light",
+            });
+            setTimeout(() => {
+              router.push(`/donHang/${data.maDonHang}`);
+              dispatch(cartActions.removeAllItem());
+            }, 500);
           });
         } else {
           toast.error("Đặt hàng không thành công", {

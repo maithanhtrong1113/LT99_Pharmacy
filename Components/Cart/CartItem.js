@@ -91,8 +91,8 @@ const CartItem = (props) => {
           </td>
           <td className="text-info">{VND.format(price)}</td>
           <td>
-            <div className="d-flex flex-column align-items-center">
-              <div className="border rounded d-flex justify-content-between w-100">
+            <div className="d-flex flex-column align-items-center w-100">
+              <div className=" rounded d-flex justify-content-between w-50">
                 <button
                   className="btn btn-sm bg-light btnSoLuong border "
                   onClick={removeItem}

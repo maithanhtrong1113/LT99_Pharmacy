@@ -96,7 +96,7 @@ const Navigation = () => {
               </div>
             </div>
             {!isOpen && (
-              <div className="container position-absolute localDanhMuc">
+              <div className="container position-absolute localDanhMuc1">
                 <div className="arrow-up"></div>
                 <div
                   className="flex-shrink-0 p-3  border rounded bg-white"
@@ -106,93 +106,18 @@ const Navigation = () => {
                 </div>
               </div>
             )}
-            <div className="col-5 ">
-              <form action="">
+            <div className="col-5">
+              <form>
                 <div className="input-group">
                   <input
                     type="text"
-                    className="form-control form-control-sm mx-2 rounded"
-                    placeholder="...."
+                    className="form-control form-control-sm mx-2 rounded "
+                    placeholder=""
                   />
                 </div>
               </form>
             </div>
             <div className="col-2 d-flex justify-content-evenly ">
-              {!isOpen1 && (
-                <div className="container-fluid sub-menu position-absolute bg-white rounded shadow ">
-                  <div
-                    className="row p-2 d-flex align-items-center pointer"
-                    onClick={() => {
-                      router.push("/me");
-                    }}
-                  >
-                    <div className="col-2">
-                      <Image
-                        src="/images/profile.png "
-                        className="bg-gray rounded-circle img-profile"
-                        alt=""
-                        width={100}
-                        height={100}
-                      />
-                    </div>
-                    <div className="col-8">
-                      <Link
-                        href="/me"
-                        className="text-decoration-none text-dark text-center"
-                      >
-                        Hồ sơ cá nhân
-                      </Link>
-                    </div>
-                    <div className="col-2">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                  <div
-                    className="row p-2 d-flex align-items-center pointer"
-                    onClick={() => {
-                      router.push("/admin");
-                    }}
-                  >
-                    <div className="col-2">
-                      <MdOutlineAdminPanelSettings className="fs-30 bg-gray rounded-circle " />
-                    </div>
-                    <div className="col-8">
-                      <Link
-                        href="/admin"
-                        className="text-decoration-none text-dark text-center"
-                      >
-                        Quản lí
-                      </Link>
-                    </div>
-                    <div className="col-2">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-
-                  <div
-                    className="row p-2 d-flex align-items-center"
-                    onClick={logOutHandler}
-                  >
-                    <div className="col-2 pointer">
-                      <Image
-                        src="/images/logout.png "
-                        className="bg-gray rounded-circle img-profile"
-                        width={100}
-                        height={100}
-                        alt=""
-                      />
-                    </div>
-                    <div className="col-8">
-                      <button className="btn btn-white w-100 d-flex justify-content-between align-items-center">
-                        Đăng xuất
-                      </button>
-                    </div>
-                    <div className="col-2 pointer">
-                      <FaAngleRight />
-                    </div>
-                  </div>
-                </div>
-              )}
               <Link
                 href="/cart"
                 className="btn d-flex align-items-center border-none text-white bg-white position-relative px-3"
@@ -208,7 +133,7 @@ const Navigation = () => {
       )}
       {windowWidth > 1000 && (
         <div className={`container-fluid ${bg} fixed-top shadow`}>
-          <div className="row align-items-center py-3">
+          <div className="row align-items-center py-3 hoverDanhMucShow">
             <div className="col-lg-1  d-block">
               <Link href="/">
                 <Image
@@ -220,9 +145,9 @@ const Navigation = () => {
                 />
               </Link>
             </div>
-            <div className="col-lg-2  position-relative">
+            <div className="col-lg-2  position-relative hoverDanhMuc">
               <div
-                className="btn border w-100 d-flex justify-content-evenly align-items-center bg-white "
+                className="btn border w-100 d-flex justify-content-evenly align-items-center bg-white  "
                 onClick={toggle}
               >
                 <FaThList className="text-dark" />
@@ -230,17 +155,14 @@ const Navigation = () => {
                 <FaAngleDown />
               </div>
             </div>
-            {!isOpen && (
-              <div className="container position-absolute localDanhMuc">
-                <div className="arrow-up"></div>
-                <div
-                  className="flex-shrink-0 p-3  border rounded bg-white"
-                  style={{ width: "300px" }}
-                >
-                  <ul className="list-unstyled ps-0 ">{danhMuc}</ul>
-                </div>
+
+            <div className="position-absolute localDanhMuc w-25 ">
+              <div className="arrow-up ms-5"></div>
+              <div className="flex-shrink-0 p-3  border rounded bg-white w-100">
+                <ul className="list-unstyled ps-0 ">{danhMuc}</ul>
               </div>
-            )}
+            </div>
+
             <div className="col-lg-5 ">
               <form action="">
                 <div className="input-group">
