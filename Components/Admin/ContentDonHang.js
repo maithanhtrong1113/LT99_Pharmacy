@@ -61,9 +61,8 @@ const ContentDonHang = () => {
       theme: "light",
     });
     setDanhSachDonHang([]);
-  
-      fetchDataTheoTrangThai(page, dhsl);
-   
+
+    fetchDataTheoTrangThai(page, dhsl);
   };
   const changStateDonHang1 = async (data) => {
     const res = await deniedDonHang(data);
@@ -200,7 +199,7 @@ const ContentDonHang = () => {
                     <button
                       className="btn btn-info"
                       onClick={() => {
-                        setPage(page === 0 ? page : page - 1);
+                        setPage(page === 1 ? page : page - 1);
                       }}
                     >
                       <AiOutlineDoubleLeft />

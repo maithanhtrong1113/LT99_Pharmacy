@@ -1,12 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { useForm } from "react-hook-form";
-
+// import ReactQuill from "react-quill";
+// import "react-quill/dist/quill.snow.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
-import { getAllNhaCungCap } from "@/api/nhaCungCapApi";
-import ModalAddNhaCungCap from "./ModalAddNhaCungCap";
-import ModalAddNhaCungCap1 from "./ModalAddNhaCungCap1";
 
 function ModalAddThuoc(props) {
   const [loaiThuoc, setLoaiThuoc] = useState([]);

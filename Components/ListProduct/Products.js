@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, use, useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import CardProduct from "../Index/CardProduct";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
@@ -38,7 +38,28 @@ const Products = () => {
   }
   const danhMucs = [];
   const danhMuc = [];
-
+  const sortTang = () => {
+    const arr = [...dsThuoc];
+    arr.sort((a, b) => a.giaBanLe - b.giaBanLe);
+    setDsThuoc(arr);
+  };
+  const sortGiam = () => {
+    const arr = [...dsThuoc];
+    arr.sort((a, b) => b.giaBanLe - a.giaBanLe);
+    setDsThuoc(arr);
+  };
+  const [sorted, setSorted] = useState(false);
+  const [dsThuocLoc, setDsThuocLoc] = useState([]);
+  const LocTheoDk = (giaMin, giaMax) => {
+    setSorted(true);
+    setDsThuocLoc(
+      dsThuoc.filter((product) => {
+        const price = product.giaBanLe;
+        return price >= giaMin && price <= giaMax;
+      })
+    );
+    console.log(dsThuoc);
+  };
   for (let i = 1; i <= loaiThuoc.length; i++) {
     if (i === 0) {
       setSelected(loaiThuoc[i - 1].maLoaiThuoc);
@@ -92,17 +113,39 @@ const Products = () => {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <button className="dropdown-item">0 - 200.000</button>
-                      </li>
-
-                      <li>
-                        <button className="dropdown-item">
-                          200.000 - 1.000.000
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => setSorted(false)}
+                        >
+                          Tất cả
                         </button>
                       </li>
                       <li>
-                        <button className="dropdown-item">
-                          1.000.000 - 3.000.000
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => LocTheoDk(0, 200000)}
+                        >
+                          0 - 200.000
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => LocTheoDk(200000, 500000)}
+                        >
+                          200.000 - 500.000
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={() => LocTheoDk(500000, 1000000)}
+                        >
+                          500.000 - 1.000.000
                         </button>
                       </li>
                     </ul>
@@ -122,32 +165,56 @@ const Products = () => {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <button className="dropdown-item">Giá giảm dần</button>
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={sortGiam}
+                        >
+                          Giá giảm dần
+                        </button>
                       </li>
 
                       <li>
-                        <button className="dropdown-item">Giá tăng dần</button>
-                      </li>
-                      <li>
-                        <button className="dropdown-item">Mới nhất</button>
+                        <button
+                          className="dropdown-item"
+                          type="button"
+                          onClick={sortTang}
+                        >
+                          Giá tăng dần
+                        </button>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              
-              <div className="row">
-                {dsThuoc.map((thuoc) => (
-                  <CardProduct
-                    images="/images/index/products/product1.jpg"
-                    price={thuoc.giaBanLe}
-                    title={thuoc.thuoc.tenThuoc}
-                    id={thuoc.thuoc.maThuoc}
-                    donViTinh={thuoc.thuoc.donViTinh}
-                    inventory={thuoc.thuoc.inventory}
-                  />
-                ))}
-              </div>
+              {!sorted && (
+                <div className="row">
+                  {dsThuoc.map((thuoc) => (
+                    <CardProduct
+                      images="/images/index/products/product1.jpg"
+                      price={thuoc.giaBanLe}
+                      title={thuoc.thuoc.tenThuoc}
+                      id={thuoc.thuoc.maThuoc}
+                      donViTinh={thuoc.thuoc.donViTinh}
+                      inventory={thuoc.thuoc.inventory}
+                    />
+                  ))}
+                </div>
+              )}
+              {sorted && (
+                <div className="row">
+                  {dsThuocLoc.map((thuoc) => (
+                    <CardProduct
+                      images="/images/index/products/product1.jpg"
+                      price={thuoc.giaBanLe}
+                      title={thuoc.thuoc.tenThuoc}
+                      id={thuoc.thuoc.maThuoc}
+                      donViTinh={thuoc.thuoc.donViTinh}
+                      inventory={thuoc.thuoc.inventory}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

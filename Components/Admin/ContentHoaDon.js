@@ -146,7 +146,7 @@ const ContentHoaDon = () => {
                     <button
                       className="btn btn-info"
                       onClick={() => {
-                        setPage(page === 0 ? page : page - 1);
+                        setPage(page === 1 ? page : page - 1);
                       }}
                     >
                       <AiOutlineDoubleLeft />
