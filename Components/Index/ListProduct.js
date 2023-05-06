@@ -16,7 +16,7 @@ const ListProduct = () => {
   const danhMuc = [];
   for (let i = 1; i <= loaiThuoc.length; i++) {
     danhMuc.push(
-      <div className="col-lg-2 col-4">
+      <div className="col-lg-2 col-4 py-3">
         <Product
           images={`images/index/${i}.jpg`}
           tenDanhMuc={loaiThuoc[i - 1].tenLoai}
@@ -28,10 +28,10 @@ const ListProduct = () => {
     <Fragment>
       <div className="row my-3 my-1i">
         <div className="col-12">
-          <h3 className="fw-bold">Danh mục sản phẩm</h3>
+          <h3 className="fw-bold text-blue-pastel">Danh mục sản phẩm</h3>
         </div>
       </div>
-      <div className="my-3 d-flex  my-1i row scrolbarCustomDanhMuc">
+      <div className="my-3 d-flex  my-1i row scrolbarCustomDanhMuc fw-bold">
         {danhMuc}
       </div>
       <div className="row line-space"></div>

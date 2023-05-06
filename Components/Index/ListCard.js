@@ -25,7 +25,7 @@ const ListCard = () => {
     <Fragment>
       <div className="row my-3 my-1i">
         <div className="col-12">
-          <h3 className="fw-bold">Sản phẩm bán chạy</h3>
+          <h3 className="fw-bold text-blue-pastel">Sản phẩm bán chạy</h3>
         </div>
       </div>
       <div className="row my-2">

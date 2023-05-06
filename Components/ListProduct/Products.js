@@ -65,13 +65,12 @@ const Products = () => {
       setSelected(loaiThuoc[i - 1].maLoaiThuoc);
     }
     danhMuc.push(
-      <li className="nav-item my-2 liList">
+      <li className="nav-item my-2 liList bg-pastel-blue-trans rounded ">
         <Link
-          className="nav-link d-flex justify-content-between align-items-center px-2"
+          className="text-dark nav-link d-flex justify-content-between align-items-center px-2 fw-bold bg-pastel-blue-trans rounded "
           href="/"
         >
           {loaiThuoc[i - 1].tenLoai}
-          <FaAngleDown />
         </Link>
       </li>
     );
@@ -93,7 +92,7 @@ const Products = () => {
               </div>
             </nav>
           </div>
-          <div className="col-xl-9 col-lg-9">
+          <div className="col-xl-9 col-lg-9  py-4 rounded shadow bg-pastel-blue-trans">
             <div className="container-fluid">
               <div className="row my-2">
                 <span className="text-muted">Lọc:</span>

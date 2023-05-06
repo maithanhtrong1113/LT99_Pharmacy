@@ -100,8 +100,8 @@ const Content = () => {
                             <h4 className="text-success me-2 fw-bold">
                               {VND.format(thuoc.giaBanLe)}
                             </h4>
-                            <span className="fw-bold">Giá thị trường:</span>
-                            <span className="text-success  bg-ligh me-2">
+                            <span className="fw-bold ">Giá thị trường:</span>
+                            <span className="text-success  bg-ligh me-2 text-decoration-line-through">
                               {` ${VND.format(
                                 thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
                               )}`}

@@ -32,7 +32,9 @@ body {
 .bg-gray2 {
   background-color: rgb(242, 246, 254);
 }
-
+.bg-dark1 {
+  background-color: rgba(0, 0, 0, 0.607);
+}
 ::-webkit-scrollbar {
   width: 0.5rem;
 }
@@ -49,11 +51,21 @@ body {
     rgba(193, 187, 187, 0.5),
     rgba(104, 103, 103, 0.5)
   );
-  height: 50px;
+  height: 30px;
 }
 .text-pink {
   color: #ff19d9;
 }
+.text-blue-pastel {
+  color: #10b3ad;
+}
+.bg-blue-dark {
+  background-color: rgb(58, 200, 200);
+}
+.bg-pastel-blue-trans {
+  background-color: rgba(32, 212, 206, 0.3) !important;
+}
+
 .arrow-up {
   width: 0;
   height: 0;
@@ -187,25 +199,80 @@ body {
 .header1 {
   background-color: #e3e3e3;
 }
-
-.cardProductHover img:hover {
-  opacity: 0.5;
+.bg-blue-darkHover:hover {
+  background-color: rgb(45, 188, 188);
 }
+
 .btnSoLuong {
   width: 30px !important;
 }
-.cardProductHover:hover {
-  border: 2px solid #34bfde !important;
-  border-radius: 5px;
+.hover15 figure {
+  position: relative;
 }
-.productHover a :hover {
+.hover15 figure::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: block;
+  content: "";
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.hover15 figure:hover::before {
+  -webkit-animation: circle 0.75s;
+  animation: circle 0.75s;
+}
+@-webkit-keyframes circle {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+@keyframes circle {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+.cardProductHover {
+  transition: 0.5s ease-in-out;
+  transform: scale(1);
+  will-change: transform;
+}
+.cardProductHover:hover {
+  border: 2px solid rgb(58, 200, 200) !important;
+  border-radius: 5px;
+  transform: scale(1.05) !important;
+}
+.productHover a:hover {
   background-color: rgba(177, 99, 99, 0) !important;
   border: none;
 }
 
-.productHover :hover {
-  background-color: rgb(99, 200, 228, 0.4) !important;
-  border: 1px solid rgb(88, 161, 228);
+.productHover:hover {
+  box-sizing: border-box !important;
+  background-color: rgba(32, 212, 206, 0.2) !important;
+
   border-radius: 5px;
 }
 
@@ -367,7 +434,9 @@ body {
 .fs-dh {
   font-size: 12px;
 }
-
+.fs-16 {
+  font-size: 16px;
+}
 .localMorePerson {
   width: 12rem;
   top: 90%;
