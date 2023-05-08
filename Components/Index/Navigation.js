@@ -15,6 +15,7 @@ import { authActions } from "../../store/auth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Image from "next/image";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 const Navigation = () => {
   const cartQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -63,7 +64,7 @@ const Navigation = () => {
   for (let i = 1; i <= loaiThuoc.length; i++) {
     danhMuc.push(
       <li className="mb-1">
-        <Link href="/listProduct">
+        <Link href={`listProduct/${loaiThuoc[i - 1].maLoai}`}>
           <button className="btn btn-toggle  rounded ">
             {loaiThuoc[i - 1].tenLoai}
           </button>
@@ -139,15 +140,47 @@ const Navigation = () => {
               </div>
             )}
             <div className="col-5">
-              <form>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control form-control-sm mx-2 rounded "
-                    placeholder=""
-                  />
-                </div>
-              </form>
+              <div className="input-group  ">
+                <input
+                  type="text"
+                  className="form-input form-control mx-2 rounded "
+                  placeholder="Bạn đang muốn tìm gì..."
+                  onFocus={() => setShow(true)}
+                  onBlur={() => setShow(false)}
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div
+              className={`position-absolute localTimKiem w-100  ${
+                show ? "localTimKiemshow" : ""
+              } p-0`}
+            >
+              <div className="p-3 border rounded bg-white w-100 shadow vh-100">
+                <button className="btn bg-blue-dark mb-2">
+                  <BsArrowLeft />
+                </button>
+                <br />
+                {dsThuoc.length === 0 && searchTerm !== null && (
+                  <span className="fw-bold">Không tìm thấy sản phẩm</span>
+                )}
+                {dsThuoc.length === 0 && searchTerm === null && (
+                  <span className="fw-bold">
+                    Nhập tên sản phẩm bạn muốn tìm
+                  </span>
+                )}
+                {dsThuoc.map((thuoc) => (
+                  <div className="row w-100  px-0 mx-0">
+                    <Link
+                      href={`/product/${thuoc.thuoc.maThuoc}`}
+                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white bg-blue-darkHover"
+                    >
+                      {thuoc.thuoc.tenThuoc}
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="col-2 d-flex justify-content-evenly ">
               <Link
@@ -177,7 +210,7 @@ const Navigation = () => {
                 />
               </Link>
             </div>
-            <div className="col-lg-2  position-relative hoverDanhMuc">
+            <div className="col-lg-2 position-relative hoverDanhMuc">
               <div
                 className="btn border w-100 d-flex justify-content-evenly align-items-center bg-white  "
                 onClick={toggle}
@@ -208,6 +241,7 @@ const Navigation = () => {
                 />
               </div>
             </div>
+
             <div
               className={`position-absolute localTimKiem w-50 ${
                 show ? "localTimKiemshow" : ""
@@ -217,8 +251,8 @@ const Navigation = () => {
                 {dsThuoc.map((thuoc) => (
                   <div className="row w-100  px-0 mx-0">
                     <Link
-                      href=""
-                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white"
+                      href={`/product/${thuoc.thuoc.maThuoc}`}
+                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white bg-blue-darkHover"
                     >
                       {thuoc.thuoc.tenThuoc}
                     </Link>

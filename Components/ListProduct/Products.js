@@ -66,12 +66,16 @@ const Products = (props) => {
         </Link>
       </li>
     );
+
     danhMucs.push(
-      <option value={loaiThuoc[i - 1].maLoaiThuoc}>
+      <option value={loaiThuoc[i - 1].maLoai}>
         {loaiThuoc[i - 1].tenLoai}
       </option>
     );
   }
+  useEffect(() => {
+    // router.push(`/listProduct/${slected}`);
+  }, [slected]);
   return (
     <Fragment>
       {windowWidth > 1000 && (
@@ -187,7 +191,7 @@ const Products = (props) => {
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
                       donViTinh={thuoc.thuoc.donViTinh}
-                      inventory={thuoc.thuoc.inventory}
+                      inventory={thuoc.thuoc.soLuong}
                     />
                   ))}
                 </div>
@@ -213,7 +217,7 @@ const Products = (props) => {
 
       {windowWidth < 1000 && (
         <div className="row mt-3">
-          <div className="col-xl-3 col-lg-3">
+          <div className="col-xl-3 col-lg-3 my-3">
             <h4 className="fw-bold ms-1">Danh mục</h4>
 
             <nav className="navbar bg-white border rounded shadow">
@@ -231,13 +235,13 @@ const Products = (props) => {
               </div>
             </nav>
           </div>
-          <div className="col-12">
-            <div className="container bg-light">
-              <div className="row d-flex justify-content-between mt-2">
-                <div className="col-6 ">
+          <div className="col-12 ">
+            <div className="container bg-pastel-blue-trans py-2">
+              <div className="row d-flex justify-content-between mt-2 ">
+                <div className="col-6">
                   <div className="dropdown">
                     <button
-                      className="btn btn-info dropdown-toggle btn-sm"
+                      className="btn btn-primary dropdown-toggle btn-sm"
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
@@ -250,17 +254,36 @@ const Products = (props) => {
                       aria-labelledby="dropdownMenuButton1"
                     >
                       <li>
-                        <button className="dropdown-item">0 - 200.000</button>
-                      </li>
-
-                      <li>
-                        <button className="dropdown-item">
-                          200.000 - 1.000.000
+                        <button
+                          className="dropdown-item"
+                          onClick={() => setSorted(false)}
+                        >
+                          Tất cả
                         </button>
                       </li>
                       <li>
-                        <button className="dropdown-item">
-                          1.000.000 - 3.000.000
+                        <button
+                          className="dropdown-item"
+                          onClick={() => LocTheoDk(0, 200000)}
+                        >
+                          0 - 200.000
+                        </button>
+                      </li>
+
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => LocTheoDk(200000, 500000)}
+                        >
+                          200.000 - 500.000
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => LocTheoDk(500000, 1000000)}
+                        >
+                          500.000 - 1.000.000
                         </button>
                       </li>
                     </ul>
@@ -268,7 +291,7 @@ const Products = (props) => {
                 </div>
                 <div className=" col-6 dropdown">
                   <button
-                    className="btn btn-secondary dropdown-toggle btn-sm"
+                    className="btn btn-dark dropdown-toggle btn-sm"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
@@ -281,30 +304,52 @@ const Products = (props) => {
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
-                      <button className="dropdown-item">Giá giảm dần</button>
+                      <button className="dropdown-item" onClick={sortGiam}>
+                        Giá giảm dần
+                      </button>
                     </li>
 
                     <li>
-                      <button className="dropdown-item">Giá tăng dần</button>
-                    </li>
-                    <li>
-                      <button className="dropdown-item">Mới nhất</button>
+                      <button className="dropdown-item" onClick={sortTang}>
+                        Giá tăng dần
+                      </button>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <div className="row">
-                {dsThuoc.map((thuoc) => (
-                  <CardProduct
-                    images="/images/index/products/product1.jpg"
-                    price={thuoc.giaBanLe}
-                    title={thuoc.thuoc.tenThuoc}
-                    id={thuoc.thuoc.maThuoc}
-                    donViTinh={thuoc.thuoc.donViTinh}
-                  />
-                ))}
-              </div>
+              {!sorted && (
+                <div className="row">
+                  {dsThuoc.map((thuoc) => (
+                    <CardProduct
+                      images="/images/index/products/product1.jpg"
+                      price={thuoc.giaBanLe}
+                      title={thuoc.thuoc.tenThuoc}
+                      id={thuoc.thuoc.maThuoc}
+                      donViTinh={thuoc.thuoc.donViTinh}
+                      inventory={thuoc.thuoc.soLuong}
+                    />
+                  ))}
+                </div>
+              )}
+              {sorted && (
+                <div className="row">
+                  {dsThuocLoc.length === 0 && (
+                    <span>Không tìm thấy sản phẩm nào</span>
+                  )}
+                  {dsThuocLoc.map((thuoc) => (
+                    <CardProduct
+                      images="/images/index/products/product1.jpg"
+                      price={thuoc.giaBanLe}
+                      title={thuoc.thuoc.tenThuoc}
+                      id={thuoc.thuoc.maThuoc}
+                      donViTinh={thuoc.thuoc.donViTinh}
+                      inventory={thuoc.thuoc.inventory}
+                    />
+                  ))}
+                </div>
+              )}
+              {dsThuoc.length === 0 && <span>Không tìm thấy sản phẩm nào</span>}
             </div>
           </div>
         </div>

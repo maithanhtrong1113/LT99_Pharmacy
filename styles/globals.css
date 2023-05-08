@@ -712,6 +712,17 @@ body {
   .btn-mb {
     font-size: 12px;
   }
+  .localTimKiem {
+    top: 5rem;
+    left: 0rem;
+    z-index: 99 !important;
+    transition: 0.5s ease-in-out;
+    transform: scale(0);
+    will-change: transform;
+  }
+  .localTimKiemshow {
+    transform: scale(1);
+  }
 }
 .h-600 {
   height: 60px;

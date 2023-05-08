@@ -7,12 +7,14 @@ import NotShowMess from "@/Components/utils/showMess";
 import { getAllThuocTheoLoai } from "@/api/thuocApi";
 import { useRouter } from "next/router";
 import React, { Fragment, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 const listProduct = () => {
   NotShowMess();
 
   return (
     <Fragment>
+      <ToastContainer />
       <GoTopPage />
       <Navigation />
       <Content />

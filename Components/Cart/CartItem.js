@@ -81,25 +81,25 @@ const CartItem = (props) => {
               <img src={`${image}`} className="img-fluid sizeImgCart" />
             </Link>
           </td>
-          <td className=" text-info">
+          <td className="text-blue-pastel">
             <Link
               href={`/product/${id}`}
-              className="text-info text-decoration-none"
+              className="text-blue-pastel text-decoration-none"
             >
               {title}
             </Link>
           </td>
-          <td className="text-info">{VND.format(price)}</td>
+          <td className="text-blue-pastel">{VND.format(price)}</td>
           <td>
             <div className="d-flex flex-column align-items-center w-100 justify-content-center">
-              <div className=" rounded d-flex justify-content-between w-50 align-items-center">
+              <div className=" rounded d-flex justify-content-between w-100 align-items-center">
                 <button
                   className="btn btn-sm bg-light btnSoLuong border "
                   onClick={removeItem}
                 >
                   -
                 </button>
-                <span>{quantity}</span>
+                <span className="fw-bold mx-2">{quantity}</span>
                 <button
                   className="btn btn-sm bg-light btnSoLuong  border "
                   onClick={addItem}
@@ -107,7 +107,7 @@ const CartItem = (props) => {
                   +
                 </button>
               </div>
-              <div className="text-muted">Số lượng tồn:{`${inventory}`}</div>
+              <div className="text-muted">Kho:{`${inventory}`}</div>
             </div>
           </td>
           <td className=" text-info">{VND.format(total)}</td>
