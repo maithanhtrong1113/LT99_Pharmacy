@@ -71,6 +71,38 @@ const Navigation = () => {
       </li>
     );
   }
+  const [show, setShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [dsThuoc, setDsThuoc] = useState([]);
+  const handleInputChange = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    console.log(searchTerm);
+    if (timeoutId) {
+      clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
+    }
+
+    if (searchTerm.length > 0) {
+      const newTimeoutId = setTimeout(() => {
+        fetch(
+          `http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/tim-thuoc?keyword=${encodeURIComponent(
+            searchTerm
+          )}`
+        )
+          .then((response) => response.json())
+          .then((results) => {
+            if (results.length > 0) setDsThuoc(results);
+            else {
+              setDsThuoc([]);
+            }
+          });
+      }, 500);
+      setTimeoutId(newTimeoutId);
+    } else {
+      setDsThuoc([]);
+    }
+  };
   return (
     <Fragment>
       {windowWidth < 1000 && (
@@ -163,16 +195,36 @@ const Navigation = () => {
               </div>
             </div>
 
-            <div className="col-lg-5 ">
-              <form action="">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-input form-control mx-2 rounded"
-                    placeholder="Bạn đang muốn tìm gì..."
-                  />
-                </div>
-              </form>
+            <div className="col-lg-5 position-relative formTimKiem">
+              <div className="input-group  ">
+                <input
+                  type="text"
+                  className="form-input form-control mx-2 rounded "
+                  placeholder="Bạn đang muốn tìm gì..."
+                  onFocus={() => setShow(true)}
+                  onBlur={() => setShow(false)}
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+            <div
+              className={`position-absolute localTimKiem w-50 ${
+                show ? "localTimKiemshow" : ""
+              } `}
+            >
+              <div className="p-3 border rounded bg-white w-100 shadow">
+                {dsThuoc.map((thuoc) => (
+                  <div className="row w-100  px-0 mx-0">
+                    <Link
+                      href=""
+                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white"
+                    >
+                      {thuoc.thuoc.tenThuoc}
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className="col-lg-4  d-flex justify-content-evenly ">
               <button
@@ -187,7 +239,7 @@ const Navigation = () => {
                 className="btn d-flex align-items-center border-none text-white bg-white position-relative px-3"
               >
                 <FaShoppingCart className="text-dark" />
-                <span className="px-1   text-white position-absolute localCart  bg-cart">
+                <span className="px-1 text-white position-absolute localCart  bg-cart">
                   {cartQuantity}
                 </span>
               </Link>
