@@ -6,7 +6,7 @@ const Product = (props) => {
     <Fragment>
       <div className="productHover my-2 w-100">
         <Link
-          href="/listProduct"
+          href={props.maLoai}
           className="d-flex flex-column justify-content-between align-items-center text-decoration-none bg-list pt-3"
         >
           <img src={props.images} className="img-fluid sizeImageProduct " />

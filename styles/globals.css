@@ -593,7 +593,11 @@ body {
 .pb-10 {
   padding-bottom: 8rem !important;
 }
-
+.localDiscount {
+  top: 5%;
+  right: 5%;
+  z-index: 1000;
+}
 .adminIcon {
   font-size: 24px;
 }
@@ -604,6 +608,11 @@ body {
   max-width: 700px !important;
 }
 @media screen and (max-width: 600px) {
+  .localDiscount {
+    top: 3%;
+    right: 2%;
+    z-index: 1000;
+  }
   body {
     font-size: 14px !important;
     font-weight: 500 !important;
@@ -657,6 +666,11 @@ body {
   }
   .h-600 {
     height: 10px;
+  }
+
+  .hover15 figure:hover::before {
+    -webkit-animation: circle 0.75s;
+    animation: circle 0.75s;
   }
   .fs-12 {
     font-size: 12px !important;

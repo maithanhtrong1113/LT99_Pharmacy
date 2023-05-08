@@ -20,6 +20,7 @@ const ListProduct = () => {
         <Product
           images={`images/index/${i}.jpg`}
           tenDanhMuc={loaiThuoc[i - 1].tenLoai}
+          maLoai={`/listProduct/${loaiThuoc[i - 1].maLoai}`}
         />
       </div>
     );

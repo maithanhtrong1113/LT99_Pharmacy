@@ -3,34 +3,26 @@ import React, { Fragment, use, useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa";
 import CardProduct from "../Index/CardProduct";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
-const Products = () => {
+import { useRouter } from "next/router";
+import { getAllThuocTheoLoai } from "@/api/thuocApi";
+const Products = (props) => {
   const [dsThuoc, setDsThuoc] = useState([]);
   const [slected, setSelected] = useState("");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const router = useRouter();
+  const { id } = router.query;
+  async function fetchDanhSachThuoc() {
+    const data = await getAllThuocTheoLoai(id);
+    setDsThuoc(data);
+  }
   useEffect(() => {
+    fetchDanhSachThuoc();
     fetchData();
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/danh-sach-thuoc"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
-        setDsThuoc(results);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+  }, [id]);
+
   const [loaiThuoc, setLoaiThuoc] = useState([]);
   async function fetchData() {
     const data = await getAllLoaiThuocKhach();
@@ -68,7 +60,7 @@ const Products = () => {
       <li className="nav-item my-2 liList bg-pastel-blue-trans rounded ">
         <Link
           className="text-dark nav-link d-flex justify-content-between align-items-center px-2 fw-bold bg-pastel-blue-trans rounded "
-          href="/"
+          href={`/listProduct/${loaiThuoc[i - 1].maLoai}`}
         >
           {loaiThuoc[i - 1].tenLoai}
         </Link>
@@ -92,14 +84,14 @@ const Products = () => {
               </div>
             </nav>
           </div>
-          <div className="col-xl-9 col-lg-9  py-4 rounded shadow bg-pastel-blue-trans">
+          <div className="col-xl-9 col-lg-9 rounded shadow bg-pastel-blue-trans">
             <div className="container-fluid">
               <div className="row my-2">
-                <span className="text-muted">Lọc:</span>
+                <span className="text-dark my-3 ">Lọc sản phẩm:</span>
                 <div className="col-xl-12 col-lg-12 d-flex justify-content-between">
                   <div className="dropdown">
                     <button
-                      className="btn btn-info dropdown-toggle"
+                      className="btn btn-primary dropdown-toggle"
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
@@ -151,7 +143,7 @@ const Products = () => {
                   </div>
                   <div className="dropdown">
                     <button
-                      className="btn btn-secondary dropdown-toggle"
+                      className="btn btn-dark dropdown-toggle text-white"
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"

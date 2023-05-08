@@ -7,6 +7,8 @@ import VND from "../utils/formatVND";
 import Image from "next/image";
 import xuLyTenKhiQuaDai from "../utils/tooLong";
 import { BsCartPlus, BsCartPlusFill } from "react-icons/bs";
+import { useEffect } from "react";
+import { useState } from "react";
 const CardProduct = (props) => {
   const dispatch = useDispatch();
   const addToCart = () => {
@@ -21,11 +23,25 @@ const CardProduct = (props) => {
       theme: "light",
     });
   };
-
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <Fragment>
-      <div className="col-6 col-lg-3  mb-3  pb-3 pt-2  ">
-        <div className="card cardProductHover h-100 hover15 shadow ">
+      <div className="col-6 col-lg-3  mb-3  pb-3 pt-2">
+        <div
+          className={`card cardProductHover h-100 ${
+            windowWidth > 1000 ? "hover15" : " "
+          } shadow position-relative`}
+        >
+          <div className="position-absolute localDiscount fs-12">
+            <span className="text-dark rounded-circle bg-danger p-2 text-white fs-12">
+              -10%
+            </span>
+          </div>
           <Link
             href={`/product/${props.id}`}
             className=" h-90 text-decoration-none d-flex flex-column justify-content-between align-items-center shadow "
@@ -46,7 +62,7 @@ const CardProduct = (props) => {
               </h6>
 
               <p className="text-muted text-decoration-line-through">
-                {VND.format(props.price) + "/" + props.donViTinh}
+                {VND.format(props.price * 1.1) + "/" + props.donViTinh}
               </p>
               <p className="text-blue-pastel">
                 {VND.format(props.price) + "/" + props.donViTinh}

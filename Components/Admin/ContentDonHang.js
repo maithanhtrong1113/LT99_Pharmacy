@@ -145,10 +145,10 @@ const ContentDonHang = () => {
                         Đơn hàng đã chấp nhận
                       </option>
                       <option value="DENIED" key={3}>
-                        Đơn hàng đã hủy
+                        Đơn hàng đã từ chối
                       </option>
                       <option value="CANCELLED" key={4}>
-                        Đơn hàng đã từ chối
+                        Đơn hàng khách đã hủy
                       </option>
                     </select>
                   </form>

@@ -103,13 +103,13 @@ const Content = () => {
                             <span className="fw-bold ">Giá thị trường:</span>
                             <span className="text-success  bg-ligh me-2 text-decoration-line-through">
                               {` ${VND.format(
-                                thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
+                                thuoc.giaBanLe + (thuoc.giaBanLe * 10) / 100
                               )}`}
                             </span>
                             <span className="text-white bg-info p-1 rounded">
                               {`Tiết kiệm: ${VND.format(
-                                (thuoc.giaBanLe * 5) / 100
-                              )}(-5%)`}
+                                (thuoc.giaBanLe * 10) / 100
+                              )}(-10%)`}
                             </span>
                           </div>
                           <p>{thuoc.thuoc.moTa}</p>

@@ -4,10 +4,13 @@ import GoTopPage from "@/Components/Index/GoTopPage";
 import Navigation from "@/Components/Index/Navigation";
 import Content from "@/Components/ListProduct/Content";
 import NotShowMess from "@/Components/utils/showMess";
-import React, { Fragment } from "react";
+import { getAllThuocTheoLoai } from "@/api/thuocApi";
+import { useRouter } from "next/router";
+import React, { Fragment, useEffect, useState } from "react";
 
 const listProduct = () => {
   NotShowMess();
+
   return (
     <Fragment>
       <GoTopPage />

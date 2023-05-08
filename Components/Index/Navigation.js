@@ -32,7 +32,7 @@ const Navigation = () => {
     toggle1();
   };
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  console.log(windowWidth);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -156,9 +156,9 @@ const Navigation = () => {
               </div>
             </div>
 
-            <div className="position-absolute localDanhMuc w-25 ">
+            <div className="position-absolute localDanhMuc w-25  ">
               <div className="arrow-up ms-5"></div>
-              <div className="flex-shrink-0 p-3  border rounded bg-white w-100">
+              <div className="flex-shrink-0 p-3  border rounded bg-white w-100 shadow">
                 <ul className="list-unstyled ps-0 ">{danhMuc}</ul>
               </div>
             </div>
@@ -187,7 +187,7 @@ const Navigation = () => {
                 className="btn d-flex align-items-center border-none text-white bg-white position-relative px-3"
               >
                 <FaShoppingCart className="text-dark" />
-                <span className="px-1  text-white position-absolute localCart  bg-cart">
+                <span className="px-1   text-white position-absolute localCart  bg-cart">
                   {cartQuantity}
                 </span>
               </Link>

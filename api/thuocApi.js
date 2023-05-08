@@ -84,3 +84,10 @@ export const xoaThuoc = async (data) => {
   const thuoc = await getAllThuoc();
   return thuoc;
 };
+export const getAllThuocTheoLoai = async (id) => {
+  const response = await fetch(
+    `http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/loai-thuoc/${id}/thuoc`
+  );
+  const data = await response.json();
+  return data;
+};
