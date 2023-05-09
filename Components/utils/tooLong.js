@@ -1,6 +1,6 @@
 const xuLyTenKhiQuaDai = (chuoi) => {
   if (chuoi.length > 40) {
-    chuoi = chuoi.slice(0, 40) + "...";
+    chuoi = chuoi.slice(0, 35) + "...";
   }
   return chuoi;
 };

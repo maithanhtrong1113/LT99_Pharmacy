@@ -19,7 +19,7 @@ function CountdownTimer() {
       })
       .then((results) => {
         results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
-        setDsThuoc(results);
+        setDsThuoc(results.slice(0, 8));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -93,7 +93,7 @@ function CountdownTimer() {
                 </div>
               </div>
             )}
-            <div className="row mt-4 d-flex justify-content-between">
+            <div className="row mt-4 d-flex ">
               {dsThuoc.map((thuoc, index) => (
                 <CardProduct
                   images={`/images/product/${index + 1}.jpg`}

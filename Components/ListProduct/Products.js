@@ -184,9 +184,9 @@ const Products = (props) => {
               </div>
               {!sorted && (
                 <div className="row">
-                  {dsThuoc.map((thuoc) => (
+                  {dsThuoc.map((thuoc, index) => (
                     <CardProduct
-                      images="/images/index/products/product1.jpg"
+                      images={`/images/product/${index + 1}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
@@ -198,9 +198,9 @@ const Products = (props) => {
               )}
               {sorted && (
                 <div className="row">
-                  {dsThuocLoc.map((thuoc) => (
+                  {dsThuocLoc.map((thuoc, index) => (
                     <CardProduct
-                      images="/images/index/products/product1.jpg"
+                      images={`/images/product/${index + 1}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
@@ -320,7 +320,7 @@ const Products = (props) => {
 
               {!sorted && (
                 <div className="row">
-                  {dsThuoc.map((thuoc) => (
+                  {dsThuoc.map((thuoc, index) => (
                     <CardProduct
                       images="/images/index/products/product1.jpg"
                       price={thuoc.giaBanLe}
@@ -337,9 +337,9 @@ const Products = (props) => {
                   {dsThuocLoc.length === 0 && (
                     <span>Không tìm thấy sản phẩm nào</span>
                   )}
-                  {dsThuocLoc.map((thuoc) => (
+                  {dsThuocLoc.map((thuoc, index) => (
                     <CardProduct
-                      images="/images/index/products/product1.jpg"
+                      images={`/images/product/${index + 1}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
