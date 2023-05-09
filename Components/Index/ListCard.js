@@ -15,7 +15,7 @@ const ListCard = () => {
       })
       .then((results) => {
         results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
-        setDsThuoc(results);
+        setDsThuoc(results.slice(0, 4));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -29,9 +29,9 @@ const ListCard = () => {
         </div>
       </div>
       <div className="row my-2">
-        {dsThuoc.map((thuoc) => (
+        {dsThuoc.map((thuoc, index) => (
           <CardProduct
-            images="/images/index/products/product1.jpg"
+            images={`/images/product/${index + 1}.jpg`}
             price={thuoc.giaBanLe}
             title={thuoc.thuoc.tenThuoc}
             id={thuoc.thuoc.maThuoc}

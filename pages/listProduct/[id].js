@@ -19,7 +19,6 @@ const listProduct = () => {
       <Navigation />
       <Content />
       <Footer />
-      <BottomNavigation />
     </Fragment>
   );
 };

@@ -64,7 +64,6 @@ function ModalAddNhanVien(props) {
                       <input
                         {...register("name", {
                           required: true,
-                          maxLength: 20,
                         })}
                         type="text"
                         required
@@ -75,11 +74,6 @@ function ModalAddNhanVien(props) {
                     <div className="col-sm-9">
                       {errors?.name?.type === "required" && (
                         <span className="text-danger">Vui lòng nhập tên</span>
-                      )}
-                      {errors?.name?.type === "maxLength" && (
-                        <span className="text-danger">
-                          Tên không vượt qua 20 ký tự
-                        </span>
                       )}
                     </div>
                   </div>

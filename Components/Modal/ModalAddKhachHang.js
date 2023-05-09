@@ -165,7 +165,7 @@ function ModalAddKhachHang(props) {
                   <div className="row d-flex justify-content-center justify-content-between">
                     <button
                       className="btn btn-danger my-3 btn-sm  text-white fw-bold w-25"
-                      type="submit"
+                      type="button"
                       onClick={toggle}
                     >
                       Hủy

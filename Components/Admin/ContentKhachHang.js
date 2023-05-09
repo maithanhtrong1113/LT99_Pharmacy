@@ -10,6 +10,7 @@ import { BsThreeDots } from "react-icons/bs";
 import xuLyTenKhiQuaDai from "../utils/tooLong";
 import { getAllKhachHang, themKhachHang } from "@/api/khachHangApi";
 import ModalXemChiTietKH from "../Modal/ModalXemChiTietKH";
+import ModalChangIn4KhachHang from "../Modal/ModalChangIn4KhachHang";
 
 const ContentKhachHang = () => {
   const [dsKhachHang, setDsKhachHang] = useState([]);
@@ -63,9 +64,34 @@ const ContentKhachHang = () => {
         .catch((error) => console.error(error));
     }
   };
+  const changein4Customer = (data) => {
+    console.log(data);
+    fetch(
+      `http://localhost:8080/QLNT-Server/khach-hang/thong-tin-khach-hang/${data.maKhachHang}/cap-nhat-thong-tin-ca-nhan`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          soDienThoai: data.soDienThoai,
+          hoTen: data.hoTen,
+          email: data.email,
+          gioiTinh: data.gioiTinh,
+          ngaySinh: data.ngaySinh,
+          diaChi: data.diaChi,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setDsKhachHang([]);
+        fetchData();
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <Fragment>
-      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -124,6 +150,10 @@ const ContentKhachHang = () => {
                       </td>
                       <td>
                         <ModalXemChiTietKH khachHang={khachHang} />
+                        <ModalChangIn4KhachHang
+                          nhanVien={khachHang}
+                          changeNVSubmit={changein4Customer}
+                        />
                       </td>
                     </tr>
                   ))}

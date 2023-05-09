@@ -35,9 +35,9 @@ const Thuoc = (props) => {
               <MdOutlineClose className="text-danger fs-20" />
             )}
           </td>
-          <td>{thuoc.thuoc.congDung}</td>
-          <td>{thuoc.thuoc.soLuong}</td>
           <td>{thuoc.thuoc.loaiThuoc.tenLoai}</td>
+          <td>{thuoc.thuoc.soLuong}</td>
+
           <td className="d-flex">
             <ModalXemThuoc thuoc={thuoc.thuoc} />
             <button

@@ -110,7 +110,7 @@ const CartItem = (props) => {
               <div className="text-muted">Kho:{`${inventory}`}</div>
             </div>
           </td>
-          <td className=" text-info">{VND.format(total)}</td>
+          <td className=" text-blue-pastel">{VND.format(total)}</td>
           <td className="">
             <ModalItem
               content={<BsTrash className="pointer" />}

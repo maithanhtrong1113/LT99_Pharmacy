@@ -16,7 +16,7 @@ const index = (props) => {
         <GoTopPage />
         <Navigation />
         <Content />
-        <BottomNavigation />
+
         <Footer />
       </LoadingScreen>
     </Fragment>

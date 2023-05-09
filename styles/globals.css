@@ -604,8 +604,8 @@ body {
   padding-bottom: 8rem !important;
 }
 .localDiscount {
-  top: 5%;
-  right: 5%;
+  top: 3%;
+  right: 3%;
   z-index: 1000;
 }
 .adminIcon {
@@ -616,6 +616,11 @@ body {
 }
 .w-modalDiaChi {
   max-width: 700px !important;
+}
+.localIconSearch1 {
+  top: 30%;
+  right: 05%;
+  z-index: 1000;
 }
 @media screen and (max-width: 600px) {
   .localDiscount {
@@ -723,7 +728,108 @@ body {
   .localTimKiemshow {
     transform: scale(1);
   }
+  .localIconSearch1 {
+    top: 30%;
+    right: 10%;
+  }
 }
 .h-600 {
   height: 60px;
+}
+.sectionLogin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background: url("../public/images/bg-login.jpg") no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.inputboxx input {
+  color-scheme: dark;
+}
+
+.form-boxx {
+  position: relative;
+  width: 400px;
+  height: 450px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-log {
+  font-size: 2em;
+  color: #fff;
+  text-align: center;
+}
+.inputboxx {
+  position: relative;
+  margin: 30px 0;
+  width: 310px;
+  border-bottom: 2px solid #fff;
+}
+.inputboxx label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 1em;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.inputboxx input:focus ~ label,
+.inputboxx input:valid ~ label {
+  top: -10px;
+}
+.inputboxx input {
+  width: 100%;
+  height: 40px;
+  background: transparent !important;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 35px 0 5px;
+  color: #fff;
+}
+
+.forget {
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+.forget label input {
+  margin-right: 3px;
+}
+.forget label a {
+  color: #fff;
+  text-decoration: none;
+}
+.forget label a:hover {
+  text-decoration: underline;
+}
+.formLog button {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+}
+.inputboxx .icon {
+  position: absolute;
+  right: 8px;
+  color: #fff;
+  font-size: 1.2em;
+  top: 20px;
 }

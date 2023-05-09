@@ -4,6 +4,7 @@ import ModalChinhSuaLoaiThuoc from "../Modal/ModalChinhSuaLoaiThuoc";
 import ModalXemLoaiThuoc from "../Modal/ModalXemLoaiThuoc";
 import ModalXoaLoaiThuoc from "../Modal/ModalXoaLoaiThuoc";
 import { chinhSuaThuoc, xoaLoaiThuoc } from "@/api/loaiThuocApi";
+import { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
 
 const LoaiThuoc = (props) => {
   const xoaLoaiThuochanler = async (id) => {
@@ -25,7 +26,7 @@ const LoaiThuoc = (props) => {
         <tr key={loaiThuoc.maLoai}>
           <td>{loaiThuoc.maLoai}</td>
           <td>{loaiThuoc.tenLoai}</td>
-          <td>{loaiThuoc.moTaChung}</td>
+          <td>{xuLyDiaChiKhiQuaDai(loaiThuoc.moTaChung)}</td>
           <td className="d-flex">
             <ModalXemLoaiThuoc loaiThuoc={loaiThuoc} />
             <ModalChinhSuaLoaiThuoc

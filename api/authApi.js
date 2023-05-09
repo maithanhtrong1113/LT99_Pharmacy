@@ -15,7 +15,7 @@ export const Login = async (data) => {
     const res = await response.json();
     return res;
   } else {
-    toast.error("Vui lòng nhập đúng tài khoản và mật khẩu", {
+    toast.error("Thông tin đăng nhập không hợp lệ", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",

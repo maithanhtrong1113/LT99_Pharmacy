@@ -3,6 +3,7 @@ import { chinhSuaNhaCungCap, xoaNhaCungCap } from "@/api/nhaCungCapApi";
 import ModalChinhSuaNhaCungCap from "../Modal/ModalChinhSuaNhaCungCap";
 import ModalXoaNhaCungCap from "../Modal/ModalXoaNhaCungCap";
 import ModalCacLoThuoc from "../Modal/ModalCacLoThuoc";
+import xuLyTenKhiQuaDai, { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
 
 const NhaCungCap = (props) => {
   const xoaNhaCungCapHandler = async (id) => {
@@ -24,7 +25,7 @@ const NhaCungCap = (props) => {
         <tr key={nhaCungCap.maNhaCungCap}>
           <td>{nhaCungCap.maNhaCungCap}</td>
           <td>{nhaCungCap.tenNhaCungCap}</td>
-          <td>{nhaCungCap.diaChi}</td>
+          <td>{xuLyDiaChiKhiQuaDai(nhaCungCap.diaChi)}</td>
           <td>{nhaCungCap.soDienThoai}</td>
           <td className="d-flex">
             <ModalCacLoThuoc nhaCungCap={nhaCungCap} />

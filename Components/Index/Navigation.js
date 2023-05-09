@@ -15,7 +15,7 @@ import { authActions } from "../../store/auth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Image from "next/image";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import { BsArrowLeft, BsArrowRight, BsSearch } from "react-icons/bs";
 
 const Navigation = () => {
   const cartQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -140,16 +140,17 @@ const Navigation = () => {
               </div>
             )}
             <div className="col-5">
-              <div className="input-group  ">
+              <div className="input-group position-relative d-flex align-items-center">
                 <input
                   type="text"
                   className="form-input form-control mx-2 rounded "
-                  placeholder="Bạn đang muốn tìm gì..."
+                  placeholder=""
                   onFocus={() => setShow(true)}
                   onBlur={() => setShow(false)}
                   value={searchTerm}
                   onChange={handleInputChange}
                 />
+                <BsSearch className="position-absolute localIconSearch1" />
               </div>
             </div>
             <div
@@ -229,7 +230,7 @@ const Navigation = () => {
             </div>
 
             <div className="col-lg-5 position-relative formTimKiem">
-              <div className="input-group  ">
+              <div className="input-group position-relative d-flex align-items-center ">
                 <input
                   type="text"
                   className="form-input form-control mx-2 rounded "
@@ -239,6 +240,7 @@ const Navigation = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                 />
+                <BsSearch className="position-absolute localIconSearch1 " />
               </div>
             </div>
 
@@ -248,6 +250,14 @@ const Navigation = () => {
               } `}
             >
               <div className="p-3 border rounded bg-white w-100 shadow">
+                {dsThuoc.length === 0 && searchTerm !== null && (
+                  <span className="fw-bold">Không tìm thấy sản phẩm</span>
+                )}
+                {dsThuoc.length === 0 && searchTerm === null && (
+                  <span className="fw-bold">
+                    Nhập tên sản phẩm bạn muốn tìm
+                  </span>
+                )}
                 {dsThuoc.map((thuoc) => (
                   <div className="row w-100  px-0 mx-0">
                     <Link
