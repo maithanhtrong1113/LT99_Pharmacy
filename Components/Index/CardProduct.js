@@ -70,11 +70,12 @@ const CardProduct = (props) => {
             </div>
           </Link>
           <button
-            className="btn bg-blue-dark bg-blue-darkHover   my-2 mx-2 shadow fw-bold fs-12 d-flexalign-items-center text-white"
+            className="btn  bg-blue-dark bg-blue-darkHover my-2 mx-2 shadow fw-bold fs-12 d-flexalign-items-center text-dark"
             onClick={addToCart}
           >
             Thêm vào giỏ hàng
           </button>
+          {/*  */}
         </div>
       </div>
     </Fragment>

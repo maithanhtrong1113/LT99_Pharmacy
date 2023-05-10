@@ -59,6 +59,7 @@ body {
 .text-blue-pastel {
   color: #10b3ad;
 }
+
 .imageHot {
   width: 300px;
   z-index: 1000;
@@ -218,7 +219,30 @@ body {
 .bg-blue-darkHover:hover {
   background-color: rgb(45, 188, 188);
 }
+.btn-animate {
+  background-color: #4caf50; /* Màu nền ban đầu */
+  background-image: linear-gradient(
+    to right,
+    #4caf50,
+    #8bc34a
+  ); /* Gradient màu nền */
 
+  background-position: -100% 0; /* Đặt vị trí ban đầu của màu nền ở bên trái ngoài */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-position 0.5s ease; /* Thêm hiệu ứng transition cho background-position */
+}
+
+.btn-animate:hover {
+  background-position: 0 0; /* Thay đổi vị trí của màu nền để nó di chuyển sang phải */
+}
 .btnSoLuong {
   width: 30px !important;
 }

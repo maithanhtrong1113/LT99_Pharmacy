@@ -31,9 +31,9 @@ const ListCard = () => {
           width={300}
           height={50}
         />
-        {dsThuoc.map((thuoc, index) => (
+        {dsThuoc.map((thuoc) => (
           <CardProduct
-            images={`/images/product/${index + 1}.jpg`}
+            images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
             price={thuoc.giaBanLe}
             title={thuoc.thuoc.tenThuoc}
             id={thuoc.thuoc.maThuoc}
