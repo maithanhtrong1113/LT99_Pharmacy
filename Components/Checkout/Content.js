@@ -17,6 +17,7 @@ const Content = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const totalPriceCartt = useSelector((state) => state.cart.totalPriceCart);
   const [thongTinKhachHang, setThongTinKhachHang] = useState("");
+  const [cartDonHang, setCartDonHang] = useState([]);
   const xuliGia = (data) => {
     console.log(data);
     if (data === "nhanh") {
@@ -68,6 +69,7 @@ const Content = () => {
             });
             setTimeout(() => {
               router.push(`/donHang/${data.maDonHang}`);
+              dispatch(cartActions.copyAllItem());
               dispatch(cartActions.removeAllItem());
             }, 500);
           });

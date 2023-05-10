@@ -56,7 +56,7 @@ function CountdownTimer() {
           Deal khủng không ngờ - giá sốc mỗi giờ
         </h5>
         <div className="col-12 bg-pastel-blue-trans p-2 rounded  shadow ">
-          <div className="container-fluid p-3   ">
+          <div className="container-fluid    ">
             {windowWidth > 1000 && (
               <div className="row text-dark d-flex justify-content-between text-white bg-blue-dark p-3 rounded  shadow">
                 <div className="d-flex col-8 flex-column  justify-content-center">
@@ -76,7 +76,7 @@ function CountdownTimer() {
               </div>
             )}
             {windowWidth < 1000 && (
-              <div className="row text-dark d-flex justify-content-between text-white bg-blue-dark p-3 rounded  shadow">
+              <div className="row text-dark d-flex justify-content-between text-white bg-blue-dark rounded  shadow">
                 <div className="d-flex col-12 flex-column  justify-content-start px-0">
                   <h4 className="fw-bold">00:00 - 23:59</h4>
                   <h6 className="fw-bold">Đang diễn ra</h6>

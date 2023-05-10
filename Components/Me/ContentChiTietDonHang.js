@@ -14,11 +14,13 @@ import {
 } from "@/api/donHangApi";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const ContentChiTietDonHang = () => {
   const router = useRouter();
   const [chiTiet, setChiTiet] = useState({});
   const { id } = router.query;
+  const cartItemsCopy = useSelector((state) => state.cart.itemsCopy);
 
   async function fetchData() {
     if (typeof id !== null || typeof id !== undefined) {
@@ -215,7 +217,7 @@ const ContentChiTietDonHang = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
+                        {/* {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
                           <tr>
                             <td>
                               <Link href={`/product/${thuoc.thuoc.maThuoc}`}>
@@ -237,13 +239,38 @@ const ContentChiTietDonHang = () => {
                             <td>{thuoc.soLuong}</td>
                             <td>{VND.format(thuoc.thanhTien)}</td>
                           </tr>
+                        ))} */}
+                        {cartItemsCopy.map((thuoc) => (
+                          <tr>
+                            <td>
+                              <Link href={`/product/${thuoc.id}`}>
+                                <img
+                                  src={thuoc.image}
+                                  className="img-fluid sizeImgCart"
+                                />
+                              </Link>
+                            </td>
+                            <td>
+                              <Link
+                                href={`/product/${thuoc.id}`}
+                                className="text-decoration-none text-blue-pastel"
+                              >
+                                {thuoc.title}
+                              </Link>
+                            </td>
+                            <td>{VND.format(thuoc.price)}</td>
+                            <td>{thuoc.quantity}</td>
+                            <td className="fw-bold">
+                              {VND.format(thuoc.totalPrice)}
+                            </td>
+                          </tr>
                         ))}
                       </tbody>
                     </table>
                   )}
                   {windowWidth < 1000 && (
                     <div className="container">
-                      {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
+                      {/* {chiTiet.hoaDon.chiTietDonHang.map((thuoc) => (
                         <div className="row">
                           <div className="col-5">
                             <Link href={`/product/${thuoc.thuoc.maThuoc}`}>
@@ -264,6 +291,31 @@ const ContentChiTietDonHang = () => {
                               <span>{VND.format(thuoc.donGia) + " "}</span>
                               <span>x</span>
                               <span>{" " + thuoc.soLuong}</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))} */}
+                      {cartItemsCopy.map((thuoc) => (
+                        <div className="row">
+                          <div className="col-5">
+                            <Link href={`/product/${thuoc.id}`}>
+                              <img
+                                src={`/images/index/products/product1.jpg`}
+                                className="img-fluid sizeImgCart"
+                              />
+                            </Link>
+                          </div>
+                          <div className="col-7 d-flex  flex-column">
+                            <Link
+                              href={`/product/${thuoc.id}`}
+                              className="text-decoration-none"
+                            >
+                              {thuoc.title}
+                            </Link>
+                            <div>
+                              <span>{VND.format(thuoc.price) + " "}</span>
+                              <span>x</span>
+                              <span>{" " + thuoc.quantity}</span>
                             </div>
                           </div>
                         </div>

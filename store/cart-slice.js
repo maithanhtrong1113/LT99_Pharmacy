@@ -6,6 +6,7 @@ const cartSlice = createSlice({
     items: [],
     totalQuantity: 0,
     totalPriceCart: 0,
+    itemsCopy: [],
   },
   reducers: {
     replaceCart(state, action) {
@@ -55,6 +56,9 @@ const cartSlice = createSlice({
       state.items = [];
       state.totalQuantity = 0;
       state.totalPriceCart = 0;
+    },
+    copyAllItem(state) {
+      state.itemsCopy = state.items;
     },
     removeItemById(state, action) {
       const id = action.payload;
