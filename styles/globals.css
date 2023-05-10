@@ -59,6 +59,12 @@ body {
 .text-blue-pastel {
   color: #10b3ad;
 }
+.imageHot {
+  width: 300px;
+  z-index: 1000;
+  right: 40%;
+  top: -3%;
+}
 .bg-blue-dark {
   background-color: rgb(58, 200, 200);
 }

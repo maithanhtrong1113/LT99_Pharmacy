@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import CardProduct from "./CardProduct";
+import Image from "next/image";
 
 const ListCard = () => {
   const [dsThuoc, setDsThuoc] = useState([]);
@@ -23,12 +24,13 @@ const ListCard = () => {
   }, []);
   return (
     <Fragment>
-      <div className="row my-3 my-1i">
-        <div className="col-12">
-          <h3 className="fw-bold text-blue-pastel">Sản phẩm bán chạy</h3>
-        </div>
-      </div>
-      <div className="row my-2">
+      <div className="row my-2 bg-pastel-blue-trans pt-5 mt-3 position-relative">
+        <Image
+          src="/images/ho.png"
+          className="imageHot position-absolute z-index "
+          width={300}
+          height={50}
+        />
         {dsThuoc.map((thuoc, index) => (
           <CardProduct
             images={`/images/product/${index + 1}.jpg`}
