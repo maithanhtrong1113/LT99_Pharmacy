@@ -8,6 +8,7 @@ import { BsSearch } from "react-icons/bs";
 import NguoiDung from "./NguoiDung";
 import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
 import { getAllThuoc, getThuocTheoLoai, themThuoc } from "@/api/thuocApi";
+import { useSelector } from "react-redux";
 
 const ContentThuoc = () => {
   const {
@@ -20,6 +21,8 @@ const ContentThuoc = () => {
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [timeoutId, setTimeoutId] = useState(null);
+  const role = useSelector((state) => state.auth.role);
+
   //Lấy all loại thuốc
 
   async function fetchData() {
@@ -130,9 +133,11 @@ const ContentThuoc = () => {
                     </select>
                   </form>
                 </div>
-                <div className="col-2">
-                  <ModalAddThuoc submitHandler={addThuocHandler} />
-                </div>
+                {role === 1 && (
+                  <div className="col-2">
+                    <ModalAddThuoc submitHandler={addThuocHandler} />
+                  </div>
+                )}
               </div>
               <table className="table table-striped">
                 <thead>

@@ -130,7 +130,7 @@ const Footer = () => {
 
         <div className="col-12 ">
           <p className="fw-bold text-dark text-center">
-            © Copyright 2023 LT99pharmacy.com. All rights reserved.
+            © Copyright 2023 lt-99-pharmacy.vercel.app. All rights reserved.
           </p>
         </div>
       </div>

@@ -183,16 +183,17 @@ const Sidebar = () => {
               </Link>
             </li>
           )}
-
-          <li className={`${activeThongKe} mb-3`}>
-            <Link
-              href="/admin/thongKe"
-              className="btn btn-toggle w-100 rounded fw-bold collapsed text-primary  d-flex align-items-center   "
-            >
-              <BsFillBarChartFill className="text-primary me-2 fs-icon-SideBar" />{" "}
-              Thống Kê
-            </Link>
-          </li>
+          {role === 1 && (
+            <li className={`${activeThongKe} mb-3`}>
+              <Link
+                href="/admin/thongKe"
+                className="btn btn-toggle w-100 rounded fw-bold collapsed text-primary  d-flex align-items-center   "
+              >
+                <BsFillBarChartFill className="text-primary me-2 fs-icon-SideBar" />{" "}
+                Thống Kê
+              </Link>
+            </li>
+          )}
         </ul>
         <div className="position-absolute localFooter bg-secondary">
           <Link href="/" className="w-100 d-block text-center ">

@@ -26,14 +26,18 @@ function ModalChangIn4KhachHang(props) {
   const [diaChi, setDiaChi] = useState(nhanVien.diaChi);
   const [selectedGT, setGT] = useState(nhanVien.gioiTinh);
   const [email, setEmail] = useState(nhanVien.email);
-  const dateParts = nhanVien.ngaySinh.split("/");
+  const dateParts =
+    nhanVien.ngaySinh !== null
+      ? nhanVien.ngaySinh.split("/")
+      : new Date().toLocaleDateString("vi-VN");
   const onSubmit = (data) => {
     data.date = new Date(data.date).toLocaleDateString("vi-VN");
-    const trung =
-      data.date === new Date().toLocaleDateString("vi-VN") ? true : false;
-    trung === true
-      ? (data.ngaySinh = props.nhanVien.ngaySinh)
-      : (data.ngaySinh = data.date);
+    // const trung =
+    //   data.date === new Date().toLocaleDateString("vi-VN") ? true : false;
+    // trung === true
+    //   ? (data.ngaySinh = props.nhanVien.ngaySinh)
+    //   : (data.ngaySinh = data.date);
+    data.ngaySinh = nhanVien.ngaySinh;
     data.gioiTinh = selectedGT;
     data.maKhachHang = nhanVien.maKhachHang;
     props.changeNVSubmit(data);
@@ -159,7 +163,7 @@ function ModalChangIn4KhachHang(props) {
                       </select>
                     </div>
                   </div>
-                  <div className="form-group row my-2 d-flex align-items-center">
+                  {/* <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Ngày Sinh:
                     </label>
@@ -187,7 +191,7 @@ function ModalChangIn4KhachHang(props) {
                         )}
                       />
                     </div>
-                  </div>
+                  </div> */}
                   <div className="form-group row my-2 d-flex align-items-center">
                     <label className="col-sm-4 col-form-label fw-bold">
                       Email

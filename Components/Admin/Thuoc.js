@@ -6,6 +6,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { BsCheck2 } from "react-icons/bs";
 import ModalXemThuoc from "../Modal/ModalXemThuoc";
 import xuLyTenKhiQuaDai, { xuLyDiaChiKhiQuaDai } from "../utils/tooLong";
+import { useSelector } from "react-redux";
 const Thuoc = (props) => {
   const router = useRouter();
   const handlerInfo = (data) => {
@@ -16,6 +17,7 @@ const Thuoc = (props) => {
     const res = await xoaThuoc(data);
     props.setDsThuoc(res);
   };
+  const role = useSelector((state) => state.auth.role);
 
   return (
     <Fragment>
@@ -40,16 +42,20 @@ const Thuoc = (props) => {
 
           <td className="d-flex">
             <ModalXemThuoc thuoc={thuoc.thuoc} />
-            <button
-              className="btn btn-sm btn-warning ms-2"
-              onClick={() => handlerInfo(thuoc.thuoc.maThuoc)}
-            >
-              Chỉnh sửa
-            </button>
-            <ModalXoaThuoc
-              maThuoc={thuoc.thuoc.maThuoc}
-              OnClickYes={DeleteHandler}
-            />
+            {role === 1 && (
+              <button
+                className="btn btn-sm btn-warning ms-2"
+                onClick={() => handlerInfo(thuoc.thuoc.maThuoc)}
+              >
+                Chỉnh sửa
+              </button>
+            )}
+            {role == 1 && (
+              <ModalXoaThuoc
+                maThuoc={thuoc.thuoc.maThuoc}
+                OnClickYes={DeleteHandler}
+              />
+            )}
           </td>
         </tr>
       ))}
