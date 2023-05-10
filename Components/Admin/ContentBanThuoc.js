@@ -379,7 +379,7 @@ const ContentBanThuoc = () => {
         });
       });
   };
-
+  const [searchShow, setSearchShow] = useState(false);
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -428,7 +428,7 @@ const ContentBanThuoc = () => {
                     <BsSearch className="position-absolute localIconSearch text-dark shadow pointer " />
 
                     {dsKhachHang.length !== 0 && (
-                      <div className="position-absolute container border rounded bg-light">
+                      <div className="position-absolute container border rounded bg-light ">
                         {dsKhachHang.map((khachHang) => (
                           <button
                             type="button"
@@ -664,13 +664,15 @@ const ContentBanThuoc = () => {
                       placeholder="Nhập tên hoặc công dụng của thuốc muốn tìm"
                       className="form-control w-100 px-2 shadow"
                       value={searchTerm}
+                      // onBlur={() => setSearchShow(false)}
+                      onFocus={() => setSearchShow(true)}
                       onChange={handleInputChange}
                     />
 
                     <BsSearch className="position-absolute localIconSearch text-dark shadow pointer" />
 
-                    {dsThuoc.length !== 0 && (
-                      <div className="position-absolute container border rounded bg-light">
+                    {dsThuoc.length !== 0 && searchShow && (
+                      <div className="position-absolute container border rounded bg-light widthThuoc">
                         {dsThuoc.map((thuoc) => (
                           <button
                             type="button"

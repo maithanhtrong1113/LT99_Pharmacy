@@ -31,7 +31,7 @@ function ModalChinhSuaNuocSanXuat(props) {
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold"> Chỉnh Sửa Nước Sản Xuất</span>
+          <span className="fw-bold"> Chỉnh Sửa Nơi Sản Xuất</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -40,7 +40,7 @@ function ModalChinhSuaNuocSanXuat(props) {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
                     <label className="col-sm-4 col-form-label fw-bold">
-                      Tên Nước Sản Xuất:
+                      Tên Nơi Sản Xuất:
                     </label>
                     <div className="col-sm-8">
                       <input
@@ -58,7 +58,7 @@ function ModalChinhSuaNuocSanXuat(props) {
                     <div className="col-sm-8">
                       {errors?.tenNuoc?.type === "required" && (
                         <span className="text-danger">
-                          Vui lòng nhập tên nước sản xuất
+                          Vui lòng nhập tên nơi sản xuất
                         </span>
                       )}
                     </div>
@@ -76,7 +76,7 @@ function ModalChinhSuaNuocSanXuat(props) {
                       className="btn btn-info my-3 btn-sm  text-white fw-bold w-50"
                       type="submit"
                     >
-                      Chỉnh Sửa Ca Làm Việc
+                      Chỉnh Sửa Nơi Sản Xuất
                     </button>
                   </div>
                 </form>

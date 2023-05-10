@@ -53,7 +53,7 @@ const Sidebar = () => {
     } else if (router.pathname === "/admin/hoaDon") {
       setActiveHoaDon("bg-info rounded");
     } else if (router.pathname === "/admin/banThuoc") {
-      setActiveBanThuoc("bg-info rounded");
+      setActiveBanThuoc("bg-info rounded ");
     } else if (router.pathname === "/admin/donHang") {
       setActiveDonHang("bg-info rounded");
     } else if (router.pathname === "/admin/caLamViec") {
@@ -178,8 +178,8 @@ const Sidebar = () => {
                 href="/admin/nuocSanXuat"
                 className="btn btn-toggle w-100 rounded fw-bold collapsed text-primary d-flex align-items-center   "
               >
-                <BsFlagFill className="text-primary me-2 fs-icon-SideBar" />{" "}
-                Nước Sản Xuất
+                <BsFlagFill className="text-primary me-2 fs-icon-SideBar" /> Nơi
+                Sản Xuất
               </Link>
             </li>
           )}

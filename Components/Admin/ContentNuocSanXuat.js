@@ -43,8 +43,8 @@ const ContentNuocSanXuat = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">Mã Nước Sản Xuất</th>
-                    <th scope="col">Tên Nước Sản Xuất</th>
+                    <th scope="col">Mã Nơi Sản Xuất</th>
+                    <th scope="col">Tên Nơi Sản Xuất</th>
                   </tr>
                 </thead>
                 <tbody>

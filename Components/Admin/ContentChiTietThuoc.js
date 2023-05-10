@@ -588,7 +588,7 @@ const ContentChiTietThuoc = (props) => {
                         <th className="pe-5">Giá Bán Sỉ</th>
                         <th className="pe-5">Giá Bán Lẻ</th>
                         <th className="pe-5">Nhà Cung Cấp</th>
-                        <th className="pe-5">Nước Sản Xuất</th>
+                        <th className="pe-5">Nơi Sản Xuất</th>
                       </tr>
                     </thead>
 
@@ -853,7 +853,7 @@ const ContentChiTietThuoc = (props) => {
                   {/* nước sản xuất */}
                   <div className="form-group row my-2  d-flex align-items-center">
                     <label className="col-sm-3 col-form-label fw-bold text-info">
-                      Nước Sản Xuất
+                      Nơi Sản Xuất
                     </label>
                     <div className="col-sm-3">
                       <select

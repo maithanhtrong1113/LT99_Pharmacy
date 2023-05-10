@@ -19,11 +19,11 @@ function ModalAddNuocSanXuat(props) {
   return (
     <Fragment>
       <Button onClick={toggle} className="btn bg-primary btn-sm text-white">
-        Thêm nước sản xuất
+        Thêm nơi sản xuất
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold"> Thêm nước sản xuất</span>
+          <span className="fw-bold"> Thêm nơi sản xuất</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">
@@ -32,7 +32,7 @@ function ModalAddNuocSanXuat(props) {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                   <div className="form-group row my-2">
                     <label className="col-sm-5 col-form-label fw-bold">
-                      Tên nước sản xuất:
+                      Tên nơi sản xuất:
                     </label>
                     <div className="col-sm-7">
                       <input
@@ -48,7 +48,7 @@ function ModalAddNuocSanXuat(props) {
                     <div className="col-sm-7">
                       {errors?.tenNuoc?.type === "required" && (
                         <span className="text-danger">
-                          Vui lòng nhập tên nước sản xuất
+                          Vui lòng nhập tên nơi sản xuất
                         </span>
                       )}
                     </div>
@@ -71,7 +71,7 @@ function ModalAddNuocSanXuat(props) {
                         className="btn btn-info my-3 btn-sm text-white fw-bold w-100"
                         type="submit"
                       >
-                        Thêm nước sản xuất
+                        Thêm nơi sản xuất
                       </button>
                     </div>
                   </div>

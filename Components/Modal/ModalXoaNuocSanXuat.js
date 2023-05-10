@@ -16,9 +16,9 @@ function ModalXoaNuocSanXuat(props) {
         Xóa
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>Xóa nước sản xuất</ModalHeader>
+        <ModalHeader toggle={toggle}>Xóa nơi sản xuất</ModalHeader>
         <ModalBody>
-          <p> Bạn có muốn xóa nước sản xuất không?</p>
+          <p> Bạn có muốn xóa nơi sản xuất không?</p>
         </ModalBody>
         <ModalFooter className="d-flex justify-content-between">
           <Button color="secondary" onClick={toggle}>

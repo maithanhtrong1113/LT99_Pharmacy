@@ -16,7 +16,7 @@ const NuocSanXuat = (props) => {
     <Fragment>
       {props.nuocSanXuat.length === 0 && (
         <tr className="text-dark">
-          <td>Không tìm thấy nước sản xuất</td>
+          <td>Không tìm thấy nơi sản xuất</td>
         </tr>
       )}
       {props.nuocSanXuat.map((nuocSanXuat) => (

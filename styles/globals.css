@@ -59,7 +59,9 @@ body {
 .text-blue-pastel {
   color: #10b3ad;
 }
-
+.widthThuoc {
+  width: 900px !important;
+}
 .imageHot {
   width: 300px;
   z-index: 1000;
