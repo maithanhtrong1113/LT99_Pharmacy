@@ -706,7 +706,12 @@ body {
     top: 5%;
     right: 10%;
   }
-
+  .imageHot {
+    width: 300px;
+    z-index: 1000;
+    right: 10%;
+    top: -1.5%;
+  }
   .bg-cart {
     font-size: 9px;
     background-color: #da2319;
