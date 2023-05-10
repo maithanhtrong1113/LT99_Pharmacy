@@ -46,7 +46,9 @@ const Content = () => {
       id: thuoc.thuoc.maThuoc,
       title: thuoc.thuoc.tenThuoc,
       price: thuoc.giaBanLe,
-      images: "/images/index/products/product1.jpg",
+      images: `/images/product/${thuoc.thuoc.maThuoc}.jpg`,
+      donViTinh: thuoc.thuoc.donViTinh,
+      inventory: thuoc.thuoc.soLuong,
     };
     dispatch(cartActions.addItemToCart(obj));
   };
@@ -81,7 +83,7 @@ const Content = () => {
                 {Object.keys(thuoc).length !== 0 && (
                   <>
                     <div className="col-4 rounded">
-                      <div className="card position-relative">
+                      <div className="card position-relative shadow">
                         <div className="position-absolute localDiscount fs-12">
                           <span className="text-dark rounded-circle bg-danger p-2 text-white fs-12">
                             -10%
@@ -97,7 +99,7 @@ const Content = () => {
                       <div className="container">
                         <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
                         <div className="row">
-                          <div className="col-8">
+                          <div className="col-12">
                             <div className="border rounded p-2 my-3 shadow">
                               <BsStarFill className="text-warning" />
                               <BsStarFill className="text-warning" />
@@ -262,111 +264,114 @@ const Content = () => {
             </div>
             <div className="container">
               <div className="row">
-                <div className="col-12">
-                  <div className="card ">
-                    <img
-                      src="/images/index/products/product1.jpg"
-                      className="img-fluid"
-                    />
-                  </div>
-                </div>
-                <div className="col-12 my-2">
-                  {Object.keys(thuoc).length !== 0 && (
-                    <div className="container">
-                      <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="border rounded p-2 mt-1 mb-3 shadow">
-                            <BsStarFill className="text-warning" />
-                            <BsStarFill className="text-warning" />
-                            <BsStarFill className="text-warning" />
-                            <BsStarFill className="text-warning" />
-                            <BsStarHalf className="text-warning" />
-                            <h4 className="text-success me-2 fw-bold mb-0">
-                              {VND.format(thuoc.giaBanLe)}
-                            </h4>
-                            <span className="fw-bold">Giá thị trường:</span>
-                            <span className="text-success  bg-ligh w-100">
-                              {` ${VND.format(
-                                thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
-                              )}`}
-                            </span>
-                            <p className="text-muted rounded mb-0 fst-italic bg-info mt-2">
-                              {`Tiết kiệm: ${VND.format(
-                                (thuoc.giaBanLe * 5) / 100
-                              )}(-5%)`}
-                            </p>
-                          </div>
-                          <p>{thuoc.thuoc.moTa}</p>
+                {Object.keys(thuoc).length !== 0 && (
+                  <>
+                    {" "}
+                    <div className="col-12">
+                      <div className="card ">
+                        <img
+                          src="/images/index/products/product1.jpg"
+                          className="img-fluid"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-12 my-2">
+                      <div className="container">
+                        <h4 className="fw-bold">{thuoc.thuoc.tenThuoc}</h4>
+                        <div className="row">
+                          <div className="col-12">
+                            <div className="border rounded p-2 mt-1 mb-3 shadow">
+                              <BsStarFill className="text-warning" />
+                              <BsStarFill className="text-warning" />
+                              <BsStarFill className="text-warning" />
+                              <BsStarFill className="text-warning" />
+                              <BsStarHalf className="text-warning" />
+                              <h4 className="text-success me-2 fw-bold mb-0">
+                                {VND.format(thuoc.giaBanLe)}
+                              </h4>
+                              <span className="fw-bold">Giá thị trường:</span>
+                              <span className="text-success  bg-ligh w-100">
+                                {` ${VND.format(
+                                  thuoc.giaBanLe + (thuoc.giaBanLe * 5) / 100
+                                )}`}
+                              </span>
+                              <p className="text-muted rounded mb-0 fst-italic bg-info mt-2">
+                                {`Tiết kiệm: ${VND.format(
+                                  (thuoc.giaBanLe * 5) / 100
+                                )}(-5%)`}
+                              </p>
+                            </div>
+                            <p>{thuoc.thuoc.moTa}</p>
 
-                          <div className="fixed-bottom bg-light py-3 d-flex justify-content-between px-3">
-                            <button
-                              className="btn btn-info mx-4 text-white"
-                              onClick={() => {
-                                addToCart();
-                                router.push("/checkout");
-                              }}
-                            >
-                              Mua Ngay
-                            </button>
-                            <button
-                              className="btn btn-warning text-dark"
-                              onClick={() => {
-                                toast.success(
-                                  "Thêm sản phẩm vào giỏ hàng thành công",
-                                  {
-                                    position: toast.POSITION.TOP_RIGHT,
-                                    autoClose: 500,
-                                    theme: "light",
-                                  }
-                                );
-                                addToCart();
-                              }}
-                            >
-                              <BsCartPlus /> Thêm vào giỏ hàng
-                            </button>
+                            <div className="fixed-bottom bg-light py-3 d-flex justify-content-between px-3">
+                              <button
+                                className="btn btn-info mx-4 text-white"
+                                onClick={() => {
+                                  addToCart();
+                                  router.push("/checkout");
+                                }}
+                              >
+                                Mua Ngay
+                              </button>
+                              <button
+                                className="btn btn-warning text-dark"
+                                onClick={() => {
+                                  toast.success(
+                                    "Thêm sản phẩm vào giỏ hàng thành công",
+                                    {
+                                      position: toast.POSITION.TOP_RIGHT,
+                                      autoClose: 500,
+                                      theme: "light",
+                                    }
+                                  );
+                                  addToCart();
+                                }}
+                              >
+                                <BsCartPlus /> Thêm vào giỏ hàng
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-12">
-                          <div className="border rounded my-3 p-3 pb-3 ">
-                            <h5 className="fw-bold pb-3">
-                              Các hình thức giao hàng
-                            </h5>
-                            <span className="p-2 rounded bg-primary  me-4 text-white ">
-                              Giao hàng tiết kiệm
-                            </span>
-                            <span className="p-2 rounded bg-primary text-white ">
-                              Ahamove
-                            </span>
-                          </div>
-                          <div className="container border rounded my-3 p-2 pb-3 ">
-                            <div className="row">
-                              <div className="col-4 text-center fw-bold">
-                                <CartIcon />
-                                <span className="my-2 fs-12 ">
-                                  Miễn phí vận chuyển cho đơn hàng từ 300.000đ
-                                </span>
-                              </div>
-                              <div className="col-4 text-center fw-bold ">
-                                <TuVanIcon />
-                                <span className="my-2 fs-12">
-                                  Đủ thuốc tốt tư vấn nhiệt tình
-                                </span>
-                              </div>
-                              <div className="col-4 text-center fw-bold">
-                                <TichDiem />
-                                <span className="my-2 fs-12">
-                                  Tích điểm thưởng đổi thưởng và sử dụng điểm
-                                  cho mọi giao dịch
-                                </span>
+                          <div className="col-12">
+                            <div className="border rounded my-3 p-3 pb-3 ">
+                              <h5 className="fw-bold pb-3">
+                                Các hình thức giao hàng
+                              </h5>
+                              <span className="p-2 rounded bg-primary  me-4 text-white ">
+                                Giao hàng tiết kiệm
+                              </span>
+                              <span className="p-2 rounded bg-primary text-white ">
+                                Ahamove
+                              </span>
+                            </div>
+                            <div className="container border rounded my-3 p-2 pb-3 ">
+                              <div className="row">
+                                <div className="col-4 text-center fw-bold">
+                                  <CartIcon />
+                                  <span className="my-2 fs-12 ">
+                                    Miễn phí vận chuyển cho đơn hàng từ 300.000đ
+                                  </span>
+                                </div>
+                                <div className="col-4 text-center fw-bold ">
+                                  <TuVanIcon />
+                                  <span className="my-2 fs-12">
+                                    Đủ thuốc tốt tư vấn nhiệt tình
+                                  </span>
+                                </div>
+                                <div className="col-4 text-center fw-bold">
+                                  <TichDiem />
+                                  <span className="my-2 fs-12">
+                                    Tích điểm thưởng đổi thưởng và sử dụng điểm
+                                    cho mọi giao dịch
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  )}
-                </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

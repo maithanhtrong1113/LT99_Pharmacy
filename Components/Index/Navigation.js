@@ -64,7 +64,7 @@ const Navigation = () => {
   for (let i = 1; i <= loaiThuoc.length; i++) {
     danhMuc.push(
       <li className="mb-1">
-        <Link href={`listProduct/${loaiThuoc[i - 1].maLoai}`}>
+        <Link href={`/listProduct/${loaiThuoc[i - 1].maLoai}`}>
           <button className="btn btn-toggle  rounded ">
             {loaiThuoc[i - 1].tenLoai}
           </button>

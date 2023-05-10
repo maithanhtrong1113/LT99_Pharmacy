@@ -186,7 +186,7 @@ const Products = (props) => {
                 <div className="row">
                   {dsThuoc.map((thuoc, index) => (
                     <CardProduct
-                      images={`/images/product/${index + 1}.jpg`}
+                      images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
@@ -198,14 +198,14 @@ const Products = (props) => {
               )}
               {sorted && (
                 <div className="row">
-                  {dsThuocLoc.map((thuoc, index) => (
+                  {dsThuocLoc.map((thuoc) => (
                     <CardProduct
-                      images={`/images/product/${index + 1}.jpg`}
+                      images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
                       donViTinh={thuoc.thuoc.donViTinh}
-                      inventory={thuoc.thuoc.inventory}
+                      inventory={thuoc.thuoc.soLuong}
                     />
                   ))}
                 </div>

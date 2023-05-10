@@ -96,7 +96,7 @@ function CountdownTimer() {
             <div className="row mt-4 d-flex ">
               {dsThuoc.map((thuoc, index) => (
                 <CardProduct
-                  images={`/images/product/${index + 1}.jpg`}
+                  images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                   price={thuoc.giaBanLe}
                   title={thuoc.thuoc.tenThuoc}
                   id={thuoc.thuoc.maThuoc}
