@@ -15,7 +15,11 @@ const Thuoc = (props) => {
 
   const DeleteHandler = async (data) => {
     const res = await xoaThuoc(data);
-    props.setDsThuoc(res);
+    props.setTotal(Math.ceil(res.length / 12));
+    if (Math.ceil(res.length / 12) < props.page) {
+      props.setPage(Math.ceil(res.length / 12));
+    }
+    props.setDsThuoc(props.getItems(res, props.page));
   };
   const role = useSelector((state) => state.auth.role);
 
