@@ -137,6 +137,14 @@ const Content = () => {
                               </div>
                               <div className="row my-3">
                                 <div className="col-4 fw-bold">
+                                  Quy Cách Đóng Gói:
+                                </div>
+                                <div className="col-8">
+                                  <span>{thuoc.thuoc.quyCachDongGoi}</span>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">
                                   Cách Sử Dụng:
                                 </div>
                                 <div className="col-8">
@@ -165,7 +173,7 @@ const Content = () => {
                               </div>
                             </div>
 
-                            <div className="w-100 d-flex justify-content-between ">
+                            <div className="w-100 d-flex justify-content-end ">
                               <button
                                 className="btn btn-info me-4 text-white"
                                 onClick={() => {
@@ -268,9 +276,9 @@ const Content = () => {
                   <>
                     {" "}
                     <div className="col-12">
-                      <div className="card ">
+                      <div className="card shadow ">
                         <img
-                          src="/images/index/products/product1.jpg"
+                          src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                           className="img-fluid"
                         />
                       </div>
@@ -301,8 +309,55 @@ const Content = () => {
                                 )}(-5%)`}
                               </p>
                             </div>
-                            <p>{thuoc.thuoc.moTa}</p>
-
+                            <div className="container-fluid px-0">
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">Danh Mục:</div>
+                                <div className="col-8">
+                                  <Link
+                                    href={`/listProduct/${thuoc.thuoc.loaiThuoc.maLoai}`}
+                                    className="text-blue-pastel fw-bold text-decoration-none"
+                                  >
+                                    {thuoc.thuoc.loaiThuoc.tenLoai}
+                                  </Link>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">
+                                  Quy Cách Đóng Gói:
+                                </div>
+                                <div className="col-8">
+                                  <span>{thuoc.thuoc.quyCachDongGoi}</span>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">
+                                  Cách Sử Dụng:
+                                </div>
+                                <div className="col-8">
+                                  <span>{thuoc.thuoc.huongDanSuDung}</span>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">Liều Lượng:</div>
+                                <div className="col-8">
+                                  <span>{thuoc.thuoc.lieuLuong}</span>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">
+                                  Tác Dụng Phụ:
+                                </div>
+                                <div className="col-8">
+                                  <span>{thuoc.thuoc.tacDungPhu}</span>
+                                </div>
+                              </div>
+                              <div className="row my-3">
+                                <div className="col-4 fw-bold">Mô tả ngắn:</div>
+                                <div className="col-8">
+                                  <p>{thuoc.thuoc.moTa}</p>
+                                </div>
+                              </div>
+                            </div>
                             <div className="fixed-bottom bg-light py-3 d-flex justify-content-between px-3">
                               <button
                                 className="btn btn-info mx-4 text-white"

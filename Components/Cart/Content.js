@@ -144,7 +144,7 @@ const Content = () => {
                 <Image
                   className="img-fluid rounded shadow h-50 mt-0"
                   src="/images/404.jpg"
-                  width={500}
+                  width={400}
                   height={50}
                 />
                 <span className="my-3 w-25 text-center fw-bold ">

@@ -101,6 +101,11 @@ body {
   transform: scale(0);
   will-change: transform;
 }
+.localTimKiem1 {
+  transition: 0.5s ease-in-out;
+  transform: scale(0);
+  will-change: transform;
+}
 .localTimKiemshow {
   transform: scale(1);
 }
@@ -497,6 +502,7 @@ body {
   right: 20%;
   z-index: 9999;
 }
+
 .localFooter {
   width: 100%;
   bottom: 0;
@@ -506,7 +512,22 @@ body {
   width: 15%;
 }
 .w-10 {
-  width: 13%;
+  width: 8%;
+}
+.hide {
+  position: absolute;
+  z-index: -1000;
+  visibility: hidden;
+}
+@media print {
+  .print-hide {
+    display: none;
+  }
+  .hide {
+    visibility: visible;
+    position: relative;
+    z-index: 10000;
+  }
 }
 .w-85 {
   width: 85%;

@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
+import { useReactToPrint } from "react-to-print";
 import {
   BsCheck2,
   BsFillCartCheckFill,
@@ -13,6 +14,7 @@ import {
   AiFillCloseCircle,
   AiOutlineMinusCircle,
   AiOutlinePlusCircle,
+  AiOutlinePrinter,
 } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { MdOutlineClose } from "react-icons/md";
@@ -20,6 +22,9 @@ import HoaDonKhongKeDon from "./HoaDonKhongKeDon";
 import { toast } from "react-toastify";
 import VND from "../utils/formatVND";
 import khachHang from "@/pages/admin/khachHang";
+import PrintInvoice from "./PrintInvoice";
+import { useRef } from "react";
+import Image from "next/image";
 const ContentBanThuoc = () => {
   const {
     register,
@@ -51,6 +56,8 @@ const ContentBanThuoc = () => {
   const [soDienThoaiFocus, setSoDienThoaiFocus] = useState(false);
   const [tongTienHoaDon, setTongTienHoaDon] = useState(0);
   const [tongTienHoaDon1, setTongTienHoaDon1] = useState(0);
+  const [showIn, setShowIn] = useState(false);
+  const [showIn1, setShowIn1] = useState(false);
   useEffect(() => {
     if (tab === "KhongKeDon") {
       setOptionThuoc("Chỉ thuốc không kê đơn");
@@ -282,6 +289,7 @@ const ContentBanThuoc = () => {
             autoClose: 1000,
             theme: "light",
           });
+          setShowIn(true);
         } else {
           toast.error("Thêm hóa đơn không thành công", {
             position: toast.POSITION.TOP_RIGHT,
@@ -324,6 +332,7 @@ const ContentBanThuoc = () => {
             autoClose: 1000,
             theme: "light",
           });
+          setShowIn1(true);
         } else {
           toast.error("Thêm hóa đơn không thành công", {
             position: toast.POSITION.TOP_RIGHT,
@@ -379,7 +388,12 @@ const ContentBanThuoc = () => {
         });
       });
   };
-  const [searchShow, setSearchShow] = useState(false);
+  const componentPDF = useRef();
+
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+  });
+
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -664,19 +678,17 @@ const ContentBanThuoc = () => {
                       placeholder="Nhập tên hoặc công dụng của thuốc muốn tìm"
                       className="form-control w-100 px-2 shadow"
                       value={searchTerm}
-                      // onBlur={() => setSearchShow(false)}
-                      onFocus={() => setSearchShow(true)}
                       onChange={handleInputChange}
                     />
 
                     <BsSearch className="position-absolute localIconSearch text-dark shadow pointer" />
 
-                    {dsThuoc.length !== 0 && searchShow && (
-                      <div className="position-absolute container border rounded bg-light widthThuoc">
+                    {dsThuoc.length !== 0 && (
+                      <div className="position-absolute container border rounded bg-light widthThuoc localTimKiemshow localTimKiem1">
                         {dsThuoc.map((thuoc) => (
                           <button
                             type="button"
-                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-1 border "
+                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-1 border"
                             onClick={() => {
                               if (tab === "KeDon") {
                                 if (thuoc.thuoc.soLuong === 0) return;
@@ -734,7 +746,7 @@ const ContentBanThuoc = () => {
                               {thuoc.thuoc.soLuong >= 1 && (
                                 <>
                                   <span className="text-muted  ">{`Số lượng tồn: ${thuoc.thuoc.soLuong} `}</span>
-                                  <AiOutlinePlusCircle className="text-info" />
+                                  {/* <AiOutlinePlusCircle className="text-info" /> */}
                                 </>
                               )}
                               {thuoc.thuoc.soLuong < 1 && (
@@ -783,95 +795,161 @@ const ContentBanThuoc = () => {
                         </button>
                       )}
                     </div>
-                    <table className="table table-striped table-bordered table-sm shadow border-rounded ">
-                      <thead>
-                        <tr className="text-center">
-                          <th>Mã thuốc</th>
-                          <th>Tên thuốc</th>
-                          <th>Thuốc kê đơn</th>
-                          <th>Đơn vị tính</th>
-                          <th>Số lượng</th>
-                          <th>Thành tiền</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dsNhap.map((thuoc) => (
-                          <tr key={thuoc.thuoc.maThuoc} className="text-center">
-                            <td>{thuoc.thuoc.maThuoc}</td>
-                            <td className="fw-bold">{thuoc.thuoc.tenThuoc}</td>
-                            {thuoc.thuoc.isThuocKeDon && (
-                              <td>
-                                <BsCheck2 className="text-success fs-20  " />
-                              </td>
-                            )}
-                            {!thuoc.thuoc.isThuocKeDon && (
-                              <td className="fw-bold ">
-                                <MdOutlineClose className="text-danger fs-27  " />
-                              </td>
-                            )}
+                    <div ref={componentPDF}>
+                      <div className="container hide">
+                        <div className="row">
+                          <div className="col-6">
+                            <Image
+                              src="/images/logo.png"
+                              className="img-fluid rounded mx-5 my-2 "
+                              width={100}
+                              height={100}
+                              priority
+                              alt=""
+                            />
+                          </div>
+                          <div className="col-6 mt-4">
+                            <b>Loại Hóa đơn:</b> Hóa đơn kê đơn
+                            <br />
+                            <b>Ngày: </b>
+                            {new Date().toLocaleDateString("vi-VN")}
+                            {`      ${new Date()
+                              .getHours()
+                              .toString()
+                              .padStart(2, "0")}: ${new Date()
+                              .getMinutes()
+                              .toString()
+                              .padStart(2, "0")}: ${new Date()
+                              .getSeconds()
+                              .toString()
+                              .padStart(2, "0")} `}
+                          </div>
+                        </div>
 
-                            <td>{thuoc.thuoc.donViTinh}</td>
-                            <td className="w-10">
-                              <input
-                                type="number"
-                                value={thuoc.thuoc.soLuongBan}
-                                min={1}
-                                onChange={(e) => {
-                                  if (
-                                    e.target.value <= 0 ||
-                                    e.target.value === ""
-                                  ) {
-                                    e.target.value = 1;
-                                  }
-                                  NhapSoLuong(
-                                    thuoc.thuoc.maThuoc,
-                                    e.target.value
-                                  );
-                                }}
-                                className="fw-bold form-control text-center"
-                              />
-                              <span className=" text-muted">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
-                            </td>
-                            <td className="fw-bold">
-                              {VND.format(thuoc.thuoc.thanhTien)}
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-warning mx-2 px-2 mt-3 shadow"
-                                onClick={() =>
-                                  removeThuocNhap(thuoc.thuoc.maThuoc)
-                                }
-                              >
-                                <AiOutlineMinusCircle className="text-white" />
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-info mx-2 mt-3 shadow"
-                                onClick={() =>
-                                  addThuocNhap(thuoc.thuoc.maThuoc)
-                                }
-                              >
-                                <BsFillPlusCircleFill className="text-white " />
-                              </button>
-                              <button
-                                type="button"
-                                className="btn btn-sm btn-danger mx-2 mt-3 shadow"
-                                onClick={() => removeThuoc(thuoc.thuoc.maThuoc)}
-                              >
-                                <AiFillCloseCircle className="text-white " />
-                              </button>
-                            </td>
+                        <div className="row">
+                          <div className="col-6">
+                            <b>Tên khách hàng</b>
+                          </div>
+                          <div className="col-6">{khachHangCoSan.hoTen}</div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <b>Số điện thoại</b>
+                          </div>
+                          <div className="col-6">
+                            {khachHangCoSan.soDienThoai}
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-6">
+                            <b>Nhân viên bán hàng</b>
+                          </div>
+                          <div className="col-6">
+                            {localStorage.getItem("tenNhanVien")}
+                          </div>
+                        </div>
+                      </div>
+
+                      <table className="table table-striped table-bordered table-sm shadow border-rounded  ">
+                        <thead>
+                          <tr className="text-center">
+                            <th>Mã thuốc</th>
+                            <th>Tên thuốc</th>
+                            <th>Thuốc kê đơn</th>
+                            <th>Đơn vị tính</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th className="print-hide"></th>
                           </tr>
-                        ))}
-                        <tr>
-                          <td className="fw-bold">
-                            Tổng tiền: {VND.format(tongTienHoaDon)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {dsNhap.map((thuoc) => (
+                            <tr
+                              key={thuoc.thuoc.maThuoc}
+                              className="text-center"
+                            >
+                              <td className="w-10">{thuoc.thuoc.maThuoc}</td>
+                              <td className="fw-bold ">
+                                {thuoc.thuoc.tenThuoc}
+                              </td>
+                              {thuoc.thuoc.isThuocKeDon && (
+                                <td>
+                                  <BsCheck2 className="text-success fs-20  " />
+                                </td>
+                              )}
+                              {!thuoc.thuoc.isThuocKeDon && (
+                                <td className="fw-bold ">
+                                  <MdOutlineClose className="text-danger fs-27  " />
+                                </td>
+                              )}
+
+                              <td>{thuoc.thuoc.donViTinh}</td>
+                              <td className="w-10">
+                                <input
+                                  type="number"
+                                  value={thuoc.thuoc.soLuongBan}
+                                  min={1}
+                                  onChange={(e) => {
+                                    if (
+                                      e.target.value <= 0 ||
+                                      e.target.value === ""
+                                    ) {
+                                      e.target.value = 1;
+                                    }
+                                    NhapSoLuong(
+                                      thuoc.thuoc.maThuoc,
+                                      e.target.value
+                                    );
+                                  }}
+                                  className="fw-bold form-control text-center"
+                                />
+                                <span className=" text-muted ">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
+                              </td>
+                              <td className="fw-bold">
+                                {VND.format(thuoc.thuoc.thanhTien)}
+                              </td>
+                              <td className="print-hide">
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-warning mx-2 px-2 mt-3 shadow"
+                                  onClick={() =>
+                                    removeThuocNhap(thuoc.thuoc.maThuoc)
+                                  }
+                                >
+                                  <AiOutlineMinusCircle className="text-white" />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-info mx-2 mt-3 shadow"
+                                  onClick={() =>
+                                    addThuocNhap(thuoc.thuoc.maThuoc)
+                                  }
+                                >
+                                  <BsFillPlusCircleFill className="text-white " />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn-sm btn-danger mx-2 mt-3 shadow"
+                                  onClick={() =>
+                                    removeThuoc(thuoc.thuoc.maThuoc)
+                                  }
+                                >
+                                  <AiFillCloseCircle className="text-white " />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                          <tr className="fw-bold">
+                            <td className="fw-bold">Tổng tiền:</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{VND.format(tongTienHoaDon)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   {dsNhap.length !== 0 &&
                     Object.keys(khachHangCoSan).length !== 0 && (
@@ -885,25 +963,32 @@ const ContentBanThuoc = () => {
                             Tạo Hóa Đơn
                           </button>
                         </div>
-                        <div className="col-3 mb-3 ">
-                          <button
-                            className="btn btn-secondary d-flex align-items-center"
-                            type="button"
-                          >
-                            <BsFillCartCheckFill className="fs-5 me-2" />
-                            In Hóa Đơn
-                          </button>
-                        </div>
+                        {showIn && (
+                          <div className="col-3 mb-3 ">
+                            <button
+                              onClick={generatePDF}
+                              type="button"
+                              className="btn btn-secondary"
+                            >
+                              <AiOutlinePrinter className="fs-5 me-2" /> In Hoá
+                              đơn
+                            </button>
+                          </div>
+                        )}
                       </>
                     )}
                 </div>
               )}
               {tab === "KhongKeDon" && (
-                <HoaDonKhongKeDon
-                  dsNhap1={dsNhap1}
-                  setDsNhap1={setDsNhap1}
-                  tongTienHoaDon1={tongTienHoaDon1}
-                />
+                <>
+                  <HoaDonKhongKeDon
+                    dsNhap1={dsNhap1}
+                    setDsNhap1={setDsNhap1}
+                    tongTienHoaDon1={tongTienHoaDon1}
+                    khachHangCoSan={khachHangCoSan}
+                    showIn1={showIn1}
+                  />
+                </>
               )}
             </form>
           </div>
