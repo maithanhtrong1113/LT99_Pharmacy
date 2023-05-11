@@ -903,7 +903,7 @@ const ContentBanThuoc = () => {
                                   }}
                                   className="fw-bold form-control text-center"
                                 />
-                                <span className=" text-muted ">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
+                                <span className=" text-muted print-hide">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                               </td>
                               <td className="fw-bold">
                                 {VND.format(thuoc.thuoc.thanhTien)}
