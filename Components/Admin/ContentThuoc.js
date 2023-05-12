@@ -57,14 +57,6 @@ const ContentThuoc = () => {
       </div>
     );
   }
-  // lấy thuốc theo loại
-  async function DanhSachThuocTheoLoai(loaiThuocSelected) {
-    const data = await getThuocTheoLoai(loaiThuocSelected);
-    setPage(1);
-    setTotal(Math.ceil(data.length / 12));
-    setDsThuoc(getItems(data, page));
-  }
-  console.log(totalPage);
   useEffect(() => {
     fetchData();
     if (loaiThuocSelected === "All") {
@@ -73,6 +65,13 @@ const ContentThuoc = () => {
       DanhSachThuocTheoLoai(loaiThuocSelected);
     }
   }, [loaiThuocSelected, page]);
+  // lấy thuốc theo loại
+  async function DanhSachThuocTheoLoai(loaiThuocSelected) {
+    const data = await getThuocTheoLoai(loaiThuocSelected);
+    setTotal(Math.ceil(data.length / 12));
+    setDsThuoc(getItems(data, page));
+  }
+  console.log(totalPage);
 
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
@@ -142,6 +141,7 @@ const ContentThuoc = () => {
                       aria-label=".form-select-sm"
                       {...register("loaiThuocName", {})}
                       onChange={(e) => {
+                        setPage(1);
                         setLoaiThuocSelected(e.target.value);
                       }}
                     >
