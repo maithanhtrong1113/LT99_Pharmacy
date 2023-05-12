@@ -52,7 +52,7 @@ const CardProduct = (props) => {
                 height={400}
                 src={props.images}
                 alt=""
-                className="card-img-top img-fluid"
+                className="card-img-top img-fluid p-3"
               />
             </figure>
 

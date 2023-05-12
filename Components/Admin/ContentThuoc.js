@@ -60,6 +60,7 @@ const ContentThuoc = () => {
   // lấy thuốc theo loại
   async function DanhSachThuocTheoLoai(loaiThuocSelected) {
     const data = await getThuocTheoLoai(loaiThuocSelected);
+    setPage(1);
     setTotal(Math.ceil(data.length / 12));
     setDsThuoc(getItems(data, page));
   }

@@ -143,7 +143,7 @@ const Content = () => {
               >
                 <Image
                   className="img-fluid rounded shadow h-50 mt-0"
-                  src="/images/404.jpg"
+                  src="/images/illustration-not-found.svg"
                   width={400}
                   height={50}
                 />

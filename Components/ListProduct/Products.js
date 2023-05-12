@@ -5,15 +5,43 @@ import CardProduct from "../Index/CardProduct";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
 import { useRouter } from "next/router";
 import { getAllThuocTheoLoai } from "@/api/thuocApi";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 const Products = (props) => {
   const [dsThuoc, setDsThuoc] = useState([]);
   const [slected, setSelected] = useState("");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const router = useRouter();
   const { id } = router.query;
+
+  const [loaiThuoc, setLoaiThuoc] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotal] = useState(0);
+  const getItems = (data, page) => {
+    const start = (page - 1) * 8;
+    const end = start + 8;
+    return data.slice(start, end);
+  };
   async function fetchDanhSachThuoc() {
     const data = await getAllThuocTheoLoai(id);
-    setDsThuoc(data);
+    // setPage(1);
+    setTotal(Math.ceil(data.length / 8));
+    setDsThuoc(getItems(data, page));
+  }
+  const buttons = [];
+  for (let i = 1; i <= totalPage; i++) {
+    buttons.push(
+      <div className="col-1">
+        <button
+          className={`btn bg-blue-dark rounded-circle w-50 btn-page-hover p-1 ${
+            page === i ? "bg-blue-darkActive" : ""
+          } `}
+          key={i}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </button>
+      </div>
+    );
   }
   useEffect(() => {
     fetchDanhSachThuoc();
@@ -21,9 +49,10 @@ const Products = (props) => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, [id, page]);
+  useEffect(() => {
+    setPage(1);
   }, [id]);
-
-  const [loaiThuoc, setLoaiThuoc] = useState([]);
   async function fetchData() {
     const data = await getAllLoaiThuocKhach();
     setLoaiThuoc(data);
@@ -73,9 +102,7 @@ const Products = (props) => {
       </option>
     );
   }
-  useEffect(() => {
-    // router.push(`/listProduct/${slected}`);
-  }, [slected]);
+  useEffect(() => {}, [slected]);
   return (
     <Fragment>
       {windowWidth > 1000 && (
@@ -210,6 +237,31 @@ const Products = (props) => {
                   ))}
                 </div>
               )}
+              {totalPage > 1 && (
+                <div className="row d-flex justify-content-center align-items-center my-2">
+                  <div className="col-1">
+                    <button
+                      className="btn bg-blue-dark btn-page-hover"
+                      onClick={() => {
+                        setPage(page === 1 ? page : page - 1);
+                      }}
+                    >
+                      <AiOutlineDoubleLeft className="text-white" />
+                    </button>
+                  </div>
+                  {buttons}
+                  <div className="col-1">
+                    <button
+                      className="btn bg-blue-dark btn-page-hover"
+                      onClick={() => {
+                        setPage(page === totalPage ? page : page + 1);
+                      }}
+                    >
+                      <AiOutlineDoubleRight className="text-white" />
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -320,9 +372,9 @@ const Products = (props) => {
 
               {!sorted && (
                 <div className="row">
-                  {dsThuoc.map((thuoc, index) => (
+                  {dsThuoc.map((thuoc) => (
                     <CardProduct
-                      images="/images/index/products/product1.jpg"
+                      images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}
@@ -339,7 +391,7 @@ const Products = (props) => {
                   )}
                   {dsThuocLoc.map((thuoc, index) => (
                     <CardProduct
-                      images={`/images/product/${index + 1}.jpg`}
+                      images={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
                       price={thuoc.giaBanLe}
                       title={thuoc.thuoc.tenThuoc}
                       id={thuoc.thuoc.maThuoc}

@@ -11,6 +11,7 @@ import CartIcon from "./CartIcon";
 import TichDiem from "./TichDiem";
 import TuVanIcon from "./TuVanIcon";
 import { toast } from "react-toastify";
+import Image from "next/image";
 
 const Content = () => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const Content = () => {
               <div className="row">
                 {Object.keys(thuoc).length !== 0 && (
                   <>
-                    <div className="col-4 rounded">
+                    <div className="col-4 rounded d-flex flex-column align-items-center">
                       <div className="card position-relative shadow">
                         <div className="position-absolute localDiscount fs-12">
                           <span className="text-dark rounded-circle bg-danger p-2 text-white fs-12">
@@ -91,9 +92,15 @@ const Content = () => {
                         </div>
                         <img
                           src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
-                          className="img-fluid"
+                          className="img-fluid p-3"
                         />
                       </div>
+                      <Image
+                        src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
+                        className="img-fluid border border-primary mt-3 p-3 rounded pointer"
+                        width={100}
+                        height={30}
+                      />
                     </div>
                     <div className="col-8">
                       <div className="container">
@@ -175,7 +182,7 @@ const Content = () => {
 
                             <div className="w-100 d-flex justify-content-end ">
                               <button
-                                className="btn btn-info me-4 text-white"
+                                className="btn btn-info me-4 text-white rounded-pill btn-lg"
                                 onClick={() => {
                                   addToCart();
                                   router.push("/checkout");
@@ -184,7 +191,7 @@ const Content = () => {
                                 Mua Ngay
                               </button>
                               <button
-                                className="btn btn-warning text-dark"
+                                className="btn btn-warning text-dark rounded-pill btn-lg"
                                 onClick={() => {
                                   toast.success(
                                     "Thêm sản phẩm vào giỏ hàng thành công",

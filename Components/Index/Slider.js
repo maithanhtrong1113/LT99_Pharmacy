@@ -107,6 +107,7 @@ const Slider = () => {
             />
           </div>
         )}
+        <div className="col-12"></div>
       </div>
     </Fragment>
   );

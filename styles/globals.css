@@ -71,6 +71,14 @@ body {
 .bg-blue-dark {
   background-color: rgb(58, 200, 200);
 }
+.bg-blue-darkActive {
+  background-color: rgb(37, 150, 150);
+  color: white !important;
+}
+.btn-page-hover:hover {
+  background-color: rgb(37, 150, 150);
+  color: white !important;
+}
 .bg-pastel-blue-trans {
   background-color: rgba(32, 212, 206, 0.3) !important;
 }

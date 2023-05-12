@@ -93,7 +93,7 @@ const Navigation = () => {
         )
           .then((response) => response.json())
           .then((results) => {
-            if (results.length > 0) setDsThuoc(results);
+            if (results.length > 0) setDsThuoc(results.slice(0, 5));
             else {
               setDsThuoc([]);
             }
