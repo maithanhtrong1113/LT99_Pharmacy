@@ -1,32 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
 import CardProduct from "./CardProduct";
 import Image from "next/image";
+import { getAllThuocTheoLoai } from "@/api/thuocApi";
 
-const ListCard = () => {
+const ListCard1 = () => {
   const [dsThuoc, setDsThuoc] = useState([]);
+  async function fetchDanhSachThuoc() {
+    const data = await getAllThuocTheoLoai(2);
+    setDsThuoc(data.slice(0, 4));
+  }
   useEffect(() => {
-    fetch(
-      "http://localhost:8080/QLNT-Server/khach-hang/xem-thuoc/danh-sach-thuoc"
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((results) => {
-        results = results.filter((thuoc) => thuoc.thuoc.soLuong > 0);
-        setDsThuoc(results.slice(0, 4));
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+    fetchDanhSachThuoc();
   }, []);
   return (
     <Fragment>
-      <div className="row  bg-pastel-blue-trans pt-5 my-3 position-relative  ">
+      <div className="row line-space"></div>
+      <div className="row my-2 bg-pastel-blue-trans pt-5 mt-3 position-relative ">
         <Image
-          src="/images/ho.png"
+          src="/images/hot.png"
           className="imageHot position-absolute z-index "
           width={300}
           height={50}
@@ -46,4 +37,4 @@ const ListCard = () => {
   );
 };
 
-export default ListCard;
+export default ListCard1;

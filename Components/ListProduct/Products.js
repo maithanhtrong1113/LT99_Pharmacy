@@ -237,7 +237,7 @@ const Products = (props) => {
                   ))}
                 </div>
               )}
-              {totalPage > 1 && (
+              {totalPage > 1 && !sorted && (
                 <div className="row d-flex justify-content-center align-items-center my-2">
                   <div className="col-1">
                     <button
