@@ -25,6 +25,7 @@ function ModalXemChiTietHoaDon(props) {
   useEffect(() => {
     ChiTietHoaDon(props.hoaDon.maHoaDon);
   }, []);
+  console.log(hoaDon);
   return (
     <Fragment>
       <Button onClick={toggle} className="btn btn-info btn-sm me-2">
@@ -113,31 +114,31 @@ function ModalXemChiTietHoaDon(props) {
                       <div className="form-group row my-2 d-flex align-items-center ">
                         <div className="col-5">
                           <b>Tổng tiền trước thuế:</b>
-                          <span className="text-warning">
+                          <span className="text-warning fw-bold">
                             {` ${VND.format(hoaDon.hoaDon.tongTruocThue)}`}
                           </span>
                         </div>
                         <div className="col-3">
                           <b> Thuế:</b>
-                          <span className="text-danger">
+                          <span className="text-danger fw-bold">
                             {` ${VND.format(hoaDon.hoaDon.thue)}`}
                           </span>
                         </div>
                         <div className="col-4">
                           <b>Tổng tiền sau thuế:</b>
-                          <span className="text-info">
+                          <span className="text-info fw-bold">
                             {` ${VND.format(hoaDon.hoaDon.tongSauThue)}`}
                           </span>
                         </div>
                         <div className="col-6 my-3">
                           <b> Nhân viên bán hàng:</b>
-                          <span className="text-info">
+                          <span className="text-info fw-bold">
                             {` ${props.nhanvienBanHang}`}
                           </span>
                         </div>
                         <div className="col-6 my-3">
                           <b> Ngày lập hóa đơn:</b>
-                          <span className="text-info">
+                          <span className="text-info fw-bold">
                             {` ${hoaDon.hoaDon.ngayLapHoaDon}`}
                           </span>
                         </div>
