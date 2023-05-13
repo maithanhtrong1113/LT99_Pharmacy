@@ -60,7 +60,7 @@ const ContentThongKe = () => {
   const [ngayKetThuc, setNgayKetThuc] = useState(
     new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
   );
-
+  const [table, setTable] = useState([]);
   useEffect(() => {
     const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
     const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
@@ -70,35 +70,37 @@ const ContentThongKe = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data.length !== 0) {
-          //lọc những phần tử thỏa mãn điều kiện
-          data = data.filter(
-            (item) =>
-              item.xuatNhapTon.soLuongTon !== 0 ||
-              item.xuatNhapTon.soLuongXuat !== 0 ||
-              item.xuatNhapTon.soLuongNhap !== 0
-          );
-          //lấy thuốc 1 trong 3 khác 0
-          const temporaryLabels = [];
-          const soLuongTons = [];
-          const soLuongNhaps = [];
-          const soLuongXuats = [];
-          data.forEach((thuoc) => {
-            temporaryLabels.push(thuoc.tenThuoc);
-            soLuongTons.push(thuoc.xuatNhapTon.soLuongTon);
-            soLuongXuats.push(thuoc.xuatNhapTon.soLuongXuat);
-            soLuongNhaps.push(thuoc.xuatNhapTon.soLuongNhap);
-          });
-          setLabels(temporaryLabels);
-          setSoLuongTon(soLuongTons);
-          setSoLuongNhap(soLuongNhaps);
-          setSoLuongXuat(soLuongXuats);
-        } else {
-          setLabels([]);
-          setSoLuongTon([]);
-          setSoLuongNhap([]);
-          setSoLuongXuat([]);
-        }
+        // if (data.length !== 0) {
+        //   //lọc những phần tử thỏa mãn điều kiện
+        //   data = data.filter(
+        //     (item) =>
+        //       item.xuatNhapTon.soLuongTon !== 0 ||
+        //       item.xuatNhapTon.soLuongXuat !== 0 ||
+        //       item.xuatNhapTon.soLuongNhap !== 0
+        //   );
+        //   //lấy thuốc 1 trong 3 khác 0
+        //   const temporaryLabels = [];
+        //   const soLuongTons = [];
+        //   const soLuongNhaps = [];
+        //   const soLuongXuats = [];
+        //   console.log(data);
+        //   data.forEach((thuoc) => {
+        //     temporaryLabels.push(thuoc.tenThuoc);
+        //     soLuongTons.push(thuoc.xuatNhapTon.soLuongTon);
+        //     soLuongXuats.push(thuoc.xuatNhapTon.soLuongXuat);
+        //     soLuongNhaps.push(thuoc.xuatNhapTon.soLuongNhap);
+        //   });
+        //   setLabels(temporaryLabels);
+        //   setSoLuongTon(soLuongTons);
+        //   setSoLuongNhap(soLuongNhaps);
+        //   setSoLuongXuat(soLuongXuats);
+        // } else {
+        //   setLabels([]);
+        //   setSoLuongTon([]);
+        //   setSoLuongNhap([]);
+        //   setSoLuongXuat([]);
+        // }
+        setTable(data);
       })
       .catch((error) => console.error(error));
   }, [ngayBatDau, ngayKetThuc]);
@@ -146,7 +148,6 @@ const ContentThongKe = () => {
   }, [selected]);
   return (
     <Fragment>
-      {/* <ProgressBar /> */}
       <div className="container-fluid ">
         <div className="row d-flex">
           <Sidebar />
@@ -210,8 +211,29 @@ const ContentThongKe = () => {
                       dateFormat="yyyy-MM-dd"
                     />
                   </div>
-                  <div className="col-12">
-                    <Bar options={options} data={data} height={400} />
+                  <div className="col-12 my-3">
+                    {/* <Bar options={options} data={data} height={400} /> */}
+                    <table className="table table-striped border  border-info rounded shadow">
+                      <thead>
+                        <tr>
+                          <th scope="col">Tên Thuốc</th>
+
+                          <th>Số lượng nhập</th>
+                          <th>Số lượng bán</th>
+                          <th>Số lượng tồn</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.map((thuoc) => (
+                          <tr>
+                            <td className="w-50">{thuoc.tenThuoc}</td>
+                            <td>{thuoc.xuatNhapTon.soLuongNhap}</td>
+                            <td>{thuoc.xuatNhapTon.soLuongTon}</td>
+                            <td>{thuoc.xuatNhapTon.soLuongXuat}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               )}
