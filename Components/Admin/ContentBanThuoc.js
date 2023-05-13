@@ -869,7 +869,7 @@ const ContentBanThuoc = () => {
                               className="text-center"
                             >
                               <td className="w-10">{thuoc.thuoc.maThuoc}</td>
-                              <td className="fw-bold ">
+                              <td className="fw-bold w-40">
                                 {thuoc.thuoc.tenThuoc}
                               </td>
                               {thuoc.thuoc.isThuocKeDon && (
@@ -903,7 +903,7 @@ const ContentBanThuoc = () => {
                                   }}
                                   className="fw-bold form-control text-center"
                                 />
-                                <span className=" text-muted print-hide">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
+                                <span className=" text-muted print-hide">{`Kho: ${thuoc.thuoc.soLuong}`}</span>
                               </td>
                               <td className="fw-bold">
                                 {VND.format(thuoc.thuoc.thanhTien)}
@@ -945,7 +945,11 @@ const ContentBanThuoc = () => {
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{VND.format(tongTienHoaDon)}</td>
+                            <td>
+                              {`${VND.format(tongTienHoaDon * 1.1)}`}
+                              <br />{" "}
+                              <span className="text-muted fs-12VAT">{`Đã bao gồm VAT `}</span>
+                            </td>
                           </tr>
                         </tbody>
                       </table>

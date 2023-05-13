@@ -34,7 +34,7 @@ function ModalXemChiTietHoaDon(props) {
         isOpen={modal}
         toggle={toggle}
         {...props}
-        className="w-modalAddNhanVien1"
+        className="w-modalAddNhanVien2"
       >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info"> Thông tin hóa đơn</span>
@@ -92,8 +92,8 @@ function ModalXemChiTietHoaDon(props) {
                             {hoaDon.hoaDon.chiTietHoaDon.map((thuoc) => (
                               <tr>
                                 <td>{thuoc.thuoc.maThuoc}</td>
-                                <td>{thuoc.thuoc.tenThuoc}</td>
-                                <td>
+                                <td className="w-40">{thuoc.thuoc.tenThuoc}</td>
+                                <td className="text-center">
                                   {thuoc.thuoc.keDon === true ? (
                                     <BsCheck2 className="text-success fs-25" />
                                   ) : (
