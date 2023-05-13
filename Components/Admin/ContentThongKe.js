@@ -211,16 +211,15 @@ const ContentThongKe = () => {
                       dateFormat="yyyy-MM-dd"
                     />
                   </div>
-                  <div className="col-12 my-3">
+                  <div className="col-12 my-3 rounded">
                     {/* <Bar options={options} data={data} height={400} /> */}
                     <table className="table table-striped border  border-info rounded shadow">
                       <thead>
                         <tr>
                           <th scope="col">Tên Thuốc</th>
-
                           <th>Số lượng nhập</th>
-                          <th>Số lượng bán</th>
                           <th>Số lượng tồn</th>
+                          <th>Số lượng bán</th>
                         </tr>
                       </thead>
                       <tbody>
