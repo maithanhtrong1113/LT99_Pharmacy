@@ -22,6 +22,7 @@ import ThuocHetHan from "./ThuocHetHan";
 import ThuocSapHetHang from "./ThuocSapHetHang";
 import DoanhThuTheoNgay from "./DoanhThuTheoNgay";
 import DoanhThuTheoThang from "./DoanhThuTheoThang";
+import Image from "next/image";
 const ContentThongKe = () => {
   const {
     formState: { errors },
@@ -62,6 +63,7 @@ const ContentThongKe = () => {
   );
   const [table, setTable] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
     const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
     //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc
@@ -100,6 +102,7 @@ const ContentThongKe = () => {
         //   setSoLuongNhap([]);
         //   setSoLuongXuat([]);
         // }
+        setIsLoading(false);
         setTable(data);
       })
       .catch((error) => console.error(error));
@@ -132,6 +135,7 @@ const ContentThongKe = () => {
   const [isDoanhThuNgay, setIsDoanhThuNgay] = useState(false);
   const [isDoanhThuThang, setIsDoanhThuThang] = useState(false);
   const [selected, setSelected] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsXuatNhapTon(false);
     setIsThuocSapHetHan(false);
@@ -213,26 +217,38 @@ const ContentThongKe = () => {
                   </div>
                   <div className="col-12 my-3 rounded">
                     {/* <Bar options={options} data={data} height={400} /> */}
-                    <table className="table table-striped border  border-info rounded shadow">
-                      <thead>
-                        <tr>
-                          <th scope="col">Tên Thuốc</th>
-                          <th>Số lượng nhập</th>
-                          <th>Số lượng tồn</th>
-                          <th>Số lượng bán</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {table.map((thuoc) => (
+                    {isLoading && (
+                      <>
+                        <Image
+                          src="/images/Loading_icon.gif"
+                          width={50}
+                          height={50}
+                        />
+                        <span className="fw-bold">Đang tải dữ liệu</span>
+                      </>
+                    )}
+                    {!isLoading && (
+                      <table className="table table-striped border  border-info rounded shadow">
+                        <thead>
                           <tr>
-                            <td className="w-50">{thuoc.tenThuoc}</td>
-                            <td>{thuoc.xuatNhapTon.soLuongNhap}</td>
-                            <td>{thuoc.xuatNhapTon.soLuongTon}</td>
-                            <td>{thuoc.xuatNhapTon.soLuongXuat}</td>
+                            <th scope="col">Tên Thuốc</th>
+                            <th>Số lượng nhập</th>
+                            <th>Số lượng tồn</th>
+                            <th>Số lượng bán</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {table.map((thuoc) => (
+                            <tr>
+                              <td className="w-50">{thuoc.tenThuoc}</td>
+                              <td>{thuoc.xuatNhapTon.soLuongNhap}</td>
+                              <td>{thuoc.xuatNhapTon.soLuongTon}</td>
+                              <td>{thuoc.xuatNhapTon.soLuongXuat}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 </div>
               )}
