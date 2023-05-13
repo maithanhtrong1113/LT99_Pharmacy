@@ -31,6 +31,13 @@ const ThuocSapHetHang = () => {
         text: "Thống kê sắp hết hàng",
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+      },
+    },
   };
 
   const [soLuongConLai, setSoLuongConLai] = useState([]);

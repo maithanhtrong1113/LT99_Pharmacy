@@ -221,7 +221,7 @@ const ContentThongKe = () => {
                       <>
                         <Image
                           src="/images/Loading_icon.gif"
-                          width={50}
+                          width={100}
                           height={50}
                         />
                         <span className="fw-bold">Đang tải dữ liệu</span>

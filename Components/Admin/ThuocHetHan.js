@@ -31,6 +31,13 @@ const ThuocHetHan = () => {
         text: "Thống kê thuốc hết hạn",
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+      },
+    },
   };
   const [soNgayConLai, setSoNgayConLai] = useState([]);
   const [soLuongConLai, setSoLuongConLai] = useState([]);

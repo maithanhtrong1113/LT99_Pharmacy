@@ -19,6 +19,10 @@ const ThuocSapHetHan = () => {
     Tooltip,
     Legend
   );
+  const [soNgayConLai, setSoNgayConLai] = useState([]);
+  const [soLuongConLai, setSoLuongConLai] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const today = new Date();
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -31,11 +35,15 @@ const ThuocSapHetHan = () => {
         text: "Thống kê thuốc gần hết hạn",
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          display: false,
+        },
+      },
+    },
   };
-  const [soNgayConLai, setSoNgayConLai] = useState([]);
-  const [soLuongConLai, setSoLuongConLai] = useState([]);
-  const [labels, setLabels] = useState([]);
-  const today = new Date();
+
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
     fetch(
