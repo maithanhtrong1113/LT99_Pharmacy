@@ -21,7 +21,12 @@ function ModalXemChiTietKH(props) {
       <Button onClick={toggle} className="btn btn-info btn-sm me-2">
         Xem Chi Tiết
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        {...props}
+        className="w-modalAddNhanVien"
+      >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info"> Thông Tin Khách Hàng</span>
         </ModalHeader>

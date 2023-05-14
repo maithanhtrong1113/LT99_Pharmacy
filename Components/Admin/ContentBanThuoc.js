@@ -760,22 +760,20 @@ const ContentBanThuoc = () => {
                   </div>
                 </div>
                 <div className="col-3">
-                  {tab === "KeDon" && (
-                    <select
-                      className="form-select form-select-sm "
-                      value={optionThuoc}
-                      onChange={(e) => {
-                        setOptionThuoc(e.target.value);
-                      }}
-                    >
-                      <option value="Tất cả">Tất cả thuốc</option>
-                      <option value="Chỉ thuốc kê đơn">Chỉ thuốc kê đơn</option>
+                  <select
+                    className="form-select form-select-sm "
+                    value={optionThuoc}
+                    onChange={(e) => {
+                      setOptionThuoc(e.target.value);
+                    }}
+                  >
+                    <option value="Tất cả">Tất cả thuốc</option>
+                    <option value="Chỉ thuốc kê đơn">Chỉ thuốc kê đơn</option>
 
-                      <option value="Chỉ thuốc không kê đơn">
-                        Chỉ thuốc không kê đơn
-                      </option>
-                    </select>
-                  )}
+                    <option value="Chỉ thuốc không kê đơn">
+                      Chỉ thuốc không kê đơn
+                    </option>
+                  </select>
                 </div>
               </div>
               {tab === "KeDon" && (

@@ -34,7 +34,7 @@ function ModalXemChiTietDonHang(props) {
         isOpen={modal}
         toggle={toggle}
         {...props}
-        className="w-modalAddNhanVien"
+        className="w-modalAddNhanVien2"
       >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info"> Thông tin đơn hàng</span>
@@ -118,7 +118,7 @@ function ModalXemChiTietDonHang(props) {
                             {donHang.hoaDon.chiTietDonHang.map((thuoc) => (
                               <tr>
                                 <td>{thuoc.thuoc.maThuoc}</td>
-                                <td>{thuoc.thuoc.tenThuoc}</td>
+                                <td className="w-40">{thuoc.thuoc.tenThuoc}</td>
                                 <td>{thuoc.thuoc.donViTinh}</td>
 
                                 <td>{thuoc.soLuong}</td>

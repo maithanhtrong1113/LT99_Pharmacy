@@ -26,7 +26,12 @@ function ModalAddCaLamViec(props) {
       <Button onClick={toggle} className="btn bg-primary btn-sm text-white">
         Thêm Ca Làm Việc
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        {...props}
+        className="w-modalAddNhanVien"
+      >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold"> Thêm Ca Làm Việc</span>
         </ModalHeader>

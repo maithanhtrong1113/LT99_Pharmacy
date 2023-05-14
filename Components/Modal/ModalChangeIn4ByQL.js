@@ -59,7 +59,12 @@ function ModalChangeIn4ByQL(props) {
       >
         Cập nhập thông tin
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        {...props}
+        className="w-modalAddNhanVien2"
+      >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info">
             Chỉnh Sửa Thông Tin Nhân Viên
