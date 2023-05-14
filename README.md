@@ -2,4 +2,4 @@
 ```bash
 npm run dev
 ```
-## ![image](https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/e10f0fb7-f9c6-4fe3-85f0-59c3720811c8) Core Screen & Functionality
+## ![image](https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/9d8e3ecb-4406-4527-aec7-8f61b865c8b4) Core Screen & Functionality
