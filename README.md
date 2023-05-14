@@ -1,38 +1,19 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
+## 🔧How to run
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
+## 🔗 Video Demo https://www.youtube.com/watch?v=YFP6yLjqAq0&ab_channel=LiemNguyen
+## :computer: :iphone: Core Screen & Functionality
+### 1. Home Page: (Computer Screen & Mobile Screen)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/9dba9462-110e-46fa-a312-6eaddc81834c" />                                                                                                      
+  <img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/830bcdec-32a9-428c-b154-8dde9a05fef0" />
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### 2. Product List Screen: (Computer Screen & Mobile Screen)
+<img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/fcf56552-6c64-4b48-b3da-23d643bbc0e9" />           
+<img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/8a6a9292-fd2a-4960-93cd-eaa68cb63d33" />       
+### 3. Product Detail Screen: (Computer Screen & Mobile Screen)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/4d3e7980-c596-49ce-814e-39646e1f1ac6" />           
+<img src="https://github.com/maithanhtrong1113/LT99_Pharmacy/assets/56313471/8a6a9292-fd2a-4960-93cd-eaa68cb63d33" /> 
