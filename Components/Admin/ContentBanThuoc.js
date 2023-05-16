@@ -940,9 +940,9 @@ const ContentBanThuoc = () => {
                       </table>
                       {trachNhiem && (
                         <span className="text-danger hide">
-                          *** Thuốc trong đơn thuốc này do quý khách hàng tự yêu
-                          cầu. Chúng tôi sẽ không chịu trách nhiệm cho bất kỳ sự
-                          cố nào xảy ra. Trân trọng
+                          *Lưu ý: Vui lòng tham khảo ý kiến của dược sĩ trước
+                          khi sử dụng các loại thuốc kê đơn. Nhà thuốc sẽ không
+                          chịu trách nhiệm cho bất kỳ rủi ro nào. Xin cảm ơn.
                         </span>
                       )}
                     </div>
