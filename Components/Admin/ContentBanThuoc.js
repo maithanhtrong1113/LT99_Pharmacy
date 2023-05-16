@@ -145,7 +145,7 @@ const ContentBanThuoc = () => {
       setDsThuoc([]);
     }
   };
-
+  const [trachNhiem, setTrachNhiem] = useState(false);
   const handleInputChange1 = (event) => {
     const searchTerm1 = event.target.value;
     setSearchTerm1(searchTerm1);
@@ -240,16 +240,11 @@ const ContentBanThuoc = () => {
     if (soDienThoai === "") {
       setSoDienThoaiFocus(true);
     }
-    if (tab === "KeDon" && bacSi === "") {
-      setBacSiFocus(true);
-    }
-    if (tab === "KeDon" && noiKham === "") {
-      setNoiKhamFocus(true);
-    }
+
     if (name === "" || soDienThoai === "") {
       return;
     }
-    if (tab === "KeDon" && (name === "" || bacSi === "" || noiKham === "")) {
+    if (tab === "KeDon" && name === "") {
       return;
     }
 
@@ -264,6 +259,13 @@ const ContentBanThuoc = () => {
           soLuongThuocBan: thuoc.thuoc.soLuongBan,
         };
       });
+      if (bacSi === "" || noiKham === "") {
+        for (let i = 0; i < dsNhap.length; i++) {
+          if (dsNhap[i].thuoc.isThuocKeDon === true) {
+            setTrachNhiem(true);
+          }
+        }
+      }
 
       fetch(
         `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/lap-hoa-don-theo-toa`,
@@ -628,14 +630,6 @@ const ContentBanThuoc = () => {
                             className="form-control inputText"
                           />
                         </div>
-                        {noiKham === "" && noiKhamFocus && (
-                          <>
-                            <div className="col-4"></div>
-                            <span className="text-danger col-8">
-                              Vui lòng nhập nơi khám bệnh
-                            </span>
-                          </>
-                        )}
                       </div>
                       <div className="row d-flex align-items-center my-3">
                         <div className="col-4">
@@ -650,14 +644,6 @@ const ContentBanThuoc = () => {
                             className="form-control inputText"
                           />
                         </div>
-                        {bacSiFocus && bacSi === "" && (
-                          <>
-                            <div className="col-4"></div>
-                            <span className="col-8 text-danger">
-                              Vui lòng nhập mã phiếu khám
-                            </span>
-                          </>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -759,22 +745,24 @@ const ContentBanThuoc = () => {
                     )}
                   </div>
                 </div>
-                <div className="col-3">
-                  <select
-                    className="form-select form-select-sm "
-                    value={optionThuoc}
-                    onChange={(e) => {
-                      setOptionThuoc(e.target.value);
-                    }}
-                  >
-                    <option value="Tất cả">Tất cả thuốc</option>
-                    <option value="Chỉ thuốc kê đơn">Chỉ thuốc kê đơn</option>
+                {tab === "KeDon" && (
+                  <div className="col-3">
+                    <select
+                      className="form-select form-select-sm "
+                      value={optionThuoc}
+                      onChange={(e) => {
+                        setOptionThuoc(e.target.value);
+                      }}
+                    >
+                      <option value="Tất cả">Tất cả thuốc</option>
+                      <option value="Chỉ thuốc kê đơn">Chỉ thuốc kê đơn</option>
 
-                    <option value="Chỉ thuốc không kê đơn">
-                      Chỉ thuốc không kê đơn
-                    </option>
-                  </select>
-                </div>
+                      <option value="Chỉ thuốc không kê đơn">
+                        Chỉ thuốc không kê đơn
+                      </option>
+                    </select>
+                  </div>
+                )}
               </div>
               {tab === "KeDon" && (
                 <div className="row">
@@ -847,7 +835,6 @@ const ContentBanThuoc = () => {
                           </div>
                         </div>
                       </div>
-
                       <table className="table table-striped table-bordered table-sm shadow border-rounded  ">
                         <thead>
                           <tr className="text-center">
@@ -951,6 +938,13 @@ const ContentBanThuoc = () => {
                           </tr>
                         </tbody>
                       </table>
+                      {trachNhiem && (
+                        <span className="text-danger hide">
+                          *** Thuốc trong đơn thuốc này do quý khách hàng tự yêu
+                          cầu. Chúng tôi sẽ không chịu trách nhiệm cho bất kỳ sự
+                          cố nào xảy ra. Trân trọng
+                        </span>
+                      )}
                     </div>
                   </div>
                   {dsNhap.length !== 0 &&

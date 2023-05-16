@@ -110,14 +110,15 @@ const ContentHoaDon = () => {
                         new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
                       }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>
                       <td>
-                        {hoaDon.bacSiChiDinh === null ? (
+                        {hoaDon.bacSiChiDinh === null ||
+                        hoaDon.bacSiChiDinh === "" ? (
                           <BsThreeDots className="text-warning fs-20" />
                         ) : (
                           hoaDon.bacSiChiDinh
                         )}
                       </td>
                       <td>
-                        {hoaDon.noiKham === null ? (
+                        {hoaDon.noiKham === null || hoaDon.noiKham === "" ? (
                           <BsThreeDots className="text-warning fs-20" />
                         ) : (
                           hoaDon.noiKham
