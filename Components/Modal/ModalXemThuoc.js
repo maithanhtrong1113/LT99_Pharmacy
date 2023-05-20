@@ -36,10 +36,10 @@ function ModalXemThuoc(props) {
         isOpen={modal}
         toggle={toggle}
         {...props}
-        className="w-modalDiaChi"
+        className="w-modalAddNhanVien2"
       >
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold text-info"> Thông Tin  Thuốc</span>
+          <span className="fw-bold text-info"> Thông Tin Thuốc</span>
         </ModalHeader>
         <ModalBody>
           <div className="container ">
