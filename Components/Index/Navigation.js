@@ -93,6 +93,7 @@ const Navigation = () => {
         )
           .then((response) => response.json())
           .then((results) => {
+            console.log(results);
             if (results.length > 0) setDsThuoc(results.slice(0, 5));
             else {
               setDsThuoc([]);
@@ -262,8 +263,15 @@ const Navigation = () => {
                   <div className="row w-100  px-0 mx-0">
                     <Link
                       href={`/product/${thuoc.thuoc.maThuoc}`}
-                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white bg-blue-darkHover"
+                      className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white bg-blue-darkHover d-flex"
                     >
+                      <Image
+                        src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
+                        className="img-fluid rounded me-2"
+                        width={60}
+                        height={50}
+                        alt=""
+                      />
                       {thuoc.thuoc.tenThuoc}
                     </Link>
                   </div>
