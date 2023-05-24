@@ -272,11 +272,11 @@ const Navigation = () => {
             </div>
             <div className="col-lg-4  d-flex justify-content-evenly ">
               <button
-                className="btn btn-light w-50 d-flex justify-content-evenly fw-bold"
+                className="btn btn-light w-75 d-flex justify-content-evenly fw-bold"
                 onClick={() => router.push("/admin/banThuoc")}
               >
                 <MdOutlineAdminPanelSettings className="adminIcon" />
-                Trang Bán Thuốc
+                Trang dành cho nhân viên
               </button>
               <Link
                 href="/cart"

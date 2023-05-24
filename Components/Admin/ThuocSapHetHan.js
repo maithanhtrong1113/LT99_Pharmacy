@@ -40,6 +40,7 @@ const ThuocSapHetHan = () => {
         ticks: {
           display: false,
         },
+        maxTicksLimit: 10,
       },
     },
   };

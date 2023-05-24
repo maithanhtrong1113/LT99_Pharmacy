@@ -109,7 +109,7 @@ const Sidebar = () => {
               className="btn btn-toggle w-100 rounded fw-bold collapsed text-primary  d-flex align-items-center   "
             >
               <BsFillCartPlusFill className="text-primary me-2 fs-icon-SideBar" />{" "}
-              Bán Thuốc
+              Bán Hàng
             </Link>
           </li>
           <li className={`${activeKhachHang} mb-3`}>
