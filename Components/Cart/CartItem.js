@@ -75,13 +75,13 @@ const CartItem = (props) => {
         </div>
       )}
       {windowWidth > 1000 && (
-        <tr className="pt-4">
+        <tr className="pt-4 ">
           <td>
             <Link href={`/product/${id}`}>
               <img src={`${image}`} className="img-fluid sizeImgCart" />
             </Link>
           </td>
-          <td className="text-blue-pastel">
+          <td className="text-blue-pastel w-50">
             <Link
               href={`/product/${id}`}
               className="text-blue-pastel text-decoration-none"
