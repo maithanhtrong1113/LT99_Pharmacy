@@ -24,7 +24,7 @@ function ModalHuyDon(props) {
           <p>Bạn có muốn hủy đơn hàng?</p>
         </ModalBody>
         <ModalFooter className="d-flex justify-content-between">
-          <Button color="secondary" onClick={toggle}>
+          <Button type="button" color="secondary" onClick={toggle}>
             Quay Về
           </Button>
           <Button color="danger" onClick={deleteHandler}>
