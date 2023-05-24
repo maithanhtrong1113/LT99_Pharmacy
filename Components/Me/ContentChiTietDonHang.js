@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { chuyenDoiNgayThangNam } from "../utils/tooLong";
+import ModalHuyDon from "../Modal/ModalHuyDon";
 
 const ContentChiTietDonHang = () => {
   const router = useRouter();
@@ -140,12 +141,7 @@ const ContentChiTietDonHang = () => {
                   </div>
                   {chiTiet.hoaDon.trangThai === "WAITTING" && (
                     <div className="col-4 text-end">
-                      <button
-                        className="btn btn-secondary"
-                        onClick={huyDonHangClick}
-                      >
-                        Hủy Đơn
-                      </button>
+                      <ModalHuyDon huyDonHangClicks={huyDonHangClick} />
                     </div>
                   )}
                   <div className="col-12 d-flex align-items-center fw-bold">
