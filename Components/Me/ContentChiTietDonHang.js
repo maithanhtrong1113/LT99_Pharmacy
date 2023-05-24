@@ -15,6 +15,7 @@ import {
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 const ContentChiTietDonHang = () => {
   const router = useRouter();
@@ -202,7 +203,10 @@ const ContentChiTietDonHang = () => {
                   </div>
                   <div className="col-12 mt-5">
                     <h6 className="fw-bold">
-                      Ngày tạo đơn: <b>{chiTiet.hoaDon.ngayTaoDonhHang}</b>
+                      Ngày tạo đơn:{" "}
+                      <b>
+                        {chuyenDoiNgayThangNam(chiTiet.hoaDon.ngayTaoDonhHang)}
+                      </b>
                     </h6>
                   </div>
                   {windowWidth > 1000 && (

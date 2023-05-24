@@ -5,6 +5,7 @@ import { GoLocation } from "react-icons/go";
 import ModalDiaChi from "./ModalDiaChi";
 import { MdLocationPin } from "react-icons/md";
 import khachHang from "@/pages/admin/khachHang";
+import { kiemTraEmail } from "../utils/kiemTraEmail";
 
 function ModalAll(props) {
   const {
@@ -192,11 +193,18 @@ function ModalAll(props) {
   const [errDiaChiCoSan, setErrDiaChiCoSan] = useState(false);
   const [email, setEmail] = useState("");
   const [emailerr, setEmailErr] = useState(false);
+  const [wrong, setWrong] = useState(false);
   useEffect(() => {
     if (diaChiFull !== "") {
       setErrDiaChiCoSan(false);
     }
-  }, [diaChiFull]);
+    if (email !== "") {
+      setEmailErr(false);
+    }
+    if (!emailerr && !kiemTraEmail(email)) {
+      setWrong(false);
+    }
+  }, [diaChiFull, email]);
   const addDiaChiFromModal = (data) => {
     setDiaChiFull(data);
     setKhachHangFull({
@@ -354,6 +362,11 @@ function ModalAll(props) {
                         <span>Vui lòng nhập địa chỉ email</span>
                       </div>
                     )}
+                    {wrong && (
+                      <div className="col-12 text-danger">
+                        <span>Vui lòng nhập đúng định dạng email</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -381,7 +394,10 @@ function ModalAll(props) {
                       setEmailErr(true);
                       return;
                     } else {
-                      setEmailErr(false);
+                      if (!kiemTraEmail(email)) {
+                        setWrong(true);
+                        return;
+                      } else setEmailErr(false);
                     }
 
                     props.sendDataToCheckOut(khachHangFull);
@@ -407,7 +423,6 @@ function ModalAll(props) {
                     <input
                       {...register("name", {
                         required: true,
-                        maxLength: 20,
                       })}
                       type="text"
                       required
@@ -416,11 +431,6 @@ function ModalAll(props) {
                     />
                     {errors?.name?.type === "required" && (
                       <span className="text-danger">Tên không được trống</span>
-                    )}
-                    {errors?.name?.type === "maxLength" && (
-                      <span className="text-danger">
-                        Tên không vượt qua 20 ký tự
-                      </span>
                     )}
                   </div>
                   <div className="col-12 my-3">
