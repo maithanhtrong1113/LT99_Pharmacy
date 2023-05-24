@@ -28,7 +28,7 @@ function ModalHuyDon(props) {
             Quay Về
           </Button>
           <Button color="danger" onClick={deleteHandler}>
-            Hủy
+            Hủy đơn hàng
           </Button>{" "}
         </ModalFooter>
       </Modal>
