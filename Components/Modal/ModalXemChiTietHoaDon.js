@@ -6,6 +6,7 @@ import { getChiTietHoaDon } from "@/api/hoaDonApi";
 import { BsCheck2 } from "react-icons/bs";
 import { MdOutlineClose } from "react-icons/md";
 import VND from "../utils/formatVND";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 function ModalXemChiTietHoaDon(props) {
   const {
@@ -139,7 +140,9 @@ function ModalXemChiTietHoaDon(props) {
                         <div className="col-6 my-3">
                           <b> Ngày lập hóa đơn:</b>
                           <span className="text-info fw-bold">
-                            {` ${hoaDon.hoaDon.ngayLapHoaDon}`}
+                            {` ${chuyenDoiNgayThangNam(
+                              hoaDon.hoaDon.ngayLapHoaDon
+                            )}`}
                           </span>
                         </div>
                       </div>

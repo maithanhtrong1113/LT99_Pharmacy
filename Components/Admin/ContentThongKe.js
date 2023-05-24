@@ -56,7 +56,7 @@ const ContentThongKe = () => {
   const [soLuongNhap, setSoLuongNhap] = useState([]);
   const [soLuongXuat, setSoLuongXuat] = useState([]);
   const [ngayBatDau, setNgayBatDau] = useState(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10)
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() - 20)
   );
   const [ngayKetThuc, setNgayKetThuc] = useState(
     new Date(today.getFullYear(), today.getMonth(), today.getDate() + 10)

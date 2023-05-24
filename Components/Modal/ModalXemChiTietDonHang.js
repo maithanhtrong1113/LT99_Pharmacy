@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { getChiTietDonHang } from "@/api/donHangApi";
 import { MdOutlineClose } from "react-icons/md";
 import VND from "../utils/formatVND";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 function ModalXemChiTietDonHang(props) {
   const {
@@ -86,7 +87,11 @@ function ModalXemChiTietDonHang(props) {
                           Ngày đặt đơn hàng
                         </label>
                         <div className="col-sm-8">
-                          <label>{donHang.hoaDon.ngayTaoDonhHang}</label>
+                          <label>
+                            {chuyenDoiNgayThangNam(
+                              donHang.hoaDon.ngayTaoDonhHang
+                            )}
+                          </label>
                         </div>
                       </div>
 

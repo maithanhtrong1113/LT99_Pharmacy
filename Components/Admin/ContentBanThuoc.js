@@ -265,6 +265,8 @@ const ContentBanThuoc = () => {
             setTrachNhiem(true);
           }
         }
+      } else {
+        setTrachNhiem(false);
       }
 
       fetch(
