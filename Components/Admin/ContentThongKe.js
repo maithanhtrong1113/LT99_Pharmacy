@@ -59,53 +59,30 @@ const ContentThongKe = () => {
     new Date(today.getFullYear(), today.getMonth(), today.getDate() - 20)
   );
   const [ngayKetThuc, setNgayKetThuc] = useState(
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 10)
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10)
   );
+  const [errDate, setErrDate] = useState(false);
   const [table, setTable] = useState([]);
   useEffect(() => {
-    setIsLoading(true);
-    const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
-    const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
-    //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-xuat-nhap-ton/theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // if (data.length !== 0) {
-        //   //lọc những phần tử thỏa mãn điều kiện
-        //   data = data.filter(
-        //     (item) =>
-        //       item.xuatNhapTon.soLuongTon !== 0 ||
-        //       item.xuatNhapTon.soLuongXuat !== 0 ||
-        //       item.xuatNhapTon.soLuongNhap !== 0
-        //   );
-        //   //lấy thuốc 1 trong 3 khác 0
-        //   const temporaryLabels = [];
-        //   const soLuongTons = [];
-        //   const soLuongNhaps = [];
-        //   const soLuongXuats = [];
-        //   console.log(data);
-        //   data.forEach((thuoc) => {
-        //     temporaryLabels.push(thuoc.tenThuoc);
-        //     soLuongTons.push(thuoc.xuatNhapTon.soLuongTon);
-        //     soLuongXuats.push(thuoc.xuatNhapTon.soLuongXuat);
-        //     soLuongNhaps.push(thuoc.xuatNhapTon.soLuongNhap);
-        //   });
-        //   setLabels(temporaryLabels);
-        //   setSoLuongTon(soLuongTons);
-        //   setSoLuongNhap(soLuongNhaps);
-        //   setSoLuongXuat(soLuongXuats);
-        // } else {
-        //   setLabels([]);
-        //   setSoLuongTon([]);
-        //   setSoLuongNhap([]);
-        //   setSoLuongXuat([]);
-        // }
-        setIsLoading(false);
-        setTable(data);
-      })
-      .catch((error) => console.error(error));
+    if (ngayKetThuc < ngayBatDau) {
+      setErrDate(true);
+      return;
+    } else {
+      setErrDate(false);
+      setIsLoading(true);
+      const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
+      const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
+      //lấy tên loại thuốc, số lượng tồn, số lượng nhập, số lượng xuất của thuốc
+      fetch(
+        `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-xuat-nhap-ton/theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setIsLoading(false);
+          setTable(data);
+        })
+        .catch((error) => console.error(error));
+    }
   }, [ngayBatDau, ngayKetThuc]);
 
   const data = {
@@ -216,8 +193,12 @@ const ContentThongKe = () => {
                     />
                   </div>
                   <div className="col-12 my-3 rounded">
-                    {/* <Bar options={options} data={data} height={400} /> */}
-                    {isLoading && (
+                    {errDate && (
+                      <span className="my-3 text-danger">
+                        Ngày kết thúc phải lớn hơn ngày bắt đầu
+                      </span>
+                    )}
+                    {isLoading && !errDate && (
                       <>
                         <Image
                           src="/images/Loading_icon.gif"
@@ -227,7 +208,7 @@ const ContentThongKe = () => {
                         <span className="fw-bold">Đang tải dữ liệu</span>
                       </>
                     )}
-                    {!isLoading && (
+                    {!isLoading && !errDate && (
                       <table className="table table-striped border  border-info rounded shadow">
                         <thead>
                           <tr>

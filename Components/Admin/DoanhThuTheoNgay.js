@@ -51,25 +51,32 @@ const DoanhThuTheoNgay = () => {
     new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
   );
   const [tongDoanhThu, setTongDoanhThu] = useState(0);
+  const [errDate, setErrDate] = useState(false);
   useEffect(() => {
-    // danh sách thuốc sắp hết hạn
-    const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
-    const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
-    fetch(
-      `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-doanh-thu-theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.doanhThuTungNgay.length !== 0) {
-          let tempLabels = data.doanhThuTungNgay.map((thuoc) => thuoc.ngay);
-          let tempSoLuongConLai = data.doanhThuTungNgay.map(
-            (thuoc) => thuoc.doanhThu
-          );
-          setTongDoanhThu(data.tongDoanhThu);
-          setLabels(tempLabels);
-          setSoLuongConLai(tempSoLuongConLai);
-        }
-      });
+    if (ngayKetThuc < ngayBatDau) {
+      setErrDate(true);
+      return;
+    } else {
+      setErrDate(false);
+      // danh sách thuốc sắp hết hạn
+      const StringNgayBatDau = ngayBatDau.toISOString().slice(0, 10);
+      const StringNgayKetThuc = ngayKetThuc.toISOString().slice(0, 10);
+      fetch(
+        `http://localhost:8080/QLNT-Server/quan-ly/thong-ke/thong-ke-doanh-thu-theo-ngay?ngayBatDau=${StringNgayBatDau}&ngayKetThuc=${StringNgayKetThuc}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.doanhThuTungNgay.length !== 0) {
+            let tempLabels = data.doanhThuTungNgay.map((thuoc) => thuoc.ngay);
+            let tempSoLuongConLai = data.doanhThuTungNgay.map(
+              (thuoc) => thuoc.doanhThu
+            );
+            setTongDoanhThu(data.tongDoanhThu);
+            setLabels(tempLabels);
+            setSoLuongConLai(tempSoLuongConLai);
+          }
+        });
+    }
   }, [ngayBatDau, ngayKetThuc]);
   console.log(new Date().toLocaleDateString("en-CA"));
   const data = {
@@ -112,14 +119,23 @@ const DoanhThuTheoNgay = () => {
             dateFormat="yyyy-MM-dd"
           />
         </div>
-        <div className="col-12  my-3">
-          <span className="text-info">
-            Tổng doanh thu: {VND.format(tongDoanhThu)}
+        {errDate && (
+          <span className="my-3 text-danger">
+            Ngày kết thúc phải lớn hơn ngày bắt đầu
           </span>
-        </div>
-        <div className="col-12">
-          <Line options={options} data={data} height={400} />
-        </div>
+        )}
+        {!errDate && (
+          <>
+            <div className="col-12  my-3">
+              <span className="text-info">
+                Tổng doanh thu: {VND.format(tongDoanhThu)}
+              </span>
+            </div>
+            <div className="col-12">
+              <Line options={options} data={data} height={400} />
+            </div>
+          </>
+        )}
       </div>
     </Fragment>
   );
