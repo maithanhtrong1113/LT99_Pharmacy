@@ -212,7 +212,7 @@ const Navigation = () => {
                 />
               </Link>
             </div>
-            <div className="col-lg-2 position-relative hoverDanhMuc">
+            <div className="col-lg-2   position-relative hoverDanhMuc">
               <div
                 className="btn border w-100 d-flex justify-content-evenly align-items-center bg-white  "
                 onClick={toggle}
@@ -235,7 +235,7 @@ const Navigation = () => {
                 <input
                   type="text"
                   className="form-input form-control mx-2 rounded "
-                  placeholder="Bạn đang muốn tìm gì..."
+                  placeholder="Bạn đang muốn tìm sản phẩm nào..."
                   onFocus={() => setShow(true)}
                   onBlur={() => setShow(false)}
                   value={searchTerm}
@@ -278,20 +278,18 @@ const Navigation = () => {
                 ))}
               </div>
             </div>
-            <div className="col-lg-4  d-flex justify-content-evenly ">
-              <button
-                className="btn btn-light w-75 d-flex justify-content-evenly fw-bold"
-                onClick={() => router.push("/admin/banThuoc")}
-              >
-                <MdOutlineAdminPanelSettings className="adminIcon" />
-                Trang dành cho nhân viên
-              </button>
+            <div className="col-lg-3 "></div>
+            <div className="col-lg-1  d-flex justify-content-end ">
               <Link
                 href="/cart"
-                className="btn d-flex align-items-center border-none text-white bg-white position-relative px-3"
+                className="bg-white d-flex align-items-center border-none  position-relative px-3 py-2-5 rounded "
               >
-                <FaShoppingCart className="text-dark" />
-                <span className="px-1 text-white position-absolute localCart  bg-cart">
+                <FaShoppingCart className="text-dark fs-23 mt-2" />
+                <span
+                  className={`position-absolute localCart bg-danger text-white  ${
+                    cartQuantity > 9 ? "px-1" : "px-1-5"
+                  } fs-10 `}
+                >
                   {cartQuantity}
                 </span>
               </Link>

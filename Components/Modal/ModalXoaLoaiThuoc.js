@@ -8,7 +8,6 @@ function ModalXoaLoaiThuoc(props) {
   const deleteHandler = () => {
     const loaiThuocId = props.loaiThuoc.maLoai;
     props.handlerSubmit(loaiThuocId);
-
     toggle();
   };
   return (
@@ -19,14 +18,17 @@ function ModalXoaLoaiThuoc(props) {
       <Modal isOpen={modal} toggle={toggle} {...props}>
         <ModalHeader toggle={toggle}>Xóa loại thuốc</ModalHeader>
         <ModalBody>
-          <p> Bạn có muốn xóa loại thuốc không?</p>
+          <b>
+            Bạn có chắc chắn muốn xóa loại thuốc này? Hành động này không thể
+            hoàn tác.
+          </b>
         </ModalBody>
         <ModalFooter className="d-flex justify-content-between">
           <Button color="secondary" onClick={toggle}>
             Hủy
           </Button>
           <Button color="danger" onClick={deleteHandler}>
-            Xóa
+            Đồng ý
           </Button>{" "}
         </ModalFooter>
       </Modal>

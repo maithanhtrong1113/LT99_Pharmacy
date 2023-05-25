@@ -15,6 +15,7 @@ import {
 import { MdOutlineClose } from "react-icons/md";
 import { useReactToPrint } from "react-to-print";
 import VND from "../utils/formatVND";
+import ModalLapKD from "../Modal/ModalLapKD";
 
 const HoaDonKhongKeDon = ({
   dsNhap1,
@@ -22,6 +23,7 @@ const HoaDonKhongKeDon = ({
   tongTienHoaDon1,
   khachHangCoSan,
   showIn1,
+  submitHanler,
 }) => {
   const removeThuocNhap = (maThuoc) => {
     const isThuocExist = dsNhap1.find((item) => item.thuoc.maThuoc === maThuoc);
@@ -153,7 +155,7 @@ const HoaDonKhongKeDon = ({
                 {dsNhap1.map((thuoc) => (
                   <tr key={thuoc.thuoc.maThuoc} className="text-center">
                     <td>{thuoc.thuoc.maThuoc}</td>
-                    <td className="fw-bold">{thuoc.thuoc.tenThuoc}</td>
+                    <td className="fw-bold w-40">{thuoc.thuoc.tenThuoc}</td>
                     {thuoc.thuoc.isThuocKeDon && (
                       <td>
                         <BsCheck2 className="text-success fs-20 mt-3 " />
@@ -215,14 +217,17 @@ const HoaDonKhongKeDon = ({
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="fw-bold">{VND.format(tongTienHoaDon1)} </td>
+                  <td className="fw-bold">
+                    {VND.format(tongTienHoaDon1 * 1.1)} <br />
+                    <span className="text-muted fs-12VAT">{`Đã bao gồm VAT `}</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      {dsNhap1.length !== 0 && (
+      {dsNhap1.length !== 0 && Object.keys(khachHangCoSan).length !== 0 && (
         <div className="d-flex">
           <div className="col-3 mb-3">
             <button

@@ -25,6 +25,7 @@ import khachHang from "@/pages/admin/khachHang";
 import PrintInvoice from "./PrintInvoice";
 import { useRef } from "react";
 import Image from "next/image";
+import ModalLapKD from "../Modal/ModalLapKD";
 const ContentBanThuoc = () => {
   const {
     register,
@@ -414,7 +415,7 @@ const ContentBanThuoc = () => {
                   }`}
                   onClick={() => setTab("KeDon")}
                 >
-                  Lập hóa đơn kê đơn
+                  Bán thuốc kê đơn
                 </button>
               </div>
               <div className="col-6">
@@ -425,14 +426,17 @@ const ContentBanThuoc = () => {
                   type="button"
                   onClick={() => setTab("KhongKeDon")}
                 >
-                  Lập hóa đơn không kê đơn
+                  Bán thuốc không kê đơn
                 </button>
               </div>
             </div>
             <div className="col-12">
               {/* thông tin khách hàng */}
               <div className="row my-3">
-                <div className="col-5">
+                <div className="col-3  my-2 ">
+                  <b>Tìm khách hàng đã mua</b>
+                </div>
+                <div className="col-5 ">
                   <div className="position-relative">
                     {/* tìm kiếm khách hàng */}
                     <input
@@ -473,7 +477,9 @@ const ContentBanThuoc = () => {
                     </h4>
                     <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
-                        <label className="fw-bold">Tên</label>
+                        <label className="fw-bold">
+                          Tên<span className="text-danger">*</span>
+                        </label>
                       </div>
                       <div className="col-9">
                         {Object.keys(khachHangCoSan).length === 0 && (
@@ -508,7 +514,9 @@ const ContentBanThuoc = () => {
                     </div>
                     <div className="row d-flex align-items-center my-3">
                       <div className="col-3">
-                        <label className="fw-bold">Số điện thoại</label>
+                        <label className="fw-bold">
+                          Số điện thoại <span className="text-danger">*</span>
+                        </label>
                       </div>
                       <div className="col-9">
                         {Object.keys(khachHangCoSan).length === 0 && (
@@ -937,6 +945,7 @@ const ContentBanThuoc = () => {
                               <br />{" "}
                               <span className="text-muted fs-12VAT">{`Đã bao gồm VAT `}</span>
                             </td>
+                            <td></td>
                           </tr>
                         </tbody>
                       </table>
@@ -953,13 +962,14 @@ const ContentBanThuoc = () => {
                     Object.keys(khachHangCoSan).length !== 0 && (
                       <>
                         <div className="col-2 mb-3 ">
-                          <button
-                            className="btn btn-primary d-flex align-items-center"
+                          <ModalLapKD submitHanlerr={submitHanler} />
+                          {/* <button
+                            className="btn btn-success d-flex align-items-center"
                             type="Submit"
                           >
                             <BsFillCartCheckFill className="fs-5 me-2" />
-                            Tạo Hóa Đơn
-                          </button>
+                            Hoàn tất
+                          </button> */}
                         </div>
                         {showIn && (
                           <div className="col-3 mb-3 ">
@@ -985,6 +995,7 @@ const ContentBanThuoc = () => {
                     tongTienHoaDon1={tongTienHoaDon1}
                     khachHangCoSan={khachHangCoSan}
                     showIn1={showIn1}
+                    submitHanlerr={submitHanler}
                   />
                 </>
               )}

@@ -31,13 +31,11 @@ function Example(props) {
         {phuongThucVanChuyen === "tieuChuan" && (
           <div className="col-xl-12 col-lg-12 d-flex align-items-center justify-content-between text-dark">
             <span className="ms-4">Giao hàng tiết kiệm</span>
-            <span className="text-info fw-bold">16.000 đ</span>
           </div>
         )}
         {phuongThucVanChuyen === "nhanh" && (
           <div className="col-xl-12 col-lg-12 d-flex align-items-center justify-content-between text-dark">
             <span className="ms-4">Ahamove</span>
-            <span className="text-info fw-bold">25.000 đ</span>
           </div>
         )}
       </button>
@@ -70,14 +68,6 @@ function Example(props) {
                         />
                       </div>
                     </div>
-                    <div className="row py-2">
-                      <div className="col-4">
-                        <span>Phí vận chuyển</span>
-                      </div>
-                      <div className="col-5">
-                        <span className="text-success ">16.000 đ</span>
-                      </div>
-                    </div>
                   </div>
                   <div className="container border rounded shadow m y-3 ">
                     <div className="row py-2">
@@ -102,9 +92,6 @@ function Example(props) {
                     <div className="row py-2">
                       <div className="col-4">
                         <span>Phí vận chuyển</span>
-                      </div>
-                      <div className="col-5">
-                        <span className="text-success text-end ">25.000 đ</span>
                       </div>
                     </div>
                   </div>

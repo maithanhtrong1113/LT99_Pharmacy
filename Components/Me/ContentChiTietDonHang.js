@@ -278,7 +278,7 @@ const ContentChiTietDonHang = () => {
                   <div className="col-12">
                     Tổng tiền:{" "}
                     <b className="fs-20 text-success">
-                      {VND.format(chiTiet.hoaDon.tongTruocThue)}
+                      {VND.format(chiTiet.hoaDon.tongSauThue)}
                     </b>
                   </div>
                 </div>

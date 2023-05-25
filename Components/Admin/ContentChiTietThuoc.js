@@ -78,6 +78,15 @@ const ContentChiTietThuoc = (props) => {
     }
     return true;
   };
+  const validateSoLuongNhap1 = (value) => {
+    const num = Number(value);
+    if (value <= 0) {
+      return "Số lượng phải lớn hơn 0";
+    } else if (!Number.isInteger(num)) {
+      return "Số lượng phải là một số nguyên";
+    }
+    return true;
+  };
   useEffect(() => {
     fetchDataNhaCungCap();
     fetchDataNuocSanXuat();
@@ -167,7 +176,7 @@ const ContentChiTietThuoc = (props) => {
       }
     ).then((response) => {
       if (response.ok) {
-        toast.success("Chỉnh sửa  thuốc thành công", {
+        toast.success("Cập nhật thành công", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
           theme: "light",
@@ -217,7 +226,7 @@ const ContentChiTietThuoc = (props) => {
       }
     ).then((response) => {
       if (response.ok) {
-        toast.success("Nhập thuốc thành công", {
+        toast.success("Lô thuốc được nhập thành công", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
           theme: "light",
@@ -526,10 +535,10 @@ const ContentChiTietThuoc = (props) => {
                         <div className="row ">
                           <div className="col-7">
                             <button
-                              className="btn btn-warning me-2 w-50"
+                              className="btn btn-warning me- w-25"
                               type="submit"
                             >
-                              Sửa thông tin thuốc
+                              Lưu
                             </button>
                             <button
                               className="btn btn-danger btn- ms-2 w-25"
@@ -658,10 +667,9 @@ const ContentChiTietThuoc = (props) => {
                       <input
                         {...register("soLuongNhap", {
                           required: true,
-                          validate: validateSoLuongNhap,
+                          validate: validateSoLuongNhap1,
                         })}
                         type="number"
-                        min={1}
                         required
                         defaultValue={1}
                         className="form-control form-control-sm inputText"
@@ -686,7 +694,7 @@ const ContentChiTietThuoc = (props) => {
                           required: true,
                           validate: validateSoLuongNhap,
                         })}
-                        type="text"
+                        type="number"
                         required
                         defaultValue={1000}
                         className="form-control form-control-sm inputText"
@@ -878,20 +886,24 @@ const ContentChiTietThuoc = (props) => {
                       <ModalAddNuocSanXuat1 setNuocSanXuat={setNuocSanXuat} />
                     </div>
                   </div>
-                  <div className="row d-flex justify-content-between mx-2">
-                    <button
-                      type="button"
-                      className="btn btn-danger btn-sm my-3 w-25"
-                      onClick={toggleShowNhapThuoc}
-                    >
-                      Hủy
-                    </button>
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-sm my-3 w-25"
-                    >
-                      Nhập thuốc
-                    </button>
+                  <div className="row d-flex justify-content-between ">
+                    <div className="col-2">
+                      <button
+                        type="button"
+                        className="btn btn-danger btn-sm my-3 w-100"
+                        onClick={toggleShowNhapThuoc}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                    <div className="col-2">
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-sm w-100"
+                      >
+                        Lưu
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

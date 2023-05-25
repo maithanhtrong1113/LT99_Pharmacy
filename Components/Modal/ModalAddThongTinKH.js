@@ -177,7 +177,7 @@ function ModalAll(props) {
               setDsKhachHang([]);
               setErrDT(true);
               setValueText(
-                "Không tìm thấy thông tin của bạn hãy chọn nhập thông tin"
+                "*Không tìm thấy thông tin của bạn hãy chọn nhập thông tin"
               );
             }
           });
@@ -296,7 +296,7 @@ function ModalAll(props) {
                   className="form-control w-100 px-2"
                 />
               </div>
-              {errDT && <span className="text-danger">{valueText} </span>}
+              {errDT && <span className="text-danger my-5">{valueText} </span>}
 
               <div className="row rouded border">
                 {dsKhachHang.map((khachHang) => (

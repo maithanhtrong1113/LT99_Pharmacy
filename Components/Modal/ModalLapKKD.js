@@ -1,36 +1,34 @@
 import React, { useState } from "react";
+import { BsFillCartCheckFill } from "react-icons/bs";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-function ModalXoaThuoc(props) {
+function ModalLapKKD(props) {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
-  const deleteHandler = () => {
-    props.OnClickYes(props.maThuoc);
+  const deleteHandler = (e) => {
+    props.submitHanlerr(e);
     toggle();
   };
   return (
     <div>
       <Button
-        color="danger"
-        className="btn btn-danger btn-sm ms-2"
+        className="btn btn-success d-flex align-items-center"
         onClick={toggle}
       >
-        Xóa
+        <BsFillCartCheckFill className="fs-5 me-2" />
+        Hoàn Tất
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...props}>
-        <ModalHeader toggle={toggle}>Xóa Thuốc</ModalHeader>
+        <ModalHeader toggle={toggle}>Xác Nhận Lập Hóa Đơn</ModalHeader>
         <ModalBody>
-          <b>
-            Bạn có chắc chắn muốn xóa thuốc này không? Hành động này không thể
-            hoàn tác.
-          </b>
+          <b>Bạn có muốn xác nhận lập hóa đơn này</b>
         </ModalBody>
         <ModalFooter className="d-flex justify-content-between">
           <Button color="secondary" onClick={toggle}>
             Quay Về
           </Button>
-          <Button color="danger" onClick={deleteHandler}>
+          <Button color="primary" onClick={(e) => deleteHandler(e)}>
             OK
           </Button>
         </ModalFooter>
@@ -39,4 +37,4 @@ function ModalXoaThuoc(props) {
   );
 }
 
-export default ModalXoaThuoc;
+export default ModalLapKKD;

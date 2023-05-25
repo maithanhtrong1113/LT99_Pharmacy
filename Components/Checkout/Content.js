@@ -268,15 +268,15 @@ const Content = () => {
                   </span>
                 </div>
                 <div className="d-flex justify-content-between my-3">
-                  <span className="text-muted">Phí vận chuyển</span>
-                  <span>{VND.format(giaVanChuyen)}</span>
+                  <span className="text-muted">Thuế</span>
+                  <span>{VND.format(totalPriceCartt * 0.1)}</span>
                 </div>
                 <div className="d-flex justify-content-between align-items-center my-3">
                   <span className="text-muted">
                     Thành tiền (Đã bao gồm VAT)
                   </span>
                   <span className="fw-bold fs-25 text-warning">
-                    {VND.format(giaVanChuyen + totalPriceCartt)}
+                    {VND.format(totalPriceCartt * 1.1)}
                   </span>
                 </div>
                 <div className="">
@@ -420,10 +420,7 @@ const Content = () => {
                     {VND.format(totalPriceCartt)}
                   </span>
                 </div>
-                <div className="d-flex justify-content-between my-3">
-                  <span className="text-muted">Phí vận chuyển</span>
-                  <span>{VND.format(giaVanChuyen)}</span>
-                </div>
+
                 <div className="d-flex justify-content-between align-items-center my-3">
                   <span className="text-muted">
                     Thành tiền (Đã bao gồm VAT)

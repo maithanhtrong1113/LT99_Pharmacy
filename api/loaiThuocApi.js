@@ -49,13 +49,16 @@ export const xoaLoaiThuoc = async (id) => {
     }
   );
   if (!res.ok) {
-    toast.error("Xóa loại thuốc không thành công", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 1000,
-      theme: "light",
-    });
+    toast.error(
+      "Không thể xóa loại thuốc này vì vẫn còn thuốc thuộc loại này trong hệ thống. Vui lòng xóa thuốc và thao tác lại",
+      {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+        theme: "light",
+      }
+    );
   } else {
-    toast.success("Xóa loại thuốc thành công", {
+    toast.success("Loại thuốc đã bị xóa", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",
