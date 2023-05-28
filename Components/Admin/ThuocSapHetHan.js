@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 const ThuocSapHetHan = () => {
   ChartJS.register(
@@ -21,12 +22,27 @@ const ThuocSapHetHan = () => {
   );
   const [soNgayConLai, setSoNgayConLai] = useState([]);
   const [soLuongConLai, setSoLuongConLai] = useState([]);
+  const [donViTinh, setDonViTinh] = useState([]);
   const [labels, setLabels] = useState([]);
   const today = new Date();
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const datasetLabel = context.dataset.label || "";
+            const value = context.parsed.y;
+            if (datasetLabel === "Số lượng thuốc sắp hết hạn") {
+              const index = context.dataIndex;
+              const labelValue = soLuongConLai[index] + " " + donViTinh[index];
+              return datasetLabel + ": " + labelValue;
+            }
+            return datasetLabel + ": " + value;
+          },
+        },
+      },
       legend: {
         position: "top",
       },
@@ -54,14 +70,17 @@ const ThuocSapHetHan = () => {
       .then((data) => {
         let tempLabels = data.map(
           (thuoc) =>
-            ` ${thuoc.tenThuoc} Lô (${thuoc.loThuoc}) Ngày Hết Hạn: ${thuoc.ngayHetHan}`
+            ` ${thuoc.tenThuoc} - Lô: (${
+              thuoc.loThuoc
+            }) - Ngày Hết Hạn: ${chuyenDoiNgayThangNam(thuoc.ngayHetHan)}`
         );
         let tempSoNgayConLai = data.map((thuoc) => thuoc.soNgayConLai);
         let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuong);
-
+        let tempDonViTinh = data.map((thuoc) => thuoc.donViTinh);
         setLabels(tempLabels);
         setSoNgayConLai(tempSoNgayConLai);
         setSoLuongConLai(tempSoLuongConLai);
+        setDonViTinh(tempDonViTinh);
       });
   }, []);
 
@@ -74,7 +93,7 @@ const ThuocSapHetHan = () => {
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "Số lượng thuốc còn lại",
+        label: "Số lượng thuốc sắp hết hạn",
         data: soLuongConLai,
         backgroundColor: "rgb(233, 233, 110,0.5)",
       },

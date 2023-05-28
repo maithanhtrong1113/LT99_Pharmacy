@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 
 import { Line } from "react-chartjs-2";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 const DoanhThuTheoNgay = () => {
   ChartJS.register(
@@ -67,7 +68,9 @@ const DoanhThuTheoNgay = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.doanhThuTungNgay.length !== 0) {
-            let tempLabels = data.doanhThuTungNgay.map((thuoc) => thuoc.ngay);
+            let tempLabels = data.doanhThuTungNgay.map((thuoc) =>
+              chuyenDoiNgayThangNam(thuoc.ngay)
+            );
             let tempSoLuongConLai = data.doanhThuTungNgay.map(
               (thuoc) => thuoc.doanhThu
             );

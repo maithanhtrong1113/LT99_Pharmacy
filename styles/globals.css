@@ -553,6 +553,10 @@ body {
 .pr-opx {
   padding-right: 0px !important;
 }
+.imgSearch {
+  width: 50px !important;
+  height: 60px !important;
+}
 .fables-footer-image {
   background-repeat: no-repeat;
   background-size: cover;
@@ -564,15 +568,7 @@ body {
 .fables-after-overlay {
   position: relative;
 }
-/* .fables-after-overlay::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(44, 62, 79, 0.5);
-} */
+
 .bg-rules {
   background-attachment: fixed;
 
@@ -602,8 +598,8 @@ body {
 }
 .localCart {
   border-radius: 100%;
-  top: 2px;
-  right: 3px;
+  top: 1px;
+  right: 5px;
 }
 .px-1-5 {
   padding: 0px 5px;

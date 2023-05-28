@@ -433,16 +433,13 @@ const ContentBanThuoc = () => {
             <div className="col-12">
               {/* thông tin khách hàng */}
               <div className="row my-3">
-                <div className="col-3  my-2 ">
-                  <b>Tìm khách hàng đã mua</b>
-                </div>
-                <div className="col-5 ">
-                  <div className="position-relative">
-                    {/* tìm kiếm khách hàng */}
+                <div className="col-7 d-flex align-items-center ">
+                  <b>Tìm khách hàng đã mua:</b>
+                  <div className="position-relative w-75">
                     <input
                       type="text"
                       placeholder="Nhập tên hoặc số điện thoại của khách hàng"
-                      className="form-control w-100 px-2 shadow"
+                      className="form-control shadow  "
                       value={searchTerm1}
                       onChange={handleInputChange1}
                     />

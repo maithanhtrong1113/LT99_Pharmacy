@@ -30,6 +30,20 @@ const ThuocSapHetHang = () => {
         display: true,
         text: "Thống kê sắp hết hàng",
       },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const datasetLabel = context.dataset.label || "";
+            const value = context.parsed.y;
+            if (datasetLabel === "Số lượng thuốc còn lại") {
+              const index = context.dataIndex;
+              const labelValue = soLuongConLai[index] + " " + donViTinh[index];
+              return datasetLabel + ": " + labelValue;
+            }
+            return datasetLabel + ": " + value;
+          },
+        },
+      },
     },
     scales: {
       x: {
@@ -42,6 +56,8 @@ const ThuocSapHetHang = () => {
 
   const [soLuongConLai, setSoLuongConLai] = useState([]);
   const [labels, setLabels] = useState([]);
+  const [donViTinh, setDonViTinh] = useState([]);
+
   const today = new Date();
   useEffect(() => {
     // danh sách thuốc sắp hết hạn
@@ -52,9 +68,9 @@ const ThuocSapHetHang = () => {
       .then((data) => {
         let tempLabels = data.map((thuoc) => thuoc.tenThuoc);
         let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuongConLai);
-
+        let tempDonViTinh = data.map((thuoc) => thuoc.donViTinh);
         setLabels(tempLabels);
-
+        setDonViTinh(tempDonViTinh);
         setSoLuongConLai(tempSoLuongConLai);
       });
   }, []);

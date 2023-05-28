@@ -69,6 +69,9 @@ const HoaDonKhongKeDon = ({
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
+  const submitON = () => {
+    submitHanler;
+  };
   return (
     <Fragment>
       <div className="row">

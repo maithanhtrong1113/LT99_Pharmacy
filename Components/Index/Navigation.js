@@ -241,7 +241,7 @@ const Navigation = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                 />
-                <BsSearch className="position-absolute localIconSearch1 " />
+                <BsSearch className="position-absolute localIconSearch1 pointer" />
               </div>
             </div>
 
@@ -265,26 +265,30 @@ const Navigation = () => {
                       href={`/product/${thuoc.thuoc.maThuoc}`}
                       className="text-decoration-none w-100 rounded bg-blue-dark py-2 my-1 text-white bg-blue-darkHover d-flex"
                     >
-                      <Image
-                        src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
-                        className="img-fluid rounded me-2"
-                        width={60}
-                        height={50}
-                        alt=""
-                      />
+                      <div className="rounded bg-white px-2 me-2">
+                        <Image
+                          src={`/images/product/${thuoc.thuoc.maThuoc}.jpg`}
+                          className=" imgSearch "
+                          alt=""
+                          width={50}
+                          height={60}
+                        />
+                      </div>
+
                       {thuoc.thuoc.tenThuoc}
                     </Link>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="col-lg-3 "></div>
-            <div className="col-lg-1  d-flex justify-content-end ">
+            {/* <div className="col-lg-2 "></div> */}
+            <div className="col-lg-2  d-flex justify-content-end align-items-center ">
               <Link
                 href="/cart"
-                className="bg-white d-flex align-items-center border-none  position-relative px-3 py-2-5 rounded "
+                className="bg-white d-flex align-items-center border-none  position-relative px-3 py-2-5 rounded text-decoration-none text-dark fw-bold justify-content-between w-75 "
               >
-                <FaShoppingCart className="text-dark fs-23 mt-2" />
+                Giỏ hàng
+                <FaShoppingCart className="text-dark fs-23 me-2" />
                 <span
                   className={`position-absolute localCart bg-danger text-white  ${
                     cartQuantity > 9 ? "px-1" : "px-1-5"

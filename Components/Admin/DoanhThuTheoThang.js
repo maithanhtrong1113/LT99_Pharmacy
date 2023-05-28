@@ -44,7 +44,7 @@ const DoanhThuTheoThang = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        let tempLabels = data.map((thuoc) => thuoc.thang);
+        let tempLabels = data.map((thuoc) => `Tháng ${thuoc.thang}`);
         let tempSoLuongConLai = data.map((thuoc) => thuoc.doanhThu);
 
         setLabels(tempLabels);
