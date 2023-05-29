@@ -22,6 +22,7 @@ function ModalXemChiTietHoaDon(props) {
   async function ChiTietHoaDon(maHoaDon) {
     const data = await getChiTietHoaDon(maHoaDon);
     setHoaDon(data);
+    console.log(hoaDon);
   }
   useEffect(() => {
     ChiTietHoaDon(props.hoaDon.maHoaDon);
@@ -59,14 +60,16 @@ function ModalXemChiTietHoaDon(props) {
                           <label>{hoaDon.hoaDon.tenKhachHang}</label>
                         </div>
                       </div>
-                      <div className="form-group row my-2 d-flex align-items-center">
-                        <label className="col-sm-4 col-form-label fw-bold">
-                          Số điện thoại:
-                        </label>
-                        <div className="col-sm-8">
-                          <label>{hoaDon.hoaDon.sdtKhachHang}</label>
+                      {hoaDon.hoaDon.tenKhachHang !== "Khách vãng lai" && (
+                        <div className="form-group row my-2 d-flex align-items-center">
+                          <label className="col-sm-4 col-form-label fw-bold">
+                            Số điện thoại:
+                          </label>
+                          <div className="col-sm-8">
+                            <label>{hoaDon.hoaDon.sdtKhachHang}</label>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       <div className="row d-flex justify-content-center "></div>
                     </form>
@@ -93,7 +96,9 @@ function ModalXemChiTietHoaDon(props) {
                           <tbody>
                             {hoaDon.hoaDon.chiTietHoaDon.map((thuoc) => (
                               <tr>
-                                <td>{thuoc.thuoc.maThuoc}</td>
+                                <td className="text-center">
+                                  {thuoc.thuoc.maThuoc}
+                                </td>
                                 <td className="w-40">{thuoc.thuoc.tenThuoc}</td>
                                 <td className="text-center">
                                   {thuoc.thuoc.keDon === true ? (
@@ -103,7 +108,7 @@ function ModalXemChiTietHoaDon(props) {
                                   )}
                                 </td>
                                 <td>{thuoc.soLuong}</td>
-                                <td>{thuoc.donGia}</td>
+                                <td>{VND.format(thuoc.donGia)}</td>
                                 <td className="fw-bold">
                                   {VND.format(thuoc.thanhTien)}
                                 </td>

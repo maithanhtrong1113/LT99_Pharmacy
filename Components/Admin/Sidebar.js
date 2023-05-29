@@ -78,7 +78,7 @@ const Sidebar = () => {
             alt=""
           />
         </Link>
-        <hr className="text-primary" />
+        <div className="line-space1 rounded my-3" />
         <ul className="list-unstyled  navbarSideLiHover  vh-90 ">
           {role === 1 && (
             <li className={`${active} mb-3`}>

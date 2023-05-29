@@ -75,7 +75,12 @@ function ModalUpdateIn4(props) {
       >
         Cập nhập thông tin
       </Button>
-      <Modal isOpen={modal} toggle={toggle} {...props}>
+      <Modal
+        isOpen={modal}
+        toggle={toggle}
+        {...props}
+        className="w-modalAddNhanVien"
+      >
         <ModalHeader toggle={toggle}>
           <span className="fw-bold text-info">Chỉnh Sửa Thông Tin</span>
         </ModalHeader>

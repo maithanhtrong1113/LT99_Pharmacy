@@ -98,7 +98,7 @@ const DoanhThuTheoNgay = () => {
       <hr className="fw-bold my-3" />
       <div className="row my-3 d-flex align-items-center">
         <div className="col-12">
-          <h5 className="fw-bold text-info fst-italic ">Doanh thu theo ngày</h5>
+          <h5 className="fw-bold text-info ">Doanh thu theo ngày</h5>
         </div>
         <div className="col-2">
           <label className="fw-bold">Chọn ngày bắt đầu</label>

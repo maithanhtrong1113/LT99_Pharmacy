@@ -105,7 +105,15 @@ const ContentHoaDon = () => {
                   {dsHoaDon.map((hoaDon) => (
                     <tr key={hoaDon.maHoaDon}>
                       <td>{hoaDon.maHoaDon}</td>
-                      <td>{hoaDon.khachHang.hoTen}</td>
+                      <td>
+                        {" "}
+                        {hoaDon.khachHang.hoTen === null ||
+                        hoaDon.khachHang.hoTen === "" ? (
+                          <BsThreeDots className="text-warning fs-20" />
+                        ) : (
+                          hoaDon.khachHang.hoTen
+                        )}
+                      </td>
                       <td>{`${new Date(hoaDon.ngayLapHoaDon).getDate()}/${
                         new Date(hoaDon.ngayLapHoaDon).getMonth() + 1
                       }/${new Date(hoaDon.ngayLapHoaDon).getFullYear()}`}</td>

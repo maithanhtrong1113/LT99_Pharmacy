@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 // import "react-quill/dist/quill.snow.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function ModalAddThuoc(props) {
   const [loaiThuoc, setLoaiThuoc] = useState([]);
@@ -35,8 +36,9 @@ function ModalAddThuoc(props) {
       <Button
         onClick={toggle}
         color="primary"
-        className="btn  btn-sm my-3 text-white"
+        className="btn  btn-sm  text-white w-100"
       >
+        <AiOutlinePlusCircle className="fs-16 me-2" />
         Thêm Thuốc
       </Button>
       <Modal
@@ -46,7 +48,7 @@ function ModalAddThuoc(props) {
         className="modal-dialogg"
       >
         <ModalHeader toggle={toggle}>
-          <span className="fw-bold"> Thêm Thuốc</span>
+          <span className="fw-bold">Thêm Thuốc</span>
         </ModalHeader>
         <ModalBody>
           <div className="container">

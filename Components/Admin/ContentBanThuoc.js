@@ -242,7 +242,7 @@ const ContentBanThuoc = () => {
       setSoDienThoaiFocus(true);
     }
 
-    if (name === "" || soDienThoai === "") {
+    if ((name === "" || soDienThoai === "") && tab === "KeDon") {
       return;
     }
     if (tab === "KeDon" && name === "") {
@@ -323,10 +323,6 @@ const ContentBanThuoc = () => {
           },
           body: JSON.stringify({
             nhanVienBanHang: { maNhanVien: idNhanVien },
-            khachHang: {
-              maKhachHang: khachHangCoSan.maKhachHang,
-            },
-
             dsHoaDon: dsXuat,
           }),
         }
@@ -398,10 +394,10 @@ const ContentBanThuoc = () => {
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
-
+  const [showKhachHangCoSan, setShowKhachHangSan] = useState(false);
   return (
     <Fragment>
-      <div className="container-fluid ">
+      <div className="container-fluid">
         <div className="row d-flex">
           <Sidebar />
           <div className="col-10 border shadow">
@@ -430,233 +426,203 @@ const ContentBanThuoc = () => {
                 </button>
               </div>
             </div>
-            <div className="col-12">
-              {/* thông tin khách hàng */}
-              <div className="row my-3">
-                <div className="col-7 d-flex align-items-center ">
-                  <b>Tìm khách hàng đã mua:</b>
-                  <div className="position-relative w-75">
-                    <input
-                      type="text"
-                      placeholder="Nhập tên hoặc số điện thoại của khách hàng"
-                      className="form-control shadow  "
-                      value={searchTerm1}
-                      onChange={handleInputChange1}
-                    />
+            {tab === "KeDon" && (
+              <div className="col-12">
+                {/* thông tin khách hàng */}
+                <div className="row my-5">
+                  <div className="col-7 d-flex align-items-center ">
+                    <b>Tìm khách hàng đã mua:</b>
+                    <div className="position-relative ms-3 w-45">
+                      <input
+                        type="text"
+                        placeholder="Nhập tên hoặc số điện thoại của khách hàng"
+                        className="form-control shadow  "
+                        value={searchTerm1}
+                        onFocus={() => setShowKhachHangSan(true)}
+                        onBlur={() => setShowKhachHangSan(false)}
+                        onChange={handleInputChange1}
+                      />
 
-                    <BsSearch className="position-absolute localIconSearch text-dark shadow pointer " />
+                      <BsSearch className=" text-info position-absolute localIconSearch   pointer " />
 
-                    {dsKhachHang.length !== 0 && (
-                      <div className="position-absolute container border rounded bg-light ">
-                        {dsKhachHang.map((khachHang) => (
-                          <button
-                            type="button"
-                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
-                            onClick={() => {
-                              setKhachHangCoSan(khachHang);
-                              setThongTin(khachHang);
-                            }}
-                          >
-                            <span>{khachHang.hoTen}</span>
-                            <span>{khachHang.soDienThoai}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-4"></div>
-
-                <div className={`${tab === "KeDon" ? "col-7" : "col-9"} my-3`}>
-                  <div className="container border shadow rounded p-4">
-                    <h4 className="text-center fw-bold text-info">
-                      Thông tin khách hàng
-                    </h4>
-                    <div className="row d-flex align-items-center my-3">
-                      <div className="col-3">
-                        <label className="fw-bold">
-                          Tên<span className="text-danger">*</span>
-                        </label>
-                      </div>
-                      <div className="col-9">
-                        {Object.keys(khachHangCoSan).length === 0 && (
-                          <input
-                            value={name}
-                            onFocus={hanleFocusName}
-                            onChange={(e) => setName(e.target.value)}
-                            type="text"
-                            className="form-control inputText "
-                          />
-                        )}
-                        {Object.keys(khachHangCoSan).length !== 0 && (
-                          <input
-                            value={name}
-                            onFocus={hanleFocusName}
-                            onChange={(e) => setName(e.target.value)}
-                            type="text"
-                            readOnly
-                            className="form-control inputText opacity-50"
-                          />
-                        )}
-
-                        {name === "" && nameFocus && (
-                          <>
-                            <div className="col-3"></div>
-                            <span className="text-danger col-9">
-                              Vui lòng nhập tên khách hàng
-                            </span>
-                          </>
-                        )}
-                      </div>
+                      {dsKhachHang.length !== 0 && (
+                        <div className="position-absolute container border rounded bg-light ">
+                          {dsKhachHang.map((khachHang) => (
+                            <button
+                              type="button"
+                              className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
+                              onClick={() => {
+                                setKhachHangCoSan(khachHang);
+                                setThongTin(khachHang);
+                              }}
+                            >
+                              <span>{khachHang.hoTen}</span>
+                              <span>{khachHang.soDienThoai}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <div className="row d-flex align-items-center my-3">
-                      <div className="col-3">
-                        <label className="fw-bold">
-                          Số điện thoại <span className="text-danger">*</span>
-                        </label>
-                      </div>
-                      <div className="col-9">
-                        {Object.keys(khachHangCoSan).length === 0 && (
-                          <input
-                            value={soDienThoai}
-                            onChange={(e) => setSoDienThoai(e.target.value)}
-                            onFocus={hanleFocusSoDienThoai}
-                            type="text"
-                            className="form-control inputText"
-                          />
-                        )}
-                        {Object.keys(khachHangCoSan).length !== 0 && (
-                          <input
-                            value={soDienThoai}
-                            onChange={(e) => setSoDienThoai(e.target.value)}
-                            onFocus={hanleFocusSoDienThoai}
-                            type="text"
-                            readOnly
-                            className="form-control inputText opacity-50"
-                          />
-                        )}
+                  </div>
+                  <div className="col-4"></div>
 
-                        {soDienThoai === "" && soDienThoaiFocus && (
-                          <>
-                            <div className="col-3"></div>
-                            <span className="text-danger col-9">
-                              Vui lòng nhập số điện thoại
-                            </span>
-                          </>
-                        )}
-                        {!kiemTraSoDienThoai(soDienThoai) &&
-                          soDienThoai !== "" && (
+                  <div
+                    className={`${tab === "KeDon" ? "col-7" : "col-9"} my-3`}
+                  >
+                    <div className="container border shadow rounded p-4">
+                      <h4 className="text-center fw-bold text-info">
+                        Thông tin khách hàng
+                      </h4>
+                      <div className="row d-flex align-items-center my-3">
+                        <div className="col-3">
+                          <label className="fw-bold">
+                            Tên<span className="text-danger">*</span>
+                          </label>
+                        </div>
+                        <div className="col-9">
+                          {Object.keys(khachHangCoSan).length === 0 && (
+                            <input
+                              value={name}
+                              onFocus={hanleFocusName}
+                              onChange={(e) => setName(e.target.value)}
+                              type="text"
+                              className="form-control inputText "
+                            />
+                          )}
+                          {Object.keys(khachHangCoSan).length !== 0 && (
+                            <input
+                              value={name}
+                              onFocus={hanleFocusName}
+                              onChange={(e) => setName(e.target.value)}
+                              type="text"
+                              readOnly
+                              className="form-control inputText opacity-50"
+                            />
+                          )}
+
+                          {name === "" && nameFocus && (
                             <>
                               <div className="col-3"></div>
-                              <span className="col-9 text-danger">
-                                Số điện thoại không tồn tại
+                              <span className="text-danger col-9">
+                                Vui lòng nhập tên khách hàng
                               </span>
                             </>
                           )}
-                      </div>
-                    </div>
-                    {/* <div className="row d-flex align-items-center my-3">
-                      <div className="col-3">
-                        <label className="fw-bold">Địa chỉ</label>
-                      </div>
-                      <div className="col-9">
-                        <input
-                          type="text"
-                          value={diaChi}
-                          onChange={(e) => setDiaChi(e.target.value)}
-                          className="form-control inputText "
-                        />
-                      </div>
-                    </div> */}
-                    <div className="row d-flex align-items-center my-3">
-                      {/* <div className="col-3">
-                        <label className="fw-bold">Giới tính</label>
-                      </div>
-                      <div className="col-3">
-                        <select
-                          {...register("gioiTinh")}
-                          className="w-100 form-control"
-                          value={gioiTinh}
-                          onChange={(e) => setGioiTinh(e.target.value)}
-                        >
-                          <option value="Nam">Nam</option>
-                          <option value="Nữ">Nữ</option>
-                        </select>
-                      </div>
-                      <div className="col-2 px-0">
-                        <label className="fw-bold">Ngày sinh</label>
-                      </div>
-                      <div className="col-4">
-                        <DatePicker
-                          className="form-select"
-                          selected={ngaySinh}
-                          onChange={(date) => setNgaySinh(date)}
-                          dateFormat="dd-MM-yyyy"
-                        />
-                      </div> */}
-                      <div className="d-flex justify-content-between">
-                        {Object.keys(khachHangCoSan).length === 0 && (
-                          <button
-                            className="btn btn-primary my-3 w-25 btn-sm"
-                            type="button"
-                            onClick={themKhachHangMoi}
-                          >
-                            Thêm khách hàng
-                          </button>
-                        )}
-                        {Object.keys(khachHangCoSan).length !== 0 && (
-                          <button
-                            className="btn btn-warning my-3 w-25 float-right btn-sm"
-                            type="button"
-                            onClick={() => setThongTin({})}
-                          >
-                            Xóa thông tin nhập
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {tab === "KeDon" && (
-                  <div className="col-5 my-3">
-                    <div className="container border shadow rounded p-4 ">
-                      <h4 className="text-info fw-bold text-center">
-                        Thông tin nơi cấp đơn thuốc
-                      </h4>
-                      <div className="row d-flex align-items-center my-3 ">
-                        <div className="col-4">
-                          <label className="fw-bold">Nơi khám</label>
-                        </div>
-                        <div className="col-8">
-                          <input
-                            value={noiKham}
-                            onFocus={hanleFocusNoiKham}
-                            onChange={(e) => setNoiKham(e.target.value)}
-                            type="text"
-                            className="form-control inputText"
-                          />
                         </div>
                       </div>
                       <div className="row d-flex align-items-center my-3">
-                        <div className="col-4">
-                          <label className="fw-bold">Phiếu Khám</label>
+                        <div className="col-3">
+                          <label className="fw-bold">
+                            Số điện thoại <span className="text-danger">*</span>
+                          </label>
                         </div>
-                        <div className="col-8">
-                          <input
-                            value={bacSi}
-                            onChange={(e) => setBacSi(e.target.value)}
-                            onFocus={hanleFocusBacSi}
-                            type="text"
-                            className="form-control inputText"
-                          />
+                        <div className="col-9">
+                          {Object.keys(khachHangCoSan).length === 0 && (
+                            <input
+                              value={soDienThoai}
+                              onChange={(e) => setSoDienThoai(e.target.value)}
+                              onFocus={hanleFocusSoDienThoai}
+                              type="text"
+                              className="form-control inputText"
+                            />
+                          )}
+                          {Object.keys(khachHangCoSan).length !== 0 && (
+                            <input
+                              value={soDienThoai}
+                              onChange={(e) => setSoDienThoai(e.target.value)}
+                              onFocus={hanleFocusSoDienThoai}
+                              type="text"
+                              readOnly
+                              className="form-control inputText opacity-50"
+                            />
+                          )}
+
+                          {soDienThoai === "" && soDienThoaiFocus && (
+                            <>
+                              <div className="col-3"></div>
+                              <span className="text-danger col-9">
+                                Vui lòng nhập số điện thoại
+                              </span>
+                            </>
+                          )}
+                          {!kiemTraSoDienThoai(soDienThoai) &&
+                            soDienThoai !== "" && (
+                              <>
+                                <div className="col-3"></div>
+                                <span className="col-9 text-danger">
+                                  Số điện thoại không tồn tại
+                                </span>
+                              </>
+                            )}
+                        </div>
+                      </div>
+
+                      <div className="row d-flex align-items-center my-3">
+                        <div className="d-flex justify-content-between">
+                          {Object.keys(khachHangCoSan).length === 0 && (
+                            <button
+                              className="btn btn-primary my-3 w-25 btn-sm"
+                              type="button"
+                              onClick={themKhachHangMoi}
+                            >
+                              Thêm khách hàng
+                            </button>
+                          )}
+                          {Object.keys(khachHangCoSan).length !== 0 && (
+                            <button
+                              className="btn btn-warning my-3 w-25 float-right btn-sm"
+                              type="button"
+                              onClick={() => setThongTin({})}
+                            >
+                              Xóa thông tin nhập
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
-                )}
+
+                  {tab === "KeDon" && (
+                    <div className="col-5 my-3">
+                      <div className="container border shadow rounded p-4 ">
+                        <h4 className="text-info fw-bold text-center">
+                          Thông tin nơi cấp đơn thuốc
+                        </h4>
+                        <div className="row d-flex align-items-center my-3 ">
+                          <div className="col-4">
+                            <label className="fw-bold">Nơi khám</label>
+                          </div>
+                          <div className="col-8">
+                            <input
+                              value={noiKham}
+                              onFocus={hanleFocusNoiKham}
+                              onChange={(e) => setNoiKham(e.target.value)}
+                              type="text"
+                              className="form-control inputText"
+                            />
+                          </div>
+                        </div>
+                        <div className="row d-flex align-items-center my-3">
+                          <div className="col-4">
+                            <label className="fw-bold">Phiếu Khám</label>
+                          </div>
+                          <div className="col-8">
+                            <input
+                              value={bacSi}
+                              onChange={(e) => setBacSi(e.target.value)}
+                              onFocus={hanleFocusBacSi}
+                              type="text"
+                              className="form-control inputText"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
+
             <form
               className="container border shadow rounded "
               onSubmit={submitHanler}
@@ -674,7 +640,7 @@ const ContentBanThuoc = () => {
                       onChange={handleInputChange}
                     />
 
-                    <BsSearch className="position-absolute localIconSearch text-dark shadow pointer" />
+                    <BsSearch className="position-absolute localIconSearch text-info  pointer" />
 
                     {dsThuoc.length !== 0 && (
                       <div className="position-absolute container border rounded bg-light widthThuoc localTimKiemshow localTimKiem1">
@@ -775,7 +741,7 @@ const ContentBanThuoc = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="d-flex justify-content-between my-1 align-items-center">
-                      <span className="fst-italic text-info ">
+                      <span className="text-info ">
                         Danh sách thuốc khách hàng mua
                       </span>
                       {dsNhap.length !== 0 && (
@@ -850,6 +816,7 @@ const ContentBanThuoc = () => {
                             <th>Thuốc kê đơn</th>
                             <th>Đơn vị tính</th>
                             <th>Số lượng</th>
+                            <th>Đơn giá</th>
                             <th>Thành tiền</th>
                             <th className="print-hide"></th>
                           </tr>
@@ -861,7 +828,7 @@ const ContentBanThuoc = () => {
                               className="text-center"
                             >
                               <td className="w-10">{thuoc.thuoc.maThuoc}</td>
-                              <td className="fw-bold w-40">
+                              <td className="fw-bold w-30">
                                 {thuoc.thuoc.tenThuoc}
                               </td>
                               {thuoc.thuoc.isThuocKeDon && (
@@ -895,8 +862,9 @@ const ContentBanThuoc = () => {
                                   }}
                                   className="fw-bold form-control text-center"
                                 />
-                                <span className=" text-muted print-hide">{`Kho: ${thuoc.thuoc.soLuong}`}</span>
+                                <span className="text-center text-muted print-hide">{`Kho: ${thuoc.thuoc.soLuong}`}</span>
                               </td>
+                              <td>{VND.format(thuoc.giaBanLe)}</td>
                               <td className="fw-bold">
                                 {VND.format(thuoc.thuoc.thanhTien)}
                               </td>
@@ -937,11 +905,13 @@ const ContentBanThuoc = () => {
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>
+                            <td></td>
+                            <td className="text-center">
                               {`${VND.format(tongTienHoaDon * 1.1)}`}
                               <br />{" "}
                               <span className="text-muted fs-12VAT">{`Đã bao gồm VAT `}</span>
                             </td>
+
                             <td></td>
                           </tr>
                         </tbody>

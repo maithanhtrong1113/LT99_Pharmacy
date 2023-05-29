@@ -77,9 +77,7 @@ const HoaDonKhongKeDon = ({
       <div className="row">
         <div className="col-12">
           <div className="d-flex justify-content-between my-1 align-items-center">
-            <span className="fst-italic text-info ">
-              Danh sách thuốc khách hàng mua
-            </span>
+            <span className=" text-info">Danh sách thuốc khách hàng mua</span>
             {dsNhap1.length !== 0 && (
               <button
                 className="btn btn-danger"
@@ -150,6 +148,7 @@ const HoaDonKhongKeDon = ({
                   <th>Thuốc kê đơn</th>
                   <th>Đơn vị tính</th>
                   <th>Số lượng</th>
+                  <th>Đơn giá</th>
                   <th>Thành tiền</th>
                   <th></th>
                 </tr>
@@ -158,7 +157,7 @@ const HoaDonKhongKeDon = ({
                 {dsNhap1.map((thuoc) => (
                   <tr key={thuoc.thuoc.maThuoc} className="text-center">
                     <td>{thuoc.thuoc.maThuoc}</td>
-                    <td className="fw-bold w-40">{thuoc.thuoc.tenThuoc}</td>
+                    <td className="fw-bold w-30">{thuoc.thuoc.tenThuoc}</td>
                     {thuoc.thuoc.isThuocKeDon && (
                       <td>
                         <BsCheck2 className="text-success fs-20 mt-3 " />
@@ -186,6 +185,7 @@ const HoaDonKhongKeDon = ({
                       />
                       <span className=" text-muted print-hide">{`Tồn: ${thuoc.thuoc.soLuong}`}</span>
                     </td>
+                    <td>{VND.format(thuoc.giaBanLe)}</td>
                     <td className="fw-bold">
                       {VND.format(thuoc.thuoc.thanhTien)}
                     </td>
@@ -220,19 +220,21 @@ const HoaDonKhongKeDon = ({
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="fw-bold">
+                  <td></td>
+                  <td className="fw-bold text-center">
                     {VND.format(tongTienHoaDon1 * 1.1)} <br />
                     <span className="text-muted fs-12VAT">{`Đã bao gồm VAT `}</span>
                   </td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      {dsNhap1.length !== 0 && Object.keys(khachHangCoSan).length !== 0 && (
+      {dsNhap1.length !== 0 && (
         <div className="d-flex">
-          <div className="col-3 mb-3">
+          <div className="col-2 mb-3">
             <button
               className="btn btn-primary d-flex align-items-center"
               type="Submit"

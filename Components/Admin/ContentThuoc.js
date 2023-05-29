@@ -4,12 +4,18 @@ import { useForm } from "react-hook-form";
 import Sidebar from "./Sidebar";
 import ModalAddThuoc from "../Modal/ModalAddThuoc";
 import Thuoc from "./Thuoc";
-import { BsSearch } from "react-icons/bs";
+import { BsFilterLeft, BsListCheck, BsSearch } from "react-icons/bs";
 import NguoiDung from "./NguoiDung";
 import { getAllLoaiThuoc } from "@/api/loaiThuocApi";
 import { getAllThuoc, getThuocTheoLoai, themThuoc } from "@/api/thuocApi";
 import { useSelector } from "react-redux";
-import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
+import {
+  AiOutlineDoubleLeft,
+  AiOutlineDoubleRight,
+  AiOutlineUnorderedList,
+} from "react-icons/ai";
+import { CgScrollV } from "react-icons/cg";
+import { FcList } from "react-icons/fc";
 
 const ContentThuoc = () => {
   const {
@@ -17,6 +23,7 @@ const ContentThuoc = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [keDon, setKeDon] = useState("all");
   const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [dsThuoc, setDsThuoc] = useState([]);
   const [loaiThuocSelected, setLoaiThuocSelected] = useState("All");
@@ -57,14 +64,30 @@ const ContentThuoc = () => {
       </div>
     );
   }
+  const filterKeDon = (dsThuoc) => {
+    console.log(dsThuoc);
+    if (keDon === "Thuốc kê đơn") {
+      setDsThuoc(dsThuoc.filter((thuoc) => thuoc.thuoc.isThuocKeDon));
+    } else if (keDon === "Thuốc không kê đơn") {
+      setDsThuoc(dsThuoc.filter((thuoc) => !thuoc.thuoc.isThuocKeDon));
+    } else {
+      setTotal(Math.ceil(dsThuoc.length / 12));
+      setDsThuoc(getItems(dsThuoc, page));
+    }
+  };
   useEffect(() => {
     fetchData();
-    if (loaiThuocSelected === "All") {
-      DanhSachThuoc();
+    if (keDon === "all") {
+      if (loaiThuocSelected === "All") {
+        DanhSachThuoc();
+      } else {
+        DanhSachThuocTheoLoai(loaiThuocSelected);
+      }
     } else {
-      DanhSachThuocTheoLoai(loaiThuocSelected);
+      filterKeDon(dsThuoc);
     }
-  }, [loaiThuocSelected, page]);
+  }, [loaiThuocSelected, page, keDon]);
+
   // lấy thuốc theo loại
   async function DanhSachThuocTheoLoai(loaiThuocSelected) {
     const data = await getThuocTheoLoai(loaiThuocSelected);
@@ -111,6 +134,7 @@ const ContentThuoc = () => {
     setPage(Math.ceil(res.length / 12)); //lấy trang cuối cùng
     setDsThuoc(getItems(res, page));
   };
+
   return (
     <Fragment>
       <div className="container-fluid ">
@@ -130,11 +154,11 @@ const ContentThuoc = () => {
                         value={searchTerm}
                         onChange={handleInputChange}
                       />
-                      <BsSearch className="position-absolute localIconSearch" />
+                      <BsSearch className="position-absolute localIconSearch text-primary pointer" />
                     </div>
                   </form>
                 </div>
-                <div className="col-2">
+                <div className="col-3">
                   <form>
                     <select
                       className="form-select form-select-sm py-2"
@@ -146,13 +170,37 @@ const ContentThuoc = () => {
                       }}
                     >
                       <option value={"All"} key={0} defaultValue>
-                        Tất cả thuốc
+                        Tất cả loại thuốc
                       </option>
                       {loaiThuoc.map((loaiThuoc) => (
                         <option value={loaiThuoc.maLoai} key={loaiThuoc.maLoai}>
                           {loaiThuoc.tenLoai}
                         </option>
                       ))}
+                    </select>
+                  </form>
+                </div>
+                <div className="col-2 px-0">
+                  <form>
+                    <select
+                      className="form-select form-select-sm py-2 "
+                      value={keDon}
+                      onChange={(e) => {
+                        setKeDon(e.target.value);
+                      }}
+                    >
+                      <option value={"all"} key={"allKey"} defaultValue>
+                        Tất cả thuốc
+                      </option>
+                      <option value="Thuốc kê đơn" key={"thuocKeDon"}>
+                        Thuốc kê đơn
+                      </option>
+                      <option
+                        value="Thuốc không kê đơn"
+                        key={"thuocKhongKeDon"}
+                      >
+                        Thuốc không kê đơn
+                      </option>
                     </select>
                   </form>
                 </div>
@@ -166,9 +214,15 @@ const ContentThuoc = () => {
                 <thead>
                   <tr>
                     <th scope="col">Mã Thuốc</th>
-                    <th scope="col">Tên Thuốc</th>
-                    <th scope="col">Thuốc kê đơn</th>
-                    <th scope="col">Loại Thuốc</th>
+                    <th scope="col">
+                      Tên Thuốc <CgScrollV />
+                    </th>
+                    <th scope="col">
+                      Thuốc kê đơn <CgScrollV />
+                    </th>
+                    <th scope="col">
+                      Loại Thuốc <CgScrollV />
+                    </th>
                     <th scope="col">Số Lượng</th>
                   </tr>
                 </thead>

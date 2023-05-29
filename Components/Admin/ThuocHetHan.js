@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { chuyenDoiNgayThangNam } from "../utils/tooLong";
 
 const ThuocHetHan = () => {
   ChartJS.register(
@@ -68,7 +69,9 @@ const ThuocHetHan = () => {
       .then((data) => {
         let tempLabels = data.map(
           (thuoc) =>
-            ` ${thuoc.tenThuoc} Lô (${thuoc.loThuoc}) Ngày Hết Hạn: ${thuoc.ngayHetHan}`
+            ` ${thuoc.tenThuoc} Lô (${
+              thuoc.loThuoc
+            }) Ngày Hết Hạn: ${chuyenDoiNgayThangNam(thuoc.ngayHetHan)}`
         );
 
         let tempSoLuongConLai = data.map((thuoc) => thuoc.soLuong);
@@ -95,7 +98,7 @@ const ThuocHetHan = () => {
       <hr className="fw-bold my-3" />
       <div className="row my-3 d-flex align-items-center">
         <div className="col-12">
-          <h5 className="fw-bold text-danger fst-italic ">
+          <h5 className="fw-bold text-danger">
             Thống kê thuốc hết hạn: {`(${today.toLocaleDateString("vi-VN")})`}
           </h5>
         </div>

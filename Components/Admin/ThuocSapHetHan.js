@@ -104,7 +104,7 @@ const ThuocSapHetHan = () => {
       <hr className="fw-bold my-3" />
       <div className="row my-3 d-flex align-items-center">
         <div className="col-12">
-          <h5 className="fw-bold text-warning fst-italic ">
+          <h5 className="fw-bold text-warning  ">
             Thống kê thuốc sắp hết hạn:
             {` (${today.toLocaleDateString("vi-VN")})`}
           </h5>
