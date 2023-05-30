@@ -292,7 +292,7 @@ const Navigation = () => {
                 href="https://m.me/110305482000429"
                 className="w-100 bg-white btn d-flex align-items-center fw-bold justify-content-between"
               >
-                Tư vấn trực tuyến
+                Hỗ trợ trực tuyến
                 <BsChatDotsFill className=" fs-19 text-blue-pastel" />
               </Link>
             </div>
