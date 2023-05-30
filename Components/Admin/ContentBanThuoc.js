@@ -76,7 +76,7 @@ const ContentBanThuoc = () => {
   const handleInputChange = (event) => {
     const searchTerm = event.target.value;
     setSearchTerm(searchTerm);
-    console.log(dsThuoc);
+
     if (timeoutId) {
       clearTimeout(timeoutId); // Xóa timeout trước đó nếu còn tồn tại
     }
@@ -274,7 +274,13 @@ const ContentBanThuoc = () => {
       } else {
         setTrachNhiem(false);
       }
-
+      console.log(
+        idNhanVien,
+        khachHangCoSan.maKhachHang,
+        bacSi,
+        noiKham,
+        dsXuat
+      );
       fetch(
         `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/lap-hoa-don-theo-toa`,
         {
@@ -282,6 +288,7 @@ const ContentBanThuoc = () => {
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify({
             nhanVienBanHang: { maNhanVien: idNhanVien },
             khachHang: {
@@ -318,7 +325,7 @@ const ContentBanThuoc = () => {
           soLuongThuocBan: thuoc.thuoc.soLuongBan,
         };
       });
-
+      console.log(idNhanVien, dsXuat);
       fetch(
         `http://localhost:8080/QLNT-Server/nhan-vien/hoa-don/lap-hoa-don-khong-theo-toa`,
         {
@@ -327,6 +334,7 @@ const ContentBanThuoc = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            isHoaDonKeDon: false,
             nhanVienBanHang: { maNhanVien: idNhanVien },
             dsHoaDon: dsXuat,
           }),
@@ -390,6 +398,13 @@ const ContentBanThuoc = () => {
         toast.success("Thêm khách hàng thành công", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
+          theme: "light",
+        });
+      })
+      .catch((errors) => {
+        toast.error("Số điện thoại đã tồn tại", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 3000,
           theme: "light",
         });
       });
