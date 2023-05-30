@@ -33,7 +33,7 @@ const ContentBanThuoc = () => {
     formState: { errors },
   } = useForm({});
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(null);
   const [timeoutId, setTimeoutId] = useState(null);
   const [timeoutId1, setTimeoutId1] = useState(null);
   const [dsThuoc, setDsThuoc] = useState([]);
@@ -164,8 +164,13 @@ const ContentBanThuoc = () => {
         )
           .then((response) => response.json())
           .then((results) => {
-            if (results.length > 0) setDsKhachHang(results);
-            else {
+            if (results.length > 0) {
+              console.log(results);
+              results = results.filter(
+                (thuoc) => thuoc.hoTen !== "Khách vãng lai"
+              );
+              setDsKhachHang(results);
+            } else {
               setDsKhachHang([]);
             }
           });
@@ -429,7 +434,7 @@ const ContentBanThuoc = () => {
             {tab === "KeDon" && (
               <div className="col-12">
                 {/* thông tin khách hàng */}
-                <div className="row my-5">
+                <div className="row my-5 position-relative">
                   <div className="col-7 d-flex align-items-center ">
                     <b>Tìm khách hàng đã mua:</b>
                     <div className="position-relative ms-3 w-45">
@@ -442,26 +447,56 @@ const ContentBanThuoc = () => {
                         onBlur={() => setShowKhachHangSan(false)}
                         onChange={handleInputChange1}
                       />
-
                       <BsSearch className=" text-info position-absolute localIconSearch   pointer " />
-
-                      {dsKhachHang.length !== 0 && (
-                        <div className="position-absolute container border rounded bg-light ">
-                          {dsKhachHang.map((khachHang) => (
-                            <button
-                              type="button"
-                              className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
-                              onClick={() => {
-                                setKhachHangCoSan(khachHang);
-                                setThongTin(khachHang);
-                              }}
-                            >
-                              <span>{khachHang.hoTen}</span>
-                              <span>{khachHang.soDienThoai}</span>
-                            </button>
-                          ))}
-                        </div>
+                      {/* <div
+                        className={`position-absolute container border rounded bg-light
+                            ${showKhachHangCoSan ? "visible " : "invisible"}`}
+                      >
+                        {dsKhachHang.map((khachHang) => (
+                          <button
+                            type="button"
+                            className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
+                            onClick={() => {
+                              setKhachHangCoSan(khachHang);
+                              setThongTin(khachHang);
+                            }}
+                          >
+                            <span>{khachHang.hoTen}</span>
+                            <span>{khachHang.soDienThoai}</span>
+                          </button>
+                        ))}
+                      </div> */}
+                    </div>
+                  </div>
+                  <div
+                    className={`position-absolute localTimKiemAfter w-40  ${
+                      showKhachHangCoSan ? "localTimKiemshow" : ""
+                    } p-0`}
+                  >
+                    <div className="p-3 border rounded bg-white shadow ">
+                      {dsKhachHang.length === 0 && searchTerm1 !== null && (
+                        <span className="fw-bold">
+                          Không tìm thấy thông tin của khách hàng
+                        </span>
                       )}
+                      {dsKhachHang.length === 0 && searchTerm1 === null && (
+                        <span className="fw-bold">
+                          Nhập tên hoặc số điện thoại của khách hàng
+                        </span>
+                      )}
+                      {dsKhachHang.map((khachHang) => (
+                        <button
+                          type="button"
+                          className="text-dark w-100 btn btn-light d-flex justify-content-between align-items-center my-2 border "
+                          onClick={() => {
+                            setKhachHangCoSan(khachHang);
+                            setThongTin(khachHang);
+                          }}
+                        >
+                          <span>{khachHang.hoTen}</span>
+                          <span>{khachHang.soDienThoai}</span>
+                        </button>
+                      ))}
                     </div>
                   </div>
                   <div className="col-4"></div>
