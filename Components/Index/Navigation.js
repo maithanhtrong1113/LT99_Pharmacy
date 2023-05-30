@@ -15,7 +15,12 @@ import { authActions } from "../../store/auth";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Image from "next/image";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
-import { BsArrowLeft, BsArrowRight, BsSearch } from "react-icons/bs";
+import {
+  BsArrowLeft,
+  BsArrowRight,
+  BsChatDotsFill,
+  BsSearch,
+} from "react-icons/bs";
 import { AiOutlineMessage } from "react-icons/ai";
 
 const Navigation = () => {
@@ -288,7 +293,7 @@ const Navigation = () => {
                 className="w-100 bg-white btn d-flex align-items-center fw-bold justify-content-between"
               >
                 Tư vấn trực tuyến
-                <AiOutlineMessage className=" fs-19 text-blue-pastel" />
+                <BsChatDotsFill className=" fs-19 text-blue-pastel" />
               </Link>
             </div>
             <div className="col-lg-2  d-flex justify-content-end align-items-center ">
