@@ -64,15 +64,22 @@ const ContentThuoc = () => {
       </div>
     );
   }
-  const filterKeDon = (dsThuoc) => {
-    console.log(dsThuoc);
-    if (keDon === "Thuốc kê đơn") {
-      setDsThuoc(dsThuoc.filter((thuoc) => thuoc.thuoc.isThuocKeDon));
-    } else if (keDon === "Thuốc không kê đơn") {
-      setDsThuoc(dsThuoc.filter((thuoc) => !thuoc.thuoc.isThuocKeDon));
+  const filterKeDon = async () => {
+    let listThuoc = [];
+    if (loaiThuocSelected === "All") {
+      const data = await getAllThuoc();
+      listThuoc = data;
     } else {
-      setTotal(Math.ceil(dsThuoc.length / 12));
-      setDsThuoc(getItems(dsThuoc, page));
+      const data = await getThuocTheoLoai(loaiThuocSelected);
+      listThuoc = data;
+    }
+    if (keDon === "Thuốc kê đơn") {
+      setDsThuoc(listThuoc.filter((thuoc) => thuoc.thuoc.isThuocKeDon));
+      setTotal(Math.ceil(listThuoc / 12));
+    } else if (keDon === "Thuốc không kê đơn") {
+      listThuoc = listThuoc.filter((thuoc) => !thuoc.thuoc.isThuocKeDon);
+      setTotal(Math.ceil(listThuoc.length / 12));
+      setDsThuoc(getItems(listThuoc, page));
     }
   };
   useEffect(() => {
@@ -84,7 +91,7 @@ const ContentThuoc = () => {
         DanhSachThuocTheoLoai(loaiThuocSelected);
       }
     } else {
-      filterKeDon(dsThuoc);
+      filterKeDon();
     }
   }, [loaiThuocSelected, page, keDon]);
 
