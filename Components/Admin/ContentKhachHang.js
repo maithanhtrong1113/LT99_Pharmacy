@@ -131,7 +131,15 @@ const ContentKhachHang = () => {
                     <tr key={khachHang.maKhachHang}>
                       <td>{khachHang.maKhachHang}</td>
                       <td>{khachHang.hoTen}</td>
-                      <td>{khachHang.soDienThoai}</td>
+                      <td>
+                        {" "}
+                        {khachHang.soDienThoai === null ||
+                        khachHang.soDienThoai === "" ? (
+                          <BsThreeDots className="text-success fs-20" />
+                        ) : (
+                          khachHang.soDienThoai
+                        )}
+                      </td>
                       <td>
                         {khachHang.gioiTinh === null ||
                         khachHang.gioiTinh === "" ? (

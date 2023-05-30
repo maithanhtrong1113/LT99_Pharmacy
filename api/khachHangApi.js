@@ -30,7 +30,7 @@ export const themKhachHang = async (data) => {
       theme: "light",
     });
   } else {
-    toast.error("Thêm khách hàng không thành công", {
+    toast.error("Số điện thoại đã tồn tại", {
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
       theme: "light",

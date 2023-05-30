@@ -289,7 +289,7 @@ const Navigation = () => {
             </div>
             <div className="col-lg-2 ">
               <Link
-                href="https://www.facebook.com/LT99Phamarcy"
+                href="https://m.me/110305482000429"
                 className="w-100 bg-white btn d-flex align-items-center fw-bold justify-content-between"
               >
                 Tư vấn trực tuyến

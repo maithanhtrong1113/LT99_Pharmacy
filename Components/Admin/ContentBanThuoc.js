@@ -401,7 +401,7 @@ const ContentBanThuoc = () => {
           theme: "light",
         });
       })
-      .catch((errors) => {
+      .catch(() => {
         toast.error("Số điện thoại đã tồn tại", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 3000,
