@@ -5,8 +5,21 @@ import { useState } from "react";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const ListProduct = () => {
+  const animateImgeBot = {
+    off: { y: 100, opacity: 0 },
+    on: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 3,
+        type: "spring",
+        bounce: 0.7,
+      },
+    },
+  };
   const [loaiThuoc, setLoaiThuoc] = useState([]);
   const [length, setLength] = useState(0);
   useEffect(() => {
@@ -44,9 +57,14 @@ const ListProduct = () => {
           <h3 className="fw-bold text-blue-pastel">Danh mục sản phẩm</h3>
         </div>
       </div>
-      <div className="my-3 d-flex  my-1i row scrolbarCustomDanhMuc fw-bold">
+      <motion.div
+        className="my-3 d-flex  my-1i row scrolbarCustomDanhMuc fw-bold"
+        initial={"off"}
+        animate={"on"}
+        variants={animateImgeBot}
+      >
         {danhMuc}
-      </div>
+      </motion.div>
       <div className="row line-space"></div>
     </Fragment>
   );

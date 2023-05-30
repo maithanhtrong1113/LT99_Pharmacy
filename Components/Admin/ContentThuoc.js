@@ -75,10 +75,11 @@ const ContentThuoc = () => {
     }
     if (keDon === "Thuốc kê đơn") {
       setDsThuoc(listThuoc.filter((thuoc) => thuoc.thuoc.isThuocKeDon));
-      setTotal(Math.ceil(listThuoc / 12));
+      setTotal(Math.ceil(dsThuoc.length / 12));
     } else if (keDon === "Thuốc không kê đơn") {
       listThuoc = listThuoc.filter((thuoc) => !thuoc.thuoc.isThuocKeDon);
       setTotal(Math.ceil(listThuoc.length / 12));
+
       setDsThuoc(getItems(listThuoc, page));
     }
   };

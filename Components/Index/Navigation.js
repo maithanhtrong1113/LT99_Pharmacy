@@ -16,6 +16,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Image from "next/image";
 import { getAllLoaiThuocKhach } from "@/api/loaiThuocApi";
 import { BsArrowLeft, BsArrowRight, BsSearch } from "react-icons/bs";
+import { AiOutlineMessage } from "react-icons/ai";
 
 const Navigation = () => {
   const cartQuantity = useSelector((state) => state.cart.totalQuantity);
@@ -217,9 +218,9 @@ const Navigation = () => {
                 className="btn border w-100 d-flex justify-content-evenly align-items-center bg-white  "
                 onClick={toggle}
               >
-                <FaThList className="text-dark" />
+                <FaThList className="text-blue-pastel" />
                 <span className="text-decoration-none fw-bold"> Danh Mục</span>
-                <FaAngleDown />
+                <FaAngleDown className="text-blue-pastel" />
               </div>
             </div>
 
@@ -241,7 +242,7 @@ const Navigation = () => {
                   value={searchTerm}
                   onChange={handleInputChange}
                 />
-                <BsSearch className="position-absolute localIconSearch1 pointer" />
+                <BsSearch className="position-absolute localIconSearch1 pointer text-blue-pastel" />
               </div>
             </div>
 
@@ -281,14 +282,22 @@ const Navigation = () => {
                 ))}
               </div>
             </div>
-            {/* <div className="col-lg-2 "></div> */}
+            <div className="col-lg-2 ">
+              <Link
+                href="https://www.facebook.com/LT99Phamarcy"
+                className="w-100 bg-white btn d-flex align-items-center fw-bold justify-content-between"
+              >
+                Tư vấn trực tuyến
+                <AiOutlineMessage className=" fs-19 text-blue-pastel" />
+              </Link>
+            </div>
             <div className="col-lg-2  d-flex justify-content-end align-items-center ">
               <Link
                 href="/cart"
                 className="bg-white d-flex align-items-center border-none  position-relative px-3 py-2-5 rounded text-decoration-none text-dark fw-bold justify-content-between w-75 "
               >
                 Giỏ hàng
-                <FaShoppingCart className="text-dark fs-23 me-2" />
+                <FaShoppingCart className="text-blue-pastel  fs-23 me-2" />
                 <span
                   className={`position-absolute localCart bg-danger text-white  ${
                     cartQuantity > 9 ? "px-1" : "px-1-5"

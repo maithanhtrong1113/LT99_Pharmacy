@@ -171,7 +171,7 @@ const ContentChiTietDonHang = () => {
                     <h6 className="fw-bold">Thông tin khách hàng</h6>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-100 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center fw-bold">
                       <BsPerson className="me-2" />
                       Tên người nhận
                     </div>
@@ -180,7 +180,7 @@ const ContentChiTietDonHang = () => {
                     <span>{chiTiet.hoaDon.tenKhachHang}</span>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-100 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center fw-bold">
                       <BsTelephone className="me-2" />
                       Số điện thoại
                     </div>
@@ -189,7 +189,7 @@ const ContentChiTietDonHang = () => {
                     <span>{chiTiet.hoaDon.sdtKhachHang}</span>
                   </div>
                   <div className="col-6 my-2">
-                    <div className="w-100 d-flex align-items-center text-muted">
+                    <div className="w-100 d-flex align-items-center fw-bold">
                       <MdOutlineLocationOn className="me-2" />
                       Địa chỉ giao hàng
                     </div>

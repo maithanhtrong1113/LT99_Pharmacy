@@ -4,6 +4,18 @@ import Image from "next/image";
 import { getAllThuocTheoLoai } from "@/api/thuocApi";
 
 const ListCard1 = () => {
+  const animateImgeBot = {
+    off: { y: 150, opacity: 0 },
+    on: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 3,
+        type: "spring",
+        bounce: 0.3,
+      },
+    },
+  };
   const [dsThuoc, setDsThuoc] = useState([]);
   async function fetchDanhSachThuoc() {
     const data = await getAllThuocTheoLoai(2);

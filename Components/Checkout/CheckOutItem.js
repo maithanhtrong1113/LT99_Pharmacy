@@ -17,7 +17,7 @@ const CheckOutItem = (props) => {
           </th>
           <td className="pt-4 text-dark fw-bold w-50">{props.item.title}</td>
           <td className="pt-4 text-info">{VND.format(props.item.price)}</td>
-          <td className="pt-4">
+          <td className="pt-4 text-center">
             <span>{props.item.quantity}</span>
           </td>
           <td className="pt-4 text-info">{VND.format(props.item.total)}</td>

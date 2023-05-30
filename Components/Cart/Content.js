@@ -137,12 +137,9 @@ const Content = () => {
               </nav>
             </div>
             {cartItems.length === 0 && (
-              <div
-                className="col-lg-12 d-flex justify-content-start flex-column align-items-center "
-                onClick={() => router.push("/")}
-              >
+              <div className="col-lg-12 d-flex justify-content-start flex-column align-items-center ">
                 <Image
-                  className="img-fluid rounded shadow h-50 mt-0"
+                  className="img-fluid  h-50 mt-0"
                   src="/images/illustration-not-found.svg"
                   width={400}
                   height={50}
@@ -151,7 +148,10 @@ const Content = () => {
                   Tiếc quá! LT99 không tìm thấy sản phẩm nào trong giỏ hàng của
                   bạn.
                 </span>
-                <button className="btn bg-blue-dark text-white  bg-blue-darkHover  btn-lg">
+                <button
+                  className="btn bg-blue-dark text-white  bg-blue-darkHover  btn-lg"
+                  onClick={() => router.push("/")}
+                >
                   Tiếp tục mua hàng
                 </button>
               </div>

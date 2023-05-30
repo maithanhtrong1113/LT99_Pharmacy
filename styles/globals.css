@@ -609,7 +609,7 @@ body {
 }
 .localCart {
   border-radius: 100%;
-  top: 1px;
+  top: 2px;
   right: 5px;
 }
 .px-1-5 {
@@ -678,6 +678,9 @@ body {
 .fs-15 {
   font-size: 20px;
   transform: rotate(90deg);
+}
+.fs-19 {
+  font-size: 23px;
 }
 .fs {
   font-size: 12px !important;

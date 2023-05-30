@@ -1,8 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
 import CardProduct from "./CardProduct";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const ListCard = () => {
+  const animateImgeBot = {
+    off: { y: 150, opacity: 0 },
+    on: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 3,
+        type: "spring",
+        bounce: 0.3,
+      },
+    },
+  };
   const [dsThuoc, setDsThuoc] = useState([]);
   useEffect(() => {
     fetch(
@@ -24,7 +37,13 @@ const ListCard = () => {
   }, []);
   return (
     <Fragment>
-      <div className="row  bg-pastel-blue-trans pt-5 my-3 position-relative  ">
+      <motion.div
+        className="row  bg-pastel-blue-trans pt-5 my-3 position-relative  "
+        initial={"off"}
+        whileInView={"on"}
+        viewport={{ once: true }}
+        variants={animateImgeBot}
+      >
         <Image
           src="/images/ho.png"
           className="imageHot position-absolute z-index "
@@ -41,7 +60,7 @@ const ListCard = () => {
             inventory={thuoc.thuoc.soLuong}
           />
         ))}
-      </div>
+      </motion.div>
     </Fragment>
   );
 };
