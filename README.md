@@ -2,7 +2,7 @@
 ```bash
 npm i -> npm run dev
 ```
-**Link back-end**: https://github.com/liemktpm13a/QLNT-Server
+
 ## 🔗 Video Demo 
 
 https://www.youtube.com/watch?v=YFP6yLjqAq0&ab_channel=LiemNguyen
