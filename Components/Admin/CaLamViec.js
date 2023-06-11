@@ -4,8 +4,8 @@ import ModalChinhSuaCaLamViec from "../Modal/ModalChinhSuaCaLamViec";
 import ModalXoaCaLamViec from "../Modal/ModalXoaCaLamViec";
 
 const LoaiThuoc = (props) => {
-  const xoaCaLamViecHandler = async (id) => {
-    const res = await xoaCaLamViec(id);
+  const xoaCaLamViecHandler = async (ma) => {
+    const res = await xoaCaLamViec(ma);
     props.setCaLamViec(res);
   };
   const chinhSuaCaLamViecc = async (id) => {
